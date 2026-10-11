@@ -6,17 +6,10 @@
   <!-- Fireworks Overlay Canvas -->
   <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; z-index: 100; display: none;"></canvas>
 
-  <!-- Rapid Fire 100 Rockets Challenge Badge (Bottom Right) -->
-  <div id="hbr-rocket-challenge-badge" style="display: none; position: absolute; bottom: 16px; right: 16px; background: rgba(17,17,21,0.92); border: 2px solid #f97316; border-radius: 12px; padding: 10px 14px; z-index: 120; box-shadow: 0 6px 20px rgba(0,0,0,0.8); text-align: center; cursor: pointer; user-select: none;">
-    <div style="font-size: 10px; font-weight: 800; color: #fb923c; text-transform: uppercase; margin-bottom: 2px;">🚀 ROCKET CHALLENGE</div>
-    <div style="font-size: 12px; font-weight: 700; color: #fff;"><span id="hbr-rocket-left">100</span> / 100 LEFT</div>
-    <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;">Tap fast to fire!</div>
-  </div>
-
   <!-- Rocket Challenge Results Overlay -->
   <div id="hbr-rocket-results" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.95); border: 2px solid #22c55e; border-radius: 14px; padding: 16px 24px; z-index: 160; box-shadow: 0 8px 32px rgba(0,0,0,0.9); text-align: center;">
     <span style="font-size: 15px; font-weight: 800; color: #4ade80; display: block; margin-bottom: 4px;">🏆 CHALLENGE COMPLETE!</span>
-    <span style="font-size: 12px; color: #d1d5db; display: block; margin-bottom: 12px;">You fired 100 rockets in <strong id="hbr-rocket-time" style="color: #60a5fa;">0.0s</strong>!</span>
+    <span style="font-size: 12px; color: #d1d5db; display: block; margin-bottom: 12px;">You fired 23 rockets in <strong id="hbr-rocket-time" style="color: #60a5fa;">0.0s</strong>!</span>
     <button id="hbr-rocket-close-btn" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">AWESOME!</button>
   </div>
 
@@ -153,7 +146,7 @@
     </div>
 
     <!-- Turntable Deck Frame -->
-    <div id="hbr-deck-frame" style="position: relative; background: rgba(26,26,36,0.85); backdrop-filter: blur(4px); border-radius: 16px; padding: 24px 20px 20px; text-align: center; overflow: hidden; border: 1px solid #2a2a3a; margin-bottom: 20px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
+    <div id="hbr-deck-frame" style="position: relative; background: rgba(26,26,36,0.85); backdrop-filter: blur(4px); border-radius: 16px; padding: 24px 20px 20px; text-align: center; overflow: hidden; border: 1px solid #2a2a3a; margin-bottom: 14px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
       <canvas id="hbr-game-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 18;"></canvas>
       <div id="hbr-notes-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15; overflow: hidden;">&nbsp;</div>
       <div id="hbr-times-up" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.92); border: 2px solid #ef4444; border-radius: 12px; padding: 12px 20px; z-index: 25; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center;"><span id="hbr-banner-title" style="font-size: 14px; font-weight: 800; color: #ef4444; display: block; margin-bottom: 2px;">TIME&#39;S UP!</span> <span style="font-size: 11px; color: #d1d5db;"><span id="hbr-banner-msg">You popped <strong id="hbr-final-count" style="color: #60a5fa;">0</strong> notes!</span></span></div>
@@ -214,6 +207,13 @@
         </div>
       </div>
       <div style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;"><iframe allow="autoplay" frameborder="0" id="hbr-engine" src="https://www.youtube.com/embed/WHzTume00O8?enablejsapi=1&amp;modestbranding=1&amp;rel=0&amp;iv_load_policy=3" title="Honest Blue Radio Engine"></iframe></div>
+    </div>
+
+    <!-- Rapid Fire 23 Rockets Challenge Badge (Right Under Record / Turntable Deck) -->
+    <div id="hbr-rocket-challenge-badge" style="display: none; margin: 0 auto 16px auto; background: rgba(17,17,21,0.92); border: 2px solid #f97316; border-radius: 12px; padding: 10px 14px; max-width: 280px; box-shadow: 0 6px 20px rgba(0,0,0,0.8); text-align: center; cursor: pointer; user-select: none;">
+      <div style="font-size: 10px; font-weight: 800; color: #fb923c; text-transform: uppercase; margin-bottom: 2px;">🚀 ROCKET CHALLENGE</div>
+      <div style="font-size: 12px; font-weight: 700; color: #fff;"><span id="hbr-rocket-left">23</span> / 23 LEFT</div>
+      <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;">Tap fast to fire!</div>
     </div>
 
     <!-- Vinyl Color Picker Bar -->
@@ -792,12 +792,26 @@
         if (savedQ1) customQueue1 = JSON.parse(savedQ1);
         if (savedQ2) customQueue2 = JSON.parse(savedQ2);
         if (savedT3) customTop3 = JSON.parse(savedT3);
-        if (savedBanked) bankedNotesTotal = parseInt(savedBanked, 10) || 0;
+        
+        if (savedBanked !== null) {
+          bankedNotesTotal = parseInt(savedBanked, 10) || 0;
+        } else {
+          bankedNotesTotal = 150;
+          saveBankedNotesToStorage();
+        }
+
+        if (bankedNotesTotal === 0 && (savedStores || savedMovies || localStorage.getItem('hbr_user_profile'))) {
+          bankedNotesTotal = 150;
+          saveBankedNotesToStorage();
+        }
+
         if (savedCash) storeCashTotal = parseFloat(savedCash) || 0.00;
         if (savedStores) userOwnedStores = Object.assign(userOwnedStores, JSON.parse(savedStores));
         if (savedMovies) userOwnedMovies = Object.assign(userOwnedMovies, JSON.parse(savedMovies));
         if (savedUnrewound) unrewoundTapesCount = parseInt(savedUnrewound, 10) || 0;
-      } catch (e) {}
+      } catch (e) {
+        bankedNotesTotal = 150;
+      }
     }
 
     function savePlaylistsToStorage() {
@@ -808,7 +822,10 @@
       } catch (e) {}
     }
 
-    function saveBankedNotesToStorage() { localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString()); }
+    function saveBankedNotesToStorage() { 
+      if (bankedNotesTotal < 0) bankedNotesTotal = 0;
+      localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString()); 
+    }
     function saveCashToStorage() { localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2)); }
     function saveOwnedStoresToStorage() { localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores)); }
     function saveOwnedMoviesToStorage() {
@@ -1539,7 +1556,7 @@
       closeModalBtn.addEventListener('click', () => installModal.style.display = 'none');
     }
 
-    // Automatic Eastern Time Fireworks & 100 Rockets Challenge Engine
+    // Automatic Eastern Time Fireworks & 23 Rockets Challenge Engine
     const canvas = document.getElementById('hbr-fireworks-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
     let fireworksActive = false;
@@ -1549,7 +1566,7 @@
     let isGrandFinale = false;
 
     let rocketChallengeActive = false;
-    let rocketsLeft = 100;
+    let rocketsLeft = 23;
     let rocketStartTime = 0;
     const rocketBadge = document.getElementById('hbr-rocket-challenge-badge');
     const rocketLeftSpan = document.getElementById('hbr-rocket-left');
@@ -1633,7 +1650,7 @@
         e.stopPropagation();
         if (!rocketChallengeActive) return;
 
-        if (rocketsLeft === 100) rocketStartTime = Date.now();
+        if (rocketsLeft === 23) rocketStartTime = Date.now();
         rocketsLeft--;
         if (rocketLeftSpan) rocketLeftSpan.textContent = rocketsLeft;
 
@@ -1694,8 +1711,8 @@
       runFireworksLoop();
 
       rocketChallengeActive = true;
-      rocketsLeft = 100;
-      if (rocketLeftSpan) rocketLeftSpan.textContent = '100';
+      rocketsLeft = 23;
+      if (rocketLeftSpan) rocketLeftSpan.textContent = '23';
       if (rocketBadge) rocketBadge.style.display = 'block';
 
       setTimeout(() => stopFireworks(), 300000);
@@ -1818,19 +1835,22 @@
 
     if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
 
+    function autoBankUnsavedNotes() {
+      if (poppedNotesTotal > 0) {
+        bankedNotesTotal += poppedNotesTotal;
+        poppedNotesTotal = 0;
+        if (popCountDisplay) popCountDisplay.textContent = '0';
+        if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+        saveBankedNotesToStorage();
+      }
+    }
+
     if (bankBtn) {
       bankBtn.addEventListener('click', function() {
-        if (poppedNotesTotal > 0) {
-          bankedNotesTotal += poppedNotesTotal;
-          poppedNotesTotal = 0;
-          if (popCountDisplay) popCountDisplay.textContent = '0';
-          if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-          saveBankedNotesToStorage();
-
-          if (bankedBadge) {
-            bankedBadge.style.transform = 'scale(1.2)';
-            setTimeout(() => bankedBadge.style.transform = 'scale(1)', 200);
-          }
+        autoBankUnsavedNotes();
+        if (bankedBadge) {
+          bankedBadge.style.transform = 'scale(1.2)';
+          setTimeout(() => bankedBadge.style.transform = 'scale(1)', 200);
         }
       });
     }
@@ -2049,8 +2069,9 @@
             clearInterval(countdownInterval);
             canPopNotes = false;
             stopNotesSystem();
+            autoBankUnsavedNotes();
             if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You popped <strong style="color: #60a5fa;">' + poppedNotesTotal + '</strong> notes!';
+            if (bannerMsg) bannerMsg.innerHTML = 'You popped <strong style="color: #60a5fa;">' + poppedNotesTotal + '</strong> notes (banked automatically)!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
@@ -2083,8 +2104,9 @@
             clearInterval(countdownInterval);
             canPopNotes = false;
             stopNotesSystem();
+            autoBankUnsavedNotes();
             if (bannerTitle) bannerTitle.textContent = "GAME OVER!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You reached <strong style="color: #4ade80;">Level ' + gameLevel + '</strong> and popped ' + poppedNotesTotal + ' total notes!';
+            if (bannerMsg) bannerMsg.innerHTML = 'You reached <strong style="color: #4ade80;">Level ' + gameLevel + '</strong> and banked notes!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
@@ -2135,8 +2157,9 @@
             clearInterval(countdownInterval);
             canPopNotes = false;
             stopNotesSystem();
+            autoBankUnsavedNotes();
             if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal + '</strong> fireworks!';
+            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal + '</strong> fireworks (banked automatically)!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
@@ -2249,6 +2272,7 @@
         let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 4px; vertical-align: middle;">E</span>' : '';
         titleSpan.innerHTML = (globalIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentlyPlaying ? ' <span style="font-size: 9px; opacity: 0.7;">(PLAYING)</span>' : '');
         titleSpan.addEventListener('click', function() {
+          autoBankUnsavedNotes();
           activeQueueSource = null;
           activePlaylist = currentMasterTracks;
           selectAndPlayTrack(globalIdx);
@@ -2359,7 +2383,7 @@
           let nameSpan = document.createElement('span');
           nameSpan.style.cursor = 'pointer';
           nameSpan.innerHTML = '★ ' + (cIdx + 1) + '. ' + track.name + (isCurrentQ1 ? ' <span style="font-size: 8px; color: #60a5fa;">(PLAYING)</span>' : '');
-          nameSpan.addEventListener('click', () => { activeQueueSource = 'q1'; activePlaylist = customQueue1; selectAndPlayTrack(cIdx); });
+          nameSpan.addEventListener('click', () => { autoBankUnsavedNotes(); activeQueueSource = 'q1'; activePlaylist = customQueue1; selectAndPlayTrack(cIdx); });
           let removeBtn = document.createElement('button');
           removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
           removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue1.splice(cIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
@@ -2378,7 +2402,7 @@
           let nameSpan = document.createElement('span');
           nameSpan.style.cursor = 'pointer';
           nameSpan.innerHTML = '★ ' + (cIdx + 1) + '. ' + track.name + (isCurrentQ2 ? ' <span style="font-size: 8px; color: #c084fc;">(PLAYING)</span>' : '');
-          nameSpan.addEventListener('click', () => { activeQueueSource = 'q2'; activePlaylist = customQueue2; selectAndPlayTrack(cIdx); });
+          nameSpan.addEventListener('click', () => { autoBankUnsavedNotes(); activeQueueSource = 'q2'; activePlaylist = customQueue2; selectAndPlayTrack(cIdx); });
           let removeBtn = document.createElement('button');
           removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
           removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue2.splice(cIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
@@ -2397,7 +2421,7 @@
           let nameSpan = document.createElement('span');
           nameSpan.style.cursor = 'pointer';
           nameSpan.innerHTML = '🟢 ' + (tIdx + 1) + '. ' + track.name + (isCurrentT3 ? ' <span style="font-size: 8px; color: #4ade80;">(PLAYING)</span>' : '');
-          nameSpan.addEventListener('click', () => { activeQueueSource = 't3'; activePlaylist = customTop3; selectAndPlayTrack(tIdx); });
+          nameSpan.addEventListener('click', () => { autoBankUnsavedNotes(); activeQueueSource = 't3'; activePlaylist = customTop3; selectAndPlayTrack(tIdx); });
           let removeBtn = document.createElement('button');
           removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
           removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customTop3.splice(tIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
@@ -2410,6 +2434,7 @@
     if (playQ1Btn) {
       playQ1Btn.addEventListener('click', () => {
         if (customQueue1.length > 0) {
+          autoBankUnsavedNotes();
           activeQueueSource = 'q1'; activePlaylist = customQueue1; selectAndPlayTrack(0);
           if (drawer) { drawer.style.maxHeight = '0'; drawer.style.marginBottom = '0px'; drawer.style.borderWidth = '0px'; drawerOpen = false; if (drawerArrow) drawerArrow.textContent = '▼'; }
         } else alert('Playlist 1 is empty!');
@@ -2418,6 +2443,7 @@
     if (playQ2Btn) {
       playQ2Btn.addEventListener('click', () => {
         if (customQueue2.length > 0) {
+          autoBankUnsavedNotes();
           activeQueueSource = 'q2'; activePlaylist = customQueue2; selectAndPlayTrack(0);
           if (drawer) { drawer.style.maxHeight = '0'; drawer.style.marginBottom = '0px'; drawer.style.borderWidth = '0px'; drawerOpen = false; if (drawerArrow) drawerArrow.textContent = '▼'; }
         } else alert('Playlist 2 is empty!');
@@ -2426,6 +2452,7 @@
     if (playT3Btn) {
       playT3Btn.addEventListener('click', () => {
         if (customTop3.length > 0) {
+          autoBankUnsavedNotes();
           activeQueueSource = 't3'; activePlaylist = customTop3; selectAndPlayTrack(0);
           if (drawer) { drawer.style.maxHeight = '0'; drawer.style.marginBottom = '0px'; drawer.style.borderWidth = '0px'; drawerOpen = false; if (drawerArrow) drawerArrow.textContent = '▼'; }
         } else alert('Top 3 is empty!');
@@ -2488,6 +2515,7 @@
     if (modeBtn) {
       modeBtn.addEventListener('click', function() {
         isInstrumentalMode = !isInstrumentalMode;
+        autoBankUnsavedNotes();
         activeQueueSource = null;
         if (isInstrumentalMode) {
           currentMasterTracks = masterInstrumentalTracks; activePlaylist = masterInstrumentalTracks;
@@ -2510,6 +2538,7 @@
 
     if (christmasBtn) {
       christmasBtn.addEventListener('click', () => {
+        autoBankUnsavedNotes();
         activeQueueSource = null; currentMasterTracks = masterChristmasTracks; activePlaylist = masterChristmasTracks;
         if (modeTitleText) modeTitleText.textContent = 'Honest Blue Christmas';
         if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Festive Soundscapes';
@@ -2520,6 +2549,7 @@
 
     if (disneyBtn) {
       disneyBtn.addEventListener('click', () => {
+        autoBankUnsavedNotes();
         activeQueueSource = null; currentMasterTracks = masterDisneyTracks; activePlaylist = masterDisneyTracks;
         if (modeTitleText) modeTitleText.textContent = 'Jay Draws Disney';
         if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Relaxing Disney Piano';
@@ -2555,6 +2585,7 @@
       try {
         let data = JSON.parse(event.data);
         if (data.event === 'infoDelivery' && data.info && data.info.playerState === 0) {
+          autoBankUnsavedNotes();
           selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
         }
       } catch (e) {}
@@ -2570,6 +2601,7 @@
           if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
           stopNativeSpin();
           stopNotesSystem();
+          autoBankUnsavedNotes();
           if (countdownInterval) clearInterval(countdownInterval);
           if (animFrameReq) cancelAnimationFrame(animFrameReq);
           toggleBtn.innerHTML = '▶';
@@ -2579,8 +2611,8 @@
       });
     }
 
-    if (nextBtn) nextBtn.addEventListener('click', () => selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length));
-    if (prevBtn) prevBtn.addEventListener('click', () => selectAndPlayTrack((currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length));
+    if (nextBtn) nextBtn.addEventListener('click', () => { autoBankUnsavedNotes(); selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { autoBankUnsavedNotes(); selectAndPlayTrack((currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length); });
 
     renderDrawerList();
 
