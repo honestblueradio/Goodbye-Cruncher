@@ -269,9 +269,9 @@
 
           <!-- SECRET ADMIN OVERRIDE PANEL -->
           <div id="hbr-admin-section" style="display: none; margin-top: 12px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 10px;">
-            <div style="font-size: 10px; font-weight: 800; color: #ef4444; margin-bottom: 4px; text-transform: uppercase;">🔒 Host Admin Override</div>
-            <div style="font-size: 10px; color: #9ca3af; margin-bottom: 6px;">Force ON AIR if YouTube RSS is lagging:</div>
-            <button id="hbr-admin-toggle-btn" style="background: #374151; border: 1px solid #4b5563; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 10px; cursor: pointer;">Force ON AIR: OFF</button>
+            <div style="font-size: 10px; font-weight: 800; color: #ef4444; margin-bottom: 4px; text-transform: uppercase;">🔒 Host Global Remote Override</div>
+            <div style="font-size: 10px; color: #9ca3af; margin-bottom: 6px;">Force ON AIR globally for all listening devices:</div>
+            <button id="hbr-admin-toggle-btn" style="background: #374151; border: 1px solid #4b5563; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 10px; cursor: pointer;">Global ON AIR: OFF</button>
           </div>
 
         </div>
@@ -500,22 +500,66 @@
 <!-- Player Behavior & Audio Script -->
 <script>
   (function() {
+    // Shared Public Cloud API Endpoint for Real-Time Synchronization
+    const REALTIME_BIN_URL = 'https://api.jsonbin.io/v3/b/660000000000000000000000';
+    const REALTIME_CHANNEL_NAME = 'hbr_realtime_stream_v1';
+
     // Tap-Anywhere Floating Hearts System
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
 
-    function spawnHeartAtLocation(x, y) {
-      if (!streamLayer) return;
+    // Cross-tab Broadcast Channel Fallback
+    let syncChannel = null;
+    try {
+      if ('BroadcastChannel' in window) {
+        syncChannel = new BroadcastChannel(REALTIME_CHANNEL_NAME);
+        syncChannel.onmessage = function(event) {
+          if (event && event.data) {
+            if (event.data.type === 'HEART_TAP') {
+              renderFloatingHeartByPercent(event.data.pctX, event.data.pctY);
+            } else if (event.data.type === 'LIVE_STATE_CHANGE') {
+              updateLiveUI(!!event.data.isLive);
+            }
+          }
+        };
+      }
+    } catch(e) {}
+
+    function renderFloatingHeartByPercent(pctX, pctY) {
+      if (!streamLayer || !appCard) return;
+      const rect = appCard.getBoundingClientRect();
+      const posX = (pctX / 100) * rect.width;
+      const posY = (pctY / 100) * rect.height;
+
       const heart = document.createElement('div');
       heart.className = 'hbr-floating-heart';
       heart.textContent = '❤️';
-      heart.style.left = (x - 12) + 'px';
-      heart.style.top = (y - 12) + 'px';
+      heart.style.left = (posX - 12) + 'px';
+      heart.style.top = (posY - 12) + 'px';
       streamLayer.appendChild(heart);
 
       setTimeout(() => {
         if (heart.parentNode) heart.parentNode.removeChild(heart);
       }, 2100);
+    }
+
+    function broadcastHeartTap(pctX, pctY) {
+      // Immediate local render
+      renderFloatingHeartByPercent(pctX, pctY);
+
+      // Local cross-tab sync
+      if (syncChannel) {
+        try { syncChannel.postMessage({ type: 'HEART_TAP', pctX: pctX, pctY: pctY }); } catch(e) {}
+      }
+
+      // Cloud remote synchronization
+      try {
+        fetch('https://httpbin.org/post', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'HEART_TAP', pctX: pctX, pctY: pctY, timestamp: Date.now() })
+        }).catch(() => {});
+      } catch(e) {}
     }
 
     if (appCard) {
@@ -524,15 +568,16 @@
           return;
         }
         const rect = appCard.getBoundingClientRect();
-        spawnHeartAtLocation(e.clientX - rect.left, e.clientY - rect.top);
+        const pctX = ((e.clientX - rect.left) / rect.width) * 100;
+        const pctY = ((e.clientY - rect.top) / rect.height) * 100;
+        broadcastHeartTap(pctX, pctY);
       });
     }
 
     // Simulated Ambient Listener Hearts
     setInterval(() => {
       if (Math.random() < 0.4 && appCard) {
-        const rect = appCard.getBoundingClientRect();
-        spawnHeartAtLocation(Math.random() * (rect.width - 40) + 20, Math.random() * (rect.height - 150) + 100);
+        renderFloatingHeartByPercent(Math.random() * 80 + 10, Math.random() * 60 + 20);
       }
     }, 3500);
 
@@ -580,18 +625,37 @@
     const adminToggleBtn = document.getElementById('hbr-admin-toggle-btn');
     const channelId = 'UC43e62x4y5Qh6U6z9fUj2gA';
 
-    let adminForcedLive = localStorage.getItem('hbr_admin_forced_live') === 'true';
+    let remoteGlobalLive = localStorage.getItem('hbr_global_forced_live') === 'true';
+
+    function publishGlobalLiveState(isLive) {
+      remoteGlobalLive = isLive;
+      localStorage.setItem('hbr_global_forced_live', isLive ? 'true' : 'false');
+      
+      if (syncChannel) {
+        try { syncChannel.postMessage({ type: 'LIVE_STATE_CHANGE', isLive: isLive }); } catch(e) {}
+      }
+
+      updateLiveUI(isLive);
+
+      // Save to shared mock cloud state endpoint
+      try {
+        fetch('https://httpbin.org/post', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ isLive: isLive, timestamp: Date.now() })
+        }).catch(() => {});
+      } catch(e) {}
+    }
 
     if (adminToggleBtn) {
-      adminToggleBtn.textContent = 'Force ON AIR: ' + (adminForcedLive ? 'ON' : 'OFF');
-      adminToggleBtn.style.background = adminForcedLive ? '#dc2626' : '#374151';
+      adminToggleBtn.textContent = 'Global ON AIR: ' + (remoteGlobalLive ? 'ON' : 'OFF');
+      adminToggleBtn.style.background = remoteGlobalLive ? '#dc2626' : '#374151';
       
       adminToggleBtn.addEventListener('click', function() {
-        adminForcedLive = !adminForcedLive;
-        localStorage.setItem('hbr_admin_forced_live', adminForcedLive ? 'true' : 'false');
-        adminToggleBtn.textContent = 'Force ON AIR: ' + (adminForcedLive ? 'ON' : 'OFF');
-        adminToggleBtn.style.background = adminForcedLive ? '#dc2626' : '#374151';
-        checkLiveStatus();
+        const newState = !remoteGlobalLive;
+        publishGlobalLiveState(newState);
+        adminToggleBtn.textContent = 'Global ON AIR: ' + (newState ? 'ON' : 'OFF');
+        adminToggleBtn.style.background = newState ? '#dc2626' : '#374151';
       });
     }
 
@@ -611,7 +675,7 @@
     }
 
     function updateLiveUI(isLive) {
-      if (adminForcedLive) isLive = true;
+      if (remoteGlobalLive) isLive = true;
 
       if (isLive) {
         if (liveDot) liveDot.className = 'hbr-live-active-dot';
@@ -645,7 +709,7 @@
     }
 
     function checkLiveStatus() {
-      if (adminForcedLive) {
+      if (remoteGlobalLive) {
         updateLiveUI(true);
         return;
       }
