@@ -497,30 +497,37 @@
   }
 </style>
 
-<!-- Pusher Real-Time WebSockets Library -->
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-
 <!-- Player Behavior & Audio Script -->
 <script>
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
 
-    // Global Pusher Real-Time WebSocket Channel for Worldwide Heart Sync
-    Pusher.logToConsole = false;
-    const pusher = new Pusher('4e28494793f77626359e', { cluster: 'us2' });
-    const globalChannel = pusher.subscribe('honest-blue-global-hearts');
+    // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync
+    let globalSocket = null;
+    function connectGlobalRelay() {
+      globalSocket = new WebSocket('wss://free.blr2.piesocket.com/v3/1?api_key=VCXCEuvhGcBDP7XJAJJUDVdB0QrRxMZSmndDCWhu&notify_self=1');
+      
+      globalSocket.onmessage = function(event) {
+        try {
+          let data = JSON.parse(event.data);
+          if (data && data.type === 'heart-tap') {
+            triggerGlobalHeartStream();
+          }
+        } catch(e) {}
+      };
 
-    globalChannel.bind('heart-tapped', function(data) {
-      triggerGlobalHeartStream();
-    });
+      globalSocket.onclose = function() {
+        setTimeout(connectGlobalRelay, 3000);
+      };
+    }
+    connectGlobalRelay();
 
     function triggerGlobalHeartStream() {
       if (!streamLayer || !appCard) return;
       let centerX = appCard.clientWidth / 2;
       let centerY = appCard.clientHeight - 60;
 
-      // Cascading stream of hearts across the screen when anyone in the world taps!
       for (let i = 0; i < 5; i++) {
         setTimeout(() => {
           const heart = document.createElement('div');
@@ -546,7 +553,7 @@
       let posX = clientX - rect.left;
       let posY = clientY - rect.top;
 
-      // 1. Show local hearts immediately on your own device where you tapped
+      // 1. Show local hearts immediately where you tapped
       for (let i = 0; i < 3; i++) {
         setTimeout(() => {
           const heart = document.createElement('div');
@@ -562,16 +569,12 @@
         }, i * 80);
       }
 
-      // 2. Broadcast securely via Pusher to trigger hearts globally across all devices worldwide
-      fetch('https://app.pusher.com/apps/1800000/events', { method: 'POST', body: JSON.stringify({}), mode: 'no-cors' }).catch(() => {});
-      try {
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://api.pusherapp.com/apps/1800000/events', true);
-        xhr.send();
-      } catch(err) {}
-
-      // Instant cross-tab/device sync fallback
-      triggerGlobalHeartStream();
+      // 2. Broadcast instantly across all connected devices worldwide via the WebSocket relay
+      if (globalSocket && globalSocket.readyState === WebSocket.OPEN) {
+        globalSocket.send(JSON.stringify({ type: 'heart-tap' }));
+      } else {
+        triggerGlobalHeartStream();
+      }
     }
 
     if (appCard) {
@@ -878,7 +881,7 @@
         if (topBannerName) topBannerName.textContent = userProfileData.name;
         if (topBannerBadge) {
           topBannerBadge.textContent = userProfileData.badge;
-          topBannerBadge.style.background = userProfileData.themeBadgeBg || 'rgba(59, 130, 246, 0.25)';
+          topBannerBadge.style.background = userProfileData.themeBadgeBg || 'rgba(59,130,246,0.25)';
           topBannerBadge.style.color = userProfileData.themeColor || '#60a5fa';
         }
         if (topBannerFrame) topBannerFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
