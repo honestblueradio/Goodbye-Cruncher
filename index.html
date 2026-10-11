@@ -1625,7 +1625,7 @@
 
     if (canvas) {
       canvas.addEventListener('click', launchUserRocket);
-      canvas.addEventListener('touchstart', launchUserRocket, {passive: true});
+      canvas.addEventListener('touchstart', launchUserRocket);
     }
 
     if (rocketBadge) {
@@ -2008,7 +2008,7 @@
       };
 
       el.addEventListener('click', popHandler);
-      el.addEventListener('touchstart', popHandler, {passive: true});
+      el.addEventListener('touchstart', popHandler);
       notesContainer.appendChild(el);
     }
 
