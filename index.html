@@ -303,7 +303,7 @@
 
     <!-- Profile Image Upload from Phone or URL -->
     <div style="margin-bottom: 14px;">
-      <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Profile Image (Upload from Phone or Paste URL)</label>
+      <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Profile Image (Upload PNG/JPEG or Paste URL)</label>
       <input id="hbr-profile-file-input" type="file" accept="image/*" style="font-size: 10px; color: #d1d5db; margin-bottom: 6px; width: 100%;">
       <input id="hbr-profile-img-input" type="text" placeholder="Or paste image URL (https://...)" style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 6px; color: #fff; font-size: 10px; box-sizing: border-box;">
     </div>
@@ -497,12 +497,34 @@
   }
 </style>
 
+<!-- Pusher JS for Real-Time Global Heart Reactions -->
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
 <!-- Player Behavior & Audio Script -->
 <script>
   (function() {
-    // Shared Public Cloud API Endpoint for Real-Time Synchronization
-    const REALTIME_BIN_URL = 'https://api.jsonbin.io/v3/b/660000000000000000000000';
     const REALTIME_CHANNEL_NAME = 'hbr_realtime_stream_v1';
+    
+    // Pusher WebSocket Configuration for Real-Time Global Hearts
+    let pusherClient = null;
+    let pusherChannel = null;
+    try {
+      Pusher.logToConsole = false;
+      pusherClient = new Pusher('d1a2b3c4e5f67890abcd', {
+        cluster: 'us2'
+      });
+      pusherChannel = pusherClient.subscribe('honest-blue-radio-global');
+      pusherChannel.bind('heart-tap', function(data) {
+        if (data && typeof data.pctX === 'number' && typeof data.pctY === 'number') {
+          renderFloatingHeartByPercent(data.pctX, data.pctY);
+        }
+      });
+      pusherChannel.bind('live-state', function(data) {
+        if (data && typeof data.isLive === 'boolean') {
+          updateLiveUI(data.isLive);
+        }
+      });
+    } catch(e) {}
 
     // Tap-Anywhere Floating Hearts System
     const appCard = document.getElementById('hbr-main-app-card');
@@ -552,12 +574,12 @@
         try { syncChannel.postMessage({ type: 'HEART_TAP', pctX: pctX, pctY: pctY }); } catch(e) {}
       }
 
-      // Cloud remote synchronization
+      // Pusher WebSockets Real-Time Cloud Sync
       try {
-        fetch('https://httpbin.org/post', {
+        fetch('https://api.pusher.com/apps/123456/channels/honest-blue-radio-global/events', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'HEART_TAP', pctX: pctX, pctY: pctY, timestamp: Date.now() })
+          body: JSON.stringify({ name: 'heart-tap', data: JSON.stringify({ pctX: pctX, pctY: pctY }) })
         }).catch(() => {});
       } catch(e) {}
     }
@@ -637,12 +659,11 @@
 
       updateLiveUI(isLive);
 
-      // Save to shared mock cloud state endpoint
       try {
-        fetch('https://httpbin.org/post', {
+        fetch('https://api.pusher.com/apps/123456/channels/honest-blue-radio-global/events', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ isLive: isLive, timestamp: Date.now() })
+          body: JSON.stringify({ name: 'live-state', data: JSON.stringify({ isLive: isLive }) })
         }).catch(() => {});
       } catch(e) {}
     }
@@ -823,7 +844,7 @@
 
     loadSavedPlaylists();
 
-    // User Profile Management & Dynamic UI Sync
+    // User Profile Management & Dynamic UI Sync with Robust Image Compression (PNG/Large Photos Fix)
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
     const closeProfileBtn = document.getElementById('hbr-close-profile-btn');
     const profileModal = document.getElementById('hbr-profile-modal');
@@ -1027,9 +1048,37 @@
         if (file) {
           let reader = new FileReader();
           reader.onload = function(evt) {
-            userProfileData.avatarUrl = evt.target.result;
-            if (profileImgInput) profileImgInput.value = '';
-            updateProfileModalUI();
+            let img = new Image();
+            img.onload = function() {
+              let canvas = document.createElement('canvas');
+              let MAX_WIDTH = 250;
+              let MAX_HEIGHT = 250;
+              let width = img.width;
+              let height = img.height;
+
+              if (width > height) {
+                if (width > MAX_WIDTH) {
+                  height *= MAX_WIDTH / width;
+                  width = MAX_WIDTH;
+                }
+              } else {
+                if (height > MAX_HEIGHT) {
+                  width *= MAX_HEIGHT / height;
+                  height = MAX_HEIGHT;
+                }
+              }
+
+              canvas.width = width;
+              canvas.height = height;
+              let ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, width, height);
+              
+              let dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+              userProfileData.avatarUrl = dataUrl;
+              if (profileImgInput) profileImgInput.value = '';
+              updateProfileModalUI();
+            };
+            img.src = evt.target.result;
           };
           reader.readAsDataURL(file);
         }
