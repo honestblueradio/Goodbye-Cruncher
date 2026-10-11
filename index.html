@@ -181,7 +181,7 @@
         <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
 
         <!-- Interactive Quick-Action Shoplifter Catch Banner -->
-        <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(239,68,68,0.5); user-select: none;">
+        <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; user-select: none; box-shadow: 0 4px 12px rgba(239,68,68,0.5);">
           <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase;">🚨 SHOPLIFTER ESCAPING!</div>
           <div style="font-size: 9px; color: #fee2e2; margin-top: 2px;">TAP HERE FAST TO TACKLE THE THIEF! (<span id="hbr-thief-timer">3</span>s)</div>
         </div>
@@ -506,12 +506,12 @@
     // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync
     let globalSocket = null;
     function connectGlobalRelay() {
-      globalSocket = new WebSocket('wss://free.blr2.piesocket.com/v3/1?api_key=VCXCEuvhGcBDP7XJAJJUDVdB0QrRxMZSmndDCWhu&notify_self=1');
+      globalSocket = new WebSocket('wss://ws.postman-echo.com/raw');
       
       globalSocket.onmessage = function(event) {
         try {
           let data = JSON.parse(event.data);
-          if (data && data.type === 'heart-tap') {
+          if (data && data.type === 'hbr-heart-tap') {
             triggerGlobalHeartStream();
           }
         } catch(e) {}
@@ -553,7 +553,6 @@
       let posX = clientX - rect.left;
       let posY = clientY - rect.top;
 
-      // 1. Show local hearts immediately where you tapped
       for (let i = 0; i < 3; i++) {
         setTimeout(() => {
           const heart = document.createElement('div');
@@ -569,9 +568,8 @@
         }, i * 80);
       }
 
-      // 2. Broadcast instantly across all connected devices worldwide via the WebSocket relay
       if (globalSocket && globalSocket.readyState === WebSocket.OPEN) {
-        globalSocket.send(JSON.stringify({ type: 'heart-tap' }));
+        globalSocket.send(JSON.stringify({ type: 'hbr-heart-tap' }));
       } else {
         triggerGlobalHeartStream();
       }
@@ -2561,12 +2559,6 @@
         }
       } catch (e) {}
     });
-
-    setInterval(() => {
-      if (isPlaying && iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({ event: 'listening' }), '*');
-      }
-    }, 1000);
 
     if (toggleBtn) {
       toggleBtn.addEventListener('click', () => {
