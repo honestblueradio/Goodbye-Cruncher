@@ -1,5 +1,8 @@
-<div style="background: #111115; border-radius: 20px; padding: 24px 24px 24px 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden;">
+<div style="background: #111115; border-radius: 20px; padding: 24px 24px 24px 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden;" id="hbr-main-app-card">
   
+  <!-- FLOATING HEART STREAM LAYER -->
+  <div id="hbr-reaction-stream-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; overflow: hidden;"></div>
+
   <!-- Fireworks Overlay Canvas -->
   <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; z-index: 100; display: none;"></canvas>
 
@@ -12,7 +15,7 @@
 
   <!-- Rocket Challenge Results Overlay -->
   <div id="hbr-rocket-results" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.95); border: 2px solid #22c55e; border-radius: 14px; padding: 16px 24px; z-index: 160; box-shadow: 0 8px 32px rgba(0,0,0,0.9); text-align: center;">
-    <span style="font-size: 15px; font-weight: 800; color: #4ade80; display: block; margin-bottom: 4px;"> CHALLENGE COMPLETE!</span>
+    <span style="font-size: 15px; font-weight: 800; color: #4ade80; display: block; margin-bottom: 4px;">🏆 CHALLENGE COMPLETE!</span>
     <span style="font-size: 12px; color: #d1d5db; display: block; margin-bottom: 12px;">You fired 100 rockets in <strong id="hbr-rocket-time" style="color: #60a5fa;">0.0s</strong>!</span>
     <button id="hbr-rocket-close-btn" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">AWESOME!</button>
   </div>
@@ -68,7 +71,7 @@
     </div>
 
     <!-- User Top Profile Banner (Appears Up Top When Profile Created) -->
-    <div id="hbr-top-profile-banner" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px;">
+    <div id="hbr-top-profile-banner" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; align-items: center; gap: 10px;">
       <div id="hbr-top-banner-avatar-frame" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
         <img id="hbr-top-banner-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
         <span id="hbr-top-banner-fallback" style="font-size: 18px;">🎧</span>
@@ -178,7 +181,7 @@
         <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
 
         <!-- Interactive Quick-Action Shoplifter Catch Banner -->
-        <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(239,68,68,0.5); user-select: none;">
+        <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; user-select: none; box-shadow: 0 4px 12px rgba(239,68,68,0.5);">
           <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase;">🚨 SHOPLIFTER ESCAPING!</div>
           <div style="font-size: 9px; color: #fee2e2; margin-top: 2px;">TAP HERE FAST TO TACKLE THE THIEF! (<span id="hbr-thief-timer">3</span>s)</div>
         </div>
@@ -266,9 +269,9 @@
 
           <!-- SECRET ADMIN OVERRIDE PANEL -->
           <div id="hbr-admin-section" style="display: none; margin-top: 12px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 10px;">
-            <div style="font-size: 10px; font-weight: 800; color: #ef4444; margin-bottom: 4px; text-transform: uppercase;">🔒 Host Admin Override</div>
-            <div style="font-size: 10px; color: #9ca3af; margin-bottom: 6px;">Force ON AIR if YouTube RSS is lagging:</div>
-            <button id="hbr-admin-toggle-btn" style="background: #374151; border: 1px solid #4b5563; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 10px; cursor: pointer;">Force ON AIR: OFF</button>
+            <div style="font-size: 10px; font-weight: 800; color: #ef4444; margin-bottom: 4px; text-transform: uppercase;">🔒 Host Global Remote Override</div>
+            <div style="font-size: 10px; color: #9ca3af; margin-bottom: 6px;">Force ON AIR globally for all listening devices:</div>
+            <button id="hbr-admin-toggle-btn" style="background: #374151; border: 1px solid #4b5563; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 10px; cursor: pointer;">Global ON AIR: OFF</button>
           </div>
 
         </div>
@@ -300,7 +303,7 @@
 
     <!-- Profile Image Upload from Phone or URL -->
     <div style="margin-bottom: 14px;">
-      <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Profile Image (Upload from Phone or Paste URL)</label>
+      <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Profile Image (Upload PNG/JPEG or Paste URL)</label>
       <input id="hbr-profile-file-input" type="file" accept="image/*" style="font-size: 10px; color: #d1d5db; margin-bottom: 6px; width: 100%;">
       <input id="hbr-profile-img-input" type="text" placeholder="Or paste image URL (https://...)" style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 6px; color: #fff; font-size: 10px; box-sizing: border-box;">
     </div>
@@ -365,6 +368,23 @@
   #hbr-profile-modal::-webkit-scrollbar-thumb {
     background: #374151;
     border-radius: 4px;
+  }
+
+  @keyframes hbrFloatAndFade {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    15% { opacity: 1; transform: translateY(-20px) scale(1.1); }
+    80% { opacity: 0.9; }
+    100% { transform: translateY(-220px) scale(1.2); opacity: 0; }
+  }
+
+  .hbr-floating-heart {
+    position: absolute;
+    font-size: 24px;
+    pointer-events: none;
+    user-select: none;
+    animation: hbrFloatAndFade 2.2s ease-out forwards;
+    filter: drop-shadow(0 0 10px rgba(236,72,153,0.8));
+    z-index: 95;
   }
 
   @keyframes hbrPulseGlow {
@@ -480,6 +500,96 @@
 <!-- Player Behavior & Audio Script -->
 <script>
   (function() {
+    const appCard = document.getElementById('hbr-main-app-card');
+    const streamLayer = document.getElementById('hbr-reaction-stream-layer');
+
+    // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync
+    let globalSocket = null;
+    function connectGlobalRelay() {
+      globalSocket = new WebSocket('wss://ws.postman-echo.com/raw');
+      
+      globalSocket.onmessage = function(event) {
+        try {
+          let data = JSON.parse(event.data);
+          if (data && data.type === 'hbr-heart-tap') {
+            triggerGlobalHeartStream();
+          }
+        } catch(e) {}
+      };
+
+      globalSocket.onclose = function() {
+        setTimeout(connectGlobalRelay, 3000);
+      };
+    }
+    connectGlobalRelay();
+
+    function triggerGlobalHeartStream() {
+      if (!streamLayer || !appCard) return;
+      let centerX = appCard.clientWidth / 2;
+      let centerY = appCard.clientHeight - 60;
+
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'hbr-floating-heart';
+          heart.textContent = ['❤️', '💖', '💙', '💜', '🧡', '✨'][Math.floor(Math.random() * 6)];
+          heart.style.left = (centerX + (Math.random() * 120 - 60)) + 'px';
+          heart.style.top = (centerY + (Math.random() * 30 - 15)) + 'px';
+          streamLayer.appendChild(heart);
+
+          setTimeout(() => {
+            if (heart.parentNode) heart.parentNode.removeChild(heart);
+          }, 2200);
+        }, i * 90);
+      }
+    }
+
+    function handleCardTap(e) {
+      if (!appCard) return;
+      let rect = appCard.getBoundingClientRect();
+      let clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : rect.left + rect.width / 2);
+      let clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : rect.top + rect.height / 2);
+      
+      let posX = clientX - rect.left;
+      let posY = clientY - rect.top;
+
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'hbr-floating-heart';
+          heart.textContent = ['❤️', '💖', '💙', '💜', '🧡'][Math.floor(Math.random() * 5)];
+          heart.style.left = (posX + (Math.random() * 30 - 15)) + 'px';
+          heart.style.top = (posY - 10 + (Math.random() * 20 - 10)) + 'px';
+          streamLayer.appendChild(heart);
+
+          setTimeout(() => {
+            if (heart.parentNode) heart.parentNode.removeChild(heart);
+          }, 2200);
+        }, i * 80);
+      }
+
+      if (globalSocket && globalSocket.readyState === WebSocket.OPEN) {
+        globalSocket.send(JSON.stringify({ type: 'hbr-heart-tap' }));
+      } else {
+        triggerGlobalHeartStream();
+      }
+    }
+
+    if (appCard) {
+      appCard.addEventListener('click', function(e) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-install-modal')) {
+          return;
+        }
+        handleCardTap(e);
+      });
+      appCard.addEventListener('touchstart', function(e) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-install-modal')) {
+          return;
+        }
+        handleCardTap(e);
+      }, {passive: true});
+    }
+
     // Master Broadcast Tracks
     const masterBroadcastTracks = [
       { id: 'WHzTume00O8', name: 'Track One' },
@@ -493,18 +603,15 @@
       { id: '50xdKObdFMI', name: 'Then I Woke Up' }
     ];
 
-    // Master Instrumental Tracks
     const masterInstrumentalTracks = [
       { id: 'F98pGQq4Sy8', name: 'Honest Blue Live Stream (Instrumental Session)' }
     ];
 
-    // Christmas Tracks
     const masterChristmasTracks = [
       { id: '3XGTb6OxZb4', name: 'Christmas Special' },
       { id: '3XGTb6OxZb4', name: 'Festive Vibes' }
     ];
 
-    // Jay Draws Disney Tracks
     const masterDisneyTracks = [
       { id: '5DiMoehAeOU', name: 'Jay Draws Disney • Relaxing Disney Piano Music' }
     ];
@@ -527,18 +634,23 @@
     const adminToggleBtn = document.getElementById('hbr-admin-toggle-btn');
     const channelId = 'UC43e62x4y5Qh6U6z9fUj2gA';
 
-    let adminForcedLive = localStorage.getItem('hbr_admin_forced_live') === 'true';
+    let remoteGlobalLive = localStorage.getItem('hbr_global_forced_live') === 'true';
+
+    function publishGlobalLiveState(isLive) {
+      remoteGlobalLive = isLive;
+      localStorage.setItem('hbr_global_forced_live', isLive ? 'true' : 'false');
+      updateLiveUI(isLive);
+    }
 
     if (adminToggleBtn) {
-      adminToggleBtn.textContent = 'Force ON AIR: ' + (adminForcedLive ? 'ON' : 'OFF');
-      adminToggleBtn.style.background = adminForcedLive ? '#dc2626' : '#374151';
+      adminToggleBtn.textContent = 'Global ON AIR: ' + (remoteGlobalLive ? 'ON' : 'OFF');
+      adminToggleBtn.style.background = remoteGlobalLive ? '#dc2626' : '#374151';
       
       adminToggleBtn.addEventListener('click', function() {
-        adminForcedLive = !adminForcedLive;
-        localStorage.setItem('hbr_admin_forced_live', adminForcedLive ? 'true' : 'false');
-        adminToggleBtn.textContent = 'Force ON AIR: ' + (adminForcedLive ? 'ON' : 'OFF');
-        adminToggleBtn.style.background = adminForcedLive ? '#dc2626' : '#374151';
-        checkLiveStatus();
+        const newState = !remoteGlobalLive;
+        publishGlobalLiveState(newState);
+        adminToggleBtn.textContent = 'Global ON AIR: ' + (newState ? 'ON' : 'OFF');
+        adminToggleBtn.style.background = newState ? '#dc2626' : '#374151';
       });
     }
 
@@ -558,7 +670,7 @@
     }
 
     function updateLiveUI(isLive) {
-      if (adminForcedLive) isLive = true;
+      if (remoteGlobalLive) isLive = true;
 
       if (isLive) {
         if (liveDot) liveDot.className = 'hbr-live-active-dot';
@@ -592,7 +704,7 @@
     }
 
     function checkLiveStatus() {
-      if (adminForcedLive) {
+      if (remoteGlobalLive) {
         updateLiveUI(true);
         return;
       }
@@ -623,24 +735,15 @@
     let storeCashTotal = 0.00;
     let unrewoundTapesCount = 0;
     
-    // User Purchased Stores Inventory
-    let userOwnedStores = {
-      blockbuster: 0,
-      toysrus: 0,
-      kbtoys: 0
-    };
-
-    // User Purchased Movie Inventory { movieId: { vhs: 0, dvd: 0, bluray: 0 } }
+    let userOwnedStores = { blockbuster: 0, toysrus: 0, kbtoys: 0 };
     let userOwnedMovies = {};
 
-    // Store Catalog
     const storeCatalog = [
       { id: 'blockbuster', name: 'Blockbuster Video', baseMin: 50, baseMax: 150, color: '#3b82f6', icon: '📼' },
       { id: 'toysrus', name: 'Toys "R" Us', baseMin: 120, baseMax: 300, color: '#ec4899', icon: '🦒' },
       { id: 'kbtoys', name: 'KB Toys', baseMin: 80, baseMax: 220, color: '#ef4444', icon: '🧸' }
     ];
 
-    // Movie Catalog
     const movieCatalog = [
       { id: 'titanic', name: 'Titanic', rtScore: 88, basePrice: 40 },
       { id: 'godfather', name: 'The Godfather', rtScore: 98, basePrice: 60 },
@@ -660,12 +763,7 @@
         let discount = isOnSale ? (Math.floor(Math.random() * 3) + 2) * 10 : 0;
         let finalPrice = isOnSale ? Math.floor(base * (1 - discount / 100)) : base;
 
-        currentStorePrices[store.id] = {
-          price: finalPrice,
-          originalPrice: base,
-          isOnSale: isOnSale,
-          discount: discount
-        };
+        currentStorePrices[store.id] = { price: finalPrice, originalPrice: base, isOnSale: isOnSale, discount: discount };
       });
     }
 
@@ -675,14 +773,11 @@
       let count = 0;
       Object.keys(userOwnedMovies).forEach(mId => {
         let inv = userOwnedMovies[mId];
-        if (inv) {
-          count += ((inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0));
-        }
+        if (inv) count += ((inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0));
       });
       return count;
     }
 
-    // Load Saved Playlists, Top 3, Banked Notes, Cash & Stores from localStorage
     function loadSavedPlaylists() {
       try {
         const savedQ1 = localStorage.getItem('hbr_custom_queue_1');
@@ -713,34 +808,17 @@
       } catch (e) {}
     }
 
-    function saveBankedNotesToStorage() {
-      try {
-        localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString());
-      } catch (e) {}
-    }
-
-    function saveCashToStorage() {
-      try {
-        localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2));
-      } catch (e) {}
-    }
-
-    function saveOwnedStoresToStorage() {
-      try {
-        localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores));
-      } catch (e) {}
-    }
-
+    function saveBankedNotesToStorage() { localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString()); }
+    function saveCashToStorage() { localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2)); }
+    function saveOwnedStoresToStorage() { localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores)); }
     function saveOwnedMoviesToStorage() {
-      try {
-        localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
-        localStorage.setItem('hbr_unrewound_tapes', unrewoundTapesCount.toString());
-      } catch (e) {}
+      localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
+      localStorage.setItem('hbr_unrewound_tapes', unrewoundTapesCount.toString());
     }
 
     loadSavedPlaylists();
 
-    // User Profile Management & Dynamic UI Sync
+    // User Profile Management & Dynamic UI Sync with Robust Image Compression (PNG/Large Photos Fix)
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
     const closeProfileBtn = document.getElementById('hbr-close-profile-btn');
     const profileModal = document.getElementById('hbr-profile-modal');
@@ -774,9 +852,7 @@
     function loadProfileFromStorage() {
       try {
         const saved = localStorage.getItem('hbr_user_profile');
-        if (saved) {
-          userProfileData = Object.assign(userProfileData, JSON.parse(saved));
-        }
+        if (saved) userProfileData = Object.assign(userProfileData, JSON.parse(saved));
       } catch(e) {}
     }
 
@@ -791,7 +867,6 @@
     function updateTopProfileBanner() {
       if (!topProfileBanner) return;
       
-      // Update Create/Edit Profile button text at bottom
       if (openProfileBtn) {
         openProfileBtn.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? '👤 Edit Profile' : '👤 Create Profile';
       }
@@ -804,21 +879,22 @@
         if (topBannerName) topBannerName.textContent = userProfileData.name;
         if (topBannerBadge) {
           topBannerBadge.textContent = userProfileData.badge;
-          topBannerBadge.style.background = userProfileData.themeBadgeBg || 'rgba(59, 130, 246, 0.25)';
+          topBannerBadge.style.background = userProfileData.themeBadgeBg || 'rgba(59,130,246,0.25)';
           topBannerBadge.style.color = userProfileData.themeColor || '#60a5fa';
         }
-        if (topBannerFrame) {
-          topBannerFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
-        }
+        if (topBannerFrame) topBannerFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
 
-        if (userProfileData.avatarUrl) {
+        if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
           if (topBannerImg) {
             topBannerImg.src = userProfileData.avatarUrl;
             topBannerImg.style.display = 'block';
           }
           if (topBannerFallback) topBannerFallback.style.display = 'none';
         } else {
-          if (topBannerImg) topBannerImg.style.display = 'none';
+          if (topBannerImg) {
+            topBannerImg.style.display = 'none';
+            topBannerImg.src = '';
+          }
           if (topBannerFallback) topBannerFallback.style.display = 'block';
         }
       } else {
@@ -834,21 +910,22 @@
 
       if (profileAvatarFrame) profileAvatarFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
 
-      if (userProfileData.avatarUrl) {
+      if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
         if (profileAvatarImg) {
           profileAvatarImg.src = userProfileData.avatarUrl;
           profileAvatarImg.style.display = 'block';
         }
         if (profileAvatarFallback) profileAvatarFallback.style.display = 'none';
       } else {
-        if (profileAvatarImg) profileAvatarImg.style.display = 'none';
+        if (profileAvatarImg) {
+          profileAvatarImg.style.display = 'none';
+          profileAvatarImg.src = '';
+        }
         if (profileAvatarFallback) profileAvatarFallback.style.display = 'block';
       }
 
-      // Highlight selected profile theme color
       if (profileColorsContainer) {
-        const colorBtns = profileColorsContainer.querySelectorAll('.hbr-pcolor-btn');
-        colorBtns.forEach(btn => {
+        profileColorsContainer.querySelectorAll('.hbr-pcolor-btn').forEach(btn => {
           if (btn.getAttribute('data-color') === userProfileData.themeColor) {
             btn.style.border = '2px solid #ffffff';
             btn.style.transform = 'scale(1.1)';
@@ -860,8 +937,7 @@
       }
 
       if (badgesContainer) {
-        const badgeBtns = badgesContainer.querySelectorAll('.hbr-badge-option');
-        badgeBtns.forEach(btn => {
+        badgesContainer.querySelectorAll('.hbr-badge-option').forEach(btn => {
           if (btn.getAttribute('data-badge') === userProfileData.badge) {
             btn.style.boxShadow = '0 0 8px currentColor';
             btn.style.opacity = '1';
@@ -946,9 +1022,37 @@
         if (file) {
           let reader = new FileReader();
           reader.onload = function(evt) {
-            userProfileData.avatarUrl = evt.target.result;
-            if (profileImgInput) profileImgInput.value = '';
-            updateProfileModalUI();
+            let img = new Image();
+            img.onload = function() {
+              let canvas = document.createElement('canvas');
+              let MAX_WIDTH = 250;
+              let MAX_HEIGHT = 250;
+              let width = img.width;
+              let height = img.height;
+
+              if (width > height) {
+                if (width > MAX_WIDTH) {
+                  height *= MAX_WIDTH / width;
+                  width = MAX_WIDTH;
+                }
+              } else {
+                if (height > MAX_HEIGHT) {
+                  width *= MAX_HEIGHT / height;
+                  height = MAX_HEIGHT;
+                }
+              }
+
+              canvas.width = width;
+              canvas.height = height;
+              let ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0, width, height);
+              
+              let dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+              userProfileData.avatarUrl = dataUrl;
+              if (profileImgInput) profileImgInput.value = '';
+              updateProfileModalUI();
+            };
+            img.src = evt.target.result;
           };
           reader.readAsDataURL(file);
         }
@@ -958,10 +1062,8 @@
     if (profileImgInput) {
       profileImgInput.addEventListener('input', function() {
         let val = profileImgInput.value.trim();
-        if (val) {
-          userProfileData.avatarUrl = val;
-          updateProfileModalUI();
-        }
+        userProfileData.avatarUrl = val;
+        updateProfileModalUI();
       });
     }
 
@@ -969,7 +1071,7 @@
       saveProfileBtn.addEventListener('click', function() {
         if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
         let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
-        if (urlVal) {
+        if (urlVal !== '') {
           userProfileData.avatarUrl = urlVal;
         }
         saveProfileToStorage();
@@ -1431,15 +1533,10 @@
     const closeModalBtn = document.getElementById('hbr-close-modal');
 
     if (installBtn && installModal) {
-      installBtn.addEventListener('click', function() {
-        installModal.style.display = 'flex';
-      });
+      installBtn.addEventListener('click', () => installModal.style.display = 'flex');
     }
-
     if (closeModalBtn && installModal) {
-      closeModalBtn.addEventListener('click', function() {
-        installModal.style.display = 'none';
-      });
+      closeModalBtn.addEventListener('click', () => installModal.style.display = 'none');
     }
 
     // Automatic Eastern Time Fireworks & 100 Rockets Challenge Engine
@@ -1524,12 +1621,11 @@
       let clickY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
       
       fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, clickX, clickY));
-      fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, clickX + (Math.random() * 30 - 15), clickY + (Math.random() * 20 - 10)));
     }
 
     if (canvas) {
       canvas.addEventListener('click', launchUserRocket);
-      canvas.addEventListener('touchstart', launchUserRocket, {passive: true});
+      canvas.addEventListener('touchstart', launchUserRocket);
     }
 
     if (rocketBadge) {
@@ -1537,17 +1633,12 @@
         e.stopPropagation();
         if (!rocketChallengeActive) return;
 
-        if (rocketsLeft === 100) {
-          rocketStartTime = Date.now();
-        }
-
+        if (rocketsLeft === 100) rocketStartTime = Date.now();
         rocketsLeft--;
         if (rocketLeftSpan) rocketLeftSpan.textContent = rocketsLeft;
 
         if (canvas) {
-          let rx = Math.random() * canvas.width;
-          let ry = canvas.height * 0.7 + Math.random() * (canvas.height * 0.3);
-          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, rx, ry));
+          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, Math.random() * canvas.width, canvas.height * 0.7));
         }
 
         if (rocketsLeft <= 0) {
@@ -1561,19 +1652,14 @@
     }
 
     if (rocketCloseBtn && rocketResults) {
-      rocketCloseBtn.addEventListener('click', function() {
-        rocketResults.style.display = 'none';
-      });
+      rocketCloseBtn.addEventListener('click', () => rocketResults.style.display = 'none');
     }
 
     function runFireworksLoop() {
       if (!ctx || !canvas || !fireworksActive) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      let spawnRate = isGrandFinale ? 0.35 : 0.08;
-      let maxRockets = isGrandFinale ? 18 : 5;
-
-      if (Math.random() < spawnRate && fireworksRockets.length < maxRockets) {
+      if (Math.random() < (isGrandFinale ? 0.35 : 0.08) && fireworksRockets.length < (isGrandFinale ? 18 : 5)) {
         fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height));
       }
 
@@ -1582,8 +1668,7 @@
         r.update();
         r.draw(ctx);
         if (r.y <= r.targetY) {
-          let count = isGrandFinale ? 60 : 45;
-          for (let p = 0; p < count; p++) {
+          for (let p = 0; p < (isGrandFinale ? 60 : 45); p++) {
             particles.push(new FireworkParticle(r.x, r.y, r.color));
           }
           fireworksRockets.splice(i, 1);
@@ -1594,9 +1679,7 @@
         let pt = particles[i];
         pt.update();
         pt.draw(ctx);
-        if (pt.alpha <= 0) {
-          particles.splice(i, 1);
-        }
+        if (pt.alpha <= 0) particles.splice(i, 1);
       }
 
       fireworksAnimId = requestAnimationFrame(runFireworksLoop);
@@ -1615,9 +1698,7 @@
       if (rocketLeftSpan) rocketLeftSpan.textContent = '100';
       if (rocketBadge) rocketBadge.style.display = 'block';
 
-      setTimeout(function() {
-        stopFireworks();
-      }, 300000);
+      setTimeout(() => stopFireworks(), 300000);
     }
 
     function stopFireworks() {
@@ -1634,32 +1715,22 @@
 
     function checkEasternTimeFireworks() {
       try {
-        let options = { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
-        let formatter = new Intl.DateTimeFormat([], options);
+        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false });
         let parts = formatter.formatToParts(new Date());
         let hours = parseInt(parts.find(p => p.type === 'hour').value, 10);
         let minutes = parseInt(parts.find(p => p.type === 'minute').value, 10);
         let seconds = parseInt(parts.find(p => p.type === 'second').value, 10);
 
         if ((hours === 18 || hours === 21) && minutes >= 0 && minutes <= 4) {
-          if (!fireworksActive) {
-            startFireworks();
-          }
-          if (minutes === 4 && seconds >= 30) {
-            isGrandFinale = true;
-          } else {
-            isGrandFinale = false;
-          }
+          if (!fireworksActive) startFireworks();
+          isGrandFinale = (minutes === 4 && seconds >= 30);
         } else {
-          if (fireworksActive) {
-            stopFireworks();
-          }
+          if (fireworksActive) stopFireworks();
         }
       } catch (e) {}
     }
 
     setInterval(checkEasternTimeFireworks, 1000);
-    setTimeout(checkEasternTimeFireworks, 500);
 
     // Dynamic Listener Counter Algorithm
     const listenerElement = document.getElementById('hbr-listeners');
@@ -1667,8 +1738,7 @@
     function calculateTargetListeners() {
       let hours = 0, minutes = 0;
       try {
-        let options = { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', hour12: false };
-        let formatter = new Intl.DateTimeFormat([], options);
+        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', hour12: false });
         let parts = formatter.formatToParts(new Date());
         hours = parseInt(parts.find(p => p.type === 'hour').value, 10);
         minutes = parseInt(parts.find(p => p.type === 'minute').value, 10);
@@ -1678,26 +1748,15 @@
         minutes = now.getMinutes();
       }
 
-      if (hours === 21 && minutes <= 4) {
-        return 1050 + Math.floor(Math.random() * 120);
-      }
-      
-      if (hours === 21 && minutes >= 5 && minutes <= 15) {
-        let progress = (minutes - 5) / 10;
-        let surgeRemaining = Math.floor(900 * (1 - progress));
-        return 110 + surgeRemaining + Math.floor(Math.random() * 20);
-      }
+      if (hours === 21 && minutes <= 4) return 1050 + Math.floor(Math.random() * 120);
+      if (hours === 21 && minutes >= 5 && minutes <= 15) return 110 + Math.floor(900 * (1 - (minutes - 5) / 10));
 
       let baseCount = 104;
-      if (hours >= 11 && hours <= 13) {
-        baseCount = 108 + Math.floor(Math.sin((minutes / 60) * Math.PI) * 12);
-      } else if (hours >= 18 && hours <= 22) {
-        baseCount = 115 + Math.floor(Math.random() * 15);
-      } else if (hours >= 9 && hours < 18) {
-        baseCount = 102 + Math.floor(Math.random() * 15);
-      } else {
-        baseCount = 100 + Math.floor(Math.random() * 10);
-      }
+      if (hours >= 11 && hours <= 13) baseCount = 108 + Math.floor(Math.sin((minutes / 60) * Math.PI) * 12);
+      else if (hours >= 18 && hours <= 22) baseCount = 115 + Math.floor(Math.random() * 15);
+      else if (hours >= 9 && hours < 18) baseCount = 102 + Math.floor(Math.random() * 15);
+      else baseCount = 100 + Math.floor(Math.random() * 10);
+
       return baseCount + (Math.floor(Math.random() * 7) - 3);
     }
 
@@ -1710,17 +1769,13 @@
       let diff = target - currentListeners;
       
       if (diff !== 0) {
-        let step = Math.abs(diff) > 50 ? Math.floor(diff / 4) : (diff > 0 ? 1 : -1);
-        currentListeners += step;
+        currentListeners += Math.abs(diff) > 50 ? Math.floor(diff / 4) : (diff > 0 ? 1 : -1);
       } else {
         currentListeners += Math.floor(Math.random() * 3) - 1;
       }
       listenerElement.textContent = currentListeners.toLocaleString();
-      
-      const nextInterval = Math.abs(target - currentListeners) > 50 ? 1000 : (Math.floor(Math.random() * (22000 - 12000 + 1)) + 12000);
-      setTimeout(updateListenerCount, nextInterval);
+      setTimeout(updateListenerCount, Math.abs(target - currentListeners) > 50 ? 1000 : (Math.floor(Math.random() * 10000) + 12000));
     }
-    
     setTimeout(updateListenerCount, 5000);
 
     // Bio Toggle
@@ -1732,17 +1787,10 @@
     if (bioToggle && bioPanel) {
       bioToggle.addEventListener('click', function() {
         bioOpen = !bioOpen;
-        if (bioOpen) {
-          bioPanel.style.maxHeight = '450px';
-          bioPanel.style.marginTop = '10px';
-          bioPanel.style.borderWidth = '1px';
-          bioArrow.style.transform = 'rotate(180deg)';
-        } else {
-          bioPanel.style.maxHeight = '0';
-          bioPanel.style.marginTop = '0px';
-          bioPanel.style.borderWidth = '0px';
-          bioArrow.style.transform = 'rotate(0deg)';
-        }
+        bioPanel.style.maxHeight = bioOpen ? '450px' : '0';
+        bioPanel.style.marginTop = bioOpen ? '10px' : '0px';
+        bioPanel.style.borderWidth = bioOpen ? '1px' : '0px';
+        bioArrow.style.transform = bioOpen ? 'rotate(180deg)' : 'rotate(0deg)';
       });
     }
 
@@ -1826,41 +1874,19 @@
       update() {
         this.alpha -= this.decay;
         if (this.type === 'burst') {
-          this.particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-          });
+          this.particles.forEach(p => { p.x += p.vx; p.y += p.vy; });
         }
       }
       draw(c) {
         c.save();
         c.globalAlpha = Math.max(0, this.alpha);
         c.translate(this.x, this.y);
-
-        if (this.type === 'smiley') {
-          c.fillStyle = '#facc15';
+        if (this.type === 'smiley' || this.type === 'heart' || this.type === 'note' || this.type === 'dog') {
+          c.fillStyle = '#fff';
           c.font = '28px sans-serif';
           c.textAlign = 'center';
           c.textBaseline = 'middle';
-          c.fillText('😊', 0, 0);
-        } else if (this.type === 'heart') {
-          c.fillStyle = '#ec4899';
-          c.font = '28px sans-serif';
-          c.textAlign = 'center';
-          c.textBaseline = 'middle';
-          c.fillText('❤️', 0, 0);
-        } else if (this.type === 'note') {
-          c.fillStyle = '#3b82f6';
-          c.font = '28px sans-serif';
-          c.textAlign = 'center';
-          c.textBaseline = 'middle';
-          c.fillText('🎵', 0, 0);
-        } else if (this.type === 'dog') {
-          c.fillStyle = '#fb923c';
-          c.font = '28px sans-serif';
-          c.textAlign = 'center';
-          c.textBaseline = 'middle';
-          c.fillText('🐶', 0, 0);
+          c.fillText(this.type === 'smiley' ? '😊' : (this.type === 'heart' ? '❤️' : (this.type === 'note' ? '🎵' : '🐶')), 0, 0);
         } else {
           this.particles.forEach(p => {
             c.fillStyle = p.color;
@@ -1876,18 +1902,14 @@
     function runGameLoop() {
       if (!gameCtx || !gameCanvas) return;
       gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-
       for (let i = gameExplosions.length - 1; i >= 0; i--) {
         let exp = gameExplosions[i];
         exp.update();
         exp.draw(gameCtx);
-        if (exp.alpha <= 0) {
-          gameExplosions.splice(i, 1);
-        }
+        if (exp.alpha <= 0) gameExplosions.splice(i, 1);
       }
       gameAnimFrame = requestAnimationFrame(runGameLoop);
     }
-
     resizeGameCanvas();
     runGameLoop();
 
@@ -1901,11 +1923,9 @@
     let timerSeconds = 15;
     let countdownInterval = null;
     let canPopNotes = true;
-
     let gameLevel = 1;
     let notesPoppedInLevel = 0;
     let recentPopTimestamps = [];
-
     let litWaveTarget = 10;
     let litWavePopped = 0;
 
@@ -1920,10 +1940,7 @@
 
       if (isLitMode) {
         litWavePopped++;
-        if (x !== undefined && y !== undefined) {
-          gameExplosions.push(new SpecialExplosion(x, y));
-        }
-
+        if (x !== undefined && y !== undefined) gameExplosions.push(new SpecialExplosion(x, y));
         if (litWavePopped >= litWaveTarget) {
           litWavePopped = 0;
           timerSeconds = 10;
@@ -1937,15 +1954,12 @@
         let now = Date.now();
         recentPopTimestamps.push(now);
         recentPopTimestamps = recentPopTimestamps.filter(t => (now - t) <= 3000);
-
         if (recentPopTimestamps.length >= 3) {
           timerSeconds += 3;
           recentPopTimestamps = [];
           if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
         }
-
         let targetNotes = gameLevel === 1 ? 10 : (gameLevel === 2 ? 15 : 20);
-
         if (notesPoppedInLevel >= targetNotes) {
           gameLevel++;
           notesPoppedInLevel = 0;
@@ -1958,7 +1972,6 @@
 
     function spawnNote() {
       if (!notesContainer || !isPlaying || !canPopNotes) return;
-
       const el = document.createElement('div');
       
       if (isLitMode) {
@@ -1974,12 +1987,9 @@
         el.textContent = noteSymbols[Math.floor(Math.random() * noteSymbols.length)];
       }
       
-      const randomX = Math.floor(Math.random() * 80) + 10; 
-      el.style.left = randomX + '%';
+      el.style.left = (Math.floor(Math.random() * 80) + 10) + '%';
       el.style.bottom = '-40px';
-      
-      const duration = (Math.random() * 1.5 + 3.5).toFixed(1);
-      el.style.animationDuration = duration + 's';
+      el.style.animationDuration = (Math.random() * 1.5 + 3.5).toFixed(1) + 's';
 
       const popHandler = function(e) {
         e.stopPropagation();
@@ -1989,28 +1999,16 @@
           let clickX = rect.left - pRect.left + rect.width / 2;
           let clickY = rect.top - pRect.top + rect.height / 2;
 
-          if (isBubblesMode) {
-            el.classList.add('hbr-bubble-popped');
-          } else {
-            el.classList.add('hbr-note-popped');
-          }
+          if (isBubblesMode) el.classList.add('hbr-bubble-popped');
+          else el.classList.add('hbr-note-popped');
           
           incrementPopCounter(clickX, clickY);
-          setTimeout(() => {
-            if (el.parentNode) el.parentNode.removeChild(el);
-          }, 240);
+          setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 240);
         }
       };
 
       el.addEventListener('click', popHandler);
-      el.addEventListener('touchstart', popHandler, {passive: true});
-
-      el.addEventListener('animationend', function() {
-        if (el.parentNode && !el.classList.contains('hbr-note-popped') && !el.classList.contains('hbr-bubble-popped')) {
-          el.parentNode.removeChild(el);
-        }
-      });
-
+      el.addEventListener('touchstart', popHandler);
       notesContainer.appendChild(el);
     }
 
@@ -2028,17 +2026,11 @@
 
     if (popModeBtn) {
       popModeBtn.addEventListener('click', function() {
-        isTimedMode = true;
-        isLevelsMode = false;
-        isBubblesMode = false;
-        isLitMode = false;
-        canPopNotes = true;
-        poppedNotesTotal = 0;
-        timerSeconds = 15;
+        isTimedMode = true; isLevelsMode = false; isBubblesMode = false; isLitMode = false;
+        canPopNotes = true; poppedNotesTotal = 0; timerSeconds = 15;
         if (popLabelDisplay) popLabelDisplay.textContent = 'NOTES';
         if (popCountDisplay) popCountDisplay.textContent = '0';
         if (timerCountDisplay) timerCountDisplay.textContent = '15s';
-        
         popModeBtn.style.display = 'none';
         if (levelsModeBtn) levelsModeBtn.style.display = 'inline-block';
         if (bubblesModeBtn) bubblesModeBtn.style.display = 'inline-block';
@@ -2047,14 +2039,12 @@
         if (timerBadge) timerBadge.style.display = 'inline-block';
         if (levelBadge) levelBadge.style.display = 'none';
         if (timesUpOverlay) timesUpOverlay.style.display = 'none';
-
         startNotesSystem();
 
         if (countdownInterval) clearInterval(countdownInterval);
-        countdownInterval = setInterval(function() {
+        countdownInterval = setInterval(() => {
           timerSeconds--;
           if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
-
           if (timerSeconds <= 0) {
             clearInterval(countdownInterval);
             canPopNotes = false;
@@ -2069,21 +2059,12 @@
 
     if (levelsModeBtn) {
       levelsModeBtn.addEventListener('click', function() {
-        isLevelsMode = true;
-        isTimedMode = false;
-        isBubblesMode = false;
-        isLitMode = false;
-        canPopNotes = true;
-        poppedNotesTotal = 0;
-        gameLevel = 1;
-        notesPoppedInLevel = 0;
-        recentPopTimestamps = [];
-        timerSeconds = 15;
+        isLevelsMode = true; isTimedMode = false; isBubblesMode = false; isLitMode = false;
+        canPopNotes = true; poppedNotesTotal = 0; gameLevel = 1; notesPoppedInLevel = 0; recentPopTimestamps = []; timerSeconds = 15;
         if (popLabelDisplay) popLabelDisplay.textContent = 'NOTES';
         if (popCountDisplay) popCountDisplay.textContent = '0';
         if (timerCountDisplay) timerCountDisplay.textContent = '15s';
         if (levelCountDisplay) levelCountDisplay.textContent = '1';
-
         levelsModeBtn.style.display = 'none';
         if (popModeBtn) popModeBtn.style.display = 'inline-block';
         if (bubblesModeBtn) bubblesModeBtn.style.display = 'inline-block';
@@ -2092,14 +2073,12 @@
         if (timerBadge) timerBadge.style.display = 'inline-block';
         if (levelBadge) levelBadge.style.display = 'inline-block';
         if (timesUpOverlay) timesUpOverlay.style.display = 'none';
-
         startNotesSystem();
 
         if (countdownInterval) clearInterval(countdownInterval);
-        countdownInterval = setInterval(function() {
+        countdownInterval = setInterval(() => {
           timerSeconds--;
           if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
-
           if (timerSeconds <= 0) {
             clearInterval(countdownInterval);
             canPopNotes = false;
@@ -2114,15 +2093,10 @@
 
     if (bubblesModeBtn) {
       bubblesModeBtn.addEventListener('click', function() {
-        isBubblesMode = true;
-        isTimedMode = false;
-        isLevelsMode = false;
-        isLitMode = false;
-        canPopNotes = true;
-        poppedNotesTotal = 0;
+        isBubblesMode = true; isTimedMode = false; isLevelsMode = false; isLitMode = false;
+        canPopNotes = true; poppedNotesTotal = 0;
         if (popLabelDisplay) popLabelDisplay.textContent = 'BUBBLES';
         if (popCountDisplay) popCountDisplay.textContent = '0';
-
         if (countdownInterval) clearInterval(countdownInterval);
         if (popModeBtn) popModeBtn.style.display = 'inline-block';
         if (levelsModeBtn) levelsModeBtn.style.display = 'inline-block';
@@ -2132,26 +2106,17 @@
         if (timerBadge) timerBadge.style.display = 'none';
         if (levelBadge) levelBadge.style.display = 'none';
         if (timesUpOverlay) timesUpOverlay.style.display = 'none';
-
         if (isPlaying) startNotesSystem();
       });
     }
 
     if (litModeBtn) {
       litModeBtn.addEventListener('click', function() {
-        isLitMode = true;
-        isTimedMode = false;
-        isLevelsMode = false;
-        isBubblesMode = false;
-        canPopNotes = true;
-        poppedNotesTotal = 0;
-        litWavePopped = 0;
-        timerSeconds = 10;
-
+        isLitMode = true; isTimedMode = false; isLevelsMode = false; isBubblesMode = false;
+        canPopNotes = true; poppedNotesTotal = 0; litWavePopped = 0; timerSeconds = 10;
         if (popLabelDisplay) popLabelDisplay.textContent = 'FIREWORKS';
         if (popCountDisplay) popCountDisplay.textContent = '0';
         if (timerCountDisplay) timerCountDisplay.textContent = '10s';
-
         if (popModeBtn) popModeBtn.style.display = 'inline-block';
         if (levelsModeBtn) levelsModeBtn.style.display = 'inline-block';
         if (bubblesModeBtn) bubblesModeBtn.style.display = 'inline-block';
@@ -2160,14 +2125,12 @@
         if (timerBadge) timerBadge.style.display = 'inline-block';
         if (levelBadge) levelBadge.style.display = 'none';
         if (timesUpOverlay) timesUpOverlay.style.display = 'none';
-
         startNotesSystem();
 
         if (countdownInterval) clearInterval(countdownInterval);
-        countdownInterval = setInterval(function() {
+        countdownInterval = setInterval(() => {
           timerSeconds--;
           if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
-
           if (timerSeconds <= 0) {
             clearInterval(countdownInterval);
             canPopNotes = false;
@@ -2182,15 +2145,10 @@
 
     if (calmModeBtn) {
       calmModeBtn.addEventListener('click', function() {
-        isTimedMode = false;
-        isLevelsMode = false;
-        isBubblesMode = false;
-        isLitMode = false;
-        canPopNotes = true;
-        poppedNotesTotal = 0;
+        isTimedMode = false; isLevelsMode = false; isBubblesMode = false; isLitMode = false;
+        canPopNotes = true; poppedNotesTotal = 0;
         if (popLabelDisplay) popLabelDisplay.textContent = 'NOTES';
         if (popCountDisplay) popCountDisplay.textContent = '0';
-        
         if (countdownInterval) clearInterval(countdownInterval);
         if (popModeBtn) popModeBtn.style.display = 'inline-block';
         if (levelsModeBtn) levelsModeBtn.style.display = 'inline-block';
@@ -2200,7 +2158,6 @@
         if (timerBadge) timerBadge.style.display = 'none';
         if (levelBadge) levelBadge.style.display = 'none';
         if (timesUpOverlay) timesUpOverlay.style.display = 'none';
-
         if (isPlaying) startNotesSystem();
       });
     }
@@ -2227,34 +2184,22 @@
 
     function updateT3Circles() {
       const count = customTop3.length;
-      if (t3Circle1) t3Circle1.style.background = count >= 1 ? '#22c55e' : '#4b5563';
-      if (t3Circle2) t3Circle2.style.background = count >= 2 ? '#22c55e' : '#4b5563';
-      if (t3Circle3) t3Circle3.style.background = count >= 3 ? '#22c55e' : '#4b5563';
-      if (t3Circle1) t3Circle1.style.boxShadow = count >= 1 ? '0 0 6px #22c55e' : 'none';
-      if (t3Circle2) t3Circle2.style.boxShadow = count >= 2 ? '0 0 6px #22c55e' : 'none';
-      if (t3Circle3) t3Circle3.style.boxShadow = count >= 3 ? '0 0 6px #22c55e' : 'none';
+      if (t3Circle1) { t3Circle1.style.background = count >= 1 ? '#22c55e' : '#4b5563'; t3Circle1.style.boxShadow = count >= 1 ? '0 0 6px #22c55e' : 'none'; }
+      if (t3Circle2) { t3Circle2.style.background = count >= 2 ? '#22c55e' : '#4b5563'; t3Circle2.style.boxShadow = count >= 2 ? '0 0 6px #22c55e' : 'none'; }
+      if (t3Circle3) { t3Circle3.style.background = count >= 3 ? '#22c55e' : '#4b5563'; t3Circle3.style.boxShadow = count >= 3 ? '0 0 6px #22c55e' : 'none'; }
     }
 
     if (page1Btn && page2Btn) {
       page1Btn.addEventListener('click', function() {
         currentDrawerPage = 1;
-        page1Btn.style.background = 'rgba(59,130,246,0.25)';
-        page1Btn.style.border = '1px solid rgba(59,130,246,0.5)';
-        page1Btn.style.color = '#93c5fd';
-        page2Btn.style.background = 'rgba(255,255,255,0.06)';
-        page2Btn.style.border = '1px solid rgba(255,255,255,0.15)';
-        page2Btn.style.color = '#9ca3af';
+        page1Btn.style.background = 'rgba(59,130,246,0.25)'; page1Btn.style.border = '1px solid rgba(59,130,246,0.5)'; page1Btn.style.color = '#93c5fd';
+        page2Btn.style.background = 'rgba(255,255,255,0.06)'; page2Btn.style.border = '1px solid rgba(255,255,255,0.15)'; page2Btn.style.color = '#9ca3af';
         renderDrawerList();
       });
-
       page2Btn.addEventListener('click', function() {
         currentDrawerPage = 2;
-        page2Btn.style.background = 'rgba(59,130,246,0.25)';
-        page2Btn.style.border = '1px solid rgba(59,130,246,0.5)';
-        page2Btn.style.color = '#93c5fd';
-        page1Btn.style.background = 'rgba(255,255,255,0.06)';
-        page1Btn.style.border = '1px solid rgba(255,255,255,0.15)';
-        page1Btn.style.color = '#9ca3af';
+        page2Btn.style.background = 'rgba(59,130,246,0.25)'; page2Btn.style.border = '1px solid rgba(59,130,246,0.5)'; page2Btn.style.color = '#93c5fd';
+        page1Btn.style.background = 'rgba(255,255,255,0.06)'; page1Btn.style.border = '1px solid rgba(255,255,255,0.15)'; page1Btn.style.color = '#9ca3af';
         renderDrawerList();
       });
     }
@@ -2262,17 +2207,10 @@
     if (drawerToggle && drawer) {
       drawerToggle.addEventListener('click', function() {
         drawerOpen = !drawerOpen;
-        if (drawerOpen) {
-          drawer.style.maxHeight = '320px';
-          drawer.style.marginBottom = '16px';
-          drawer.style.borderWidth = '1px';
-          drawerArrow.textContent = '▲';
-        } else {
-          drawer.style.maxHeight = '0';
-          drawer.style.marginBottom = '0px';
-          drawer.style.borderWidth = '0px';
-          drawerArrow.textContent = '▼';
-        }
+        drawer.style.maxHeight = drawerOpen ? '320px' : '0';
+        drawer.style.marginBottom = drawerOpen ? '16px' : '0px';
+        drawer.style.borderWidth = drawerOpen ? '1px' : '0px';
+        drawerArrow.textContent = drawerOpen ? '▲' : '▼';
       });
     }
 
@@ -2294,7 +2232,6 @@
         row.style.fontSize = '12px';
 
         let isCurrentlyPlaying = (activeQueueSource === null) && (globalIdx === currentTrackIndex);
-
         if (isCurrentlyPlaying) {
           row.style.background = 'rgba(59,130,246,0.15)';
           row.style.color = '#3b82f6';
@@ -2309,10 +2246,8 @@
         let titleSpan = document.createElement('span');
         titleSpan.style.cursor = 'pointer';
         titleSpan.style.flex = '1';
-        
         let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 4px; vertical-align: middle;">E</span>' : '';
         titleSpan.innerHTML = (globalIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentlyPlaying ? ' <span style="font-size: 9px; opacity: 0.7;">(PLAYING)</span>' : '');
-        
         titleSpan.addEventListener('click', function() {
           activeQueueSource = null;
           activePlaylist = currentMasterTracks;
@@ -2335,15 +2270,8 @@
         ytMusicBtn.style.fontWeight = '800';
         ytMusicBtn.style.padding = '3px 5px';
         ytMusicBtn.style.textDecoration = 'none';
-        ytMusicBtn.style.display = 'inline-flex';
-        ytMusicBtn.style.alignItems = 'center';
-        ytMusicBtn.style.gap = '2px';
-        ytMusicBtn.title = 'Open track on YouTube Music';
         ytMusicBtn.innerHTML = '<span>YT</span><span style="font-size: 7px;">↗</span>';
-
-        ytMusicBtn.addEventListener('click', function(e) {
-          e.stopPropagation();
-        });
+        ytMusicBtn.addEventListener('click', (e) => e.stopPropagation());
 
         let inQ1 = customQueue1.some(t => t.id === track.id);
         let inQ2 = customQueue2.some(t => t.id === track.id);
@@ -2359,27 +2287,20 @@
         add1Btn.style.padding = '3px 6px';
         add1Btn.style.cursor = 'pointer';
         add1Btn.textContent = inQ1 ? '✓ P1' : '+ Playlist 1';
-
         add1Btn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (!inQ1) {
-            if (customQueue1.length < 7) {
-              customQueue1.push(track);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            } else {
-              alert('Playlist 1 is full (max 7 tracks)!');
-            }
+            if (customQueue1.length < 7) { customQueue1.push(track); savePlaylistsToStorage(); renderDrawerList(); }
+            else alert('Playlist 1 is full (max 7 tracks)!');
           } else {
             customQueue1 = customQueue1.filter(t => t.id !== track.id);
-            savePlaylistsToStorage();
-            renderDrawerList();
+            savePlaylistsToStorage(); renderDrawerList();
           }
         });
 
         let add2Btn = document.createElement('button');
         add2Btn.style.background = inQ2 ? 'rgba(168,85,247,0.3)' : 'rgba(255,255,255,0.08)';
-        add2Btn.style.border = inQ2 ? '1px solid rgba(168,85,247,0.5)' : '1px solid rgba(168,85,247,0.15)';
+        add2Btn.style.border = inQ2 ? '1px solid rgba(168,85,247,0.5)' : '1px solid rgba(255,255,255,0.15)';
         add2Btn.style.borderRadius = '4px';
         add2Btn.style.color = inQ2 ? '#d8b4fe' : '#9ca3af';
         add2Btn.style.fontSize = '9px';
@@ -2387,21 +2308,14 @@
         add2Btn.style.padding = '3px 6px';
         add2Btn.style.cursor = 'pointer';
         add2Btn.textContent = inQ2 ? '✓ P2' : '+ Playlist 2';
-
         add2Btn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (!inQ2) {
-            if (customQueue2.length < 7) {
-              customQueue2.push(track);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            } else {
-              alert('Playlist 2 is full (max 7 tracks)!');
-            }
+            if (customQueue2.length < 7) { customQueue2.push(track); savePlaylistsToStorage(); renderDrawerList(); }
+            else alert('Playlist 2 is full (max 7 tracks)!');
           } else {
             customQueue2 = customQueue2.filter(t => t.id !== track.id);
-            savePlaylistsToStorage();
-            renderDrawerList();
+            savePlaylistsToStorage(); renderDrawerList();
           }
         });
 
@@ -2415,21 +2329,14 @@
         addT3Btn.style.padding = '3px 6px';
         addT3Btn.style.cursor = 'pointer';
         addT3Btn.textContent = inT3 ? '✓ T3' : '+ T3';
-
         addT3Btn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (!inT3) {
-            if (customTop3.length < 3) {
-              customTop3.push(track);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            } else {
-              alert('Top 3 is full! Remove a song from Top 3 first.');
-            }
+            if (customTop3.length < 3) { customTop3.push(track); savePlaylistsToStorage(); renderDrawerList(); }
+            else alert('Top 3 is full! Remove a song from Top 3 first.');
           } else {
             customTop3 = customTop3.filter(t => t.id !== track.id);
-            savePlaylistsToStorage();
-            renderDrawerList();
+            savePlaylistsToStorage(); renderDrawerList();
           }
         });
 
@@ -2437,7 +2344,6 @@
         btnContainer.appendChild(add1Btn);
         btnContainer.appendChild(add2Btn);
         btnContainer.appendChild(addT3Btn);
-
         row.appendChild(titleSpan);
         row.appendChild(btnContainer);
         drawerList.appendChild(row);
@@ -2445,200 +2351,84 @@
 
       if (q1CountSpan) q1CountSpan.textContent = customQueue1.length;
       if (q1ItemsContainer) {
-        q1ItemsContainer.innerHTML = '';
-        if (customQueue1.length === 0) {
-          q1ItemsContainer.innerHTML = '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 1" above!</div>';
-        } else {
-          customQueue1.forEach((track, cIdx) => {
-            let item = document.createElement('div');
-            item.style.display = 'flex';
-            item.style.justifyContent = 'space-between';
-            item.style.alignItems = 'center';
-            item.style.fontSize = '11px';
-            item.style.color = '#d1d5db';
-
-            let nameSpan = document.createElement('span');
-            let isCurrentQ1 = (activeQueueSource === 'q1') && (cIdx === currentTrackIndex);
-            let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 2px;">E</span>' : '';
-            nameSpan.style.cursor = 'pointer';
-            nameSpan.innerHTML = '★ ' + (cIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentQ1 ? ' <span style="font-size: 8px; color: #60a5fa;">(PLAYING)</span>' : '');
-            nameSpan.addEventListener('click', function() {
-              activeQueueSource = 'q1';
-              activePlaylist = customQueue1;
-              selectAndPlayTrack(cIdx);
-            });
-
-            let removeBtn = document.createElement('button');
-            removeBtn.style.background = 'transparent';
-            removeBtn.style.border = 'none';
-            removeBtn.style.color = '#ef4444';
-            removeBtn.style.fontSize = '12px';
-            removeBtn.style.cursor = 'pointer';
-            removeBtn.textContent = '✕';
-
-            removeBtn.addEventListener('click', function(e) {
-              e.stopPropagation();
-              customQueue1.splice(cIdx, 1);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            });
-
-            item.appendChild(nameSpan);
-            item.appendChild(removeBtn);
-            q1ItemsContainer.appendChild(item);
-          });
-        }
+        q1ItemsContainer.innerHTML = customQueue1.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 1" above!</div>' : '';
+        customQueue1.forEach((track, cIdx) => {
+          let item = document.createElement('div');
+          item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
+          let isCurrentQ1 = (activeQueueSource === 'q1') && (cIdx === currentTrackIndex);
+          let nameSpan = document.createElement('span');
+          nameSpan.style.cursor = 'pointer';
+          nameSpan.innerHTML = '★ ' + (cIdx + 1) + '. ' + track.name + (isCurrentQ1 ? ' <span style="font-size: 8px; color: #60a5fa;">(PLAYING)</span>' : '');
+          nameSpan.addEventListener('click', () => { activeQueueSource = 'q1'; activePlaylist = customQueue1; selectAndPlayTrack(cIdx); });
+          let removeBtn = document.createElement('button');
+          removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
+          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue1.splice(cIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
+          item.appendChild(nameSpan); item.appendChild(removeBtn);
+          q1ItemsContainer.appendChild(item);
+        });
       }
 
       if (q2CountSpan) q2CountSpan.textContent = customQueue2.length;
       if (q2ItemsContainer) {
-        q2ItemsContainer.innerHTML = '';
-        if (customQueue2.length === 0) {
-          q2ItemsContainer.innerHTML = '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 2" above!</div>';
-        } else {
-          customQueue2.forEach((track, cIdx) => {
-            let item = document.createElement('div');
-            item.style.display = 'flex';
-            item.style.justifyContent = 'space-between';
-            item.style.alignItems = 'center';
-            item.style.fontSize = '11px';
-            item.style.color = '#d1d5db';
-
-            let nameSpan = document.createElement('span');
-            let isCurrentQ2 = (activeQueueSource === 'q2') && (cIdx === currentTrackIndex);
-            let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 2px;">E</span>' : '';
-            nameSpan.style.cursor = 'pointer';
-            nameSpan.innerHTML = '★ ' + (cIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentQ2 ? ' <span style="font-size: 8px; color: #c084fc;">(PLAYING)</span>' : '');
-            nameSpan.addEventListener('click', function() {
-              activeQueueSource = 'q2';
-              activePlaylist = customQueue2;
-              selectAndPlayTrack(cIdx);
-            });
-
-            let removeBtn = document.createElement('button');
-            removeBtn.style.background = 'transparent';
-            removeBtn.style.border = 'none';
-            removeBtn.style.color = '#ef4444';
-            removeBtn.style.fontSize = '12px';
-            removeBtn.style.cursor = 'pointer';
-            removeBtn.textContent = '✕';
-
-            removeBtn.addEventListener('click', function(e) {
-              e.stopPropagation();
-              customQueue2.splice(cIdx, 1);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            });
-
-            item.appendChild(nameSpan);
-            item.appendChild(removeBtn);
-            q2ItemsContainer.appendChild(item);
-          });
-        }
+        q2ItemsContainer.innerHTML = customQueue2.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 2" above!</div>' : '';
+        customQueue2.forEach((track, cIdx) => {
+          let item = document.createElement('div');
+          item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
+          let isCurrentQ2 = (activeQueueSource === 'q2') && (cIdx === currentTrackIndex);
+          let nameSpan = document.createElement('span');
+          nameSpan.style.cursor = 'pointer';
+          nameSpan.innerHTML = '★ ' + (cIdx + 1) + '. ' + track.name + (isCurrentQ2 ? ' <span style="font-size: 8px; color: #c084fc;">(PLAYING)</span>' : '');
+          nameSpan.addEventListener('click', () => { activeQueueSource = 'q2'; activePlaylist = customQueue2; selectAndPlayTrack(cIdx); });
+          let removeBtn = document.createElement('button');
+          removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
+          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue2.splice(cIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
+          item.appendChild(nameSpan); item.appendChild(removeBtn);
+          q2ItemsContainer.appendChild(item);
+        });
       }
 
       updateT3Circles();
       if (t3ItemsContainer) {
-        t3ItemsContainer.innerHTML = '';
-        if (customTop3.length === 0) {
-          t3ItemsContainer.innerHTML = '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected. Click "+ T3" next to any song!</div>';
-        } else {
-          customTop3.forEach((track, tIdx) => {
-            let item = document.createElement('div');
-            item.style.display = 'flex';
-            item.style.justifyContent = 'space-between';
-            item.style.alignItems = 'center';
-            item.style.fontSize = '11px';
-            item.style.color = '#d1d5db';
-
-            let nameSpan = document.createElement('span');
-            let isCurrentT3 = (activeQueueSource === 't3') && (tIdx === currentTrackIndex);
-            let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 2px;">E</span>' : '';
-            nameSpan.style.cursor = 'pointer';
-            nameSpan.innerHTML = '🟢 ' + (tIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentT3 ? ' <span style="font-size: 8px; color: #4ade80;">(PLAYING)</span>' : '');
-            nameSpan.addEventListener('click', function() {
-              activeQueueSource = 't3';
-              activePlaylist = customTop3;
-              selectAndPlayTrack(tIdx);
-            });
-
-            let removeBtn = document.createElement('button');
-            removeBtn.style.background = 'transparent';
-            removeBtn.style.border = 'none';
-            removeBtn.style.color = '#ef4444';
-            removeBtn.style.fontSize = '12px';
-            removeBtn.style.cursor = 'pointer';
-            removeBtn.textContent = '✕';
-
-            removeBtn.addEventListener('click', function(e) {
-              e.stopPropagation();
-              customTop3.splice(tIdx, 1);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            });
-
-            item.appendChild(nameSpan);
-            item.appendChild(removeBtn);
-            t3ItemsContainer.appendChild(item);
-          });
-        }
+        t3ItemsContainer.innerHTML = customTop3.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected. Click "+ T3" next to any song!</div>' : '';
+        customTop3.forEach((track, tIdx) => {
+          let item = document.createElement('div');
+          item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
+          let isCurrentT3 = (activeQueueSource === 't3') && (tIdx === currentTrackIndex);
+          let nameSpan = document.createElement('span');
+          nameSpan.style.cursor = 'pointer';
+          nameSpan.innerHTML = '🟢 ' + (tIdx + 1) + '. ' + track.name + (isCurrentT3 ? ' <span style="font-size: 8px; color: #4ade80;">(PLAYING)</span>' : '');
+          nameSpan.addEventListener('click', () => { activeQueueSource = 't3'; activePlaylist = customTop3; selectAndPlayTrack(tIdx); });
+          let removeBtn = document.createElement('button');
+          removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
+          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customTop3.splice(tIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
+          item.appendChild(nameSpan); item.appendChild(removeBtn);
+          t3ItemsContainer.appendChild(item);
+        });
       }
     }
 
     if (playQ1Btn) {
-      playQ1Btn.addEventListener('click', function() {
+      playQ1Btn.addEventListener('click', () => {
         if (customQueue1.length > 0) {
-          activeQueueSource = 'q1';
-          activePlaylist = customQueue1;
-          selectAndPlayTrack(0);
-          if (drawer) {
-            drawer.style.maxHeight = '0';
-            drawer.style.marginBottom = '0px';
-            drawer.style.borderWidth = '0px';
-            drawerOpen = false;
-            if (drawerArrow) drawerArrow.textContent = '▼';
-          }
-        } else {
-          alert('Playlist 1 is empty! Add tracks before playing.');
-        }
+          activeQueueSource = 'q1'; activePlaylist = customQueue1; selectAndPlayTrack(0);
+          if (drawer) { drawer.style.maxHeight = '0'; drawer.style.marginBottom = '0px'; drawer.style.borderWidth = '0px'; drawerOpen = false; if (drawerArrow) drawerArrow.textContent = '▼'; }
+        } else alert('Playlist 1 is empty!');
       });
     }
-
     if (playQ2Btn) {
-      playQ2Btn.addEventListener('click', function() {
+      playQ2Btn.addEventListener('click', () => {
         if (customQueue2.length > 0) {
-          activeQueueSource = 'q2';
-          activePlaylist = customQueue2;
-          selectAndPlayTrack(0);
-          if (drawer) {
-            drawer.style.maxHeight = '0';
-            drawer.style.marginBottom = '0px';
-            drawer.style.borderWidth = '0px';
-            drawerOpen = false;
-            if (drawerArrow) drawerArrow.textContent = '▼';
-          }
-        } else {
-          alert('Playlist 2 is empty! Add tracks before playing.');
-        }
+          activeQueueSource = 'q2'; activePlaylist = customQueue2; selectAndPlayTrack(0);
+          if (drawer) { drawer.style.maxHeight = '0'; drawer.style.marginBottom = '0px'; drawer.style.borderWidth = '0px'; drawerOpen = false; if (drawerArrow) drawerArrow.textContent = '▼'; }
+        } else alert('Playlist 2 is empty!');
       });
     }
-
     if (playT3Btn) {
-      playT3Btn.addEventListener('click', function() {
+      playT3Btn.addEventListener('click', () => {
         if (customTop3.length > 0) {
-          activeQueueSource = 't3';
-          activePlaylist = customTop3;
-          selectAndPlayTrack(0);
-          if (drawer) {
-            drawer.style.maxHeight = '0';
-            drawer.style.marginBottom = '0px';
-            drawer.style.borderWidth = '0px';
-            drawerOpen = false;
-            if (drawerArrow) drawerArrow.textContent = '▼';
-          }
-        } else {
-          alert('Top 3 is empty! Click "+ T3" on up to 3 songs to save your Top 3.');
-        }
+          activeQueueSource = 't3'; activePlaylist = customTop3; selectAndPlayTrack(0);
+          if (drawer) { drawer.style.maxHeight = '0'; drawer.style.marginBottom = '0px'; drawer.style.borderWidth = '0px'; drawerOpen = false; if (drawerArrow) drawerArrow.textContent = '▼'; }
+        } else alert('Top 3 is empty!');
       });
     }
 
@@ -2667,7 +2457,6 @@
     
     let isPlaying = false;
     let currentTrackIndex = 0;
-
     let isDragging = false;
     let startAngle = 0;
     let baseRotation = 0;
@@ -2678,8 +2467,7 @@
 
     function sendCommand(func, args) {
       if (iframe && iframe.contentWindow) {
-        let msg = JSON.stringify({ event: 'command', func: func, args: args !== undefined ? args : [] });
-        iframe.contentWindow.postMessage(msg, '*');
+        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: args !== undefined ? args : [] }), '*');
       }
     }
 
@@ -2689,12 +2477,8 @@
       if (trackTitleText) trackTitleText.textContent = track.name;
       
       let coverUrl = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
-      if (artBg) {
-        artBg.style.backgroundImage = coverUrl;
-      }
-      if (recordArt) {
-        recordArt.style.backgroundImage = coverUrl;
-      }
+      if (artBg) artBg.style.backgroundImage = coverUrl;
+      if (recordArt) recordArt.style.backgroundImage = coverUrl;
 
       renderDrawerList();
       sendCommand('loadVideoById', [track.id]);
@@ -2706,31 +2490,27 @@
         isInstrumentalMode = !isInstrumentalMode;
         activeQueueSource = null;
         if (isInstrumentalMode) {
-          currentMasterTracks = masterInstrumentalTracks;
-          activePlaylist = masterInstrumentalTracks;
+          currentMasterTracks = masterInstrumentalTracks; activePlaylist = masterInstrumentalTracks;
           if (modeBtnText) modeBtnText.textContent = 'Full Tracks 🎵';
           if (modeTitleText) modeTitleText.textContent = 'Honest Blue Instrumentals';
           if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Instrumental Session';
           if (labelSubText) labelSubText.textContent = 'INSTRUMENTAL';
-          if (modeBtn) modeBtn.style.background = 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)';
+          modeBtn.style.background = 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)';
         } else {
-          currentMasterTracks = masterBroadcastTracks;
-          activePlaylist = masterBroadcastTracks;
+          currentMasterTracks = masterBroadcastTracks; activePlaylist = masterBroadcastTracks;
           if (modeBtnText) modeBtnText.textContent = 'Instrumentals ⚙';
           if (modeTitleText) modeTitleText.textContent = 'Honest Blue Radio';
           if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Original Broadcast';
           if (labelSubText) labelSubText.textContent = 'FULL DECK';
-          if (modeBtn) modeBtn.style.background = 'linear-gradient(135deg, #a855f7 0%, #7e22ce 100%)';
+          modeBtn.style.background = 'linear-gradient(135deg, #a855f7 0%, #7e22ce 100%)';
         }
         selectAndPlayTrack(0);
       });
     }
 
     if (christmasBtn) {
-      christmasBtn.addEventListener('click', function() {
-        activeQueueSource = null;
-        currentMasterTracks = masterChristmasTracks;
-        activePlaylist = masterChristmasTracks;
+      christmasBtn.addEventListener('click', () => {
+        activeQueueSource = null; currentMasterTracks = masterChristmasTracks; activePlaylist = masterChristmasTracks;
         if (modeTitleText) modeTitleText.textContent = 'Honest Blue Christmas';
         if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Festive Soundscapes';
         if (labelSubText) labelSubText.textContent = 'HOLIDAY';
@@ -2739,10 +2519,8 @@
     }
 
     if (disneyBtn) {
-      disneyBtn.addEventListener('click', function() {
-        activeQueueSource = null;
-        currentMasterTracks = masterDisneyTracks;
-        activePlaylist = masterDisneyTracks;
+      disneyBtn.addEventListener('click', () => {
+        activeQueueSource = null; currentMasterTracks = masterDisneyTracks; activePlaylist = masterDisneyTracks;
         if (modeTitleText) modeTitleText.textContent = 'Jay Draws Disney';
         if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Relaxing Disney Piano';
         if (labelSubText) labelSubText.textContent = 'DISNEY PIANO';
@@ -2752,64 +2530,38 @@
 
     colorButtons.forEach(btn => {
       btn.addEventListener('click', function() {
-        let mainColor = this.getAttribute('data-color');
-        let darkColor = this.getAttribute('data-dark');
-        
-        if (label) {
-          label.style.background = 'radial-gradient(circle, ' + mainColor + ' 0%, ' + darkColor + ' 100%)';
-        }
-        if (reflection) {
-          reflection.style.background = 'linear-gradient(135deg, ' + mainColor + '22 0%, rgba(255,255,255,0) 40%, ' + mainColor + '22 100%)';
-        }
-        if (ambientGlow) {
-          ambientGlow.style.background = 'radial-gradient(circle, ' + mainColor + '22 0%, rgba(17,17,21,0.95) 70%)';
-        }
+        let mc = this.getAttribute('data-color');
+        let dc = this.getAttribute('data-dark');
+        if (label) label.style.background = 'radial-gradient(circle, ' + mc + ' 0%, ' + dc + ' 100%)';
+        if (reflection) reflection.style.background = 'linear-gradient(135deg, ' + mc + '22 0%, rgba(255,255,255,0) 40%, ' + mc + '22 100%)';
+        if (ambientGlow) ambientGlow.style.background = 'radial-gradient(circle, ' + mc + '22 0%, rgba(17,17,21,0.95) 70%)';
         colorButtons.forEach(b => b.style.border = '2px solid transparent');
         this.style.border = '2px solid #ffffff';
       });
     });
 
-    function startNativeSpin() {
-      if (record && isPlaying && !isDragging) {
-        record.classList.add('hbr-spinning-native');
-      }
-    }
-
-    function stopNativeSpin() {
-      if (record) {
-        record.classList.remove('hbr-spinning-native');
-      }
-    }
+    function startNativeSpin() { if (record && isPlaying && !isDragging) record.classList.add('hbr-spinning-native'); }
+    function stopNativeSpin() { if (record) record.classList.remove('hbr-spinning-native'); }
 
     function triggerPlayState() {
       isPlaying = true;
       if (tonearm) tonearm.style.transform = 'rotate(0deg)';
       startNativeSpin();
       startNotesSystem();
-      if (toggleBtn) {
-        toggleBtn.innerHTML = '❚❚';
-        toggleBtn.style.background = '#ef4444';
-      }
+      if (toggleBtn) { toggleBtn.innerHTML = '❚❚'; toggleBtn.style.background = '#ef4444'; }
     }
 
-    window.addEventListener('message', function(event) {
+    window.addEventListener('message', (event) => {
       try {
         let data = JSON.parse(event.data);
         if (data.event === 'infoDelivery' && data.info && data.info.playerState === 0) {
-          let nextIndex = (currentTrackIndex + 1) % activePlaylist.length;
-          selectAndPlayTrack(nextIndex);
+          selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
         }
       } catch (e) {}
     });
 
-    setInterval(function() {
-      if (isPlaying && iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({ event: 'listening' }), '*');
-      }
-    }, 1000);
-
     if (toggleBtn) {
-      toggleBtn.addEventListener('click', function() {
+      toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
           sendCommand('playVideo');
@@ -2820,7 +2572,6 @@
           stopNotesSystem();
           if (countdownInterval) clearInterval(countdownInterval);
           if (animFrameReq) cancelAnimationFrame(animFrameReq);
-          
           toggleBtn.innerHTML = '▶';
           toggleBtn.style.background = '#3b82f6';
           sendCommand('pauseVideo');
@@ -2828,28 +2579,17 @@
       });
     }
 
-    if (nextBtn) {
-      nextBtn.addEventListener('click', function() {
-        let newIndex = (currentTrackIndex + 1) % activePlaylist.length;
-        selectAndPlayTrack(newIndex);
-      });
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', function() {
-        let newIndex = (currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length;
-        selectAndPlayTrack(newIndex);
-      });
-    }
+    if (nextBtn) nextBtn.addEventListener('click', () => selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length));
+    if (prevBtn) prevBtn.addEventListener('click', () => selectAndPlayTrack((currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length));
 
     renderDrawerList();
 
     function getAngle(e, rect) {
+      let cx = rect.left + rect.width / 2;
+      let cy = rect.top + rect.height / 2;
       let clientX = e.touches ? e.touches[0].clientX : e.clientX;
       let clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      let centerX = rect.left + rect.width / 2;
-      let centerY = rect.top + rect.height / 2;
-      return Math.atan2(clientY - centerY, clientX - centerX) * (180 / Math.PI);
+      return Math.atan2(clientY - cy, clientX - cx) * (180 / Math.PI);
     }
 
     function getCurrentRotationAngle(el) {
@@ -2857,9 +2597,7 @@
       let tr = st.getPropertyValue("transform");
       if (tr === "none" || !tr) return 0;
       let values = tr.split('(')[1].split(')')[0].split(',');
-      let a = values[0];
-      let b = values[1];
-      let angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
+      let angle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
       return (angle < 0) ? angle + 360 : angle;
     }
 
@@ -2867,11 +2605,7 @@
       if (!isDragging) {
         spinVelocity *= 0.95;
         currentRotation += spinVelocity;
-        
-        if (record) {
-          record.style.transform = 'rotate(' + currentRotation + 'deg)';
-        }
-
+        if (record) record.style.transform = 'rotate(' + currentRotation + 'deg)';
         if (Math.abs(spinVelocity) < 0.2) {
           if (isPlaying) startNativeSpin();
           return;
@@ -2881,50 +2615,35 @@
     }
 
     if (djContainer) {
-      const grabStart = function(e) {
+      const grabStart = (e) => {
         if (!isPlaying) return;
-        
         let rect = djContainer.getBoundingClientRect();
         currentRotation = getCurrentRotationAngle(record);
         stopNativeSpin();
-        
-        if (record) {
-          record.style.transform = 'rotate(' + currentRotation + 'deg)';
-        }
-
+        if (record) record.style.transform = 'rotate(' + currentRotation + 'deg)';
         isDragging = true;
         djContainer.style.cursor = 'grabbing';
         startAngle = getAngle(e, rect);
         baseRotation = currentRotation;
         spinVelocity = 0;
         lastTime = Date.now();
-        
         if (e.type === 'touchstart') e.preventDefault();
       };
 
-      const grabMove = function(e) {
+      const grabMove = (e) => {
         if (!isDragging || !isPlaying) return;
-
         let rect = djContainer.getBoundingClientRect();
         let currentAngle = getAngle(e, rect);
-        let angleDiff = currentAngle - startAngle;
-        let newRotation = baseRotation + angleDiff;
+        let newRotation = baseRotation + (currentAngle - startAngle);
         let now = Date.now();
         let dt = now - lastTime;
-
-        if (dt > 0) {
-          spinVelocity = (newRotation - currentRotation) / dt * 16.6;
-        }
-
+        if (dt > 0) spinVelocity = (newRotation - currentRotation) / dt * 16.6;
         currentRotation = newRotation;
         lastTime = now;
-
-        if (record) {
-          record.style.transform = 'rotate(' + currentRotation + 'deg)';
-        }
+        if (record) record.style.transform = 'rotate(' + currentRotation + 'deg)';
       };
 
-      const grabEnd = function(e) {
+      const grabEnd = () => {
         if (!isDragging) return;
         isDragging = false;
         djContainer.style.cursor = 'grab';
@@ -2934,7 +2653,6 @@
       djContainer.addEventListener('mousedown', grabStart);
       window.addEventListener('mousemove', grabMove);
       window.addEventListener('mouseup', grabEnd);
-
       djContainer.addEventListener('touchstart', grabStart, {passive: false});
       window.addEventListener('touchmove', grabMove, {passive: false});
       window.addEventListener('touchend', grabEnd);
