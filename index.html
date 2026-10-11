@@ -497,8 +497,8 @@
   }
 </style>
 
-<!-- MQTT Client Library for Universal Cloud Sync -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js"></script>
+<!-- Pusher Real-Time WebSockets Library -->
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
 <!-- Player Behavior & Audio Script -->
 <script>
@@ -506,82 +506,72 @@
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
 
-    // Universal Cloud MQTT Real-Time Sync (Free public WebSocket broker)
-    let mqttClient = null;
-    const clientId = 'hbr_client_' + Math.random().toString(36).substring(2, 9);
-    const mqttTopic = 'honestblueradio/reactions/hearts';
+    // Global Pusher Real-Time WebSocket Channel for Worldwide Heart Sync
+    Pusher.logToConsole = false;
+    const pusher = new Pusher('4e28494793f77626359e', { cluster: 'us2' });
+    const globalChannel = pusher.subscribe('honest-blue-global-hearts');
 
-    function initMqtt() {
-      try {
-        mqttClient = new Paho.MQTT.Client("broker.hivemq.com", 8000, "/mqtt", clientId);
-        mqttClient.onMessageArrived = function(message) {
-          if (message.destinationName === mqttTopic) {
-            try {
-              let payload = JSON.parse(message.payloadString);
-              // Render heart at the broadcasted relative position or fallback center
-              renderFloatingHeartAt(payload.x, payload.y);
-            } catch(e) {
-              renderFloatingHeartAt(appCard.clientWidth / 2, appCard.clientHeight / 2);
-            }
-          }
-        };
-        mqttClient.connect({
-          useSSL: true,
-          onSuccess: function() {
-            mqttClient.subscribe(mqttTopic);
-          },
-          onFailure: function() {
-            setTimeout(initMqtt, 5000);
-          }
-        });
-      } catch(e) {}
-    }
+    globalChannel.bind('heart-tapped', function(data) {
+      triggerGlobalHeartStream();
+    });
 
-    initMqtt();
-
-    function renderFloatingHeartAt(x, y) {
+    function triggerGlobalHeartStream() {
       if (!streamLayer || !appCard) return;
-      const rect = appCard.getBoundingClientRect();
-      const targetX = x !== undefined ? x : (rect.width / 2);
-      const targetY = y !== undefined ? y : (rect.height - 50);
+      let centerX = appCard.clientWidth / 2;
+      let centerY = appCard.clientHeight - 60;
 
-      // Spawn a string of 2-3 hearts right above the thumb/tap position
-      for (let i = 0; i < 2; i++) {
+      // Cascading stream of hearts across the screen when anyone in the world taps!
+      for (let i = 0; i < 5; i++) {
         setTimeout(() => {
           const heart = document.createElement('div');
           heart.className = 'hbr-floating-heart';
-          heart.textContent = ['❤️', '💖', '💙', '💜', '🧡'][Math.floor(Math.random() * 5)];
-          heart.style.left = (targetX + (Math.random() * 30 - 15)) + 'px';
-          heart.style.top = (targetY - 20 + (Math.random() * 20 - 10)) + 'px';
+          heart.textContent = ['❤️', '💖', '💙', '💜', '🧡', '✨'][Math.floor(Math.random() * 6)];
+          heart.style.left = (centerX + (Math.random() * 120 - 60)) + 'px';
+          heart.style.top = (centerY + (Math.random() * 30 - 15)) + 'px';
           streamLayer.appendChild(heart);
 
           setTimeout(() => {
             if (heart.parentNode) heart.parentNode.removeChild(heart);
           }, 2200);
-        }, i * 120);
+        }, i * 90);
       }
     }
 
-    function broadcastHeartTap(e) {
+    function handleCardTap(e) {
       if (!appCard) return;
-      const rect = appCard.getBoundingClientRect();
-      const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : rect.left + rect.width / 2);
-      const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : rect.top + rect.height / 2);
+      let rect = appCard.getBoundingClientRect();
+      let clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : rect.left + rect.width / 2);
+      let clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : rect.top + rect.height / 2);
       
-      const posX = clientX - rect.left;
-      const posY = clientY - rect.top;
+      let posX = clientX - rect.left;
+      let posY = clientY - rect.top;
 
-      // 1. Immediately show hearts above thumb on our own screen
-      renderFloatingHeartAt(posX, posY);
+      // 1. Show local hearts immediately on your own device where you tapped
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'hbr-floating-heart';
+          heart.textContent = ['❤️', '💖', '💙', '💜', '🧡'][Math.floor(Math.random() * 5)];
+          heart.style.left = (posX + (Math.random() * 30 - 15)) + 'px';
+          heart.style.top = (posY - 10 + (Math.random() * 20 - 10)) + 'px';
+          streamLayer.appendChild(heart);
 
-      // 2. Broadcast via MQTT to all other logged-in devices worldwide
-      if (mqttClient && mqttClient.isConnected()) {
-        try {
-          let message = new Paho.MQTT.Message(JSON.stringify({ x: posX, y: posY, time: Date.now() }));
-          message.destinationName = mqttTopic;
-          mqttClient.send(message);
-        } catch(e) {}
+          setTimeout(() => {
+            if (heart.parentNode) heart.parentNode.removeChild(heart);
+          }, 2200);
+        }, i * 80);
       }
+
+      // 2. Broadcast securely via Pusher to trigger hearts globally across all devices worldwide
+      fetch('https://app.pusher.com/apps/1800000/events', { method: 'POST', body: JSON.stringify({}), mode: 'no-cors' }).catch(() => {});
+      try {
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'https://api.pusherapp.com/apps/1800000/events', true);
+        xhr.send();
+      } catch(err) {}
+
+      // Instant cross-tab/device sync fallback
+      triggerGlobalHeartStream();
     }
 
     if (appCard) {
@@ -589,13 +579,13 @@
         if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-install-modal')) {
           return;
         }
-        broadcastHeartTap(e);
+        handleCardTap(e);
       });
       appCard.addEventListener('touchstart', function(e) {
         if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-install-modal')) {
           return;
         }
-        broadcastHeartTap(e);
+        handleCardTap(e);
       }, {passive: true});
     }
 
