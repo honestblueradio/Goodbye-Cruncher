@@ -497,61 +497,43 @@
   }
 </style>
 
-<!-- Pusher JS for Real-Time Global Heart Reactions -->
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-
 <!-- Player Behavior & Audio Script -->
 <script>
   (function() {
-    const REALTIME_CHANNEL_NAME = 'hbr_realtime_stream_v1';
-    
-    // Pusher WebSocket Configuration with your personal app key and cluster
-    let pusherClient = null;
-    let pusherChannel = null;
-    try {
-      Pusher.logToConsole = false;
-      pusherClient = new Pusher('810d41730a3aadeefaae', {
-        cluster: 'us2'
-      });
-      pusherChannel = pusherClient.subscribe('honest-blue-radio-global');
-      pusherChannel.bind('heart-tap', function(data) {
-        // Trigger a floating heart from a random horizontal position like TikTok
-        renderRandomFloatingHeart();
-      });
-      pusherChannel.bind('live-state', function(data) {
-        if (data && typeof data.isLive === 'boolean') {
-          updateLiveUI(data.isLive);
-        }
-      });
-    } catch(e) {}
-
-    // Tap-Anywhere Floating Hearts System
+    const CHANNEL_KEY = 'hbr_local_sync_channel_v1';
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
 
-    // Cross-tab Broadcast Channel Fallback
-    let syncChannel = null;
+    // 1. BroadcastChannel API for multi-tab sync on same browser/device
+    let broadcastChannel = null;
     try {
       if ('BroadcastChannel' in window) {
-        syncChannel = new BroadcastChannel(REALTIME_CHANNEL_NAME);
-        syncChannel.onmessage = function(event) {
-          if (event && event.data) {
-            if (event.data.type === 'HEART_TAP') {
-              renderRandomFloatingHeart();
-            } else if (event.data.type === 'LIVE_STATE_CHANGE') {
-              updateLiveUI(!!event.data.isLive);
-            }
+        broadcastChannel = new BroadcastChannel(CHANNEL_KEY);
+        broadcastChannel.onmessage = function(event) {
+          if (event && event.data && event.data.type === 'HEART_TAP') {
+            renderRandomFloatingHeart();
           }
         };
       }
     } catch(e) {}
 
+    // 2. Storage event fallback for cross-tab sync across different windows/devices sharing storage
+    window.addEventListener('storage', function(e) {
+      if (e.key === CHANNEL_KEY) {
+        try {
+          let data = JSON.parse(e.newValue);
+          if (data && data.type === 'HEART_TAP') {
+            renderRandomFloatingHeart();
+          }
+        } catch(err) {}
+      }
+    });
+
     function renderRandomFloatingHeart() {
       if (!streamLayer || !appCard) return;
       const rect = appCard.getBoundingClientRect();
-      // Randomize horizontal position across the player card (between 15% and 85%)
       const posX = (Math.random() * 0.7 + 0.15) * rect.width;
-      const posY = rect.height - 50; // Start near the bottom like TikTok streams
+      const posY = rect.height - 50;
 
       const heart = document.createElement('div');
       heart.className = 'hbr-floating-heart';
@@ -566,21 +548,16 @@
     }
 
     function broadcastHeartTap() {
-      // Immediate local render
       renderRandomFloatingHeart();
 
-      // Local cross-tab sync
-      if (syncChannel) {
-        try { syncChannel.postMessage({ type: 'HEART_TAP' }); } catch(e) {}
+      // Send via BroadcastChannel
+      if (broadcastChannel) {
+        try { broadcastChannel.postMessage({ type: 'HEART_TAP' }); } catch(e) {}
       }
 
-      // Pusher WebSockets Real-Time Cloud Sync
+      // Send via localStorage trigger
       try {
-        fetch('https://api.pusher.com/apps/123456/channels/honest-blue-radio-global/events', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: 'heart-tap', data: JSON.stringify({ tap: true }) })
-        }).catch(() => {});
+        localStorage.setItem(CHANNEL_KEY, JSON.stringify({ type: 'HEART_TAP', time: Date.now() }));
       } catch(e) {}
     }
 
@@ -649,20 +626,7 @@
     function publishGlobalLiveState(isLive) {
       remoteGlobalLive = isLive;
       localStorage.setItem('hbr_global_forced_live', isLive ? 'true' : 'false');
-      
-      if (syncChannel) {
-        try { syncChannel.postMessage({ type: 'LIVE_STATE_CHANGE', isLive: isLive }); } catch(e) {}
-      }
-
       updateLiveUI(isLive);
-
-      try {
-        fetch('https://api.pusher.com/apps/123456/channels/honest-blue-radio-global/events', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: 'live-state', data: JSON.stringify({ isLive: isLive }) })
-        }).catch(() => {});
-      } catch(e) {}
     }
 
     if (adminToggleBtn) {
