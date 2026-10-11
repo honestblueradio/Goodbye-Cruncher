@@ -148,7 +148,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px;">
           <div>
             <div style="font-size: 12px; font-weight: 800; color: #10b981; letter-spacing: 0.5px;">🛍️ RETRO STORE &amp; MOVIE EMPORIUM</div>
-            <div style="font-size: 9px; color: #9ca3af; margin-top: 1px;">More Blockbusters require MORE MOVIES to earn profit!</div>
+            <div style="font-size: 9px; color: #9ca3af; margin-top: 1px;">Stores earn $0.00 base payout! Buy movies to earn cash.</div>
           </div>
           <button id="hbr-close-store-btn" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; border-radius: 6px; font-size: 10px; font-weight: 800; padding: 3px 7px; cursor: pointer;">✕ CLOSE</button>
         </div>
@@ -671,35 +671,26 @@
 
     updateCashUI();
 
-    // Scaled Passive Cash Accumulator & Shoplifting / Unrewound Events Engine
+    // Pure Movie-Driven Passive Cash Engine ($0.00 Store Base Payout)
     setInterval(function() {
       let bCount = userOwnedStores.blockbuster;
       if (bCount > 0) {
         let totalMovies = getTotalMovieCount();
-        let requiredMovies = bCount * 3; // Each Blockbuster requires 3 movies to function!
+        let netPerSec = 0.00; // Zero base earnings from store ownership alone!
 
-        let netPerSec = 0;
+        // Earnings come STRICTLY from owned movie stock
+        movieCatalog.forEach(movie => {
+          let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
+          let totalCopies = inv.vhs + inv.dvd + inv.bluray;
 
-        if (totalMovies < requiredMovies) {
-          // Under-stocked penalty: Store loses maintenance costs!
-          netPerSec = -0.15 * bCount;
-        } else {
-          // Stocked store generates income
-          netPerSec += bCount * 0.10;
+          if (totalCopies > 0) {
+            let multiplier = (movie.rtScore >= 50) ? (movie.rtScore / 100) : -((50 - movie.rtScore) / 50);
+            let formatBoost = (inv.vhs * 0.15) + (inv.dvd * 0.35) + (inv.bluray * 0.65);
+            netPerSec += (formatBoost * multiplier);
+          }
+        });
 
-          movieCatalog.forEach(movie => {
-            let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
-            let totalCopies = inv.vhs + inv.dvd + inv.bluray;
-
-            if (totalCopies > 0) {
-              let multiplier = (movie.rtScore >= 50) ? (movie.rtScore / 100) : -((50 - movie.rtScore) / 50);
-              let formatBoost = (inv.vhs * 0.12) + (inv.dvd * 0.30) + (inv.bluray * 0.55);
-              netPerSec += (formatBoost * multiplier);
-            }
-          });
-        }
-
-        // Penalty for unrewound VHS tapes draining time/money
+        // Penalty for unrewound VHS tapes draining cash
         if (unrewoundTapesCount > 0) {
           netPerSec -= (unrewoundTapesCount * 0.10);
         }
@@ -737,7 +728,7 @@
         if (totalMovies > 0 && Math.random() < 0.08) {
           unrewoundTapesCount++;
           saveOwnedMoviesToStorage();
-          triggerStoreAlert('📼 <strong>BE KIND, REWIND!</strong> A customer returned an unrewound VHS tape! It is draining $0.10/sec until you rewind it.');
+          triggerStoreAlert('📼 <strong>BE KIND, REWIND!</strong> A customer returned an unrewound VHS tape! It drains $0.10/sec until rewound.');
           renderStoreList();
         }
       }
@@ -776,14 +767,7 @@
           ownedLine.style.fontSize = '9px';
           ownedLine.style.color = '#9ca3af';
           ownedLine.style.marginTop = '2px';
-          
-          if (store.id === 'blockbuster') {
-            let requiredMovies = ownedCount * 3;
-            let currentMovies = getTotalMovieCount();
-            ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong> (Need ' + requiredMovies + ' movies, have ' + currentMovies + ')';
-          } else {
-            ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong>';
-          }
+          ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong> ($0.00 Base Payout)';
 
           infoDiv.appendChild(titleLine);
           infoDiv.appendChild(ownedLine);
@@ -869,7 +853,7 @@
           let rText = document.createElement('div');
           rText.style.fontSize = '10px';
           rText.style.color = '#fdba74';
-          rText.innerHTML = '📼 <strong>' + unrewoundTapesCount + ' Unrewound Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Cost $0.10/sec until rewound.</span>';
+          rText.innerHTML = '📼 <strong>' + unrewoundTapesCount + ' Unrewound Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Drains $0.10/sec until rewound.</span>';
 
           let rewindBtn = document.createElement('button');
           rewindBtn.style.background = 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)';
@@ -880,7 +864,7 @@
           rewindBtn.style.fontWeight = '800';
           rewindBtn.style.padding = '5px 10px';
           rewindBtn.style.cursor = 'pointer';
-          rewindBtn.textContent = '⏪ REWIND ALL ($0.50)';
+          rewindBtn.textContent = '⏪ REWIND ALL ($' + (unrewoundTapesCount * 0.50).toFixed(2) + ')';
 
           rewindBtn.addEventListener('click', function() {
             let cost = unrewoundTapesCount * 0.50;
@@ -902,20 +886,18 @@
 
         // Store Inventory Status Header
         let totalMovies = getTotalMovieCount();
-        let requiredMovies = userOwnedStores.blockbuster * 3;
-        let isFullyStocked = totalMovies >= requiredMovies;
 
         let statusBox = document.createElement('div');
-        statusBox.style.background = isFullyStocked ? 'rgba(34, 197, 94, 0.12)' : 'rgba(239, 68, 68, 0.12)';
-        statusBox.style.border = isFullyStocked ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(239, 68, 68, 0.3)';
+        statusBox.style.background = totalMovies > 0 ? 'rgba(34, 197, 94, 0.12)' : 'rgba(245, 158, 11, 0.12)';
+        statusBox.style.border = totalMovies > 0 ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(245, 158, 11, 0.3)';
         statusBox.style.borderRadius = '6px';
         statusBox.style.padding = '6px';
         statusBox.style.fontSize = '9px';
-        statusBox.style.color = isFullyStocked ? '#4ade80' : '#fca5a5';
+        statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
         statusBox.style.textAlign = 'center';
-        statusBox.innerHTML = isFullyStocked 
-          ? '✅ <strong>STORES FULLY STOCKED!</strong> Inventory: ' + totalMovies + ' / ' + requiredMovies + ' movies needed for ' + userOwnedStores.blockbuster + ' Blockbuster(s).'
-          : '🚨 <strong>UNDER-STOCKED!</strong> Need ' + (requiredMovies - totalMovies) + ' more movies! You are losing money due to low inventory.';
+        statusBox.innerHTML = totalMovies > 0 
+          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies + '.'
+          : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash!';
         
         storeItemsList.appendChild(statusBox);
 
