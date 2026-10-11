@@ -578,7 +578,9 @@
       let count = 0;
       Object.keys(userOwnedMovies).forEach(mId => {
         let inv = userOwnedMovies[mId];
-        count += (inv.vhs + inv.dvd + inv.bluray);
+        if (inv) {
+          count += ((inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0));
+        }
       });
       return count;
     }
@@ -681,11 +683,11 @@
         // Earnings come STRICTLY from owned movie stock
         movieCatalog.forEach(movie => {
           let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
-          let totalCopies = inv.vhs + inv.dvd + inv.bluray;
+          let totalCopies = (inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0);
 
           if (totalCopies > 0) {
             let multiplier = (movie.rtScore >= 50) ? (movie.rtScore / 100) : -((50 - movie.rtScore) / 50);
-            let formatBoost = (inv.vhs * 0.15) + (inv.dvd * 0.35) + (inv.bluray * 0.65);
+            let formatBoost = ((inv.vhs || 0) * 0.15) + ((inv.dvd || 0) * 0.35) + ((inv.bluray || 0) * 0.65);
             netPerSec += (formatBoost * multiplier);
           }
         });
@@ -703,7 +705,7 @@
         if (totalMovies > 0 && Math.random() < 0.05) {
           let movieIds = Object.keys(userOwnedMovies).filter(id => {
             let inv = userOwnedMovies[id];
-            return (inv.vhs + inv.dvd + inv.bluray) > 0;
+            return inv && ((inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0)) > 0;
           });
           
           if (movieIds.length > 0) {
@@ -714,13 +716,15 @@
             if (inv.dvd > 0) formats.push('dvd');
             if (inv.bluray > 0) formats.push('bluray');
             
-            let stolenFmt = formats[Math.floor(Math.random() * formats.length)];
-            inv[stolenFmt]--;
-            saveOwnedMoviesToStorage();
+            if (formats.length > 0) {
+              let stolenFmt = formats[Math.floor(Math.random() * formats.length)];
+              inv[stolenFmt]--;
+              saveOwnedMoviesToStorage();
 
-            let movieObj = movieCatalog.find(m => m.id === stolenId);
-            triggerStoreAlert('🚨 <strong>SHOPLIFTER ALERT!</strong> Someone stole a <strong>' + stolenFmt.toUpperCase() + '</strong> copy of ' + (movieObj ? movieObj.name : 'a movie') + '!');
-            renderStoreList();
+              let movieObj = movieCatalog.find(m => m.id === stolenId);
+              triggerStoreAlert('🚨 <strong>SHOPLIFTER ALERT!</strong> Someone stole a <strong>' + stolenFmt.toUpperCase() + '</strong> copy of ' + (movieObj ? movieObj.name : 'a movie') + '!');
+              renderStoreList();
+            }
           }
         }
 
@@ -903,11 +907,12 @@
 
         movieCatalog.forEach(movie => {
           let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
+          let totalMovieCopies = (inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0);
           let isGoodMovie = movie.rtScore >= 50;
 
           let itemBox = document.createElement('div');
           itemBox.style.background = 'rgba(255, 255, 255, 0.04)';
-          itemBox.style.border = isGoodMovie ? '1px solid rgba(34, 197, 94, 0.25)' : '1px solid rgba(239, 68, 68, 0.25)';
+          itemBox.style.border = totalMovieCopies > 0 ? '1px solid #3b82f6' : (isGoodMovie ? '1px solid rgba(34, 197, 94, 0.25)' : '1px solid rgba(239, 68, 68, 0.25)');
           itemBox.style.borderRadius = '8px';
           itemBox.style.padding = '8px';
           itemBox.style.display = 'flex';
@@ -928,7 +933,9 @@
             ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍅 ' + movie.rtScore + '% (PROFIT)</span>'
             : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍿 ' + movie.rtScore + '% (DRAINS CASH)</span>';
           
-          titleDiv.innerHTML = '🎬 ' + movie.name + rtBadge;
+          let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies + '</span>' : '';
+
+          titleDiv.innerHTML = '🎬 ' + movie.name + rtBadge + ownedBadge;
 
           topRow.appendChild(titleDiv);
           itemBox.appendChild(topRow);
@@ -951,8 +958,8 @@
 
             let fmtBtn = document.createElement('button');
             fmtBtn.style.flex = '1';
-            fmtBtn.style.background = canAfford ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.03)';
-            fmtBtn.style.border = canAfford ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(255,255,255,0.1)';
+            fmtBtn.style.background = count > 0 ? 'rgba(37, 99, 235, 0.3)' : (canAfford ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.03)');
+            fmtBtn.style.border = count > 0 ? '1px solid #60a5fa' : (canAfford ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(255,255,255,0.1)');
             fmtBtn.style.borderRadius = '5px';
             fmtBtn.style.color = canAfford ? '#93c5fd' : '#6b7280';
             fmtBtn.style.fontSize = '8px';
@@ -961,13 +968,15 @@
             fmtBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed';
             fmtBtn.style.textAlign = 'center';
 
-            fmtBtn.innerHTML = fmt.label + '<br><span style="color: #fbbf24; font-weight: 800;">' + cost + ' N</span><br><span style="color: #a7f3d0;">(' + count + ')</span>';
+            fmtBtn.innerHTML = fmt.label + '<br><span style="color: #fbbf24; font-weight: 800;">' + cost + ' N</span><br><span style="color: #a7f3d0;">(' + count + ' owned)</span>';
 
             if (canAfford) {
               fmtBtn.addEventListener('click', function() {
                 bankedNotesTotal -= cost;
-                if (!userOwnedMovies[movie.id]) userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
-                userOwnedMovies[movie.id][fmt.key]++;
+                if (!userOwnedMovies[movie.id]) {
+                  userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
+                }
+                userOwnedMovies[movie.id][fmt.key] = (userOwnedMovies[movie.id][fmt.key] || 0) + 1;
 
                 saveBankedNotesToStorage();
                 saveOwnedMoviesToStorage();
