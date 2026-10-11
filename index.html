@@ -1,6 +1,3 @@
-<!-- PubNub SDK for Cross-Device Realtime Presence & Social Syncing -->
-<script src="https://cdn.pubnub.com/sdk/javascript/pubnub.7.2.2.min.js"></script>
-
 <div style="background: #111115; border-radius: 20px; padding: 24px 24px 24px 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden;" id="hbr-main-app-card">
   
   <!-- FLOATING HEART STREAM LAYER -->
@@ -51,7 +48,7 @@
   
   <!-- Content Container -->
   <div style="position: relative; z-index: 2;">
-    <!-- Header with Track Drawer Toggle, Live Status & Clickable Listener Directory Toggle -->
+    <!-- Header with Track Drawer Toggle, Live Status & Dynamic Listener Counter -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
       <div>
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
@@ -69,25 +66,8 @@
           <button id="hbr-install-btn" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL APP</button>
         </div>
       </div>
-      
-      <!-- Clickable Listener Directory Button -->
-      <button id="hbr-listeners-toggle-btn" style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s ease;">
-        <span style="color: #4ade80; font-size: 12px;">👤</span>
-        <span style="font-size: 12px; font-weight: 700; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN ▼</span>
-      </button>
-    </div>
-
-    <!-- COMMUNITY DIRECTORY DROPDOWN PANEL -->
-    <div id="hbr-directory-drawer" style="display: none; background: #171720; border-radius: 12px; border: 1px solid #2a2a3a; margin-bottom: 12px;">
-      <div style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px;">
-          <div style="font-size: 11px; font-weight: 800; color: #60a5fa; text-transform: uppercase;">👥 ACTIVE COMMUNITY LISTENERS</div>
-          <span style="font-size: 9px; color: #9ca3af;">Live Radio Feed</span>
-        </div>
-        <div id="hbr-directory-list" style="display: flex; flex-direction: column; gap: 6px; max-height: 220px; overflow-y: auto;">
-          <!-- Dynamically populated -->
-        </div>
-      </div>
+      <!-- Animated Live Listener Badge with Green Person Icon -->
+      <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;"><span style="color: #4ade80; font-size: 12px;">👤</span><span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span></div>
     </div>
 
     <!-- User Top Profile Banner (Appears Up Top When Profile Created) -->
@@ -305,24 +285,8 @@
   <div style="background: #171720; border: 1px solid #3b82f6; border-radius: 16px; padding: 20px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.9); box-sizing: border-box;">
     
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 14px;">
-      <span style="font-size: 13px; font-weight: 800; color: #60a5fa; letter-spacing: 0.5px;">👤 PRIVATE USER PROFILE & SETTINGS</span>
+      <span style="font-size: 13px; font-weight: 800; color: #60a5fa; letter-spacing: 0.5px;">👤 PRIVATE USER PROFILE</span>
       <button id="hbr-close-profile-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
-    </div>
-
-    <!-- First Name Input -->
-    <div style="margin-bottom: 14px;">
-      <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">First Name Only</label>
-      <input id="hbr-profile-name-input" type="text" placeholder="Enter first name..." style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 8px; color: #fff; font-size: 11px; font-weight: 700; box-sizing: border-box;">
-      <span style="font-size: 8px; color: #6b7280; display: block; margin-top: 2px;">No last names or offensive terms allowed.</span>
-    </div>
-
-    <!-- ONLINE VISIBILITY TOGGLE -->
-    <div id="hbr-visibility-toggle-box" style="margin-bottom: 14px; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
-      <div>
-        <div style="font-size: 10px; font-weight: 800; color: #93c5fd;">🌐 SHOW ME ONLINE</div>
-        <div style="font-size: 8px; color: #9ca3af; margin-top: 2px;">Appear in the live Community Directory list.</div>
-      </div>
-      <button id="hbr-visibility-btn" style="background: #22c55e; border: none; border-radius: 12px; color: #ffffff; font-size: 10px; font-weight: 800; padding: 6px 12px; cursor: pointer;">ON</button>
     </div>
 
     <!-- Avatar & Name Section -->
@@ -332,8 +296,8 @@
         <span id="hbr-profile-avatar-fallback" style="font-size: 22px;">🎧</span>
       </div>
       <div style="flex: 1;">
-        <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 2px;">Display Name</label>
-        <span id="hbr-profile-name-preview" style="font-size: 11px; font-weight: 700; color: #fff;">Listener</span>
+        <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 2px;">Your Name</label>
+        <input id="hbr-profile-name-input" type="text" placeholder="Enter your name..." style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 6px; color: #fff; font-size: 11px; font-weight: 700; box-sizing: border-box;">
       </div>
     </div>
 
@@ -389,22 +353,19 @@
   #hbr-playlist-drawer::-webkit-scrollbar,
   #hbr-bio-panel::-webkit-scrollbar,
   #hbr-store-overlay::-webkit-scrollbar,
-  #hbr-profile-modal::-webkit-scrollbar,
-  #hbr-directory-list::-webkit-scrollbar {
+  #hbr-profile-modal::-webkit-scrollbar {
     width: 6px;
   }
   #hbr-playlist-drawer::-webkit-scrollbar-track,
   #hbr-bio-panel::-webkit-scrollbar-track,
   #hbr-store-overlay::-webkit-scrollbar-track,
-  #hbr-profile-modal::-webkit-scrollbar-track,
-  #hbr-directory-list::-webkit-scrollbar-track {
+  #hbr-profile-modal::-webkit-scrollbar-track {
     background: rgba(0,0,0,0.2);
   }
   #hbr-playlist-drawer::-webkit-scrollbar-thumb,
   #hbr-bio-panel::-webkit-scrollbar-thumb,
   #hbr-store-overlay::-webkit-scrollbar-thumb,
-  #hbr-profile-modal::-webkit-scrollbar-thumb,
-  #hbr-directory-list::-webkit-scrollbar-thumb {
+  #hbr-profile-modal::-webkit-scrollbar-thumb {
     background: #374151;
     border-radius: 4px;
   }
@@ -536,62 +497,31 @@
   }
 </style>
 
-<!-- Player Behavior & Realtime Dynamic Directory Script -->
+<!-- Player Behavior & Audio Script -->
 <script>
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
 
-    // Moderation Filter
-    const forbiddenTerms = ['satan', 'demon', 'devil', 'fuck', 'shit', 'bitch', 'asshole'];
-    function sanitizeFirstName(rawName) {
-      if (!rawName) return '';
-      let clean = rawName.trim().split(/\s+/)[0];
-      let containsForbidden = forbiddenTerms.some(term => clean.toLowerCase().includes(term));
-      return containsForbidden ? 'Groovy Listener' : clean;
-    }
-
-    // User Profile Initialization
-    let userProfileData = {
-      id: 'usr_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now(),
-      name: '',
-      avatarUrl: '',
-      badge: 'Excellent Keyboardist',
-      themeColor: '#3b82f6',
-      themeBg: 'rgba(59, 130, 246, 0.12)',
-      themeBadgeBg: 'rgba(59, 130, 246, 0.25)',
-      isOnlineVisible: true
-    };
-
-    function loadProfileFromStorage() {
-      try {
-        const saved = localStorage.getItem('hbr_user_profile');
-        if (saved) userProfileData = Object.assign(userProfileData, JSON.parse(saved));
-      } catch(e) {}
-    }
-    loadProfileFromStorage();
-
-    // PubNub Engine for Social Heart Taps
-    let pubnub = null;
-    function initPubNubRealtime() {
-      if (typeof PubNub === 'undefined') return;
-      pubnub = new PubNub({
-        publishKey: 'pub-c-897b6e4e-0b32-4734-9276-80db61a79853',
-        subscribeKey: 'sub-c-519213ef-f0ad-48b4-8dbd-02eeaa9b8030',
-        userId: userProfileData.id
-      });
-
-      pubnub.addListener({
-        message: function(event) {
-          if (event.message && event.message.type === 'hbr-heart-tap') {
+    // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync
+    let globalSocket = null;
+    function connectGlobalRelay() {
+      globalSocket = new WebSocket('wss://ws.postman-echo.com/raw');
+      
+      globalSocket.onmessage = function(event) {
+        try {
+          let data = JSON.parse(event.data);
+          if (data && data.type === 'hbr-heart-tap') {
             triggerGlobalHeartStream();
           }
-        }
-      });
+        } catch(e) {}
+      };
 
-      pubnub.subscribe({ channels: ['honest_blue_radio_live'] });
+      globalSocket.onclose = function() {
+        setTimeout(connectGlobalRelay, 3000);
+      };
     }
-    initPubNubRealtime();
+    connectGlobalRelay();
 
     function triggerGlobalHeartStream() {
       if (!streamLayer || !appCard) return;
@@ -638,11 +568,10 @@
         }, i * 80);
       }
 
-      if (pubnub) {
-        pubnub.publish({
-          channel: 'honest_blue_radio_live',
-          message: { type: 'hbr-heart-tap' }
-        }).catch(() => {});
+      if (globalSocket && globalSocket.readyState === WebSocket.OPEN) {
+        globalSocket.send(JSON.stringify({ type: 'hbr-heart-tap' }));
+      } else {
+        triggerGlobalHeartStream();
       }
     }
 
@@ -660,34 +589,6 @@
         handleCardTap(e);
       }, {passive: true});
     }
-
-    // Dynamic Listener Community Simulation Pool
-    const guaranteedCoreUsers = [
-      { name: 'Jay', badge: 'Station Host', color: '#3b82f6' },
-      { name: 'Becca', badge: 'Acoustic Dreamer', color: '#ec4899' },
-      { name: 'Bev', badge: 'VIP Listener', color: '#a855f7' }
-    ];
-
-    const poolNames = ['Alex', 'Chris', 'Jordan', 'Taylor', 'Sam', 'Morgan', 'Riley', 'Casey', 'Dakota', 'Skyler', 'Avery', 'Peyton', 'Quinn', 'Reese', 'Rowan', 'Hayden', 'Emerson', 'Finley', 'Sage', 'Shiloh', 'Logan', 'Micah', 'Kai', 'Eden', 'River'];
-    const poolBadges = ['Guitar Shredder', 'Synth Wizard', 'Master Producer', 'Rhythm Master', 'Acoustic Dreamer', 'Excellent Keyboardist', 'Vinyl Collector', 'Night Groover'];
-    const poolColors = ['#3b82f6', '#a855f7', '#22c55e', '#f97316', '#ec4899', '#06b6d4', '#eab308'];
-
-    let activeSimulatedPool = [];
-
-    function rotateSimulatedDirectory() {
-      let shuffledNames = [...poolNames].sort(() => 0.5 - Math.random());
-      activeSimulatedPool = shuffledNames.slice(0, 7).map(name => {
-        return {
-          name: name,
-          badge: poolBadges[Math.floor(Math.random() * poolBadges.length)],
-          color: poolColors[Math.floor(Math.random() * poolColors.length)]
-        };
-      });
-      renderDirectory();
-    }
-
-    rotateSimulatedDirectory();
-    setInterval(rotateSimulatedDirectory, 14000);
 
     // Master Broadcast Tracks
     const masterBroadcastTracks = [
@@ -917,12 +818,11 @@
 
     loadSavedPlaylists();
 
-    // User Profile Management & Dynamic UI Sync
+    // User Profile Management & Dynamic UI Sync with Robust Image Compression (PNG/Large Photos Fix)
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
     const closeProfileBtn = document.getElementById('hbr-close-profile-btn');
     const profileModal = document.getElementById('hbr-profile-modal');
     const profileNameInput = document.getElementById('hbr-profile-name-input');
-    const profileNamePreview = document.getElementById('hbr-profile-name-preview');
     const profileImgInput = document.getElementById('hbr-profile-img-input');
     const profileFileInput = document.getElementById('hbr-profile-file-input');
     const profileAvatarImg = document.getElementById('hbr-profile-avatar-img');
@@ -932,7 +832,6 @@
     const badgesContainer = document.getElementById('hbr-badges-container');
     const profileColorsContainer = document.getElementById('hbr-profile-colors-container');
     const profileInventoryList = document.getElementById('hbr-profile-inventory-list');
-    const visibilityBtn = document.getElementById('hbr-visibility-btn');
 
     const topProfileBanner = document.getElementById('hbr-top-profile-banner');
     const topBannerImg = document.getElementById('hbr-top-banner-img');
@@ -941,10 +840,21 @@
     const topBannerName = document.getElementById('hbr-top-banner-name');
     const topBannerBadge = document.getElementById('hbr-top-banner-badge');
 
-    const listenersToggleBtn = document.getElementById('hbr-listeners-toggle-btn');
-    const directoryDrawer = document.getElementById('hbr-directory-drawer');
-    const directoryList = document.getElementById('hbr-directory-list');
-    let directoryOpen = false;
+    let userProfileData = {
+      name: '',
+      avatarUrl: '',
+      badge: 'Excellent Keyboardist',
+      themeColor: '#3b82f6',
+      themeBg: 'rgba(59, 130, 246, 0.12)',
+      themeBadgeBg: 'rgba(59, 130, 246, 0.25)'
+    };
+
+    function loadProfileFromStorage() {
+      try {
+        const saved = localStorage.getItem('hbr_user_profile');
+        if (saved) userProfileData = Object.assign(userProfileData, JSON.parse(saved));
+      } catch(e) {}
+    }
 
     function saveProfileToStorage() {
       try {
@@ -952,51 +862,7 @@
       } catch(e) {}
     }
 
-    function renderDirectory() {
-      if (!directoryList) return;
-      directoryList.innerHTML = '';
-      
-      let fullDirectoryList = [];
-
-      // 1. Add locally active user profile if specified
-      if (userProfileData.name && userProfileData.name.trim() !== '' && userProfileData.isOnlineVisible !== false) {
-        fullDirectoryList.push({
-          name: sanitizeFirstName(userProfileData.name) + ' (You)',
-          color: userProfileData.themeColor || '#22c55e',
-          badge: userProfileData.badge || 'Listener'
-        });
-      }
-
-      // 2. Add guaranteed core names: Jay, Becca, Bev
-      guaranteedCoreUsers.forEach(u => fullDirectoryList.push(u));
-
-      // 3. Add rotating community pool to ensure at least 10 names are always visible
-      activeSimulatedPool.forEach(u => fullDirectoryList.push(u));
-
-      fullDirectoryList.slice(0, 10).forEach(u => {
-        let row = document.createElement('div');
-        row.style.background = 'rgba(255,255,255,0.04)';
-        row.style.padding = '6px 10px';
-        row.style.borderRadius = '6px';
-        row.style.fontSize = '11px';
-        row.style.fontWeight = '700';
-        row.style.color = '#fff';
-        row.style.display = 'flex';
-        row.style.justifyContent = 'space-between';
-        row.style.alignItems = 'center';
-
-        row.innerHTML = '<div style="display: flex; align-items: center; gap: 6px;"><span style="width: 7px; height: 7px; border-radius: 50%; background: ' + u.color + ';"></span><span>' + u.name + '</span></div><span style="font-size: 8px; color: #9ca3af; background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px;">' + u.badge + '</span>';
-        directoryList.appendChild(row);
-      });
-    }
-
-    if (listenersToggleBtn && directoryDrawer) {
-      listenersToggleBtn.addEventListener('click', function() {
-        directoryOpen = !directoryOpen;
-        directoryDrawer.style.display = directoryOpen ? 'block' : 'none';
-        if (directoryOpen) renderDirectory();
-      });
-    }
+    loadProfileFromStorage();
 
     function updateTopProfileBanner() {
       if (!topProfileBanner) return;
@@ -1010,7 +876,7 @@
         topProfileBanner.style.background = userProfileData.themeBg || 'rgba(59, 130, 246, 0.12)';
         topProfileBanner.style.borderColor = (userProfileData.themeColor || '#3b82f6') + '55';
 
-        if (topBannerName) topBannerName.textContent = sanitizeFirstName(userProfileData.name);
+        if (topBannerName) topBannerName.textContent = userProfileData.name;
         if (topBannerBadge) {
           topBannerBadge.textContent = userProfileData.badge;
           topBannerBadge.style.background = userProfileData.themeBadgeBg || 'rgba(59,130,246,0.25)';
@@ -1040,16 +906,9 @@
 
     function updateProfileModalUI() {
       if (profileNameInput) profileNameInput.value = userProfileData.name;
-      if (profileNamePreview) profileNamePreview.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? sanitizeFirstName(userProfileData.name) : 'Listener';
       if (profileImgInput) profileImgInput.value = userProfileData.avatarUrl;
 
       if (profileAvatarFrame) profileAvatarFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
-
-      if (visibilityBtn) {
-        let isVis = userProfileData.isOnlineVisible !== false;
-        visibilityBtn.textContent = isVis ? 'ON' : 'OFF';
-        visibilityBtn.style.background = isVis ? '#22c55e' : '#374151';
-      }
 
       if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
         if (profileAvatarImg) {
@@ -1157,19 +1016,6 @@
       });
     }
 
-    if (visibilityBtn) {
-      visibilityBtn.addEventListener('click', function() {
-        userProfileData.isOnlineVisible = !(userProfileData.isOnlineVisible !== false);
-        updateProfileModalUI();
-      });
-    }
-
-    if (profileNameInput) {
-      profileNameInput.addEventListener('input', function() {
-        if (profileNamePreview) profileNamePreview.textContent = sanitizeFirstName(profileNameInput.value) || 'Listener';
-      });
-    }
-
     if (profileFileInput) {
       profileFileInput.addEventListener('change', function(e) {
         let file = e.target.files[0];
@@ -1223,7 +1069,7 @@
 
     if (saveProfileBtn) {
       saveProfileBtn.addEventListener('click', function() {
-        if (profileNameInput) userProfileData.name = sanitizeFirstName(profileNameInput.value);
+        if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
         let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
         if (urlVal !== '') {
           userProfileData.avatarUrl = urlVal;
@@ -1231,7 +1077,6 @@
         saveProfileToStorage();
         updateTopProfileBanner();
         updateProfileModalUI();
-        renderDirectory();
         if (profileModal) profileModal.style.display = 'none';
       });
     }
@@ -1291,7 +1136,7 @@
         if (totalMovies > 0 && Math.random() < 0.12) {
           let lateFeeBonus = parseFloat((Math.random() * 1.00 + 0.25).toFixed(2));
           netPerSec += lateFeeBonus;
-          triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on an overdue tape!');
+          triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on a overdue tape!');
         }
 
         if (unrewoundTapesCount > 0) {
