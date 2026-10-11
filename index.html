@@ -148,7 +148,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px;">
           <div>
             <div style="font-size: 12px; font-weight: 800; color: #10b981; letter-spacing: 0.5px;">🛍️ RETRO STORE &amp; MOVIE EMPORIUM</div>
-            <div style="font-size: 9px; color: #9ca3af; margin-top: 1px;">Prices &amp; sales fluctuate live! Buy movies for Blockbuster!</div>
+            <div style="font-size: 9px; color: #9ca3af; margin-top: 1px;">More Blockbusters require MORE MOVIES to earn profit!</div>
           </div>
           <button id="hbr-close-store-btn" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; border-radius: 6px; font-size: 10px; font-weight: 800; padding: 3px 7px; cursor: pointer;">✕ CLOSE</button>
         </div>
@@ -161,6 +161,9 @@
             CASH: <span id="hbr-store-cash-count" style="color: #fff; font-weight: 800;">$0.00</span>
           </div>
         </div>
+
+        <!-- Store Event Alert Box -->
+        <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
 
         <!-- Store Navigation Tabs (Stores vs Movies) -->
         <div style="display: flex; gap: 4px; margin-bottom: 8px;">
@@ -400,7 +403,8 @@
 
     // Christmas Tracks
     const masterChristmasTracks = [
-      { id: '3XGTb6OxZb4', name: 'Christmas Special' }
+      { id: '3XGTb6OxZb4', name: 'Christmas Special' },
+      { id: '3XGTb6OxZb4', name: 'Festive Vibes' }
     ];
 
     // Jay Draws Disney Tracks
@@ -520,6 +524,7 @@
     // Bank Notes & Stores State Data
     let bankedNotesTotal = 0;
     let storeCashTotal = 0.00;
+    let unrewoundTapesCount = 0;
     
     // User Purchased Stores Inventory
     let userOwnedStores = {
@@ -531,14 +536,14 @@
     // User Purchased Movie Inventory { movieId: { vhs: 0, dvd: 0, bluray: 0 } }
     let userOwnedMovies = {};
 
-    // Store Catalog with base price ranges
+    // Store Catalog
     const storeCatalog = [
       { id: 'blockbuster', name: 'Blockbuster Video', baseMin: 50, baseMax: 150, color: '#3b82f6', icon: '📼' },
       { id: 'toysrus', name: 'Toys "R" Us', baseMin: 120, baseMax: 300, color: '#ec4899', icon: '🦒' },
       { id: 'kbtoys', name: 'KB Toys', baseMin: 80, baseMax: 220, color: '#ef4444', icon: '🧸' }
     ];
 
-    // Movie Catalog with Rotten Tomatoes Ratings
+    // Movie Catalog
     const movieCatalog = [
       { id: 'titanic', name: 'Titanic', rtScore: 88, basePrice: 40 },
       { id: 'godfather', name: 'The Godfather', rtScore: 98, basePrice: 60 },
@@ -549,7 +554,7 @@
     ];
 
     let currentStorePrices = {};
-    let activeStoreTab = 'stores'; // 'stores' or 'movies'
+    let activeStoreTab = 'stores'; 
 
     function randomizeStorePrices() {
       storeCatalog.forEach(store => {
@@ -569,6 +574,15 @@
 
     randomizeStorePrices();
 
+    function getTotalMovieCount() {
+      let count = 0;
+      Object.keys(userOwnedMovies).forEach(mId => {
+        let inv = userOwnedMovies[mId];
+        count += (inv.vhs + inv.dvd + inv.bluray);
+      });
+      return count;
+    }
+
     // Load Saved Playlists, Top 3, Banked Notes, Cash & Stores from localStorage
     function loadSavedPlaylists() {
       try {
@@ -579,6 +593,7 @@
         const savedCash = localStorage.getItem('hbr_store_cash');
         const savedStores = localStorage.getItem('hbr_owned_stores');
         const savedMovies = localStorage.getItem('hbr_owned_movies');
+        const savedUnrewound = localStorage.getItem('hbr_unrewound_tapes');
 
         if (savedQ1) customQueue1 = JSON.parse(savedQ1);
         if (savedQ2) customQueue2 = JSON.parse(savedQ2);
@@ -587,6 +602,7 @@
         if (savedCash) storeCashTotal = parseFloat(savedCash) || 0.00;
         if (savedStores) userOwnedStores = Object.assign(userOwnedStores, JSON.parse(savedStores));
         if (savedMovies) userOwnedMovies = Object.assign(userOwnedMovies, JSON.parse(savedMovies));
+        if (savedUnrewound) unrewoundTapesCount = parseInt(savedUnrewound, 10) || 0;
       } catch (e) {}
     }
 
@@ -619,6 +635,7 @@
     function saveOwnedMoviesToStorage() {
       try {
         localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
+        localStorage.setItem('hbr_unrewound_tapes', unrewoundTapesCount.toString());
       } catch (e) {}
     }
 
@@ -632,8 +649,19 @@
     const storeCashCountSpan = document.getElementById('hbr-store-cash-count');
     const cashCountBadge = document.getElementById('hbr-cash-count');
     const storeItemsList = document.getElementById('hbr-store-items-list');
+    const storeEventAlert = document.getElementById('hbr-store-event-alert');
     const tabStoresBtn = document.getElementById('hbr-tab-stores-btn');
     const tabMoviesBtn = document.getElementById('hbr-tab-movies-btn');
+
+    function triggerStoreAlert(msg) {
+      if (storeEventAlert) {
+        storeEventAlert.innerHTML = msg;
+        storeEventAlert.style.display = 'block';
+        setTimeout(() => {
+          if (storeEventAlert) storeEventAlert.style.display = 'none';
+        }, 8000);
+      }
+    }
 
     function updateCashUI() {
       let formatted = '$' + storeCashTotal.toFixed(2);
@@ -643,29 +671,75 @@
 
     updateCashUI();
 
-    // Passive Store Cash Flow Simulator (Ticks every 2 seconds)
+    // Scaled Passive Cash Accumulator & Shoplifting / Unrewound Events Engine
     setInterval(function() {
-      if (userOwnedStores.blockbuster > 0) {
+      let bCount = userOwnedStores.blockbuster;
+      if (bCount > 0) {
+        let totalMovies = getTotalMovieCount();
+        let requiredMovies = bCount * 3; // Each Blockbuster requires 3 movies to function!
+
         let netPerSec = 0;
-        
-        // Base income per Blockbuster
-        netPerSec += userOwnedStores.blockbuster * 0.25;
 
-        // Movie impact
-        movieCatalog.forEach(movie => {
-          let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
-          let totalCopies = inv.vhs + inv.dvd + inv.bluray;
+        if (totalMovies < requiredMovies) {
+          // Under-stocked penalty: Store loses maintenance costs!
+          netPerSec = -0.15 * bCount;
+        } else {
+          // Stocked store generates income
+          netPerSec += bCount * 0.10;
 
-          if (totalCopies > 0) {
-            let multiplier = (movie.rtScore >= 50) ? (movie.rtScore / 100) : -((50 - movie.rtScore) / 50);
-            let formatBoost = (inv.vhs * 0.15) + (inv.dvd * 0.35) + (inv.bluray * 0.65);
-            netPerSec += (formatBoost * multiplier);
-          }
-        });
+          movieCatalog.forEach(movie => {
+            let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
+            let totalCopies = inv.vhs + inv.dvd + inv.bluray;
+
+            if (totalCopies > 0) {
+              let multiplier = (movie.rtScore >= 50) ? (movie.rtScore / 100) : -((50 - movie.rtScore) / 50);
+              let formatBoost = (inv.vhs * 0.12) + (inv.dvd * 0.30) + (inv.bluray * 0.55);
+              netPerSec += (formatBoost * multiplier);
+            }
+          });
+        }
+
+        // Penalty for unrewound VHS tapes draining time/money
+        if (unrewoundTapesCount > 0) {
+          netPerSec -= (unrewoundTapesCount * 0.10);
+        }
 
         storeCashTotal = Math.max(0, storeCashTotal + netPerSec);
         saveCashToStorage();
         updateCashUI();
+
+        // Random Shoplifting Event (5% chance per tick if store has movies)
+        if (totalMovies > 0 && Math.random() < 0.05) {
+          let movieIds = Object.keys(userOwnedMovies).filter(id => {
+            let inv = userOwnedMovies[id];
+            return (inv.vhs + inv.dvd + inv.bluray) > 0;
+          });
+          
+          if (movieIds.length > 0) {
+            let stolenId = movieIds[Math.floor(Math.random() * movieIds.length)];
+            let inv = userOwnedMovies[stolenId];
+            let formats = [];
+            if (inv.vhs > 0) formats.push('vhs');
+            if (inv.dvd > 0) formats.push('dvd');
+            if (inv.bluray > 0) formats.push('bluray');
+            
+            let stolenFmt = formats[Math.floor(Math.random() * formats.length)];
+            inv[stolenFmt]--;
+            saveOwnedMoviesToStorage();
+
+            let movieObj = movieCatalog.find(m => m.id === stolenId);
+            triggerStoreAlert('🚨 <strong>SHOPLIFTER ALERT!</strong> Someone stole a <strong>' + stolenFmt.toUpperCase() + '</strong> copy of ' + (movieObj ? movieObj.name : 'a movie') + '!');
+            renderStoreList();
+          }
+        }
+
+        // Random Unrewound Tape Event (8% chance per tick)
+        if (totalMovies > 0 && Math.random() < 0.08) {
+          unrewoundTapesCount++;
+          saveOwnedMoviesToStorage();
+          triggerStoreAlert('📼 <strong>BE KIND, REWIND!</strong> A customer returned an unrewound VHS tape! It is draining $0.10/sec until you rewind it.');
+          renderStoreList();
+        }
       }
     }, 2000);
 
@@ -702,7 +776,14 @@
           ownedLine.style.fontSize = '9px';
           ownedLine.style.color = '#9ca3af';
           ownedLine.style.marginTop = '2px';
-          ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong>';
+          
+          if (store.id === 'blockbuster') {
+            let requiredMovies = ownedCount * 3;
+            let currentMovies = getTotalMovieCount();
+            ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong> (Need ' + requiredMovies + ' movies, have ' + currentMovies + ')';
+          } else {
+            ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong>';
+          }
 
           infoDiv.appendChild(titleLine);
           infoDiv.appendChild(ownedLine);
@@ -773,6 +854,70 @@
           storeItemsList.appendChild(warn);
           return;
         }
+
+        // Unrewound Tapes Action Box
+        if (unrewoundTapesCount > 0) {
+          let rewindBox = document.createElement('div');
+          rewindBox.style.background = 'rgba(249, 115, 22, 0.15)';
+          rewindBox.style.border = '1px solid rgba(249, 115, 22, 0.4)';
+          rewindBox.style.borderRadius = '8px';
+          rewindBox.style.padding = '8px';
+          rewindBox.style.display = 'flex';
+          rewindBox.style.justifyContent = 'space-between';
+          rewindBox.style.alignItems = 'center';
+
+          let rText = document.createElement('div');
+          rText.style.fontSize = '10px';
+          rText.style.color = '#fdba74';
+          rText.innerHTML = '📼 <strong>' + unrewoundTapesCount + ' Unrewound Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Cost $0.10/sec until rewound.</span>';
+
+          let rewindBtn = document.createElement('button');
+          rewindBtn.style.background = 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)';
+          rewindBtn.style.border = 'none';
+          rewindBtn.style.borderRadius = '5px';
+          rewindBtn.style.color = '#fff';
+          rewindBtn.style.fontSize = '9px';
+          rewindBtn.style.fontWeight = '800';
+          rewindBtn.style.padding = '5px 10px';
+          rewindBtn.style.cursor = 'pointer';
+          rewindBtn.textContent = '⏪ REWIND ALL ($0.50)';
+
+          rewindBtn.addEventListener('click', function() {
+            let cost = unrewoundTapesCount * 0.50;
+            if (storeCashTotal >= cost) {
+              storeCashTotal -= cost;
+              unrewoundTapesCount = 0;
+              saveCashToStorage();
+              saveOwnedMoviesToStorage();
+              renderStoreList();
+            } else {
+              alert('Not enough cash to rewind tapes! Earn more cash or notes first.');
+            }
+          });
+
+          rewindBox.appendChild(rText);
+          rewindBox.appendChild(rewindBtn);
+          storeItemsList.appendChild(rewindBox);
+        }
+
+        // Store Inventory Status Header
+        let totalMovies = getTotalMovieCount();
+        let requiredMovies = userOwnedStores.blockbuster * 3;
+        let isFullyStocked = totalMovies >= requiredMovies;
+
+        let statusBox = document.createElement('div');
+        statusBox.style.background = isFullyStocked ? 'rgba(34, 197, 94, 0.12)' : 'rgba(239, 68, 68, 0.12)';
+        statusBox.style.border = isFullyStocked ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(239, 68, 68, 0.3)';
+        statusBox.style.borderRadius = '6px';
+        statusBox.style.padding = '6px';
+        statusBox.style.fontSize = '9px';
+        statusBox.style.color = isFullyStocked ? '#4ade80' : '#fca5a5';
+        statusBox.style.textAlign = 'center';
+        statusBox.innerHTML = isFullyStocked 
+          ? '✅ <strong>STORES FULLY STOCKED!</strong> Inventory: ' + totalMovies + ' / ' + requiredMovies + ' movies needed for ' + userOwnedStores.blockbuster + ' Blockbuster(s).'
+          : '🚨 <strong>UNDER-STOCKED!</strong> Need ' + (requiredMovies - totalMovies) + ' more movies! You are losing money due to low inventory.';
+        
+        storeItemsList.appendChild(statusBox);
 
         movieCatalog.forEach(movie => {
           let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
@@ -2194,7 +2339,7 @@
           if (modeTitleText) modeTitleText.textContent = 'Honest Blue Radio';
           if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Original Broadcast';
           if (labelSubText) labelSubText.textContent = 'FULL DECK';
-          if (modeBtn) modeBtn.style.background = 'gradient(135deg, #a855f7 0%, #7e22ce 100%)';
+          if (modeBtn) modeBtn.style.background = 'linear-gradient(135deg, #a855f7 0%, #7e22ce 100%)';
         }
         selectAndPlayTrack(0);
       });
