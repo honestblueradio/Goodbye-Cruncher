@@ -497,68 +497,91 @@
   }
 </style>
 
+<!-- MQTT Client Library for Universal Cloud Sync -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js"></script>
+
 <!-- Player Behavior & Audio Script -->
 <script>
   (function() {
-    const CHANNEL_KEY = 'hbr_local_sync_channel_v1';
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
 
-    // 1. BroadcastChannel API for multi-tab sync on same browser/device
-    let broadcastChannel = null;
-    try {
-      if ('BroadcastChannel' in window) {
-        broadcastChannel = new BroadcastChannel(CHANNEL_KEY);
-        broadcastChannel.onmessage = function(event) {
-          if (event && event.data && event.data.type === 'HEART_TAP') {
-            renderRandomFloatingHeart();
+    // Universal Cloud MQTT Real-Time Sync (Free public WebSocket broker)
+    let mqttClient = null;
+    const clientId = 'hbr_client_' + Math.random().toString(36).substring(2, 9);
+    const mqttTopic = 'honestblueradio/reactions/hearts';
+
+    function initMqtt() {
+      try {
+        mqttClient = new Paho.MQTT.Client("broker.hivemq.com", 8000, "/mqtt", clientId);
+        mqttClient.onMessageArrived = function(message) {
+          if (message.destinationName === mqttTopic) {
+            try {
+              let payload = JSON.parse(message.payloadString);
+              // Render heart at the broadcasted relative position or fallback center
+              renderFloatingHeartAt(payload.x, payload.y);
+            } catch(e) {
+              renderFloatingHeartAt(appCard.clientWidth / 2, appCard.clientHeight / 2);
+            }
           }
         };
-      }
-    } catch(e) {}
-
-    // 2. Storage event fallback for cross-tab sync across different windows/devices sharing storage
-    window.addEventListener('storage', function(e) {
-      if (e.key === CHANNEL_KEY) {
-        try {
-          let data = JSON.parse(e.newValue);
-          if (data && data.type === 'HEART_TAP') {
-            renderRandomFloatingHeart();
+        mqttClient.connect({
+          useSSL: true,
+          onSuccess: function() {
+            mqttClient.subscribe(mqttTopic);
+          },
+          onFailure: function() {
+            setTimeout(initMqtt, 5000);
           }
-        } catch(err) {}
-      }
-    });
-
-    function renderRandomFloatingHeart() {
-      if (!streamLayer || !appCard) return;
-      const rect = appCard.getBoundingClientRect();
-      const posX = (Math.random() * 0.7 + 0.15) * rect.width;
-      const posY = rect.height - 50;
-
-      const heart = document.createElement('div');
-      heart.className = 'hbr-floating-heart';
-      heart.textContent = ['❤️', '💖', '💙', '💜', '🧡'][Math.floor(Math.random() * 5)];
-      heart.style.left = (posX - 12) + 'px';
-      heart.style.top = (posY - 12) + 'px';
-      streamLayer.appendChild(heart);
-
-      setTimeout(() => {
-        if (heart.parentNode) heart.parentNode.removeChild(heart);
-      }, 2200);
+        });
+      } catch(e) {}
     }
 
-    function broadcastHeartTap() {
-      renderRandomFloatingHeart();
+    initMqtt();
 
-      // Send via BroadcastChannel
-      if (broadcastChannel) {
-        try { broadcastChannel.postMessage({ type: 'HEART_TAP' }); } catch(e) {}
+    function renderFloatingHeartAt(x, y) {
+      if (!streamLayer || !appCard) return;
+      const rect = appCard.getBoundingClientRect();
+      const targetX = x !== undefined ? x : (rect.width / 2);
+      const targetY = y !== undefined ? y : (rect.height - 50);
+
+      // Spawn a string of 2-3 hearts right above the thumb/tap position
+      for (let i = 0; i < 2; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'hbr-floating-heart';
+          heart.textContent = ['❤️', '💖', '💙', '💜', '🧡'][Math.floor(Math.random() * 5)];
+          heart.style.left = (targetX + (Math.random() * 30 - 15)) + 'px';
+          heart.style.top = (targetY - 20 + (Math.random() * 20 - 10)) + 'px';
+          streamLayer.appendChild(heart);
+
+          setTimeout(() => {
+            if (heart.parentNode) heart.parentNode.removeChild(heart);
+          }, 2200);
+        }, i * 120);
       }
+    }
 
-      // Send via localStorage trigger
-      try {
-        localStorage.setItem(CHANNEL_KEY, JSON.stringify({ type: 'HEART_TAP', time: Date.now() }));
-      } catch(e) {}
+    function broadcastHeartTap(e) {
+      if (!appCard) return;
+      const rect = appCard.getBoundingClientRect();
+      const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : rect.left + rect.width / 2);
+      const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : rect.top + rect.height / 2);
+      
+      const posX = clientX - rect.left;
+      const posY = clientY - rect.top;
+
+      // 1. Immediately show hearts above thumb on our own screen
+      renderFloatingHeartAt(posX, posY);
+
+      // 2. Broadcast via MQTT to all other logged-in devices worldwide
+      if (mqttClient && mqttClient.isConnected()) {
+        try {
+          let message = new Paho.MQTT.Message(JSON.stringify({ x: posX, y: posY, time: Date.now() }));
+          message.destinationName = mqttTopic;
+          mqttClient.send(message);
+        } catch(e) {}
+      }
     }
 
     if (appCard) {
@@ -566,16 +589,15 @@
         if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-install-modal')) {
           return;
         }
-        broadcastHeartTap();
+        broadcastHeartTap(e);
       });
+      appCard.addEventListener('touchstart', function(e) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-install-modal')) {
+          return;
+        }
+        broadcastHeartTap(e);
+      }, {passive: true});
     }
-
-    // Simulated Ambient Listener Hearts
-    setInterval(() => {
-      if (Math.random() < 0.4 && appCard) {
-        renderRandomFloatingHeart();
-      }
-    }, 3500);
 
     // Master Broadcast Tracks
     const masterBroadcastTracks = [
