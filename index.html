@@ -505,12 +505,12 @@
   (function() {
     const REALTIME_CHANNEL_NAME = 'hbr_realtime_stream_v1';
     
-    // Pusher WebSocket Configuration for Real-Time Global Hearts
+    // Pusher WebSocket Configuration with your personal app key and cluster
     let pusherClient = null;
     let pusherChannel = null;
     try {
       Pusher.logToConsole = false;
-      pusherClient = new Pusher('d1a2b3c4e5f67890abcd', {
+      pusherClient = new Pusher('810d41730a3aadeefaae', {
         cluster: 'us2'
       });
       pusherChannel = pusherClient.subscribe('honest-blue-radio-global');
@@ -2326,7 +2326,7 @@
 
         let add2Btn = document.createElement('button');
         add2Btn.style.background = inQ2 ? 'rgba(168,85,247,0.3)' : 'rgba(255,255,255,0.08)';
-        add2Btn.style.border = inQ2 ? '1px solid rgba(168,85,247,0.5)' : '1px solid rgba(168,85,247,0.15)';
+        add2Btn.style.border = inQ2 ? '1px solid rgba(168,85,247,0.5)' : '1px solid rgba(255,255,255,0.15)';
         add2Btn.style.borderRadius = '4px';
         add2Btn.style.color = inQ2 ? '#d8b4fe' : '#9ca3af';
         add2Btn.style.fontSize = '9px';
