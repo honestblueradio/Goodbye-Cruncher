@@ -46,7 +46,7 @@
   <!-- Content Container -->
   <div style="position: relative; z-index: 2;">
     <!-- Header with Track Drawer Toggle, Live Status & Dynamic Listener Counter -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
       <div>
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
           <span id="hbr-mode-title" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #3b82f6; font-weight: 700; display: block;">Honest Blue Radio</span>
@@ -65,6 +65,18 @@
       </div>
       <!-- Animated Live Listener Badge with Green Person Icon -->
       <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;"><span style="color: #4ade80; font-size: 12px;">👤</span><span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span></div>
+    </div>
+
+    <!-- User Top Profile Banner (Appears Up Top When Profile Created) -->
+    <div id="hbr-top-profile-banner" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px;">
+      <div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+        <img id="hbr-top-banner-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+        <span id="hbr-top-banner-fallback" style="font-size: 18px;">🎧</span>
+      </div>
+      <div style="flex: 1; overflow: hidden;">
+        <div id="hbr-top-banner-name" style="font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Listener</div>
+        <div id="hbr-top-banner-badge" style="font-size: 9px; font-weight: 700; color: #93c5fd; background: rgba(59,130,246,0.25); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 3px;">Excellent Keyboardist</div>
+      </div>
     </div>
 
     <!-- Collapsible Scrollable Playlist Drawer -->
@@ -286,10 +298,11 @@
       </div>
     </div>
 
-    <!-- Profile Image URL Input -->
+    <!-- Profile Image Upload from Phone or URL -->
     <div style="margin-bottom: 14px;">
-      <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 2px;">Profile Image URL</label>
-      <input id="hbr-profile-img-input" type="text" placeholder="Paste image URL (https://...)" style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 6px; color: #fff; font-size: 10px; box-sizing: border-box;">
+      <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Profile Image (Upload from Phone or Paste URL)</label>
+      <input id="hbr-profile-file-input" type="file" accept="image/*" style="font-size: 10px; color: #d1d5db; margin-bottom: 6px; width: 100%;">
+      <input id="hbr-profile-img-input" type="text" placeholder="Or paste image URL (https://...)" style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 6px; color: #fff; font-size: 10px; box-sizing: border-box;">
     </div>
 
     <!-- Music Badges / Titles Picker -->
@@ -715,20 +728,27 @@
 
     loadSavedPlaylists();
 
-    // User Profile Management & Persistence
+    // User Profile Management & Top Banner Sync
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
     const closeProfileBtn = document.getElementById('hbr-close-profile-btn');
     const profileModal = document.getElementById('hbr-profile-modal');
     const profileNameInput = document.getElementById('hbr-profile-name-input');
     const profileImgInput = document.getElementById('hbr-profile-img-input');
+    const profileFileInput = document.getElementById('hbr-profile-file-input');
     const profileAvatarImg = document.getElementById('hbr-profile-avatar-img');
     const profileAvatarFallback = document.getElementById('hbr-profile-avatar-fallback');
     const saveProfileBtn = document.getElementById('hbr-save-profile-btn');
     const badgesContainer = document.getElementById('hbr-badges-container');
     const profileInventoryList = document.getElementById('hbr-profile-inventory-list');
 
+    const topProfileBanner = document.getElementById('hbr-top-profile-banner');
+    const topBannerImg = document.getElementById('hbr-top-banner-img');
+    const topBannerFallback = document.getElementById('hbr-top-banner-fallback');
+    const topBannerName = document.getElementById('hbr-top-banner-name');
+    const topBannerBadge = document.getElementById('hbr-top-banner-badge');
+
     let userProfileData = {
-      name: 'Honest Blue Listener',
+      name: '',
       avatarUrl: '',
       badge: 'Excellent Keyboardist'
     };
@@ -750,6 +770,30 @@
 
     loadProfileFromStorage();
 
+    function updateTopProfileBanner() {
+      if (!topProfileBanner) return;
+      if (userProfileData.name && userProfileData.name.trim() !== '') {
+        topProfileBanner.style.display = 'flex';
+        if (topBannerName) topBannerName.textContent = userProfileData.name;
+        if (topBannerBadge) topBannerBadge.textContent = userProfileData.badge;
+
+        if (userProfileData.avatarUrl) {
+          if (topBannerImg) {
+            topBannerImg.src = userProfileData.avatarUrl;
+            topBannerImg.style.display = 'block';
+          }
+          if (topBannerFallback) topBannerFallback.style.display = 'none';
+        } else {
+          if (topBannerImg) topBannerImg.style.display = 'none';
+          if (topBannerFallback) topBannerFallback.style.display = 'block';
+        }
+      } else {
+        topProfileBanner.style.display = 'none';
+      }
+    }
+
+    updateTopProfileBanner();
+
     function updateProfileModalUI() {
       if (profileNameInput) profileNameInput.value = userProfileData.name;
       if (profileImgInput) profileImgInput.value = userProfileData.avatarUrl;
@@ -765,7 +809,6 @@
         if (profileAvatarFallback) profileAvatarFallback.style.display = 'block';
       }
 
-      // Highlight selected badge
       if (badgesContainer) {
         const badgeBtns = badgesContainer.querySelectorAll('.hbr-badge-option');
         badgeBtns.forEach(btn => {
@@ -779,13 +822,10 @@
         });
       }
 
-      // Render Tracked Inventory in Profile
       if (profileInventoryList) {
         profileInventoryList.innerHTML = '';
-        
         let hasAnything = false;
         
-        // Render Stores
         storeCatalog.forEach(store => {
           let count = userOwnedStores[store.id] || 0;
           if (count > 0) {
@@ -796,7 +836,6 @@
           }
         });
 
-        // Render Movies
         movieCatalog.forEach(movie => {
           let inv = userOwnedMovies[movie.id];
           if (inv) {
@@ -839,11 +878,30 @@
       });
     }
 
+    if (profileFileInput) {
+      profileFileInput.addEventListener('change', function(e) {
+        let file = e.target.files[0];
+        if (file) {
+          let reader = new FileReader();
+          reader.onload = function(evt) {
+            userProfileData.avatarUrl = evt.target.result;
+            if (profileImgInput) profileImgInput.value = '';
+            updateProfileModalUI();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
     if (saveProfileBtn) {
       saveProfileBtn.addEventListener('click', function() {
-        if (profileNameInput) userProfileData.name = profileNameInput.value.trim() || 'Honest Blue Listener';
-        if (profileImgInput) userProfileData.avatarUrl = profileImgInput.value.trim();
+        if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
+        let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
+        if (urlVal) {
+          userProfileData.avatarUrl = urlVal;
+        }
         saveProfileToStorage();
+        updateTopProfileBanner();
         updateProfileModalUI();
         if (profileModal) profileModal.style.display = 'none';
       });
@@ -884,14 +942,12 @@
 
     updateCashUI();
 
-    // Pure Movie-Driven Passive Cash & Interactive Events Engine ($0.00 Base Payout)
     setInterval(function() {
       let bCount = userOwnedStores.blockbuster;
       if (bCount > 0) {
         let totalMovies = getTotalMovieCount();
-        let netPerSec = 0.00; // Zero base earnings from store ownership alone!
+        let netPerSec = 0.00;
 
-        // Earnings come STRICTLY from owned movie stock
         movieCatalog.forEach(movie => {
           let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
           let totalCopies = (inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0);
@@ -903,14 +959,12 @@
           }
         });
 
-        // Small Late Fee Revenue Trickling In (Random $0.25 to $1.25 when owning movies)
         if (totalMovies > 0 && Math.random() < 0.12) {
           let lateFeeBonus = parseFloat((Math.random() * 1.00 + 0.25).toFixed(2));
           netPerSec += lateFeeBonus;
           triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on a overdue tape!');
         }
 
-        // Penalty for unrewound VHS tapes draining cash
         if (unrewoundTapesCount > 0) {
           netPerSec -= (unrewoundTapesCount * 0.10);
         }
@@ -919,7 +973,6 @@
         saveCashToStorage();
         updateCashUI();
 
-        // Shoplifting Event with Reaction Catch Window (6% chance per tick)
         if (totalMovies > 0 && !shoplifterPending && Math.random() < 0.06) {
           let movieIds = Object.keys(userOwnedMovies).filter(id => {
             let inv = userOwnedMovies[id];
@@ -962,7 +1015,6 @@
 
                 if (shoplifterPending.timeLeft <= 0) {
                   clearInterval(shoplifterTimerInterval);
-                  // Escaped! Deduct tape stock
                   let stolenInv = userOwnedMovies[shoplifterPending.movieId];
                   if (stolenInv && stolenInv[shoplifterPending.format] > 0) {
                     stolenInv[shoplifterPending.format]--;
@@ -978,7 +1030,6 @@
           }
         }
 
-        // Random Unrewound Tape Event (8% chance per tick)
         if (totalMovies > 0 && Math.random() < 0.08) {
           unrewoundTapesCount++;
           saveOwnedMoviesToStorage();
@@ -988,7 +1039,6 @@
       }
     }, 2000);
 
-    // Interactive Catch Shoplifter Tap Action
     if (shoplifterCatchBox) {
       shoplifterCatchBox.addEventListener('click', function() {
         if (shoplifterPending) {
@@ -999,7 +1049,6 @@
           
           if (shoplifterCatchBox) shoplifterCatchBox.style.display = 'none';
           
-          // Bonus reward for fast reflexes!
           let rewardCash = 2.50;
           storeCashTotal += rewardCash;
           saveCashToStorage();
@@ -1101,7 +1150,6 @@
           storeItemsList.appendChild(itemBox);
         });
       } else {
-        // MOVIES TAB
         if (userOwnedStores.blockbuster === 0) {
           let warn = document.createElement('div');
           warn.style.background = 'rgba(239, 68, 68, 0.15)';
@@ -1116,7 +1164,6 @@
           return;
         }
 
-        // Unrewound Tapes Action Box
         if (unrewoundTapesCount > 0) {
           let rewindBox = document.createElement('div');
           rewindBox.style.background = 'rgba(249, 115, 22, 0.15)';
@@ -1161,7 +1208,6 @@
           storeItemsList.appendChild(rewindBox);
         }
 
-        // Store Inventory Status Header
         let totalMovies = getTotalMovieCount();
 
         let statusBox = document.createElement('div');
@@ -1213,7 +1259,6 @@
           topRow.appendChild(titleDiv);
           itemBox.appendChild(topRow);
 
-          // Formats Row (VHS / DVD / Blu-ray)
           let formatsRow = document.createElement('div');
           formatsRow.style.display = 'flex';
           formatsRow.style.gap = '4px';
@@ -2262,7 +2307,7 @@
 
         let add2Btn = document.createElement('button');
         add2Btn.style.background = inQ2 ? 'rgba(168,85,247,0.3)' : 'rgba(255,255,255,0.08)';
-        add2Btn.style.border = inQ2 ? '1px solid rgba(168,85,247,0.5)' : '1px solid rgba(168,85,247,0.15)';
+        add2Btn.style.border = inQ2 ? '1px solid rgba(168,85,247,0.5)' : '1px solid rgba(255,255,255,0.15)';
         add2Btn.style.borderRadius = '4px';
         add2Btn.style.color = inQ2 ? '#d8b4fe' : '#9ca3af';
         add2Btn.style.fontSize = '9px';
