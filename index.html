@@ -515,9 +515,8 @@
       });
       pusherChannel = pusherClient.subscribe('honest-blue-radio-global');
       pusherChannel.bind('heart-tap', function(data) {
-        if (data && typeof data.pctX === 'number' && typeof data.pctY === 'number') {
-          renderFloatingHeartByPercent(data.pctX, data.pctY);
-        }
+        // Trigger a floating heart from a random horizontal position like TikTok
+        renderRandomFloatingHeart();
       });
       pusherChannel.bind('live-state', function(data) {
         if (data && typeof data.isLive === 'boolean') {
@@ -538,7 +537,7 @@
         syncChannel.onmessage = function(event) {
           if (event && event.data) {
             if (event.data.type === 'HEART_TAP') {
-              renderFloatingHeartByPercent(event.data.pctX, event.data.pctY);
+              renderRandomFloatingHeart();
             } else if (event.data.type === 'LIVE_STATE_CHANGE') {
               updateLiveUI(!!event.data.isLive);
             }
@@ -547,31 +546,32 @@
       }
     } catch(e) {}
 
-    function renderFloatingHeartByPercent(pctX, pctY) {
+    function renderRandomFloatingHeart() {
       if (!streamLayer || !appCard) return;
       const rect = appCard.getBoundingClientRect();
-      const posX = (pctX / 100) * rect.width;
-      const posY = (pctY / 100) * rect.height;
+      // Randomize horizontal position across the player card (between 15% and 85%)
+      const posX = (Math.random() * 0.7 + 0.15) * rect.width;
+      const posY = rect.height - 50; // Start near the bottom like TikTok streams
 
       const heart = document.createElement('div');
       heart.className = 'hbr-floating-heart';
-      heart.textContent = '❤️';
+      heart.textContent = ['❤️', '💖', '💙', '💜', '🧡'][Math.floor(Math.random() * 5)];
       heart.style.left = (posX - 12) + 'px';
       heart.style.top = (posY - 12) + 'px';
       streamLayer.appendChild(heart);
 
       setTimeout(() => {
         if (heart.parentNode) heart.parentNode.removeChild(heart);
-      }, 2100);
+      }, 2200);
     }
 
-    function broadcastHeartTap(pctX, pctY) {
+    function broadcastHeartTap() {
       // Immediate local render
-      renderFloatingHeartByPercent(pctX, pctY);
+      renderRandomFloatingHeart();
 
       // Local cross-tab sync
       if (syncChannel) {
-        try { syncChannel.postMessage({ type: 'HEART_TAP', pctX: pctX, pctY: pctY }); } catch(e) {}
+        try { syncChannel.postMessage({ type: 'HEART_TAP' }); } catch(e) {}
       }
 
       // Pusher WebSockets Real-Time Cloud Sync
@@ -579,7 +579,7 @@
         fetch('https://api.pusher.com/apps/123456/channels/honest-blue-radio-global/events', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: 'heart-tap', data: JSON.stringify({ pctX: pctX, pctY: pctY }) })
+          body: JSON.stringify({ name: 'heart-tap', data: JSON.stringify({ tap: true }) })
         }).catch(() => {});
       } catch(e) {}
     }
@@ -589,17 +589,14 @@
         if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-install-modal')) {
           return;
         }
-        const rect = appCard.getBoundingClientRect();
-        const pctX = ((e.clientX - rect.left) / rect.width) * 100;
-        const pctY = ((e.clientY - rect.top) / rect.height) * 100;
-        broadcastHeartTap(pctX, pctY);
+        broadcastHeartTap();
       });
     }
 
     // Simulated Ambient Listener Hearts
     setInterval(() => {
       if (Math.random() < 0.4 && appCard) {
-        renderFloatingHeartByPercent(Math.random() * 80 + 10, Math.random() * 60 + 20);
+        renderRandomFloatingHeart();
       }
     }, 3500);
 
