@@ -3,6 +3,9 @@
   <!-- FLOATING HEART STREAM LAYER -->
   <div id="hbr-reaction-stream-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; overflow: hidden;"></div>
 
+  <!-- RUNNING & NAPPING DOG COMPANION LAYER -->
+  <div id="hbr-dog-companion" style="display: none; position: absolute; bottom: 18px; left: 20px; font-size: 26px; z-index: 85; pointer-events: none; user-select: none; transition: transform 0.4s ease, bottom 0.4s ease; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8);">🐕</div>
+
   <!-- Fireworks Overlay Canvas -->
   <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; z-index: 100; display: none;"></canvas>
 
@@ -179,10 +182,11 @@
           <div style="font-size: 9px; color: #fee2e2; margin-top: 2px;">TAP HERE FAST TO TACKLE THE THIEF! (<span id="hbr-thief-timer">3</span>s)</div>
         </div>
 
-        <!-- Store Navigation Tabs (Stores vs Movies) -->
+        <!-- Store Navigation Tabs (Stores vs Movies vs Characters) -->
         <div style="display: flex; gap: 4px; margin-bottom: 8px;">
           <button id="hbr-tab-stores-btn" style="flex: 1; background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 6px; color: #93c5fd; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🏪 STORES</button>
-          <button id="hbr-tab-movies-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🍿 BLOCKBUSTER MOVIES</button>
+          <button id="hbr-tab-movies-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🍿 MOVIES</button>
+          <button id="hbr-tab-chars-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🐶 CHARACTERS</button>
         </div>
 
         <!-- Store Items Container -->
@@ -214,6 +218,12 @@
       <div style="font-size: 10px; font-weight: 800; color: #fb923c; text-transform: uppercase; margin-bottom: 2px;">🚀 ROCKET CHALLENGE</div>
       <div style="font-size: 12px; font-weight: 700; color: #fff;"><span id="hbr-rocket-left">23</span> / 23 LEFT</div>
       <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;">Tap fast to fire!</div>
+    </div>
+
+    <!-- Companion Dog Toggle Bar (Appears when character purchased) -->
+    <div id="hbr-dog-toggle-bar" style="display: none; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px;">
+      <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700;">Molly Companion:</span>
+      <button id="hbr-dog-toggle-btn" style="background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.5); border-radius: 12px; padding: 4px 12px; font-size: 10px; font-weight: 800; color: #4ade80; cursor: pointer; transition: all 0.2s ease;">🐕 ACTIVE</button>
     </div>
 
     <!-- Vinyl Color Picker Bar -->
@@ -737,6 +747,7 @@
     
     let userOwnedStores = { blockbuster: 0, toysrus: 0, kbtoys: 0 };
     let userOwnedMovies = {};
+    let userOwnedCharacters = { mollydog: 0 };
 
     const storeCatalog = [
       { id: 'blockbuster', name: 'Blockbuster Video', baseMin: 50, baseMax: 150, color: '#3b82f6', icon: '📼' },
@@ -751,6 +762,10 @@
       { id: 'mario93', name: 'Super Mario Bros (1993)', rtScore: 28, basePrice: 20 },
       { id: 'batmanrobin', name: 'Batman & Robin', rtScore: 12, basePrice: 15 },
       { id: 'gigli', name: 'Gigli', rtScore: 6, basePrice: 10 }
+    ];
+
+    const characterCatalog = [
+      { id: 'mollydog', name: 'Molly the Black Lab', price: 250, icon: '🐕', desc: 'Runs around & takes naps on your player!' }
     ];
 
     let currentStorePrices = {};
@@ -787,6 +802,7 @@
         const savedCash = localStorage.getItem('hbr_store_cash');
         const savedStores = localStorage.getItem('hbr_owned_stores');
         const savedMovies = localStorage.getItem('hbr_owned_movies');
+        const savedChars = localStorage.getItem('hbr_owned_chars');
         const savedUnrewound = localStorage.getItem('hbr_unrewound_tapes');
 
         if (savedQ1) customQueue1 = JSON.parse(savedQ1);
@@ -796,21 +812,22 @@
         if (savedBanked !== null) {
           bankedNotesTotal = parseInt(savedBanked, 10) || 0;
         } else {
-          bankedNotesTotal = 150;
+          bankedNotesTotal = 250;
           saveBankedNotesToStorage();
         }
 
-        if (bankedNotesTotal === 0 && (savedStores || savedMovies || localStorage.getItem('hbr_user_profile'))) {
-          bankedNotesTotal = 150;
+        if (bankedNotesTotal === 0 && (savedStores || savedMovies || savedChars || localStorage.getItem('hbr_user_profile'))) {
+          bankedNotesTotal = 250;
           saveBankedNotesToStorage();
         }
 
         if (savedCash) storeCashTotal = parseFloat(savedCash) || 0.00;
         if (savedStores) userOwnedStores = Object.assign(userOwnedStores, JSON.parse(savedStores));
         if (savedMovies) userOwnedMovies = Object.assign(userOwnedMovies, JSON.parse(savedMovies));
+        if (savedChars) userOwnedCharacters = Object.assign(userOwnedCharacters, JSON.parse(savedChars));
         if (savedUnrewound) unrewoundTapesCount = parseInt(savedUnrewound, 10) || 0;
       } catch (e) {
-        bankedNotesTotal = 150;
+        bankedNotesTotal = 250;
       }
     }
 
@@ -828,12 +845,77 @@
     }
     function saveCashToStorage() { localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2)); }
     function saveOwnedStoresToStorage() { localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores)); }
+    function saveOwnedCharsToStorage() { localStorage.setItem('hbr_owned_chars', JSON.stringify(userOwnedCharacters)); }
     function saveOwnedMoviesToStorage() {
       localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
       localStorage.setItem('hbr_unrewound_tapes', unrewoundTapesCount.toString());
     }
 
     loadSavedPlaylists();
+
+    // Dog Companion Animation & Toggle Engine
+    const dogCompanion = document.getElementById('hbr-dog-companion');
+    const dogToggleBar = document.getElementById('hbr-dog-toggle-bar');
+    const dogToggleBtn = document.getElementById('hbr-dog-toggle-btn');
+    let dogActive = localStorage.getItem('hbr_dog_active') !== 'false';
+    let dogInterval = null;
+
+    function updateDogUIState() {
+      let isOwned = (userOwnedCharacters.mollydog || 0) > 0;
+      if (dogToggleBar) {
+        dogToggleBar.style.display = isOwned ? 'flex' : 'none';
+      }
+      if (dogCompanion) {
+        dogCompanion.style.display = (isOwned && dogActive) ? 'block' : 'none';
+      }
+      if (dogToggleBtn) {
+        dogToggleBtn.textContent = dogActive ? '🐕 ACTIVE' : '💤 SLEEPING/OFF';
+        dogToggleBtn.style.background = dogActive ? 'rgba(34, 197, 94, 0.2)' : 'rgba(107, 114, 128, 0.2)';
+        dogToggleBtn.style.borderColor = dogActive ? 'rgba(34, 197, 94, 0.5)' : 'rgba(107, 114, 128, 0.5)';
+        dogToggleBtn.style.color = dogActive ? '#4ade80' : '#9ca3af';
+      }
+    }
+
+    function runDogBehavior() {
+      if (!dogCompanion || !dogActive || (userOwnedCharacters.mollydog || 0) <= 0) return;
+      
+      let actions = ['run-left', 'run-right', 'nap', 'bark', 'sit'];
+      let chosen = actions[Math.floor(Math.random() * actions.length)];
+      
+      let currentLeft = parseInt(dogCompanion.style.left || '20', 10);
+      
+      if (chosen === 'run-left') {
+        let newLeft = Math.max(10, currentLeft - Math.floor(Math.random() * 120 + 40));
+        dogCompanion.style.left = newLeft + 'px';
+        dogCompanion.style.transform = 'scaleX(-1)';
+        dogCompanion.textContent = '🐕';
+      } else if (chosen === 'run-right') {
+        let newLeft = Math.min(appCard.clientWidth - 50, currentLeft + Math.floor(Math.random() * 120 + 40));
+        dogCompanion.style.left = newLeft + 'px';
+        dogCompanion.style.transform = 'scaleX(1)';
+        dogCompanion.textContent = '🐕';
+      } else if (chosen === 'nap') {
+        dogCompanion.textContent = '🛌💤';
+      } else if (chosen === 'bark') {
+        dogCompanion.textContent = '🐶✨';
+      } else {
+        dogCompanion.textContent = '🐕';
+      }
+    }
+
+    if (dogToggleBtn) {
+      dogToggleBtn.addEventListener('click', function() {
+        dogActive = !dogActive;
+        localStorage.setItem('hbr_dog_active', dogActive ? 'true' : 'false');
+        updateDogUIState();
+      });
+    }
+
+    setTimeout(() => {
+      updateDogUIState();
+      if (dogInterval) clearInterval(dogInterval);
+      dogInterval = setInterval(runDogBehavior, 4500);
+    }, 500);
 
     // User Profile Management & Dynamic UI Sync with Robust Image Compression (PNG/Large Photos Fix)
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
@@ -979,6 +1061,16 @@
           }
         });
 
+        characterCatalog.forEach(char => {
+          let count = userOwnedCharacters[char.id] || 0;
+          if (count > 0) {
+            hasAnything = true;
+            let div = document.createElement('div');
+            div.innerHTML = char.icon + ' ' + char.name + ': <strong style="color: #4ade80;">Unlocked & Companion Active</strong>';
+            profileInventoryList.appendChild(div);
+          }
+        });
+
         movieCatalog.forEach(movie => {
           let inv = userOwnedMovies[movie.id];
           if (inv) {
@@ -993,7 +1085,7 @@
         });
 
         if (!hasAnything) {
-          profileInventoryList.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No stores or movies purchased yet. Visit the Store in the app to start buying!</div>';
+          profileInventoryList.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No stores, characters or movies purchased yet. Visit the Store in the app to start buying!</div>';
         }
       }
     }
@@ -1111,6 +1203,7 @@
     const thiefTimerSpan = document.getElementById('hbr-thief-timer');
     const tabStoresBtn = document.getElementById('hbr-tab-stores-btn');
     const tabMoviesBtn = document.getElementById('hbr-tab-movies-btn');
+    const tabCharsBtn = document.getElementById('hbr-tab-chars-btn');
 
     let shoplifterPending = null;
     let shoplifterTimerInterval = null;
@@ -1340,6 +1433,81 @@
           itemBox.appendChild(buyDiv);
           storeItemsList.appendChild(itemBox);
         });
+      } else if (activeStoreTab === 'characters') {
+        characterCatalog.forEach(char => {
+          let ownedCount = userOwnedCharacters[char.id] || 0;
+
+          let itemBox = document.createElement('div');
+          itemBox.style.background = 'rgba(255, 255, 255, 0.04)';
+          itemBox.style.border = ownedCount > 0 ? '1px solid #22c55e' : '1px solid rgba(255, 255, 255, 0.12)';
+          itemBox.style.borderRadius = '8px';
+          itemBox.style.padding = '8px';
+          itemBox.style.display = 'flex';
+          itemBox.style.justifyContent = 'space-between';
+          itemBox.style.alignItems = 'center';
+
+          let infoDiv = document.createElement('div');
+          let titleLine = document.createElement('div');
+          titleLine.style.fontSize = '11px';
+          titleLine.style.fontWeight = '800';
+          titleLine.style.color = '#ffffff';
+          titleLine.innerHTML = char.icon + ' ' + char.name;
+
+          let descLine = document.createElement('div');
+          descLine.style.fontSize = '9px';
+          descLine.style.color = '#9ca3af';
+          descLine.style.marginTop = '2px';
+          descLine.innerHTML = char.desc + (ownedCount > 0 ? '<br><strong style="color: #4ade80;">STATUS: UNLOCKED & ACTIVE</strong>' : '');
+
+          infoDiv.appendChild(titleLine);
+          infoDiv.appendChild(descLine);
+
+          let buyDiv = document.createElement('div');
+          buyDiv.style.textAlign = 'right';
+
+          let priceLine = document.createElement('div');
+          priceLine.style.fontSize = '10px';
+          priceLine.style.fontWeight = '800';
+          priceLine.style.color = '#fbbf24';
+          priceLine.textContent = char.price + ' Notes';
+
+          let buyBtn = document.createElement('button');
+          let canAfford = bankedNotesTotal >= char.price;
+
+          buyBtn.style.marginTop = '3px';
+          buyBtn.style.background = ownedCount > 0 ? '#1f2937' : (canAfford ? 'linear-gradient(135deg, #22c55e 0%, #15803d 100%)' : '#374151');
+          buyBtn.style.border = 'none';
+          buyBtn.style.borderRadius = '5px';
+          buyBtn.style.color = ownedCount > 0 ? '#4ade80' : (canAfford ? '#ffffff' : '#9ca3af');
+          buyBtn.style.fontSize = '8px';
+          buyBtn.style.fontWeight = '800';
+          buyBtn.style.padding = '3px 8px';
+          buyBtn.style.cursor = (ownedCount > 0 || !canAfford) ? 'not-allowed' : 'pointer';
+          buyBtn.textContent = ownedCount > 0 ? 'UNLOCKED' : (canAfford ? 'BUY CHARACTER' : 'NEED NOTES');
+
+          if (ownedCount === 0 && canAfford) {
+            buyBtn.addEventListener('click', function() {
+              bankedNotesTotal -= char.price;
+              userOwnedCharacters[char.id] = 1;
+              
+              saveBankedNotesToStorage();
+              saveOwnedCharsToStorage();
+              updateDogUIState();
+
+              const bankedCountDisplay = document.getElementById('hbr-banked-count');
+              if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+
+              renderStoreList();
+            });
+          }
+
+          buyDiv.appendChild(priceLine);
+          buyDiv.appendChild(buyBtn);
+
+          itemBox.appendChild(infoDiv);
+          itemBox.appendChild(buyDiv);
+          storeItemsList.appendChild(itemBox);
+        });
       } else {
         if (userOwnedStores.blockbuster === 0) {
           let warn = document.createElement('div');
@@ -1506,26 +1674,28 @@
       }
     }
 
-    if (tabStoresBtn && tabMoviesBtn) {
+    if (tabStoresBtn && tabMoviesBtn && tabCharsBtn) {
       tabStoresBtn.addEventListener('click', function() {
         activeStoreTab = 'stores';
-        tabStoresBtn.style.background = 'rgba(59, 130, 246, 0.25)';
-        tabStoresBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)';
-        tabStoresBtn.style.color = '#93c5fd';
-        tabMoviesBtn.style.background = 'rgba(255,255,255,0.06)';
-        tabMoviesBtn.style.border = '1px solid rgba(255,255,255,0.15)';
-        tabMoviesBtn.style.color = '#9ca3af';
+        tabStoresBtn.style.background = 'rgba(59, 130, 246, 0.25)'; tabStoresBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)'; tabStoresBtn.style.color = '#93c5fd';
+        tabMoviesBtn.style.background = 'rgba(255,255,255,0.06)'; tabMoviesBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabMoviesBtn.style.color = '#9ca3af';
+        tabCharsBtn.style.background = 'rgba(255,255,255,0.06)'; tabCharsBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabCharsBtn.style.color = '#9ca3af';
         renderStoreList();
       });
 
       tabMoviesBtn.addEventListener('click', function() {
         activeStoreTab = 'movies';
-        tabMoviesBtn.style.background = 'rgba(59, 130, 246, 0.25)';
-        tabMoviesBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)';
-        tabMoviesBtn.style.color = '#93c5fd';
-        tabStoresBtn.style.background = 'rgba(255,255,255,0.06)';
-        tabStoresBtn.style.border = '1px solid rgba(255,255,255,0.15)';
-        tabStoresBtn.style.color = '#9ca3af';
+        tabMoviesBtn.style.background = 'rgba(59, 130, 246, 0.25)'; tabMoviesBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)'; tabMoviesBtn.style.color = '#93c5fd';
+        tabStoresBtn.style.background = 'rgba(255,255,255,0.06)'; tabStoresBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabStoresBtn.style.color = '#9ca3af';
+        tabCharsBtn.style.background = 'rgba(255,255,255,0.06)'; tabCharsBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabCharsBtn.style.color = '#9ca3af';
+        renderStoreList();
+      });
+
+      tabCharsBtn.addEventListener('click', function() {
+        activeStoreTab = 'characters';
+        tabCharsBtn.style.background = 'rgba(59, 130, 246, 0.25)'; tabCharsBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)'; tabCharsBtn.style.color = '#93c5fd';
+        tabStoresBtn.style.background = 'rgba(255,255,255,0.06)'; tabStoresBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabStoresBtn.style.color = '#9ca3af';
+        tabMoviesBtn.style.background = 'rgba(255,255,255,0.06)'; tabMoviesBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabMoviesBtn.style.color = '#9ca3af';
         renderStoreList();
       });
     }
