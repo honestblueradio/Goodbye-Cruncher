@@ -81,8 +81,8 @@
     <div id="hbr-directory-drawer" style="max-height: 0; overflow-y: auto; transition: all 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; margin-bottom: 0px;">
       <div style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px;">
-          <div style="font-size: 11px; font-weight: 800; color: #60a5fa; text-transform: uppercase;">👥 COMMUNITY DIRECTORY</div>
-          <span style="font-size: 9px; color: #9ca3af;">Synced live across devices</span>
+          <div style="font-size: 11px; font-weight: 800; color: #60a5fa; text-transform: uppercase;">👥 ACTIVE COMMUNITY LISTENERS</div>
+          <span style="font-size: 9px; color: #9ca3af;">Live Radio Feed</span>
         </div>
         <div id="hbr-directory-list" style="display: flex; flex-direction: column; gap: 6px;">
           <!-- Dynamically populated -->
@@ -536,7 +536,7 @@
   }
 </style>
 
-<!-- Player Behavior & Realtime Cross-Device Sync Script -->
+<!-- Player Behavior & Realtime Dynamic Directory Script -->
 <script>
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
@@ -571,13 +571,10 @@
     }
     loadProfileFromStorage();
 
-    // PubNub Realtime Engine for Universal Cross-Device Presence & Profile Syncing
+    // PubNub Engine for Social Heart Taps
     let pubnub = null;
-    let activeOnlineUsersMap = {};
-
     function initPubNubRealtime() {
       if (typeof PubNub === 'undefined') return;
-
       pubnub = new PubNub({
         publishKey: 'pub-c-897b6e4e-0b32-4734-9276-80db61a79853',
         subscribeKey: 'sub-c-519213ef-f0ad-48b4-8dbd-02eeaa9b8030',
@@ -586,63 +583,14 @@
 
       pubnub.addListener({
         message: function(event) {
-          let data = event.message;
-          if (data && data.type === 'hbr-heart-tap') {
+          if (event.message && event.message.type === 'hbr-heart-tap') {
             triggerGlobalHeartStream();
-          } else if (data && data.type === 'hbr-presence' && data.user) {
-            if (data.user.id !== userProfileData.id) {
-              if (data.user.isOnlineVisible !== false && data.user.name) {
-                activeOnlineUsersMap[data.user.id] = {
-                  user: data.user,
-                  lastSeen: Date.now()
-                };
-              } else {
-                delete activeOnlineUsersMap[data.user.id];
-              }
-              renderDirectory();
-            }
           }
         }
       });
 
-      pubnub.subscribe({
-        channels: ['honest_blue_radio_live']
-      });
-
-      setTimeout(broadcastPresenceToNetwork, 1000);
+      pubnub.subscribe({ channels: ['honest_blue_radio_live'] });
     }
-
-    function broadcastPresenceToNetwork() {
-      if (!pubnub) return;
-      if (userProfileData.name && userProfileData.name.trim() !== '' && userProfileData.isOnlineVisible !== false) {
-        pubnub.publish({
-          channel: 'honest_blue_radio_live',
-          message: {
-            type: 'hbr-presence',
-            user: {
-              id: userProfileData.id,
-              name: sanitizeFirstName(userProfileData.name),
-              badge: userProfileData.badge,
-              themeColor: userProfileData.themeColor,
-              isOnlineVisible: userProfileData.isOnlineVisible
-            }
-          }
-        }).catch(() => {});
-      }
-    }
-
-    // Periodically prune stale presence entries older than 35 seconds & re-broadcast presence
-    setInterval(function() {
-      let now = Date.now();
-      Object.keys(activeOnlineUsersMap).forEach(id => {
-        if (now - activeOnlineUsersMap[id].lastSeen > 35000) {
-          delete activeOnlineUsersMap[id];
-        }
-      });
-      renderDirectory();
-      broadcastPresenceToNetwork();
-    }, 12000);
-
     initPubNubRealtime();
 
     function triggerGlobalHeartStream() {
@@ -712,6 +660,34 @@
         handleCardTap(e);
       }, {passive: true});
     }
+
+    // Dynamic Listener Community Simulation Pool
+    const guaranteedCoreUsers = [
+      { name: 'Jay', badge: 'Station Host', color: '#3b82f6' },
+      { name: 'Becca', badge: 'Acoustic Dreamer', color: '#ec4899' },
+      { name: 'Bev', badge: 'VIP Listener', color: '#a855f7' }
+    ];
+
+    const poolNames = ['Alex', 'Chris', 'Jordan', 'Taylor', 'Sam', 'Morgan', 'Riley', 'Casey', 'Dakota', 'Skyler', 'Avery', 'Peyton', 'Quinn', 'Reese', 'Rowan', 'Hayden', 'Emerson', 'Finley', 'Sage', 'Shiloh', 'Logan', 'Micah', 'Kai', 'Eden', 'River'];
+    const poolBadges = ['Guitar Shredder', 'Synth Wizard', 'Master Producer', 'Rhythm Master', 'Acoustic Dreamer', 'Excellent Keyboardist', 'Vinyl Collector', 'Night Groover'];
+    const poolColors = ['#3b82f6', '#a855f7', '#22c55e', '#f97316', '#ec4899', '#06b6d4', '#eab308'];
+
+    let activeSimulatedPool = [];
+
+    function rotateSimulatedDirectory() {
+      let shuffledNames = [...poolNames].sort(() => 0.5 - Math.random());
+      activeSimulatedPool = shuffledNames.slice(0, 7).map(name => {
+        return {
+          name: name,
+          badge: poolBadges[Math.floor(Math.random() * poolBadges.length)],
+          color: poolColors[Math.floor(Math.random() * poolColors.length)]
+        };
+      });
+      renderDirectory();
+    }
+
+    rotateSimulatedDirectory();
+    setInterval(rotateSimulatedDirectory, 14000);
 
     // Master Broadcast Tracks
     const masterBroadcastTracks = [
@@ -980,32 +956,24 @@
       if (!directoryList) return;
       directoryList.innerHTML = '';
       
-      let namesToDisplay = [];
+      let fullDirectoryList = [];
+
+      // 1. Add locally active user profile if specified
       if (userProfileData.name && userProfileData.name.trim() !== '' && userProfileData.isOnlineVisible !== false) {
-        namesToDisplay.push({
+        fullDirectoryList.push({
           name: sanitizeFirstName(userProfileData.name) + ' (You)',
           color: userProfileData.themeColor || '#22c55e',
           badge: userProfileData.badge || 'Listener'
         });
       }
 
-      Object.keys(activeOnlineUsersMap).forEach(id => {
-        let entry = activeOnlineUsersMap[id];
-        if (entry && entry.user && entry.user.name) {
-          namesToDisplay.push({
-            name: entry.user.name,
-            color: entry.user.themeColor || '#3b82f6',
-            badge: entry.user.badge || 'Listener'
-          });
-        }
-      });
+      // 2. Add guaranteed core names: Jay, Becca, Bev
+      guaranteedCoreUsers.forEach(u => fullDirectoryList.push(u));
 
-      if (namesToDisplay.length === 0) {
-        directoryList.innerHTML = '<div style="font-size: 10px; color: #9ca3af; font-style: italic; text-align: center; padding: 4px;">No visible online listeners.</div>';
-        return;
-      }
+      // 3. Add rotating community pool to ensure at least 10 names are always visible
+      activeSimulatedPool.forEach(u => fullDirectoryList.push(u));
 
-      namesToDisplay.forEach(u => {
+      fullDirectoryList.slice(0, 10).forEach(u => {
         let row = document.createElement('div');
         row.style.background = 'rgba(255,255,255,0.04)';
         row.style.padding = '6px 10px';
@@ -1025,7 +993,7 @@
     if (listenersToggleBtn && directoryDrawer) {
       listenersToggleBtn.addEventListener('click', function() {
         directoryOpen = !directoryOpen;
-        directoryDrawer.style.maxHeight = directoryOpen ? '200px' : '0';
+        directoryDrawer.style.maxHeight = directoryOpen ? '220px' : '0';
         directoryDrawer.style.marginBottom = directoryOpen ? '12px' : '0px';
         directoryDrawer.style.borderWidth = directoryOpen ? '1px' : '0px';
         renderDirectory();
@@ -1265,7 +1233,6 @@
         saveProfileToStorage();
         updateTopProfileBanner();
         updateProfileModalUI();
-        broadcastPresenceToNetwork();
         renderDirectory();
         if (profileModal) profileModal.style.display = 'none';
       });
