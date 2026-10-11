@@ -1,8 +1,10 @@
-<div style="background: #111115; border-radius: 20px; padding: 24px 24px 24px 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden;">
+<div style="background: #111115; border-radius: 20px; padding: 24px 24px 24px 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden;" id="hbr-main-app-card">
   
   <!-- ========================================== -->
-  <!-- 1. FIREWORKS & CHALLENGE OVERLAY LAYERS    -->
+  <!-- 1. FLOATING HEART & FIREWORKS LAYER        -->
   <!-- ========================================== -->
+  <div id="hbr-reaction-stream-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; overflow: hidden;"></div>
+
   <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; z-index: 100; display: none;"></canvas>
 
   <!-- Rapid Fire 100 Rockets Challenge Badge (Bottom Right) -->
@@ -40,16 +42,27 @@
     </div>
   </div>
 
-  <!-- Floating Live Social Reaction Stream Layer -->
-  <div id="hbr-reaction-stream-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; overflow: hidden;"></div>
-
   <!-- Dynamic YouTube Cover Art & Ambient Background Overlay -->
   <div id="hbr-art-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://img.youtube.com/vi/WHzTume00O8/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.18; filter: blur(10px); transition: opacity 0.6s ease, background-image 0.6s ease, background 0.6s ease; pointer-events: none; z-index: 0;">&nbsp;</div>
 
   <div id="hbr-ambient-glow" style="position: absolute; top: -50px; left: -50px; width: 200%; height: 200%; background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(17,17,21,0.95) 70%); pointer-events: none; z-index: 1; transition: background 0.5s ease;">&nbsp;</div>
   
   <!-- ========================================== -->
-  <!-- 2. MAIN WIDGET CONTENT CONTAINER           -->
+  <!-- 2. FRONT PAGE PROFILE BANNER (TOP FRONT)   -->
+  <!-- ========================================== -->
+  <div id="hbr-top-profile-banner" style="display: none; position: relative; z-index: 10; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; align-items: center; gap: 10px;">
+    <div id="hbr-top-banner-avatar-frame" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+      <img id="hbr-top-banner-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+      <span id="hbr-top-banner-fallback" style="font-size: 18px;">🎧</span>
+    </div>
+    <div style="flex: 1; overflow: hidden;">
+      <div id="hbr-top-banner-name" style="font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Listener</div>
+      <div id="hbr-top-banner-badge" style="font-size: 9px; font-weight: 700; color: #93c5fd; background: rgba(59,130,246,0.25); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 3px;">Excellent Keyboardist</div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 3. MAIN WIDGET CONTENT CONTAINER           -->
   <!-- ========================================== -->
   <div style="position: relative; z-index: 2;">
     
@@ -76,18 +89,6 @@
       <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;">
         <span style="color: #4ade80; font-size: 12px;">👤</span>
         <span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span>
-      </div>
-    </div>
-
-    <!-- User Top Profile Banner (Appears Up Top When Profile Created) -->
-    <div id="hbr-top-profile-banner" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; align-items: center; gap: 10px;">
-      <div id="hbr-top-banner-avatar-frame" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
-        <img id="hbr-top-banner-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
-        <span id="hbr-top-banner-fallback" style="font-size: 18px;">🎧</span>
-      </div>
-      <div style="flex: 1; overflow: hidden;">
-        <div id="hbr-top-banner-name" style="font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Listener</div>
-        <div id="hbr-top-banner-badge" style="font-size: 9px; font-weight: 700; color: #93c5fd; background: rgba(59,130,246,0.25); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 3px;">Excellent Keyboardist</div>
       </div>
     </div>
 
@@ -252,34 +253,6 @@
       <button id="hbr-next" style="background: #1f2937; border: 1px solid #374151; width: 44px; height: 44px; border-radius: 50%; color: #9ca3af; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">⏭</button>
     </div>
 
-    <!-- SAFE SOCIAL REACTIONS & TAP BAR -->
-    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 10px; margin-bottom: 16px;">
-      <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; text-align: center; margin-bottom: 8px;">
-        💬 Live Audience Reactions (Tap to Send)
-      </div>
-
-      <!-- Quick Canned Reaction Buttons -->
-      <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px;" class="hbr-reaction-scroll">
-        <button class="hbr-canned-btn" data-reaction="❤️ Love This">❤️ Love This</button>
-        <button class="hbr-canned-btn" data-reaction="🎧 This Is A Vibe">🎧 This Is A Vibe</button>
-        <button class="hbr-canned-btn" data-reaction="🔥 Fire Track">🔥 Fire Track</button>
-        <button class="hbr-canned-btn" data-reaction="🎉 Party Time">🎉 Party Time</button>
-        <button class="hbr-canned-btn" data-reaction="☕ Coffee & Chill">☕ Coffee & Chill</button>
-        <button class="hbr-canned-btn" data-reaction="🎸 Riff Is Insane">🎸 Riff Is Insane</button>
-      </div>
-
-      <!-- Bottom Heart & Music Note Counters -->
-      <div style="display: flex; gap: 10px;">
-        <button id="hbr-send-heart-btn" style="flex: 1; background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); border: none; border-radius: 10px; color: #fff; padding: 8px 12px; font-size: 11px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 12px rgba(236,72,153,0.3);">
-          <span>❤️</span> <span>HEARTS</span> <span id="hbr-heart-count" style="background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 6px;">1,420</span>
-        </button>
-
-        <button id="hbr-send-note-btn" style="flex: 1; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 10px; color: #fff; padding: 8px 12px; font-size: 11px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 12px rgba(59,130,246,0.3);">
-          <span>🎵</span> <span>NOTES</span> <span id="hbr-note-count" style="background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 6px;">3,890</span>
-        </button>
-      </div>
-    </div>
-
     <!-- Bottom Middle Play Coffee Game Button -->
     <div style="text-align: center; margin-bottom: 16px;">
       <a href="https://jaysonsphotography.zenfolio.com/blog/2026/5/Rewind-and-Grind-The-Blockbuster-Late-Fee-Game" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 18px; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 12px rgba(37,99,235,0.4); display: inline-block;" target="_blank">☕ Play Coffee Game ↗</a>
@@ -329,7 +302,7 @@
 </div>
 
 <!-- ========================================== -->
-<!-- 3. USER PROFILE MODAL OVERLAY              -->
+<!-- 4. USER PROFILE MODAL OVERLAY              -->
 <!-- ========================================== -->
 <div id="hbr-profile-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.94); backdrop-filter: blur(10px); z-index: 200; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center;">
   <div style="background: #171720; border: 1px solid #3b82f6; border-radius: 16px; padding: 20px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; box-sizing: border-box;">
@@ -396,7 +369,7 @@
 </div>
 
 <!-- ========================================== -->
-<!-- 4. STYLES & ANIMATION KEYFRAMES            -->
+<!-- 5. STYLES & ANIMATION KEYFRAMES            -->
 <!-- ========================================== -->
 <style type="text/css">
   #hbr-playlist-drawer::-webkit-scrollbar,
@@ -419,59 +392,21 @@
     border-radius: 4px;
   }
 
-  .hbr-canned-btn {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    color: #e5e7eb;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 5px 10px;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .hbr-canned-btn:active {
-    transform: scale(0.92);
-    background: rgba(59, 130, 246, 0.3);
-  }
-  .hbr-reaction-scroll::-webkit-scrollbar {
-    height: 4px;
-  }
-  .hbr-reaction-scroll::-webkit-scrollbar-thumb {
-    background: #374151;
-    border-radius: 4px;
-  }
-
   @keyframes hbrFloatAndFade {
     0% { transform: translateY(0) scale(0.8); opacity: 0; }
-    15% { opacity: 1; transform: translateY(-20px) scale(1.05); }
+    15% { opacity: 1; transform: translateY(-20px) scale(1.1); }
     80% { opacity: 0.9; }
-    100% { transform: translateY(-240px) scale(1.1); opacity: 0; }
+    100% { transform: translateY(-220px) scale(1.2); opacity: 0; }
   }
 
-  .hbr-floating-pill {
+  .hbr-floating-heart {
     position: absolute;
-    bottom: 80px;
-    background: rgba(23, 23, 32, 0.92);
-    border: 1px solid rgba(59, 130, 246, 0.5);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-    border-radius: 16px;
-    padding: 6px 12px;
-    font-size: 11px;
-    font-weight: 800;
-    color: #ffffff;
+    font-size: 24px;
     pointer-events: none;
-    animation: hbrFloatAndFade 2.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  }
-
-  .hbr-floating-symbol {
-    position: absolute;
-    bottom: 60px;
-    font-size: 22px;
-    pointer-events: none;
+    user-select: none;
     animation: hbrFloatAndFade 2.2s ease-out forwards;
-    filter: drop-shadow(0 0 8px rgba(236,72,153,0.8));
+    filter: drop-shadow(0 0 10px rgba(236,72,153,0.8));
+    z-index: 95;
   }
 
   @keyframes hbrPulseGlow {
@@ -553,7 +488,7 @@
 </style>
 
 <!-- ========================================== -->
-<!-- 5. MASTER JAVASCRIPT LOGIC ENGINE          -->
+<!-- 6. MASTER JAVASCRIPT LOGIC ENGINE          -->
 <!-- ========================================== -->
 <script>
   (function() {
@@ -592,6 +527,52 @@
     let activeQueueSource = null;
     let currentDrawerPage = 1;
     const tracksPerPage = 6;
+
+    // TAP-ANYWHERE FLOATING HEARTS SYSTEM
+    const appCard = document.getElementById('hbr-main-app-card');
+    const streamLayer = document.getElementById('hbr-reaction-stream-layer');
+    const djContainer = document.getElementById('hbr-dj-container');
+
+    function spawnHeartAtLocation(x, y) {
+      if (!streamLayer) return;
+      const heart = document.createElement('div');
+      heart.className = 'hbr-floating-heart';
+      heart.textContent = '❤️';
+      heart.style.left = (x - 12) + 'px';
+      heart.style.top = (y - 12) + 'px';
+      streamLayer.appendChild(heart);
+
+      setTimeout(() => {
+        if (heart.parentNode) heart.parentNode.removeChild(heart);
+      }, 2100);
+    }
+
+    if (appCard) {
+      appCard.addEventListener('click', function(e) {
+        // Prevent floating heart if user clicks interactive controls or modals
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-install-modal')) {
+          return;
+        }
+
+        const rect = appCard.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+
+        spawnHeartAtLocation(clickX, clickY);
+      });
+    }
+
+    // Simulated Ambient Listener Hearts
+    setInterval(() => {
+      if (Math.random() < 0.4) {
+        if (appCard) {
+          const rect = appCard.getBoundingClientRect();
+          const rx = Math.random() * (rect.width - 40) + 20;
+          const ry = Math.random() * (rect.height - 150) + 100;
+          spawnHeartAtLocation(rx, ry);
+        }
+      }
+    }, 3500);
 
     // Live Stream Status with Secret Admin Override
     const liveIndicator = document.getElementById('hbr-live-indicator');
@@ -943,70 +924,29 @@
       });
     }
 
-    // Safe Social Reactions Engine
-    const streamLayer = document.getElementById('hbr-reaction-stream-layer');
-    const heartBtn = document.getElementById('hbr-send-heart-btn');
-    const noteBtn = document.getElementById('hbr-send-note-btn');
-    const heartCountSpan = document.getElementById('hbr-heart-count');
-    const noteCountSpan = document.getElementById('hbr-note-count');
-    const cannedButtons = document.querySelectorAll('.hbr-canned-btn');
+    // More Honest Blue Dropdown Toggle
+    const bioToggle = document.getElementById('hbr-bio-toggle');
+    const bioPanel = document.getElementById('hbr-bio-panel');
+    const bioArrow = document.getElementById('hbr-bio-arrow');
+    let bioOpen = false;
 
-    let heartTotal = 1420;
-    let noteTotal = 3890;
-
-    function spawnFloatingPill(text, senderName) {
-      if (!streamLayer) return;
-      const pill = document.createElement('div');
-      pill.className = 'hbr-floating-pill';
-      pill.innerHTML = senderName ? '<span style="color:#60a5fa; margin-right:4px;">' + senderName + ':</span> ' + text : text;
-      pill.style.left = (Math.floor(Math.random() * 60) + 10) + '%';
-      streamLayer.appendChild(pill);
-      setTimeout(() => { if (pill.parentNode) pill.parentNode.removeChild(pill); }, 2800);
-    }
-
-    function spawnFloatingSymbol(symbol, isHeart) {
-      if (!streamLayer) return;
-      const el = document.createElement('div');
-      el.className = 'hbr-floating-symbol';
-      el.textContent = symbol;
-      el.style.left = (isHeart ? (Math.random() * 30 + 10) : (Math.random() * 30 + 50)) + '%';
-      streamLayer.appendChild(el);
-      setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 2200);
-    }
-
-    cannedButtons.forEach(btn => {
-      btn.addEventListener('click', function() {
-        spawnFloatingPill(this.getAttribute('data-reaction'), "You");
-      });
-    });
-
-    if (heartBtn) {
-      heartBtn.addEventListener('click', () => {
-        heartTotal++;
-        if (heartCountSpan) heartCountSpan.textContent = heartTotal.toLocaleString();
-        heartBtn.style.transform = 'scale(0.94)';
-        setTimeout(() => heartBtn.style.transform = 'scale(1)', 100);
-        spawnFloatingSymbol('❤️', true);
+    if (bioToggle && bioPanel) {
+      bioToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        bioOpen = !bioOpen;
+        if (bioOpen) {
+          bioPanel.style.maxHeight = '450px';
+          bioPanel.style.marginTop = '10px';
+          bioPanel.style.borderWidth = '1px';
+          if (bioArrow) bioArrow.style.transform = 'rotate(180deg)';
+        } else {
+          bioPanel.style.maxHeight = '0';
+          bioPanel.style.marginTop = '0px';
+          bioPanel.style.borderWidth = '0px';
+          if (bioArrow) bioArrow.style.transform = 'rotate(0deg)';
+        }
       });
     }
-
-    if (noteBtn) {
-      noteBtn.addEventListener('click', () => {
-        noteTotal++;
-        if (noteCountSpan) noteCountSpan.textContent = noteTotal.toLocaleString();
-        noteBtn.style.transform = 'scale(0.94)';
-        setTimeout(() => noteBtn.style.transform = 'scale(1)', 100);
-        spawnFloatingSymbol('🎵', false);
-      });
-    }
-
-    const ambientPhrases = ["🎧 This Is A Vibe", "❤️ Love This", "🔥 Fire Track", "🎉 Party Time", "☕ Coffee & Chill", "🎸 Riff Is Insane"];
-    const ambientNames = ["Alex", "Becca", "Dave", "Sarah", "Chris", "Jordan", "Taylor"];
-    setInterval(() => {
-      if (Math.random() < 0.45) {
-        spawnFloatingPill(ambientPhrases[Math.floor(Math.random() * ambientPhrases.length)], ambientNames[Math.floor(Math.random() * ambientNames.length)]);
-      }
-    }, 4000);
 
     // Store & Movie UI Engine
     const storeBtn = document.getElementById('hbr-store-btn');
@@ -1016,22 +956,8 @@
     const storeCashCountSpan = document.getElementById('hbr-store-cash-count');
     const cashCountBadge = document.getElementById('hbr-cash-count');
     const storeItemsList = document.getElementById('hbr-store-items-list');
-    const storeEventAlert = document.getElementById('hbr-store-event-alert');
-    const shoplifterCatchBox = document.getElementById('hbr-shoplifter-catch-box');
-    const thiefTimerSpan = document.getElementById('hbr-thief-timer');
     const tabStoresBtn = document.getElementById('hbr-tab-stores-btn');
     const tabMoviesBtn = document.getElementById('hbr-tab-movies-btn');
-
-    let shoplifterPending = null;
-    let shoplifterTimerInterval = null;
-
-    function triggerStoreAlert(msg) {
-      if (storeEventAlert) {
-        storeEventAlert.innerHTML = msg;
-        storeEventAlert.style.display = 'block';
-        setTimeout(() => { if (storeEventAlert) storeEventAlert.style.display = 'none'; }, 8000);
-      }
-    }
 
     function updateCashUI() {
       let formatted = '$' + storeCashTotal.toFixed(2);
@@ -1039,31 +965,6 @@
       if (storeCashCountSpan) storeCashCountSpan.textContent = formatted;
     }
     updateCashUI();
-
-    setInterval(() => {
-      if (userOwnedStores.blockbuster > 0) {
-        let totalMovies = getTotalMovieCount();
-        let netPerSec = 0.00;
-        movieCatalog.forEach(movie => {
-          let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
-          let totalCopies = (inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0);
-          if (totalCopies > 0) {
-            let multiplier = (movie.rtScore >= 50) ? (movie.rtScore / 100) : -((50 - movie.rtScore) / 50);
-            let formatBoost = ((inv.vhs || 0) * 0.15) + ((inv.dvd || 0) * 0.35) + ((inv.bluray || 0) * 0.65);
-            netPerSec += (formatBoost * multiplier);
-          }
-        });
-        if (totalMovies > 0 && Math.random() < 0.12) {
-          let lateFeeBonus = parseFloat((Math.random() * 1.00 + 0.25).toFixed(2));
-          netPerSec += lateFeeBonus;
-          triggerStoreAlert('💰 <strong>LATE FEE!</strong> Earned $' + lateFeeBonus.toFixed(2));
-        }
-        if (unrewoundTapesCount > 0) netPerSec -= (unrewoundTapesCount * 0.10);
-        storeCashTotal = Math.max(0, storeCashTotal + netPerSec);
-        saveCashToStorage();
-        updateCashUI();
-      }
-    }, 2000);
 
     function renderStoreList() {
       if (!storeItemsList) return;
@@ -1148,10 +1049,8 @@
     const prevBtn = document.getElementById('hbr-prev');
     const nextBtn = document.getElementById('hbr-next');
     const record = document.getElementById('hbr-record');
-    const recordArt = document.getElementById('hbr-record-art');
     const tonearm = document.getElementById('hbr-tonearm');
     const trackTitleText = document.getElementById('hbr-track-title');
-    const subtitleText = document.getElementById('hbr-subtitle');
     const iframe = document.getElementById('hbr-engine');
 
     let isPlaying = false;
@@ -1200,4 +1099,3 @@
 
   })();
 </script>
-
