@@ -48,7 +48,7 @@
   
   <!-- Content Container -->
   <div style="position: relative; z-index: 2;">
-    <!-- Header with Track Drawer Toggle, Live Status & Clickable Listener Directory Button -->
+    <!-- Header with Track Drawer Toggle, Live Status & Clickable Listener Directory Toggle -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
       <div>
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
@@ -67,19 +67,19 @@
         </div>
       </div>
       
-      <!-- Clickable Listener Directory Toggle Button -->
-      <button id="hbr-listeners-toggle-btn" style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: background 0.2s ease;">
+      <!-- Clickable Listener Directory Button -->
+      <button id="hbr-listeners-toggle-btn" style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: all 0.2s ease;">
         <span style="color: #4ade80; font-size: 12px;">👤</span>
-        <span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN ▼</span>
+        <span style="font-size: 12px; font-weight: 700; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN ▼</span>
       </button>
     </div>
 
-    <!-- COLLAPSIBLE COMMUNITY DIRECTORY DRAWER (First Names Only, No Friends/PMs) -->
-    <div id="hbr-directory-drawer" style="max-height: 0; overflow-y: auto; transition: max-height 0.4s ease, margin-bottom 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; margin-bottom: 0px;">
+    <!-- COMMUNITY DIRECTORY DROPDOWN PANEL -->
+    <div id="hbr-directory-drawer" style="max-height: 0; overflow-y: auto; transition: all 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; margin-bottom: 0px;">
       <div style="padding: 12px; display: flex; flex-direction: column; gap: 8px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div style="font-size: 11px; font-weight: 800; color: #60a5fa; text-transform: uppercase; letter-spacing: 0.5px;">👥 COMMUNITY DIRECTORY</div>
-          <span style="font-size: 9px; color: #9ca3af;">First names only • Safe space</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px;">
+          <div style="font-size: 11px; font-weight: 800; color: #60a5fa; text-transform: uppercase;">👥 COMMUNITY DIRECTORY</div>
+          <span style="font-size: 9px; color: #9ca3af;">First names only</span>
         </div>
         <div id="hbr-directory-list" style="display: flex; flex-direction: column; gap: 6px;">
           <!-- Dynamically populated -->
@@ -165,7 +165,7 @@
       <!-- REAL STORE CASH COUNTER -->
       <span id="hbr-cash-badge" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.5px; display: inline-block;">💵 CASH: <span id="hbr-cash-count" style="color: #86efac;">$0.00</span></span>
 
-      <!-- STORE BUTTON -->
+      <!-- STORE BUTTON NEXT TO BANKED -->
       <button id="hbr-store-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); transition: transform 0.15s ease;">🛍️ STORE</button>
     </div>
 
@@ -175,7 +175,7 @@
       <div id="hbr-notes-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15; overflow: hidden;">&nbsp;</div>
       <div id="hbr-times-up" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.92); border: 2px solid #ef4444; border-radius: 12px; padding: 12px 20px; z-index: 25; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center;"><span id="hbr-banner-title" style="font-size: 14px; font-weight: 800; color: #ef4444; display: block; margin-bottom: 2px;">TIME&#39;S UP!</span> <span style="font-size: 11px; color: #d1d5db;"><span id="hbr-banner-msg">You popped <strong id="hbr-final-count" style="color: #60a5fa;">0</strong> notes!</span></span></div>
 
-      <!-- STORE MODAL OVERLAY -->
+      <!-- STORE MODAL OVERLAY (Covers the vinyl record deck) -->
       <div id="hbr-store-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 17, 25, 0.96); backdrop-filter: blur(8px); z-index: 30; padding: 14px; box-sizing: border-box; text-align: left; flex-direction: column; overflow-y: auto;">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px;">
           <div>
@@ -194,25 +194,31 @@
           </div>
         </div>
 
+        <!-- Store Event Alert Box & Interactive Shoplifter Catch Button -->
         <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
 
+        <!-- Interactive Quick-Action Shoplifter Catch Banner -->
         <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; user-select: none; box-shadow: 0 4px 12px rgba(239,68,68,0.5);">
           <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase;">🚨 SHOPLIFTER ESCAPING!</div>
           <div style="font-size: 9px; color: #fee2e2; margin-top: 2px;">TAP HERE FAST TO TACKLE THE THIEF! (<span id="hbr-thief-timer">3</span>s)</div>
         </div>
 
+        <!-- Store Navigation Tabs (Stores vs Movies) -->
         <div style="display: flex; gap: 4px; margin-bottom: 8px;">
           <button id="hbr-tab-stores-btn" style="flex: 1; background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 6px; color: #93c5fd; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🏪 STORES</button>
           <button id="hbr-tab-movies-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🍿 BLOCKBUSTER MOVIES</button>
         </div>
 
+        <!-- Store Items Container -->
         <div id="hbr-store-items-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
       </div>
 
       <!-- DJ INTERACTIVE RECORD CONTAINER -->
       <div id="hbr-dj-container" style="position: relative; width: 200px; height: 200px; margin: 0 auto; cursor: grab; user-select: none; -webkit-user-select: none; z-index: 5;">
+        <!-- Dynamic Track Album Cover Art Behind Record -->
         <div id="hbr-record-art" style="position: absolute; top: 12px; left: 12px; width: 176px; height: 176px; border-radius: 12px; background-image: url('https://img.youtube.com/vi/WHzTume00O8/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.35; filter: contrast(1.1) brightness(0.9); transition: background-image 0.5s ease; pointer-events: none; z-index: 1; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1);">&nbsp;</div>
 
+        <!-- Record Sleeve & Vinyl Disc -->
         <div id="hbr-record" style="width: 100%; height: 100%; border-radius: 50%; background: repeating-radial-gradient(#111116 0px, #111116 2px, #22222d 3px, #111116 4px); position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; transform-origin: center center; z-index: 2;">
           <div id="hbr-reflection" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(255,255,255,0) 40%, rgba(59,130,246,0.12) 100%); pointer-events: none; transition: background 0.3s ease;">&nbsp;</div>
           <div id="hbr-label" style="width: 76px; height: 76px; background: radial-gradient(circle, #3b82f6 0%, #1d4ed8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid #000; color: #fff; font-size: 9px; font-weight: bold; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.6); position: relative; z-index: 2; box-shadow: 0 0 8px rgba(0,0,0,0.5); pointer-events: none; transition: background 0.3s ease;">HONEST<br />BLUE<br /><span id="hbr-label-sub" style="font-size: 7px; opacity: 0.8;">FULL DECK</span></div>
@@ -236,19 +242,19 @@
       <div id="hbr-subtitle" style="font-size: 12px; color: #6b7280;">Honest Blue Radio &bull; Original Broadcast</div>
     </div>
 
-    <!-- Player Controls -->
+    <!-- Player Track & Play Controls -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 16px;">
       <button id="hbr-prev" style="background: #1f2937; border: 1px solid #374151; width: 44px; height: 44px; border-radius: 50%; color: #9ca3af; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">⏮</button>
       <button id="hbr-toggle" style="background: #3b82f6; border: none; width: 60px; height: 60px; border-radius: 50%; color: #fff; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4); transition: transform 0.1s ease, background 0.2s ease;">▶</button>
       <button id="hbr-next" style="background: #1f2937; border: 1px solid #374151; width: 44px; height: 44px; border-radius: 50%; color: #9ca3af; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">⏭</button>
     </div>
 
-    <!-- Bottom Middle Coffee Game Link -->
+    <!-- Bottom Middle Play Coffee Game Button -->
     <div style="text-align: center; margin-top: 10px; margin-bottom: 16px;">
       <a href="https://jaysonsphotography.zenfolio.com/blog/2026/5/Rewind-and-Grind-The-Blockbuster-Late-Fee-Game" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 18px; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 12px rgba(37,99,235,0.4); transition: transform 0.2s ease, background 0.2s ease; display: inline-block;" target="_blank">☕ Play Coffee Game ↗</a>
     </div>
 
-    <!-- Mode Switchers -->
+    <!-- Peel-Back Mode Switcher Buttons (Bottom Left & Right) -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
       <div style="display: flex; gap: 4px; flex-wrap: wrap;">
         <button id="hbr-mode-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;"><span id="hbr-mode-btn-text">Instrumentals ⚙</span></button>
@@ -258,7 +264,7 @@
       <a href="https://youtube.com/@honestblueradio?si=FBFJfkEI2OiVEJnD" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;" target="_blank">Catch Content ↗</a>
     </div>
 
-    <!-- Very Bottom Dropdown -->
+    <!-- Very Bottom "More Honest Blue" Dropdown Section (With Hidden Admin Override) -->
     <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
       <button id="hbr-bio-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 20px; color: #9ca3af; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;"><span>More Honest Blue</span> <span id="hbr-bio-arrow" style="transition: transform 0.3s ease;">▼</span></button>
 
@@ -291,38 +297,44 @@
   </div>
 </div>
 
-<!-- USER PROFILE MODAL OVERLAY (With First-Name Filtering & Online Visibility Toggle) -->
+<!-- USER PROFILE MODAL OVERLAY -->
 <div id="hbr-profile-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.94); backdrop-filter: blur(10px); z-index: 200; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center;">
   <div style="background: #171720; border: 1px solid #3b82f6; border-radius: 16px; padding: 20px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.9); box-sizing: border-box;">
     
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 14px;">
-      <span style="font-size: 13px; font-weight: 800; color: #60a5fa; letter-spacing: 0.5px;">👤 PRIVATE USER PROFILE</span>
+      <span style="font-size: 13px; font-weight: 800; color: #60a5fa; letter-spacing: 0.5px;">👤 PRIVATE USER PROFILE & SETTINGS</span>
       <button id="hbr-close-profile-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
     </div>
 
-    <!-- Avatar & First Name Input -->
+    <!-- First Name Input -->
+    <div style="margin-bottom: 14px;">
+      <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">First Name Only</label>
+      <input id="hbr-profile-name-input" type="text" placeholder="Enter first name..." style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 8px; color: #fff; font-size: 11px; font-weight: 700; box-sizing: border-box;">
+      <span style="font-size: 8px; color: #6b7280; display: block; margin-top: 2px;">No last names or offensive terms allowed.</span>
+    </div>
+
+    <!-- ONLINE VISIBILITY TOGGLE -->
+    <div id="hbr-visibility-toggle-box" style="margin-bottom: 14px; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <div style="font-size: 10px; font-weight: 800; color: #93c5fd;">🌐 SHOW ME ONLINE</div>
+        <div style="font-size: 8px; color: #9ca3af; margin-top: 2px;">Appear in the live Community Directory list.</div>
+      </div>
+      <button id="hbr-visibility-btn" style="background: #22c55e; border: none; border-radius: 12px; color: #ffffff; font-size: 10px; font-weight: 800; padding: 6px 12px; cursor: pointer;">ON</button>
+    </div>
+
+    <!-- Avatar & Name Section -->
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; background: rgba(255,255,255,0.03); border-radius: 10px; padding: 10px; border: 1px solid rgba(255,255,255,0.08);">
       <div id="hbr-profile-modal-avatar-frame" style="position: relative; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
         <img id="hbr-profile-avatar-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
         <span id="hbr-profile-avatar-fallback" style="font-size: 22px;">🎧</span>
       </div>
       <div style="flex: 1;">
-        <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 2px;">First Name Only</label>
-        <input id="hbr-profile-name-input" type="text" placeholder="Enter first name (e.g. Jayson)..." style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 6px; color: #fff; font-size: 11px; font-weight: 700; box-sizing: border-box;">
-        <span style="font-size: 8px; color: #6b7280; display: block; margin-top: 2px;">No last names or inappropriate terms allowed.</span>
+        <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 2px;">Display Name</label>
+        <span id="hbr-profile-name-preview" style="font-size: 11px; font-weight: 700; color: #fff;">Listener</span>
       </div>
     </div>
 
-    <!-- ONLINE VISIBILITY TOGGLE (Only Available After Profile Creation) -->
-    <div id="hbr-visibility-toggle-box" style="margin-bottom: 14px; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
-      <div>
-        <div style="font-size: 10px; font-weight: 800; color: #93c5fd;">🌐 SHOW ME ONLINE</div>
-        <div style="font-size: 8px; color: #9ca3af; margin-top: 2px;">Allow others to see your first name in the Community Directory.</div>
-      </div>
-      <button id="hbr-visibility-btn" style="background: #22c55e; border: none; border-radius: 12px; color: #ffffff; font-size: 9px; font-weight: 800; padding: 4px 10px; cursor: pointer; transition: background 0.2s ease;">ON</button>
-    </div>
-
-    <!-- Profile Image Upload -->
+    <!-- Profile Image Upload from Phone or URL -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Profile Image (Upload PNG/JPEG or Paste URL)</label>
       <input id="hbr-profile-file-input" type="file" accept="image/*" style="font-size: 10px; color: #d1d5db; margin-bottom: 6px; width: 100%;">
@@ -341,7 +353,7 @@
       </div>
     </div>
 
-    <!-- Music Badges Picker -->
+    <!-- Music Badges / Titles Picker -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Select Music Badge &amp; Title</label>
       <div id="hbr-badges-container" style="display: flex; flex-wrap: wrap; gap: 4px;">
@@ -354,10 +366,12 @@
       </div>
     </div>
 
-    <!-- Inventory Showcase -->
+    <!-- Inventory & Purchases Tracked Showcase -->
     <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; margin-bottom: 14px;">
       <div style="font-size: 10px; font-weight: 800; color: #10b981; text-transform: uppercase; margin-bottom: 6px;">🛍️ Tracked Inventory &amp; Purchases</div>
-      <div id="hbr-profile-inventory-list" style="font-size: 10px; color: #d1d5db; display: flex; flex-direction: column; gap: 4px;"></div>
+      <div id="hbr-profile-inventory-list" style="font-size: 10px; color: #d1d5db; display: flex; flex-direction: column; gap: 4px;">
+        <!-- Filled dynamically -->
+      </div>
     </div>
 
     <div style="text-align: right;">
@@ -367,26 +381,27 @@
   </div>
 </div>
 
+<!-- Scrollbar & Animation Styles -->
 <style type="text/css">
   #hbr-playlist-drawer::-webkit-scrollbar,
-  #hbr-directory-drawer::-webkit-scrollbar,
   #hbr-bio-panel::-webkit-scrollbar,
   #hbr-store-overlay::-webkit-scrollbar,
-  #hbr-profile-modal::-webkit-scrollbar {
+  #hbr-profile-modal::-webkit-scrollbar,
+  #hbr-directory-drawer::-webkit-scrollbar {
     width: 6px;
   }
   #hbr-playlist-drawer::-webkit-scrollbar-track,
-  #hbr-directory-drawer::-webkit-scrollbar-track,
   #hbr-bio-panel::-webkit-scrollbar-track,
   #hbr-store-overlay::-webkit-scrollbar-track,
-  #hbr-profile-modal::-webkit-scrollbar-track {
+  #hbr-profile-modal::-webkit-scrollbar-track,
+  #hbr-directory-drawer::-webkit-scrollbar-track {
     background: rgba(0,0,0,0.2);
   }
   #hbr-playlist-drawer::-webkit-scrollbar-thumb,
-  #hbr-directory-drawer::-webkit-scrollbar-thumb,
   #hbr-bio-panel::-webkit-scrollbar-thumb,
   #hbr-store-overlay::-webkit-scrollbar-thumb,
-  #hbr-profile-modal::-webkit-scrollbar-thumb {
+  #hbr-profile-modal::-webkit-scrollbar-thumb,
+  #hbr-directory-drawer::-webkit-scrollbar-thumb {
     background: #374151;
     border-radius: 4px;
   }
@@ -399,7 +414,13 @@
   }
 
   .hbr-floating-heart {
-    position: absolute; font-size: 24px; pointer-events: none; user-select: none; animation: hbrFloatAndFade 2.2s ease-out forwards; filter: drop-shadow(0 0 10px rgba(236,72,153,0.8)); z-index: 95;
+    position: absolute;
+    font-size: 24px;
+    pointer-events: none;
+    user-select: none;
+    animation: hbrFloatAndFade 2.2s ease-out forwards;
+    filter: drop-shadow(0 0 10px rgba(236,72,153,0.8));
+    z-index: 95;
   }
 
   @keyframes hbrPulseGlow {
@@ -422,75 +443,112 @@
   }
 
   @keyframes hbrFloatUp {
-    0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
+    0% {
+      transform: translateY(0) scale(0.8) rotate(0deg);
+      opacity: 0;
+    }
     20% { opacity: 0.95; }
     80% { opacity: 0.95; }
-    100% { transform: translateY(-220px) scale(1.2) rotate(25deg); opacity: 0; }
+    100% {
+      transform: translateY(-220px) scale(1.2) rotate(25deg);
+      opacity: 0;
+    }
   }
 
   @keyframes hbrPopBurst {
-    0% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 12px #60a5fa) brightness(2); }
-    50% { transform: scale(2.2); opacity: 0.8; filter: drop-shadow(0 0 20px #93c5fd) brightness(3); }
-    100% { transform: scale(2.8); opacity: 0; }
+    0% {
+      transform: scale(1);
+      opacity: 1;
+      filter: drop-shadow(0 0 12px #60a5fa) brightness(2);
+    }
+    50% {
+      transform: scale(2.2);
+      opacity: 0.8;
+      filter: drop-shadow(0 0 20px #93c5fd) brightness(3);
+    }
+    100% {
+      transform: scale(2.8);
+      opacity: 0;
+    }
   }
 
   @keyframes hbrBubblePopBurst {
-    0% { transform: scale(1); opacity: 0.9; }
-    50% { transform: scale(1.6); opacity: 0.5; }
-    100% { transform: scale(2.2); opacity: 0; }
+    0% {
+      transform: scale(1);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scale(1.6);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
   }
 
   .hbr-note-active {
-    position: absolute; color: #60a5fa; font-size: 20px; font-weight: bold; text-shadow: 0 0 10px rgba(59, 130, 246, 0.9); cursor: pointer; user-select: none; pointer-events: auto !important; animation: hbrFloatUp 4.2s linear forwards; transition: color 0.2s ease;
+    position: absolute;
+    color: #60a5fa;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.9);
+    cursor: pointer;
+    user-select: none;
+    pointer-events: auto !important;
+    animation: hbrFloatUp 4.2s linear forwards;
+    transition: color 0.2s ease;
   }
+
   .hbr-note-popped {
-    animation: hbrPopBurst 0.28s ease-out forwards !important; pointer-events: none !important;
+    animation: hbrPopBurst 0.28s ease-out forwards !important;
+    pointer-events: none !important;
   }
+
   .hbr-bubble-active {
-    position: absolute; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, rgba(34, 211, 238, 0.4) 40%, rgba(6, 182, 212, 0.2) 70%, rgba(255, 255, 255, 0.6) 100%); border: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 0 10px rgba(34, 211, 238, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.6); cursor: pointer; user-select: none; pointer-events: auto !important; animation: hbrFloatUp 4.5s linear forwards;
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, rgba(34, 211, 238, 0.4) 40%, rgba(6, 182, 212, 0.2) 70%, rgba(255, 255, 255, 0.6) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    user-select: none;
+    pointer-events: auto !important;
+    animation: hbrFloatUp 4.5s linear forwards;
   }
+
   .hbr-bubble-popped {
-    animation: hbrBubblePopBurst 0.2s ease-out forwards !important; pointer-events: none !important;
+    animation: hbrBubblePopBurst 0.2s ease-out forwards !important;
+    pointer-events: none !important;
   }
+
   .hbr-firework-unlit {
-    position: absolute; font-size: 22px; cursor: pointer; user-select: none; pointer-events: auto !important; animation: hbrFloatUp 3.8s linear forwards; filter: drop-shadow(0 0 6px #f97316);
+    position: absolute;
+    font-size: 22px;
+    cursor: pointer;
+    user-select: none;
+    pointer-events: auto !important;
+    animation: hbrFloatUp 3.8s linear forwards;
+    filter: drop-shadow(0 0 6px #f97316);
   }
 </style>
 
+<!-- Player Behavior & Audio Script -->
 <script>
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
 
-    // CONTENT & INAPPROPRIATE NAME MODERATION FILTER
-    const forbiddenTerms = [
-      'satan', 'demon', 'demonic', 'devil', 'lucifer', 'hell', '666', 'witch', 'occult', 
-      'fuck', 'shit', 'bitch', 'asshole', 'cunt', 'dick', 'pussy', 'bastard', 'nigger', 'faggot'
-    ];
-
+    // Moderation Filter
+    const forbiddenTerms = ['satan', 'demon', 'devil', 'fuck', 'shit', 'bitch', 'asshole'];
     function sanitizeFirstName(rawName) {
       if (!rawName) return '';
-      let clean = rawName.trim();
-      
-      // Enforce First Name Only (allow single initial if provided)
-      let nameParts = clean.split(/\s+/);
-      if (nameParts.length > 2) {
-        clean = nameParts[0];
-      } else if (nameParts.length === 2 && nameParts[1].length > 2) {
-        clean = nameParts[0] + ' ' + nameParts[1].charAt(0) + '.';
-      }
-
-      // Check against forbidden / dark / inappropriate terms
-      let lower = clean.toLowerCase();
-      let containsForbidden = forbiddenTerms.some(term => lower.includes(term));
-      
-      if (containsForbidden) {
-        return 'Groovy Listener';
-      }
-      return clean;
+      let clean = rawName.trim().split(/\s+/)[0];
+      let containsForbidden = forbiddenTerms.some(term => clean.toLowerCase().includes(term));
+      return containsForbidden ? 'Groovy Listener' : clean;
     }
 
-    // WebSocket Presence Relay & Heart Sync
+    // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart & Presence Sync
     let globalSocket = null;
     let activeOnlineUsers = {};
 
@@ -498,7 +556,7 @@
       globalSocket = new WebSocket('wss://ws.postman-echo.com/raw');
       
       globalSocket.onopen = function() {
-        announcePresence();
+        broadcastPresence();
       };
 
       globalSocket.onmessage = function(event) {
@@ -506,18 +564,11 @@
           let data = JSON.parse(event.data);
           if (data && data.type === 'hbr-heart-tap') {
             triggerGlobalHeartStream();
-          } else if (data && data.type === 'hbr-presence' && data.name) {
-            if (data.isVisible) {
-              activeOnlineUsers[data.id || data.name] = {
-                name: sanitizeFirstName(data.name),
-                badge: data.badge || 'Listener',
-                color: data.color || '#3b82f6',
-                lastSeen: Date.now()
-              };
-            } else {
-              delete activeOnlineUsers[data.id || data.name];
+          } else if (data && data.type === 'hbr-presence' && data.user) {
+            if (data.user.id !== userProfileData.id && data.user.isOnlineVisible !== false) {
+              activeOnlineUsers[data.user.id] = data.user;
+              renderDirectory();
             }
-            renderCommunityDirectory();
           }
         } catch(e) {}
       };
@@ -528,20 +579,19 @@
     }
     connectGlobalRelay();
 
-    function announcePresence() {
-      if (globalSocket && globalSocket.readyState === WebSocket.OPEN && userProfileData.name) {
+    function broadcastPresence() {
+      if (globalSocket && globalSocket.readyState === WebSocket.OPEN && userProfileData.name && userProfileData.isOnlineVisible !== false) {
         globalSocket.send(JSON.stringify({
           type: 'hbr-presence',
-          id: userProfileData.id || userProfileData.name,
-          name: sanitizeFirstName(userProfileData.name),
-          badge: userProfileData.badge,
-          color: userProfileData.themeColor,
-          isVisible: userProfileData.isOnlineVisible !== false
+          user: {
+            id: userProfileData.id,
+            name: sanitizeFirstName(userProfileData.name),
+            isOnlineVisible: userProfileData.isOnlineVisible
+          }
         }));
       }
     }
-
-    setInterval(announcePresence, 12000);
+    setInterval(broadcastPresence, 15000);
 
     function triggerGlobalHeartStream() {
       if (!streamLayer || !appCard) return;
@@ -623,14 +673,25 @@
       { id: '50xdKObdFMI', name: 'Then I Woke Up' }
     ];
 
-    const masterInstrumentalTracks = [{ id: 'F98pGQq4Sy8', name: 'Honest Blue Live Stream (Instrumental Session)' }];
-    const masterChristmasTracks = [{ id: '3XGTb6OxZb4', name: 'Christmas Special' }, { id: '3XGTb6OxZb4', name: 'Festive Vibes' }];
-    const masterDisneyTracks = [{ id: '5DiMoehAeOU', name: 'Jay Draws Disney • Relaxing Disney Piano Music' }];
+    const masterInstrumentalTracks = [
+      { id: 'F98pGQq4Sy8', name: 'Honest Blue Live Stream (Instrumental Session)' }
+    ];
+
+    const masterChristmasTracks = [
+      { id: '3XGTb6OxZb4', name: 'Christmas Special' },
+      { id: '3XGTb6OxZb4', name: 'Festive Vibes' }
+    ];
+
+    const masterDisneyTracks = [
+      { id: '5DiMoehAeOU', name: 'Jay Draws Disney • Relaxing Disney Piano Music' }
+    ];
 
     let currentMasterTracks = masterBroadcastTracks;
     let activePlaylist = masterBroadcastTracks;
     let isInstrumentalMode = false;
-    let customQueue1 = [], customQueue2 = [], customTop3 = [];
+    let customQueue1 = [];
+    let customQueue2 = [];
+    let customTop3 = [];
     let activeQueueSource = null;
     let currentDrawerPage = 1;
     const tracksPerPage = 6;
@@ -671,16 +732,23 @@
         adminClickCount++;
         if (adminClickCount >= 3) {
           adminClickCount = 0;
-          if (adminSection) adminSection.style.display = adminSection.style.display === 'block' ? 'none' : 'block';
+          if (adminSection) {
+            adminSection.style.display = adminSection.style.display === 'block' ? 'none' : 'block';
+          }
         }
       });
     }
 
     function updateLiveUI(isLive) {
       if (remoteGlobalLive) isLive = true;
+
       if (isLive) {
-        if (liveDot) { liveDot.className = 'hbr-live-active-dot'; liveDot.style.background = '#ef4444'; }
-        if (liveText) { liveText.textContent = 'ON AIR'; liveText.style.color = '#ef4444'; }
+        if (liveDot) liveDot.className = 'hbr-live-active-dot';
+        if (liveDot) liveDot.style.background = '#ef4444';
+        if (liveText) {
+          liveText.textContent = 'ON AIR';
+          liveText.style.color = '#ef4444';
+        }
         if (liveIndicator) {
           liveIndicator.style.borderColor = 'rgba(239, 68, 68, 0.5)';
           liveIndicator.style.background = 'rgba(239, 68, 68, 0.15)';
@@ -689,8 +757,12 @@
           liveIndicator.setAttribute('tabindex', '0');
         }
       } else {
-        if (liveDot) { liveDot.className = ''; liveDot.style.background = '#6b7280'; }
-        if (liveText) { liveText.textContent = 'OFF AIR'; liveText.style.color = '#9ca3af'; }
+        if (liveDot) liveDot.className = '';
+        if (liveDot) liveDot.style.background = '#6b7280';
+        if (liveText) {
+          liveText.textContent = 'OFF AIR';
+          liveText.style.color = '#9ca3af';
+        }
         if (liveIndicator) {
           liveIndicator.style.borderColor = '#374151';
           liveIndicator.style.background = 'rgba(255, 255, 255, 0.05)';
@@ -702,23 +774,37 @@
     }
 
     function checkLiveStatus() {
-      if (remoteGlobalLive) { updateLiveUI(true); return; }
-      fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId))
+      if (remoteGlobalLive) {
+        updateLiveUI(true);
+        return;
+      }
+
+      const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId;
+      const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl);
+
+      fetch(proxyUrl)
         .then(res => res.json())
         .then(data => {
           let liveActive = false;
-          if (data && data.contents && (data.contents.includes('isLiveBroadcast') || data.contents.toLowerCase().includes('live'))) {
-            liveActive = true;
+          if (data && data.contents) {
+            let xml = data.contents;
+            if (xml.includes('isLiveBroadcast') || xml.toLowerCase().includes('live')) {
+              liveActive = true;
+            }
           }
           updateLiveUI(liveActive);
         })
         .catch(() => updateLiveUI(false));
     }
+
     checkLiveStatus();
     setInterval(checkLiveStatus, 20000);
 
     // Bank Notes & Stores State Data
-    let bankedNotesTotal = 0, storeCashTotal = 0.00, unrewoundTapesCount = 0;
+    let bankedNotesTotal = 0;
+    let storeCashTotal = 0.00;
+    let unrewoundTapesCount = 0;
+    
     let userOwnedStores = { blockbuster: 0, toysrus: 0, kbtoys: 0 };
     let userOwnedMovies = {};
 
@@ -737,7 +823,8 @@
       { id: 'gigli', name: 'Gigli', rtScore: 6, basePrice: 10 }
     ];
 
-    let currentStorePrices = {}, activeStoreTab = 'stores'; 
+    let currentStorePrices = {};
+    let activeStoreTab = 'stores'; 
 
     function randomizeStorePrices() {
       storeCatalog.forEach(store => {
@@ -745,9 +832,11 @@
         let isOnSale = Math.random() < 0.35;
         let discount = isOnSale ? (Math.floor(Math.random() * 3) + 2) * 10 : 0;
         let finalPrice = isOnSale ? Math.floor(base * (1 - discount / 100)) : base;
+
         currentStorePrices[store.id] = { price: finalPrice, originalPrice: base, isOnSale: isOnSale, discount: discount };
       });
     }
+
     randomizeStorePrices();
 
     function getTotalMovieCount() {
@@ -780,7 +869,6 @@
         if (savedUnrewound) unrewoundTapesCount = parseInt(savedUnrewound, 10) || 0;
       } catch (e) {}
     }
-    loadSavedPlaylists();
 
     function savePlaylistsToStorage() {
       try {
@@ -789,6 +877,7 @@
         localStorage.setItem('hbr_custom_top3', JSON.stringify(customTop3));
       } catch (e) {}
     }
+
     function saveBankedNotesToStorage() { localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString()); }
     function saveCashToStorage() { localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2)); }
     function saveOwnedStoresToStorage() { localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores)); }
@@ -797,22 +886,24 @@
       localStorage.setItem('hbr_unrewound_tapes', unrewoundTapesCount.toString());
     }
 
-    // User Profile Management & Community Directory Elements
+    loadSavedPlaylists();
+
+    // User Profile Management & Dynamic UI Sync with Robust Image Compression
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
     const closeProfileBtn = document.getElementById('hbr-close-profile-btn');
     const profileModal = document.getElementById('hbr-profile-modal');
     const profileNameInput = document.getElementById('hbr-profile-name-input');
+    const profileNamePreview = document.getElementById('hbr-profile-name-preview');
     const profileImgInput = document.getElementById('hbr-profile-img-input');
     const profileFileInput = document.getElementById('hbr-profile-file-input');
     const profileAvatarImg = document.getElementById('hbr-profile-avatar-img');
     const profileAvatarFallback = document.getElementById('hbr-profile-avatar-fallback');
     const profileAvatarFrame = document.getElementById('hbr-profile-modal-avatar-frame');
     const saveProfileBtn = document.getElementById('hbr-save-profile-btn');
-    const visibilityToggleBox = document.getElementById('hbr-visibility-toggle-box');
-    const visibilityBtn = document.getElementById('hbr-visibility-btn');
     const badgesContainer = document.getElementById('hbr-badges-container');
     const profileColorsContainer = document.getElementById('hbr-profile-colors-container');
     const profileInventoryList = document.getElementById('hbr-profile-inventory-list');
+    const visibilityBtn = document.getElementById('hbr-visibility-btn');
 
     const topProfileBanner = document.getElementById('hbr-top-profile-banner');
     const topBannerImg = document.getElementById('hbr-top-banner-img');
@@ -821,9 +912,9 @@
     const topBannerName = document.getElementById('hbr-top-banner-name');
     const topBannerBadge = document.getElementById('hbr-top-banner-badge');
 
+    const listenersToggleBtn = document.getElementById('hbr-listeners-toggle-btn');
     const directoryDrawer = document.getElementById('hbr-directory-drawer');
     const directoryList = document.getElementById('hbr-directory-list');
-    const listenersToggleBtn = document.getElementById('hbr-listeners-toggle-btn');
     let directoryOpen = false;
 
     let userProfileData = {
@@ -843,67 +934,41 @@
         if (saved) userProfileData = Object.assign(userProfileData, JSON.parse(saved));
       } catch(e) {}
     }
-    loadProfileFromStorage();
 
     function saveProfileToStorage() {
-      try { localStorage.setItem('hbr_user_profile', JSON.stringify(userProfileData)); } catch(e) {}
+      try {
+        localStorage.setItem('hbr_user_profile', JSON.stringify(userProfileData));
+      } catch(e) {}
     }
 
-    function renderCommunityDirectory() {
+    loadProfileFromStorage();
+
+    function renderDirectory() {
       if (!directoryList) return;
       directoryList.innerHTML = '';
-
-      let userKeys = Object.keys(activeOnlineUsers);
       
-      // Include current user in directory if visible and registered
-      if (userProfileData.name && userProfileData.isOnlineVisible !== false) {
-        if (!activeOnlineUsers[userProfileData.id]) userKeys.push('self');
+      let namesToDisplay = [];
+      if (userProfileData.name && userProfileData.name.trim() !== '' && userProfileData.isOnlineVisible !== false) {
+        namesToDisplay.push({ name: sanitizeFirstName(userProfileData.name) + ' (You)', color: '#22c55e' });
       }
 
-      if (userKeys.length === 0) {
-        directoryList.innerHTML = '<div style="font-size: 10px; color: #9ca3af; font-style: italic; text-align: center; padding: 6px;">No online profiles set to visible. Create a profile and toggle "Show Me Online" to appear here!</div>';
+      Object.keys(activeOnlineUsers).forEach(id => {
+        if (activeOnlineUsers[id] && activeOnlineUsers[id].name) {
+          namesToDisplay.push({ name: activeOnlineUsers[id].name, color: '#3b82f6' });
+        }
+      });
+
+      if (namesToDisplay.length === 0) {
+        directoryList.innerHTML = '<div style="font-size: 10px; color: #9ca3af; font-style: italic; text-align: center; padding: 4px;">No visible online listeners.</div>';
         return;
       }
 
-      userKeys.forEach(key => {
-        let uData = (key === 'self') ? {
-          name: sanitizeFirstName(userProfileData.name),
-          badge: userProfileData.badge,
-          color: userProfileData.themeColor
-        } : activeOnlineUsers[key];
-
-        if (!uData || !uData.name) return;
-
+      namesToDisplay.forEach(u => {
         let row = document.createElement('div');
-        row.style.background = 'rgba(255, 255, 255, 0.04)';
-        row.style.border = '1px solid rgba(255, 255, 255, 0.08)';
-        row.style.borderRadius = '8px';
-        row.style.padding = '6px 10px';
-        row.style.display = 'flex';
-        row.style.justifyContent = 'space-between';
-        row.style.alignItems = 'center';
-
-        let leftDiv = document.createElement('div');
-        leftDiv.style.display = 'flex'; leftDiv.style.alignItems = 'center'; leftDiv.style.gap = '8px';
-
-        let dot = document.createElement('span');
-        dot.style.width = '6px'; dot.style.height = '6px'; dot.style.borderRadius = '50%';
-        dot.style.background = uData.color || '#3b82f6';
-
-        let nameSpan = document.createElement('span');
-        nameSpan.style.fontSize = '11px'; nameSpan.style.fontWeight = '700'; nameSpan.style.color = '#ffffff';
-        nameSpan.textContent = uData.name + (key === 'self' ? ' (You)' : '');
-
-        leftDiv.appendChild(dot); leftDiv.appendChild(nameSpan);
-
-        let badgeSpan = document.createElement('span');
-        badgeSpan.style.fontSize = '8px'; badgeSpan.style.fontWeight = '700';
-        badgeSpan.style.color = uData.color || '#93c5fd';
-        badgeSpan.style.background = 'rgba(255,255,255,0.06)';
-        badgeSpan.style.padding = '2px 6px'; badgeSpan.style.borderRadius = '4px';
-        badgeSpan.textContent = uData.badge || 'Listener';
-
-        row.appendChild(leftDiv); row.appendChild(badgeSpan);
+        row.style.background = 'rgba(255,255,255,0.04)'; row.style.padding = '6px 10px';
+        row.style.borderRadius = '6px'; row.style.fontSize = '11px'; row.style.fontWeight = '700';
+        row.style.color = '#fff'; row.style.display = 'flex'; row.style.alignItems = 'center'; row.style.gap = '6px';
+        row.innerHTML = '<span style="width: 6px; height: 6px; border-radius: 50%; background: ' + u.color + ';"></span>' + u.name;
         directoryList.appendChild(row);
       });
     }
@@ -911,15 +976,16 @@
     if (listenersToggleBtn && directoryDrawer) {
       listenersToggleBtn.addEventListener('click', function() {
         directoryOpen = !directoryOpen;
-        directoryDrawer.style.maxHeight = directoryOpen ? '220px' : '0';
-        directoryDrawer.style.marginBottom = directoryOpen ? '14px' : '0px';
+        directoryDrawer.style.maxHeight = directoryOpen ? '180px' : '0';
+        directoryDrawer.style.marginBottom = directoryOpen ? '12px' : '0px';
         directoryDrawer.style.borderWidth = directoryOpen ? '1px' : '0px';
-        renderCommunityDirectory();
+        renderDirectory();
       });
     }
 
     function updateTopProfileBanner() {
       if (!topProfileBanner) return;
+      
       if (openProfileBtn) {
         openProfileBtn.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? '👤 Edit Profile' : '👤 Create Profile';
       }
@@ -938,49 +1004,60 @@
         if (topBannerFrame) topBannerFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
 
         if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
-          if (topBannerImg) { topBannerImg.src = userProfileData.avatarUrl; topBannerImg.style.display = 'block'; }
+          if (topBannerImg) {
+            topBannerImg.src = userProfileData.avatarUrl;
+            topBannerImg.style.display = 'block';
+          }
           if (topBannerFallback) topBannerFallback.style.display = 'none';
         } else {
-          if (topBannerImg) { topBannerImg.style.display = 'none'; topBannerImg.src = ''; }
+          if (topBannerImg) {
+            topBannerImg.style.display = 'none';
+            topBannerImg.src = '';
+          }
           if (topBannerFallback) topBannerFallback.style.display = 'block';
         }
       } else {
         topProfileBanner.style.display = 'none';
       }
     }
+
     updateTopProfileBanner();
 
     function updateProfileModalUI() {
       if (profileNameInput) profileNameInput.value = userProfileData.name;
+      if (profileNamePreview) profileNamePreview.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? sanitizeFirstName(userProfileData.name) : 'Listener';
       if (profileImgInput) profileImgInput.value = userProfileData.avatarUrl;
 
-      // Online Visibility Button Toggle
+      if (profileAvatarFrame) profileAvatarFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
+
       if (visibilityBtn) {
         let isVis = userProfileData.isOnlineVisible !== false;
         visibilityBtn.textContent = isVis ? 'ON' : 'OFF';
         visibilityBtn.style.background = isVis ? '#22c55e' : '#374151';
       }
 
-      if (visibilityToggleBox) {
-        visibilityToggleBox.style.display = (userProfileData.name && userProfileData.name.trim() !== '') ? 'flex' : 'none';
-      }
-
-      if (profileAvatarFrame) profileAvatarFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
-
       if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
-        if (profileAvatarImg) { profileAvatarImg.src = userProfileData.avatarUrl; profileAvatarImg.style.display = 'block'; }
+        if (profileAvatarImg) {
+          profileAvatarImg.src = userProfileData.avatarUrl;
+          profileAvatarImg.style.display = 'block';
+        }
         if (profileAvatarFallback) profileAvatarFallback.style.display = 'none';
       } else {
-        if (profileAvatarImg) { profileAvatarImg.style.display = 'none'; profileAvatarImg.src = ''; }
+        if (profileAvatarImg) {
+          profileAvatarImg.style.display = 'none';
+          profileAvatarImg.src = '';
+        }
         if (profileAvatarFallback) profileAvatarFallback.style.display = 'block';
       }
 
       if (profileColorsContainer) {
         profileColorsContainer.querySelectorAll('.hbr-pcolor-btn').forEach(btn => {
           if (btn.getAttribute('data-color') === userProfileData.themeColor) {
-            btn.style.border = '2px solid #ffffff'; btn.style.transform = 'scale(1.1)';
+            btn.style.border = '2px solid #ffffff';
+            btn.style.transform = 'scale(1.1)';
           } else {
-            btn.style.border = '2px solid transparent'; btn.style.transform = 'scale(1)';
+            btn.style.border = '2px solid transparent';
+            btn.style.transform = 'scale(1)';
           }
         });
       }
@@ -988,9 +1065,11 @@
       if (badgesContainer) {
         badgesContainer.querySelectorAll('.hbr-badge-option').forEach(btn => {
           if (btn.getAttribute('data-badge') === userProfileData.badge) {
-            btn.style.boxShadow = '0 0 8px currentColor'; btn.style.opacity = '1';
+            btn.style.boxShadow = '0 0 8px currentColor';
+            btn.style.opacity = '1';
           } else {
-            btn.style.boxShadow = 'none'; btn.style.opacity = '0.7';
+            btn.style.boxShadow = 'none';
+            btn.style.opacity = '0.7';
           }
         });
       }
@@ -998,6 +1077,7 @@
       if (profileInventoryList) {
         profileInventoryList.innerHTML = '';
         let hasAnything = false;
+        
         storeCatalog.forEach(store => {
           let count = userOwnedStores[store.id] || 0;
           if (count > 0) {
@@ -1027,14 +1107,6 @@
       }
     }
 
-    if (visibilityBtn) {
-      visibilityBtn.addEventListener('click', function() {
-        userProfileData.isOnlineVisible = !(userProfileData.isOnlineVisible !== false);
-        updateProfileModalUI();
-        announcePresence();
-      });
-    }
-
     if (openProfileBtn && profileModal) {
       openProfileBtn.addEventListener('click', function() {
         updateProfileModalUI();
@@ -1043,7 +1115,9 @@
     }
 
     if (closeProfileBtn && profileModal) {
-      closeProfileBtn.addEventListener('click', () => profileModal.style.display = 'none');
+      closeProfileBtn.addEventListener('click', function() {
+        profileModal.style.display = 'none';
+      });
     }
 
     if (profileColorsContainer) {
@@ -1068,6 +1142,19 @@
       });
     }
 
+    if (visibilityBtn) {
+      visibilityBtn.addEventListener('click', function() {
+        userProfileData.isOnlineVisible = !(userProfileData.isOnlineVisible !== false);
+        updateProfileModalUI();
+      });
+    }
+
+    if (profileNameInput) {
+      profileNameInput.addEventListener('input', function() {
+        if (profileNamePreview) profileNamePreview.textContent = sanitizeFirstName(profileNameInput.value) || 'Listener';
+      });
+    }
+
     if (profileFileInput) {
       profileFileInput.addEventListener('change', function(e) {
         let file = e.target.files[0];
@@ -1077,19 +1164,30 @@
             let img = new Image();
             img.onload = function() {
               let canvas = document.createElement('canvas');
-              let MAX_WIDTH = 250, MAX_HEIGHT = 250;
-              let width = img.width, height = img.height;
+              let MAX_WIDTH = 250;
+              let MAX_HEIGHT = 250;
+              let width = img.width;
+              let height = img.height;
 
               if (width > height) {
-                if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                if (width > MAX_WIDTH) {
+                  height *= MAX_WIDTH / width;
+                  width = MAX_WIDTH;
+                }
               } else {
-                if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+                if (height > MAX_HEIGHT) {
+                  width *= MAX_HEIGHT / height;
+                  height = MAX_HEIGHT;
+                }
               }
 
-              canvas.width = width; canvas.height = height;
+              canvas.width = width;
+              canvas.height = height;
               let ctx = canvas.getContext('2d');
               ctx.drawImage(img, 0, 0, width, height);
-              userProfileData.avatarUrl = canvas.toDataURL('image/jpeg', 0.85);
+              
+              let dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+              userProfileData.avatarUrl = dataUrl;
               if (profileImgInput) profileImgInput.value = '';
               updateProfileModalUI();
             };
@@ -1102,23 +1200,24 @@
 
     if (profileImgInput) {
       profileImgInput.addEventListener('input', function() {
-        userProfileData.avatarUrl = profileImgInput.value.trim();
+        let val = profileImgInput.value.trim();
+        userProfileData.avatarUrl = val;
         updateProfileModalUI();
       });
     }
 
     if (saveProfileBtn) {
       saveProfileBtn.addEventListener('click', function() {
-        if (profileNameInput) {
-          userProfileData.name = sanitizeFirstName(profileNameInput.value.trim());
-        }
+        if (profileNameInput) userProfileData.name = sanitizeFirstName(profileNameInput.value);
         let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
-        if (urlVal !== '') userProfileData.avatarUrl = urlVal;
-
+        if (urlVal !== '') {
+          userProfileData.avatarUrl = urlVal;
+        }
         saveProfileToStorage();
         updateTopProfileBanner();
         updateProfileModalUI();
-        announcePresence();
+        broadcastPresence();
+        renderDirectory();
         if (profileModal) profileModal.style.display = 'none';
       });
     }
@@ -1137,13 +1236,16 @@
     const tabStoresBtn = document.getElementById('hbr-tab-stores-btn');
     const tabMoviesBtn = document.getElementById('hbr-tab-movies-btn');
 
-    let shoplifterPending = null, shoplifterTimerInterval = null;
+    let shoplifterPending = null;
+    let shoplifterTimerInterval = null;
 
     function triggerStoreAlert(msg) {
       if (storeEventAlert) {
         storeEventAlert.innerHTML = msg;
         storeEventAlert.style.display = 'block';
-        setTimeout(() => { if (storeEventAlert) storeEventAlert.style.display = 'none'; }, 8000);
+        setTimeout(() => {
+          if (storeEventAlert) storeEventAlert.style.display = 'none';
+        }, 8000);
       }
     }
 
@@ -1152,6 +1254,7 @@
       if (cashCountBadge) cashCountBadge.textContent = formatted;
       if (storeCashCountSpan) storeCashCountSpan.textContent = formatted;
     }
+
     updateCashUI();
 
     setInterval(function() {
@@ -1174,10 +1277,12 @@
         if (totalMovies > 0 && Math.random() < 0.12) {
           let lateFeeBonus = parseFloat((Math.random() * 1.00 + 0.25).toFixed(2));
           netPerSec += lateFeeBonus;
-          triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee!');
+          triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on a overdue tape!');
         }
 
-        if (unrewoundTapesCount > 0) netPerSec -= (unrewoundTapesCount * 0.10);
+        if (unrewoundTapesCount > 0) {
+          netPerSec -= (unrewoundTapesCount * 0.10);
+        }
 
         storeCashTotal = Math.max(0, storeCashTotal + netPerSec);
         saveCashToStorage();
@@ -1201,7 +1306,12 @@
               let targetFmt = formats[Math.floor(Math.random() * formats.length)];
               let movieObj = movieCatalog.find(m => m.id === targetMovieId);
 
-              shoplifterPending = { movieId: targetMovieId, format: targetFmt, movieName: movieObj ? movieObj.name : 'Movie', timeLeft: 3 };
+              shoplifterPending = {
+                movieId: targetMovieId,
+                format: targetFmt,
+                movieName: movieObj ? movieObj.name : 'Movie',
+                timeLeft: 3
+              };
 
               if (shoplifterCatchBox && thiefTimerSpan) {
                 thiefTimerSpan.textContent = '3';
@@ -1210,7 +1320,11 @@
 
               if (shoplifterTimerInterval) clearInterval(shoplifterTimerInterval);
               shoplifterTimerInterval = setInterval(function() {
-                if (!shoplifterPending) { clearInterval(shoplifterTimerInterval); return; }
+                if (!shoplifterPending) {
+                  clearInterval(shoplifterTimerInterval);
+                  return;
+                }
+
                 shoplifterPending.timeLeft--;
                 if (thiefTimerSpan) thiefTimerSpan.textContent = shoplifterPending.timeLeft;
 
@@ -1220,7 +1334,7 @@
                   if (stolenInv && stolenInv[shoplifterPending.format] > 0) {
                     stolenInv[shoplifterPending.format]--;
                     saveOwnedMoviesToStorage();
-                    triggerStoreAlert('🚨 <strong>SHOPLIFTER ESCAPED!</strong> Stole a <strong>' + shoplifterPending.format.toUpperCase() + '</strong> of ' + shoplifterPending.movieName + '!');
+                    triggerStoreAlert('🚨 <strong>SHOPLIFTER ESCAPED!</strong> They stole a <strong>' + shoplifterPending.format.toUpperCase() + '</strong> copy of ' + shoplifterPending.movieName + '!');
                   }
                   shoplifterPending = null;
                   if (shoplifterCatchBox) shoplifterCatchBox.style.display = 'none';
@@ -1234,7 +1348,7 @@
         if (totalMovies > 0 && Math.random() < 0.08) {
           unrewoundTapesCount++;
           saveOwnedMoviesToStorage();
-          triggerStoreAlert('📼 <strong>BE KIND, REWIND!</strong> An unrewound VHS tape was returned! Drains $0.10/sec.');
+          triggerStoreAlert('📼 <strong>BE KIND, REWIND!</strong> A customer returned an unrewound VHS tape! It drains $0.10/sec until rewound.');
           renderStoreList();
         }
       }
@@ -1247,6 +1361,7 @@
           let caughtMovie = shoplifterPending.movieName;
           let caughtFmt = shoplifterPending.format.toUpperCase();
           shoplifterPending = null;
+          
           if (shoplifterCatchBox) shoplifterCatchBox.style.display = 'none';
           
           let rewardCash = 2.50;
@@ -1254,7 +1369,7 @@
           saveCashToStorage();
           updateCashUI();
 
-          triggerStoreAlert('🛑 <strong>SHOPLIFTER CAUGHT!</strong> Saved your <strong>' + caughtFmt + '</strong> copy of ' + caughtMovie + ' and got a <strong>$' + rewardCash.toFixed(2) + '</strong> reward!');
+          triggerStoreAlert('🛑 <strong>SHOPLIFTER CAUGHT!</strong> You tackled the thief, saved your <strong>' + caughtFmt + '</strong> copy of ' + caughtMovie + ', and received a <strong>$' + rewardCash.toFixed(2) + '</strong> reward!');
           renderStoreList();
         }
       });
@@ -1274,25 +1389,37 @@
           let itemBox = document.createElement('div');
           itemBox.style.background = 'rgba(255, 255, 255, 0.04)';
           itemBox.style.border = '1px solid rgba(255, 255, 255, 0.12)';
-          itemBox.style.borderRadius = '8px'; itemBox.style.padding = '8px';
-          itemBox.style.display = 'flex'; itemBox.style.justifyContent = 'space-between'; itemBox.style.alignItems = 'center';
+          itemBox.style.borderRadius = '8px';
+          itemBox.style.padding = '8px';
+          itemBox.style.display = 'flex';
+          itemBox.style.justifyContent = 'space-between';
+          itemBox.style.alignItems = 'center';
 
           let infoDiv = document.createElement('div');
           let titleLine = document.createElement('div');
-          titleLine.style.fontSize = '11px'; titleLine.style.fontWeight = '800'; titleLine.style.color = '#ffffff';
+          titleLine.style.fontSize = '11px';
+          titleLine.style.fontWeight = '800';
+          titleLine.style.color = '#ffffff';
           
           let saleBadge = priceData.isOnSale ? ' <span style="background: #ef4444; color: #fff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + priceData.discount + '% OFF!</span>' : '';
           titleLine.innerHTML = store.icon + ' ' + store.name + saleBadge;
 
           let ownedLine = document.createElement('div');
-          ownedLine.style.fontSize = '9px'; ownedLine.style.color = '#9ca3af'; ownedLine.style.marginTop = '2px';
+          ownedLine.style.fontSize = '9px';
+          ownedLine.style.color = '#9ca3af';
+          ownedLine.style.marginTop = '2px';
           ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong> ($0.00 Base Payout)';
 
-          infoDiv.appendChild(titleLine); infoDiv.appendChild(ownedLine);
+          infoDiv.appendChild(titleLine);
+          infoDiv.appendChild(ownedLine);
 
-          let buyDiv = document.createElement('div'); buyDiv.style.textAlign = 'right';
+          let buyDiv = document.createElement('div');
+          buyDiv.style.textAlign = 'right';
+
           let priceLine = document.createElement('div');
-          priceLine.style.fontSize = '10px'; priceLine.style.fontWeight = '800'; priceLine.style.color = '#fbbf24';
+          priceLine.style.fontSize = '10px';
+          priceLine.style.fontWeight = '800';
+          priceLine.style.color = '#fbbf24';
           
           if (priceData.isOnSale) {
             priceLine.innerHTML = '<span style="text-decoration: line-through; color: #6b7280; font-size: 8px; margin-right: 3px;">' + priceData.originalPrice + '</span> ' + priceData.price + ' Notes';
@@ -1302,11 +1429,15 @@
 
           let buyBtn = document.createElement('button');
           let canAfford = bankedNotesTotal >= priceData.price;
+
           buyBtn.style.marginTop = '3px';
           buyBtn.style.background = canAfford ? 'linear-gradient(135deg, #10b981 0%, #047857 100%)' : '#374151';
-          buyBtn.style.border = 'none'; buyBtn.style.borderRadius = '5px';
+          buyBtn.style.border = 'none';
+          buyBtn.style.borderRadius = '5px';
           buyBtn.style.color = canAfford ? '#ffffff' : '#9ca3af';
-          buyBtn.style.fontSize = '8px'; buyBtn.style.fontWeight = '800'; buyBtn.style.padding = '3px 8px';
+          buyBtn.style.fontSize = '8px';
+          buyBtn.style.fontWeight = '800';
+          buyBtn.style.padding = '3px 8px';
           buyBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed';
           buyBtn.textContent = canAfford ? 'BUY STORE' : 'NEED NOTES';
 
@@ -1314,67 +1445,98 @@
             buyBtn.addEventListener('click', function() {
               bankedNotesTotal -= priceData.price;
               userOwnedStores[store.id] = (userOwnedStores[store.id] || 0) + 1;
+              
               saveBankedNotesToStorage();
               saveOwnedStoresToStorage();
+
               const bankedCountDisplay = document.getElementById('hbr-banked-count');
               if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+
               randomizeStorePrices();
               renderStoreList();
             });
           }
 
-          buyDiv.appendChild(priceLine); buyDiv.appendChild(buyBtn);
-          itemBox.appendChild(infoDiv); itemBox.appendChild(buyDiv);
+          buyDiv.appendChild(priceLine);
+          buyDiv.appendChild(buyBtn);
+
+          itemBox.appendChild(infoDiv);
+          itemBox.appendChild(buyDiv);
           storeItemsList.appendChild(itemBox);
         });
       } else {
         if (userOwnedStores.blockbuster === 0) {
           let warn = document.createElement('div');
-          warn.style.background = 'rgba(239, 68, 68, 0.15)'; warn.style.border = '1px solid rgba(239, 68, 68, 0.4)';
-          warn.style.borderRadius = '8px'; warn.style.padding = '8px'; warn.style.fontSize = '10px'; warn.style.color = '#fca5a5'; warn.style.textAlign = 'center';
-          warn.innerHTML = '⚠️ <strong>Blockbuster Required!</strong> Buy at least 1 Blockbuster store in the Stores tab before stocking movies!';
+          warn.style.background = 'rgba(239, 68, 68, 0.15)';
+          warn.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+          warn.style.borderRadius = '8px';
+          warn.style.padding = '8px';
+          warn.style.fontSize = '10px';
+          warn.style.color = '#fca5a5';
+          warn.style.textAlign = 'center';
+          warn.innerHTML = '⚠️ <strong>Blockbuster Required!</strong> You must buy at least 1 Blockbuster Video store in the Stores tab before stocking movies!';
           storeItemsList.appendChild(warn);
           return;
         }
 
         if (unrewoundTapesCount > 0) {
           let rewindBox = document.createElement('div');
-          rewindBox.style.background = 'rgba(249, 115, 22, 0.15)'; rewindBox.style.border = '1px solid rgba(249, 115, 22, 0.4)';
-          rewindBox.style.borderRadius = '8px'; rewindBox.style.padding = '8px';
-          rewindBox.style.display = 'flex'; rewindBox.style.justifyContent = 'space-between'; rewindBox.style.alignItems = 'center';
+          rewindBox.style.background = 'rgba(249, 115, 22, 0.15)';
+          rewindBox.style.border = '1px solid rgba(249, 115, 22, 0.4)';
+          rewindBox.style.borderRadius = '8px';
+          rewindBox.style.padding = '8px';
+          rewindBox.style.display = 'flex';
+          rewindBox.style.justifyContent = 'space-between';
+          rewindBox.style.alignItems = 'center';
 
           let rText = document.createElement('div');
-          rText.style.fontSize = '10px'; rText.style.color = '#fdba74';
+          rText.style.fontSize = '10px';
+          rText.style.color = '#fdba74';
           rText.innerHTML = '📼 <strong>' + unrewoundTapesCount + ' Unrewound Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Drains $0.10/sec until rewound.</span>';
 
           let rewindBtn = document.createElement('button');
           rewindBtn.style.background = 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)';
-          rewindBtn.style.border = 'none'; rewindBtn.style.borderRadius = '5px';
-          rewindBtn.style.color = '#fff'; rewindBtn.style.fontSize = '9px'; rewindBtn.style.fontWeight = '800';
-          rewindBtn.style.padding = '5px 10px'; rewindBtn.style.cursor = 'pointer';
+          rewindBtn.style.border = 'none';
+          rewindBtn.style.borderRadius = '5px';
+          rewindBtn.style.color = '#fff';
+          rewindBtn.style.fontSize = '9px';
+          rewindBtn.style.fontWeight = '800';
+          rewindBtn.style.padding = '5px 10px';
+          rewindBtn.style.cursor = 'pointer';
           rewindBtn.textContent = '⏪ REWIND ALL ($' + (unrewoundTapesCount * 0.50).toFixed(2) + ')';
 
           rewindBtn.addEventListener('click', function() {
             let cost = unrewoundTapesCount * 0.50;
             if (storeCashTotal >= cost) {
-              storeCashTotal -= cost; unrewoundTapesCount = 0;
-              saveCashToStorage(); saveOwnedMoviesToStorage(); renderStoreList();
-            } else { alert('Not enough cash to rewind tapes!'); }
+              storeCashTotal -= cost;
+              unrewoundTapesCount = 0;
+              saveCashToStorage();
+              saveOwnedMoviesToStorage();
+              renderStoreList();
+            } else {
+              alert('Not enough cash to rewind tapes! Earn more cash or notes first.');
+            }
           });
 
-          rewindBox.appendChild(rText); rewindBox.appendChild(rewindBtn);
+          rewindBox.appendChild(rText);
+          rewindBox.appendChild(rewindBtn);
           storeItemsList.appendChild(rewindBox);
         }
 
         let totalMovies = getTotalMovieCount();
+
         let statusBox = document.createElement('div');
         statusBox.style.background = totalMovies > 0 ? 'rgba(34, 197, 94, 0.12)' : 'rgba(245, 158, 11, 0.12)';
         statusBox.style.border = totalMovies > 0 ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(245, 158, 11, 0.3)';
-        statusBox.style.borderRadius = '6px'; statusBox.style.padding = '6px'; statusBox.style.fontSize = '9px';
-        statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24'; statusBox.style.textAlign = 'center';
+        statusBox.style.borderRadius = '6px';
+        statusBox.style.padding = '6px';
+        statusBox.style.fontSize = '9px';
+        statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
+        statusBox.style.textAlign = 'center';
         statusBox.innerHTML = totalMovies > 0 
-          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies: ' + totalMovies + '.'
-          : '💡 <strong>NO MOVIES IN STOCK!</strong> Buy movies below to start earning rental cash!';
+          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies + '. Earns rental cash + occasional late fees!'
+          : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash & late fees!';
+        
         storeItemsList.appendChild(statusBox);
 
         movieCatalog.forEach(movie => {
@@ -1385,25 +1547,37 @@
           let itemBox = document.createElement('div');
           itemBox.style.background = 'rgba(255, 255, 255, 0.04)';
           itemBox.style.border = totalMovieCopies > 0 ? '1px solid #3b82f6' : (isGoodMovie ? '1px solid rgba(34, 197, 94, 0.25)' : '1px solid rgba(239, 68, 68, 0.25)');
-          itemBox.style.borderRadius = '8px'; itemBox.style.padding = '8px';
-          itemBox.style.display = 'flex'; itemBox.style.flexDirection = 'column'; itemBox.style.gap = '6px';
+          itemBox.style.borderRadius = '8px';
+          itemBox.style.padding = '8px';
+          itemBox.style.display = 'flex';
+          itemBox.style.flexDirection = 'column';
+          itemBox.style.gap = '6px';
 
           let topRow = document.createElement('div');
-          topRow.style.display = 'flex'; topRow.style.justifyContent = 'space-between'; topRow.style.alignItems = 'center';
+          topRow.style.display = 'flex';
+          topRow.style.justifyContent = 'space-between';
+          topRow.style.alignItems = 'center';
 
           let titleDiv = document.createElement('div');
-          titleDiv.style.fontSize = '11px'; titleDiv.style.fontWeight = '800'; titleDiv.style.color = '#ffffff';
+          titleDiv.style.fontSize = '11px';
+          titleDiv.style.fontWeight = '800';
+          titleDiv.style.color = '#ffffff';
 
           let rtBadge = isGoodMovie 
             ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍅 ' + movie.rtScore + '% (PROFIT)</span>'
-            : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍿 ' + movie.rtScore + '% (DRAINS)</span>';
+            : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍿 ' + movie.rtScore + '% (DRAINS CASH)</span>';
           
           let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies + '</span>' : '';
 
           titleDiv.innerHTML = '🎬 ' + movie.name + rtBadge + ownedBadge;
-          topRow.appendChild(titleDiv); itemBox.appendChild(topRow);
 
-          let formatsRow = document.createElement('div'); formatsRow.style.display = 'flex'; formatsRow.style.gap = '4px';
+          topRow.appendChild(titleDiv);
+          itemBox.appendChild(topRow);
+
+          let formatsRow = document.createElement('div');
+          formatsRow.style.display = 'flex';
+          formatsRow.style.gap = '4px';
+
           const formats = [
             { key: 'vhs', label: 'VHS', costMult: 1 },
             { key: 'dvd', label: 'DVD', costMult: 1.8 },
@@ -1419,20 +1593,30 @@
             fmtBtn.style.flex = '1';
             fmtBtn.style.background = count > 0 ? 'rgba(37, 99, 235, 0.3)' : (canAfford ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.03)');
             fmtBtn.style.border = count > 0 ? '1px solid #60a5fa' : (canAfford ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(255,255,255,0.1)');
-            fmtBtn.style.borderRadius = '5px'; fmtBtn.style.color = canAfford ? '#93c5fd' : '#6b7280';
-            fmtBtn.style.fontSize = '8px'; fmtBtn.style.fontWeight = '700'; fmtBtn.style.padding = '4px 2px';
-            fmtBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed'; fmtBtn.style.textAlign = 'center';
+            fmtBtn.style.borderRadius = '5px';
+            fmtBtn.style.color = canAfford ? '#93c5fd' : '#6b7280';
+            fmtBtn.style.fontSize = '8px';
+            fmtBtn.style.fontWeight = '700';
+            fmtBtn.style.padding = '4px 2px';
+            fmtBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed';
+            fmtBtn.style.textAlign = 'center';
 
             fmtBtn.innerHTML = fmt.label + '<br><span style="color: #fbbf24; font-weight: 800;">' + cost + ' N</span><br><span style="color: #a7f3d0;">(' + count + ' owned)</span>';
 
             if (canAfford) {
               fmtBtn.addEventListener('click', function() {
                 bankedNotesTotal -= cost;
-                if (!userOwnedMovies[movie.id]) userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
+                if (!userOwnedMovies[movie.id]) {
+                  userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
+                }
                 userOwnedMovies[movie.id][fmt.key] = (userOwnedMovies[movie.id][fmt.key] || 0) + 1;
-                saveBankedNotesToStorage(); saveOwnedMoviesToStorage();
+
+                saveBankedNotesToStorage();
+                saveOwnedMoviesToStorage();
+
                 const bankedCountDisplay = document.getElementById('hbr-banked-count');
                 if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+
                 renderStoreList();
               });
             }
@@ -1449,15 +1633,23 @@
     if (tabStoresBtn && tabMoviesBtn) {
       tabStoresBtn.addEventListener('click', function() {
         activeStoreTab = 'stores';
-        tabStoresBtn.style.background = 'rgba(59, 130, 246, 0.25)'; tabStoresBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)'; tabStoresBtn.style.color = '#93c5fd';
-        tabMoviesBtn.style.background = 'rgba(255,255,255,0.06)'; tabMoviesBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabMoviesBtn.style.color = '#9ca3af';
+        tabStoresBtn.style.background = 'rgba(59, 130, 246, 0.25)';
+        tabStoresBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)';
+        tabStoresBtn.style.color = '#93c5fd';
+        tabMoviesBtn.style.background = 'rgba(255,255,255,0.06)';
+        tabMoviesBtn.style.border = '1px solid rgba(255,255,255,0.15)';
+        tabMoviesBtn.style.color = '#9ca3af';
         renderStoreList();
       });
 
       tabMoviesBtn.addEventListener('click', function() {
         activeStoreTab = 'movies';
-        tabMoviesBtn.style.background = 'rgba(59, 130, 246, 0.25)'; tabMoviesBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)'; tabMoviesBtn.style.color = '#93c5fd';
-        tabStoresBtn.style.background = 'rgba(255,255,255,0.06)'; tabStoresBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabStoresBtn.style.color = '#9ca3af';
+        tabMoviesBtn.style.background = 'rgba(59, 130, 246, 0.25)';
+        tabMoviesBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)';
+        tabMoviesBtn.style.color = '#93c5fd';
+        tabStoresBtn.style.background = 'rgba(255,255,255,0.06)';
+        tabStoresBtn.style.border = '1px solid rgba(255,255,255,0.15)';
+        tabStoresBtn.style.color = '#9ca3af';
         renderStoreList();
       });
     }
@@ -1471,7 +1663,9 @@
     }
 
     if (closeStoreBtn && storeOverlay) {
-      closeStoreBtn.addEventListener('click', () => storeOverlay.style.display = 'none');
+      closeStoreBtn.addEventListener('click', function() {
+        storeOverlay.style.display = 'none';
+      });
     }
 
     // PWA Install Modal Toggle Logic
@@ -1479,15 +1673,25 @@
     const installModal = document.getElementById('hbr-install-modal');
     const closeModalBtn = document.getElementById('hbr-close-modal');
 
-    if (installBtn && installModal) installBtn.addEventListener('click', () => installModal.style.display = 'flex');
-    if (closeModalBtn && installModal) closeModalBtn.addEventListener('click', () => installModal.style.display = 'none');
+    if (installBtn && installModal) {
+      installBtn.addEventListener('click', () => installModal.style.display = 'flex');
+    }
+    if (closeModalBtn && installModal) {
+      closeModalBtn.addEventListener('click', () => installModal.style.display = 'none');
+    }
 
     // Automatic Eastern Time Fireworks & 100 Rockets Challenge Engine
     const canvas = document.getElementById('hbr-fireworks-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
-    let fireworksActive = false, fireworksAnimId = null, particles = [], fireworksRockets = [], isGrandFinale = false;
+    let fireworksActive = false;
+    let fireworksAnimId = null;
+    let particles = [];
+    let fireworksRockets = [];
+    let isGrandFinale = false;
 
-    let rocketChallengeActive = false, rocketsLeft = 100, rocketStartTime = 0;
+    let rocketChallengeActive = false;
+    let rocketsLeft = 100;
+    let rocketStartTime = 0;
     const rocketBadge = document.getElementById('hbr-rocket-challenge-badge');
     const rocketLeftSpan = document.getElementById('hbr-rocket-left');
     const rocketResults = document.getElementById('hbr-rocket-results');
@@ -1497,7 +1701,10 @@
     function resizeCanvas() {
       if (!canvas) return;
       let parent = canvas.parentElement;
-      if (parent) { canvas.width = parent.clientWidth; canvas.height = parent.clientHeight; }
+      if (parent) {
+        canvas.width = parent.clientWidth;
+        canvas.height = parent.clientHeight;
+      }
     }
 
     class FireworkRocket {
@@ -1509,22 +1716,42 @@
         this.speed = Math.random() * 3 + (isGrandFinale ? 6 : 4);
         this.color = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#9b59b6', '#00d2d3', '#ff6b81', '#facc15', '#ec4899'][Math.floor(Math.random() * 9)];
       }
-      update() { this.y -= this.speed; this.x += (this.targetX - this.x) * 0.05; }
-      draw(c) { c.fillStyle = this.color; c.fillRect(this.x, this.y, 3, 10); }
+      update() {
+        this.y -= this.speed;
+        this.x += (this.targetX - this.x) * 0.05;
+      }
+      draw(c) {
+        c.fillStyle = this.color;
+        c.fillRect(this.x, this.y, 3, 10);
+      }
     }
 
     class FireworkParticle {
       constructor(x, y, color) {
-        this.x = x; this.y = y; this.color = color;
+        this.x = x;
+        this.y = y;
+        this.color = color;
         let angle = Math.random() * Math.PI * 2;
         let speed = Math.random() * (isGrandFinale ? 7 : 5) + 1;
-        this.vx = Math.cos(angle) * speed; this.vy = Math.sin(angle) * speed;
-        this.alpha = 1; this.decay = Math.random() * 0.015 + 0.012;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.015 + 0.012;
       }
-      update() { this.x += this.vx; this.y += this.vy; this.vy += 0.08; this.alpha -= this.decay; }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.08;
+        this.alpha -= this.decay;
+      }
       draw(c) {
-        c.save(); c.globalAlpha = Math.max(0, this.alpha); c.fillStyle = this.color;
-        c.beginPath(); c.arc(this.x, this.y, 2.5, 0, Math.PI * 2); c.fill(); c.restore();
+        c.save();
+        c.globalAlpha = Math.max(0, this.alpha);
+        c.fillStyle = this.color;
+        c.beginPath();
+        c.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
+        c.fill();
+        c.restore();
       }
     }
 
@@ -1533,20 +1760,27 @@
       let rect = canvas.getBoundingClientRect();
       let clickX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
       let clickY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+      
       fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, clickX, clickY));
     }
 
-    if (canvas) { canvas.addEventListener('click', launchUserRocket); canvas.addEventListener('touchstart', launchUserRocket); }
+    if (canvas) {
+      canvas.addEventListener('click', launchUserRocket);
+      canvas.addEventListener('touchstart', launchUserRocket);
+    }
 
     if (rocketBadge) {
       rocketBadge.addEventListener('click', function(e) {
         e.stopPropagation();
         if (!rocketChallengeActive) return;
+
         if (rocketsLeft === 100) rocketStartTime = Date.now();
         rocketsLeft--;
         if (rocketLeftSpan) rocketLeftSpan.textContent = rocketsLeft;
 
-        if (canvas) fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, Math.random() * canvas.width, canvas.height * 0.7));
+        if (canvas) {
+          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, Math.random() * canvas.width, canvas.height * 0.7));
+        }
 
         if (rocketsLeft <= 0) {
           rocketChallengeActive = false;
@@ -1558,7 +1792,9 @@
       });
     }
 
-    if (rocketCloseBtn && rocketResults) rocketCloseBtn.addEventListener('click', () => rocketResults.style.display = 'none');
+    if (rocketCloseBtn && rocketResults) {
+      rocketCloseBtn.addEventListener('click', () => rocketResults.style.display = 'none');
+    }
 
     function runFireworksLoop() {
       if (!ctx || !canvas || !fireworksActive) return;
@@ -1570,40 +1806,52 @@
 
       for (let i = fireworksRockets.length - 1; i >= 0; i--) {
         let r = fireworksRockets[i];
-        r.update(); r.draw(ctx);
+        r.update();
+        r.draw(ctx);
         if (r.y <= r.targetY) {
-          for (let p = 0; p < (isGrandFinale ? 60 : 45); p++) particles.push(new FireworkParticle(r.x, r.y, r.color));
+          for (let p = 0; p < (isGrandFinale ? 60 : 45); p++) {
+            particles.push(new FireworkParticle(r.x, r.y, r.color));
+          }
           fireworksRockets.splice(i, 1);
         }
       }
 
       for (let i = particles.length - 1; i >= 0; i--) {
         let pt = particles[i];
-        pt.update(); pt.draw(ctx);
+        pt.update();
+        pt.draw(ctx);
         if (pt.alpha <= 0) particles.splice(i, 1);
       }
+
       fireworksAnimId = requestAnimationFrame(runFireworksLoop);
     }
 
     function startFireworks() {
       if (fireworksActive) return;
-      fireworksActive = true; isGrandFinale = false;
+      fireworksActive = true;
+      isGrandFinale = false;
       resizeCanvas();
       if (canvas) canvas.style.display = 'block';
       runFireworksLoop();
-      rocketChallengeActive = true; rocketsLeft = 100;
+
+      rocketChallengeActive = true;
+      rocketsLeft = 100;
       if (rocketLeftSpan) rocketLeftSpan.textContent = '100';
       if (rocketBadge) rocketBadge.style.display = 'block';
+
       setTimeout(() => stopFireworks(), 300000);
     }
 
     function stopFireworks() {
-      fireworksActive = false; isGrandFinale = false; rocketChallengeActive = false;
+      fireworksActive = false;
+      isGrandFinale = false;
+      rocketChallengeActive = false;
       if (canvas) canvas.style.display = 'none';
       if (rocketBadge) rocketBadge.style.display = 'none';
       if (rocketResults) rocketResults.style.display = 'none';
       if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
-      particles = []; fireworksRockets = [];
+      particles = [];
+      fireworksRockets = [];
     }
 
     function checkEasternTimeFireworks() {
@@ -1622,6 +1870,7 @@
         }
       } catch (e) {}
     }
+
     setInterval(checkEasternTimeFireworks, 1000);
 
     // Dynamic Listener Counter Algorithm
@@ -1635,7 +1884,9 @@
         hours = parseInt(parts.find(p => p.type === 'hour').value, 10);
         minutes = parseInt(parts.find(p => p.type === 'minute').value, 10);
       } catch(e) {
-        let now = new Date(); hours = now.getHours(); minutes = now.getMinutes();
+        let now = new Date();
+        hours = now.getHours();
+        minutes = now.getMinutes();
       }
 
       if (hours === 21 && minutes <= 4) return 1050 + Math.floor(Math.random() * 120);
@@ -1657,6 +1908,7 @@
       if (!listenerElement) return;
       let target = calculateTargetListeners();
       let diff = target - currentListeners;
+      
       if (diff !== 0) {
         currentListeners += Math.abs(diff) > 50 ? Math.floor(diff / 4) : (diff > 0 ? 1 : -1);
       } else {
@@ -1710,10 +1962,12 @@
     if (bankBtn) {
       bankBtn.addEventListener('click', function() {
         if (poppedNotesTotal > 0) {
-          bankedNotesTotal += poppedNotesTotal; poppedNotesTotal = 0;
+          bankedNotesTotal += poppedNotesTotal;
+          poppedNotesTotal = 0;
           if (popCountDisplay) popCountDisplay.textContent = '0';
           if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
           saveBankedNotesToStorage();
+
           if (bankedBadge) {
             bankedBadge.style.transform = 'scale(1.2)';
             setTimeout(() => bankedBadge.style.transform = 'scale(1)', 200);
@@ -1724,25 +1978,35 @@
 
     const gameCanvas = document.getElementById('hbr-game-canvas');
     const gameCtx = gameCanvas ? gameCanvas.getContext('2d') : null;
-    let gameExplosions = [], gameAnimFrame = null;
+    let gameExplosions = [];
+    let gameAnimFrame = null;
 
     function resizeGameCanvas() {
       if (!gameCanvas) return;
       let p = gameCanvas.parentElement;
-      if (p) { gameCanvas.width = p.clientWidth; gameCanvas.height = p.clientHeight; }
+      if (p) {
+        gameCanvas.width = p.clientWidth;
+        gameCanvas.height = p.clientHeight;
+      }
     }
 
     class SpecialExplosion {
       constructor(x, y) {
-        this.x = x; this.y = y;
+        this.x = x;
+        this.y = y;
         this.type = ['smiley', 'heart', 'note', 'dog', 'burst'][Math.floor(Math.random() * 5)];
-        this.particles = []; this.alpha = 1; this.decay = 0.02;
+        this.particles = [];
+        this.alpha = 1;
+        this.decay = 0.02;
 
         if (this.type === 'burst') {
           for (let i = 0; i < 35; i++) {
-            let angle = Math.random() * Math.PI * 2, speed = Math.random() * 4 + 1;
+            let angle = Math.random() * Math.PI * 2;
+            let speed = Math.random() * 4 + 1;
             this.particles.push({
-              x: 0, y: 0, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+              x: 0, y: 0,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed,
               color: ['#f97316', '#3b82f6', '#a855f7', '#22c55e', '#ef4444'][Math.floor(Math.random() * 5)]
             });
           }
@@ -1750,16 +2014,26 @@
       }
       update() {
         this.alpha -= this.decay;
-        if (this.type === 'burst') this.particles.forEach(p => { p.x += p.vx; p.y += p.vy; });
+        if (this.type === 'burst') {
+          this.particles.forEach(p => { p.x += p.vx; p.y += p.vy; });
+        }
       }
       draw(c) {
-        c.save(); c.globalAlpha = Math.max(0, this.alpha); c.translate(this.x, this.y);
+        c.save();
+        c.globalAlpha = Math.max(0, this.alpha);
+        c.translate(this.x, this.y);
         if (this.type === 'smiley' || this.type === 'heart' || this.type === 'note' || this.type === 'dog') {
-          c.fillStyle = '#fff'; c.font = '28px sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+          c.fillStyle = '#fff';
+          c.font = '28px sans-serif';
+          c.textAlign = 'center';
+          c.textBaseline = 'middle';
           c.fillText(this.type === 'smiley' ? '😊' : (this.type === 'heart' ? '❤️' : (this.type === 'note' ? '🎵' : '🐶')), 0, 0);
         } else {
           this.particles.forEach(p => {
-            c.fillStyle = p.color; c.beginPath(); c.arc(p.x, p.y, 2.5, 0, Math.PI * 2); c.fill();
+            c.fillStyle = p.color;
+            c.beginPath();
+            c.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+            c.fill();
           });
         }
         c.restore();
@@ -1770,17 +2044,31 @@
       if (!gameCtx || !gameCanvas) return;
       gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
       for (let i = gameExplosions.length - 1; i >= 0; i--) {
-        let exp = gameExplosions[i]; exp.update(); exp.draw(gameCtx);
+        let exp = gameExplosions[i];
+        exp.update();
+        exp.draw(gameCtx);
         if (exp.alpha <= 0) gameExplosions.splice(i, 1);
       }
       gameAnimFrame = requestAnimationFrame(runGameLoop);
     }
-    resizeGameCanvas(); runGameLoop();
+    resizeGameCanvas();
+    runGameLoop();
 
     const noteSymbols = ['♪', '♫', '♩', '♬'];
-    let poppedNotesTotal = 0, noteSpawnInterval = null, isTimedMode = false, isLevelsMode = false, isBubblesMode = false, isLitMode = false;
-    let timerSeconds = 15, countdownInterval = null, canPopNotes = true, gameLevel = 1, notesPoppedInLevel = 0, recentPopTimestamps = [];
-    let litWaveTarget = 10, litWavePopped = 0;
+    let poppedNotesTotal = 0;
+    let noteSpawnInterval = null;
+    let isTimedMode = false;
+    let isLevelsMode = false;
+    let isBubblesMode = false;
+    let isLitMode = false;
+    let timerSeconds = 15;
+    let countdownInterval = null;
+    let canPopNotes = true;
+    let gameLevel = 1;
+    let notesPoppedInLevel = 0;
+    let recentPopTimestamps = [];
+    let litWaveTarget = 10;
+    let litWavePopped = 0;
 
     function incrementPopCounter(x, y) {
       if (!canPopNotes) return;
@@ -1795,7 +2083,8 @@
         litWavePopped++;
         if (x !== undefined && y !== undefined) gameExplosions.push(new SpecialExplosion(x, y));
         if (litWavePopped >= litWaveTarget) {
-          litWavePopped = 0; timerSeconds = 10;
+          litWavePopped = 0;
+          timerSeconds = 10;
           if (timerCountDisplay) timerCountDisplay.textContent = '10s';
           startNotesSystem();
         }
@@ -1807,12 +2096,15 @@
         recentPopTimestamps.push(now);
         recentPopTimestamps = recentPopTimestamps.filter(t => (now - t) <= 3000);
         if (recentPopTimestamps.length >= 3) {
-          timerSeconds += 3; recentPopTimestamps = [];
+          timerSeconds += 3;
+          recentPopTimestamps = [];
           if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
         }
         let targetNotes = gameLevel === 1 ? 10 : (gameLevel === 2 ? 15 : 20);
         if (notesPoppedInLevel >= targetNotes) {
-          gameLevel++; notesPoppedInLevel = 0; timerSeconds = 15;
+          gameLevel++;
+          notesPoppedInLevel = 0;
+          timerSeconds = 15;
           if (levelCountDisplay) levelCountDisplay.textContent = gameLevel;
           if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
         }
@@ -1824,11 +2116,13 @@
       const el = document.createElement('div');
       
       if (isLitMode) {
-        el.className = 'hbr-firework-unlit'; el.textContent = '🧨';
+        el.className = 'hbr-firework-unlit';
+        el.textContent = '🧨';
       } else if (isBubblesMode) {
         el.className = 'hbr-bubble-active';
         let size = Math.floor(Math.random() * 24) + 18;
-        el.style.width = size + 'px'; el.style.height = size + 'px';
+        el.style.width = size + 'px';
+        el.style.height = size + 'px';
       } else {
         el.className = 'hbr-note-active';
         el.textContent = noteSymbols[Math.floor(Math.random() * noteSymbols.length)];
@@ -1894,7 +2188,8 @@
           if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
           if (timerSeconds <= 0) {
             clearInterval(countdownInterval);
-            canPopNotes = false; stopNotesSystem();
+            canPopNotes = false;
+            stopNotesSystem();
             if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
             if (bannerMsg) bannerMsg.innerHTML = 'You popped <strong style="color: #60a5fa;">' + poppedNotesTotal + '</strong> notes!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
@@ -1927,9 +2222,10 @@
           if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
           if (timerSeconds <= 0) {
             clearInterval(countdownInterval);
-            canPopNotes = false; stopNotesSystem();
+            canPopNotes = false;
+            stopNotesSystem();
             if (bannerTitle) bannerTitle.textContent = "GAME OVER!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You reached <strong style="color: #4ade80;">Level ' + gameLevel + '</strong>!';
+            if (bannerMsg) bannerMsg.innerHTML = 'You reached <strong style="color: #4ade80;">Level ' + gameLevel + '</strong> and popped ' + poppedNotesTotal + ' total notes!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
@@ -1978,7 +2274,8 @@
           if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
           if (timerSeconds <= 0) {
             clearInterval(countdownInterval);
-            canPopNotes = false; stopNotesSystem();
+            canPopNotes = false;
+            stopNotesSystem();
             if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
             if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal + '</strong> fireworks!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
@@ -2068,34 +2365,52 @@
       pageTracks.forEach((track, pageRelativeIdx) => {
         let globalIdx = startIdx + pageRelativeIdx;
         let row = document.createElement('div');
-        row.style.display = 'flex'; row.style.justifyContent = 'space-between'; row.style.alignItems = 'center';
-        row.style.padding = '6px 10px'; row.style.borderRadius = '6px'; row.style.fontSize = '12px';
+        row.style.display = 'flex';
+        row.style.justifyContent = 'space-between';
+        row.style.alignItems = 'center';
+        row.style.padding = '6px 10px';
+        row.style.borderRadius = '6px';
+        row.style.fontSize = '12px';
 
         let isCurrentlyPlaying = (activeQueueSource === null) && (globalIdx === currentTrackIndex);
         if (isCurrentlyPlaying) {
-          row.style.background = 'rgba(59,130,246,0.15)'; row.style.color = '#3b82f6'; row.style.fontWeight = '600'; row.style.border = '1px solid rgba(59,130,246,0.3)';
+          row.style.background = 'rgba(59,130,246,0.15)';
+          row.style.color = '#3b82f6';
+          row.style.fontWeight = '600';
+          row.style.border = '1px solid rgba(59,130,246,0.3)';
         } else {
-          row.style.background = 'rgba(255,255,255,0.03)'; row.style.color = '#d1d5db'; row.style.border = '1px solid transparent';
+          row.style.background = 'rgba(255,255,255,0.03)';
+          row.style.color = '#d1d5db';
+          row.style.border = '1px solid transparent';
         }
 
         let titleSpan = document.createElement('span');
-        titleSpan.style.cursor = 'pointer'; titleSpan.style.flex = '1';
+        titleSpan.style.cursor = 'pointer';
+        titleSpan.style.flex = '1';
         let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 4px; vertical-align: middle;">E</span>' : '';
         titleSpan.innerHTML = (globalIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentlyPlaying ? ' <span style="font-size: 9px; opacity: 0.7;">(PLAYING)</span>' : '');
         titleSpan.addEventListener('click', function() {
-          activeQueueSource = null; activePlaylist = currentMasterTracks; selectAndPlayTrack(globalIdx);
+          activeQueueSource = null;
+          activePlaylist = currentMasterTracks;
+          selectAndPlayTrack(globalIdx);
         });
 
         let btnContainer = document.createElement('div');
-        btnContainer.style.display = 'flex'; btnContainer.style.gap = '4px';
+        btnContainer.style.display = 'flex';
+        btnContainer.style.gap = '4px';
 
         let ytMusicBtn = document.createElement('a');
         ytMusicBtn.href = 'https://music.youtube.com/watch?v=' + track.id;
-        ytMusicBtn.target = '_blank'; ytMusicBtn.rel = 'noopener noreferrer';
+        ytMusicBtn.target = '_blank';
+        ytMusicBtn.rel = 'noopener noreferrer';
         ytMusicBtn.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
-        ytMusicBtn.style.border = '1px solid rgba(239,68,68,0.5)'; ytMusicBtn.style.borderRadius = '4px';
-        ytMusicBtn.style.color = '#ffffff'; ytMusicBtn.style.fontSize = '8px'; ytMusicBtn.style.fontWeight = '800';
-        ytMusicBtn.style.padding = '3px 5px'; ytMusicBtn.style.textDecoration = 'none';
+        ytMusicBtn.style.border = '1px solid rgba(239,68,68,0.5)';
+        ytMusicBtn.style.borderRadius = '4px';
+        ytMusicBtn.style.color = '#ffffff';
+        ytMusicBtn.style.fontSize = '8px';
+        ytMusicBtn.style.fontWeight = '800';
+        ytMusicBtn.style.padding = '3px 5px';
+        ytMusicBtn.style.textDecoration = 'none';
         ytMusicBtn.innerHTML = '<span>YT</span><span style="font-size: 7px;">↗</span>';
         ytMusicBtn.addEventListener('click', (e) => e.stopPropagation());
 
@@ -2106,8 +2421,12 @@
         let add1Btn = document.createElement('button');
         add1Btn.style.background = inQ1 ? 'rgba(37,99,235,0.3)' : 'rgba(255,255,255,0.08)';
         add1Btn.style.border = inQ1 ? '1px solid rgba(37,99,235,0.5)' : '1px solid rgba(255,255,255,0.15)';
-        add1Btn.style.borderRadius = '4px'; add1Btn.style.color = inQ1 ? '#93c5fd' : '#9ca3af';
-        add1Btn.style.fontSize = '9px'; add1Btn.style.fontWeight = '700'; add1Btn.style.padding = '3px 6px'; add1Btn.style.cursor = 'pointer';
+        add1Btn.style.borderRadius = '4px';
+        add1Btn.style.color = inQ1 ? '#93c5fd' : '#9ca3af';
+        add1Btn.style.fontSize = '9px';
+        add1Btn.style.fontWeight = '700';
+        add1Btn.style.padding = '3px 6px';
+        add1Btn.style.cursor = 'pointer';
         add1Btn.textContent = inQ1 ? '✓ P1' : '+ Playlist 1';
         add1Btn.addEventListener('click', function(e) {
           e.stopPropagation();
@@ -2123,8 +2442,12 @@
         let add2Btn = document.createElement('button');
         add2Btn.style.background = inQ2 ? 'rgba(168,85,247,0.3)' : 'rgba(255,255,255,0.08)';
         add2Btn.style.border = inQ2 ? '1px solid rgba(168,85,247,0.5)' : '1px solid rgba(255,255,255,0.15)';
-        add2Btn.style.borderRadius = '4px'; add2Btn.style.color = inQ2 ? '#d8b4fe' : '#9ca3af';
-        add2Btn.style.fontSize = '9px'; add2Btn.style.fontWeight = '700'; add2Btn.style.padding = '3px 6px'; add2Btn.style.cursor = 'pointer';
+        add2Btn.style.borderRadius = '4px';
+        add2Btn.style.color = inQ2 ? '#d8b4fe' : '#9ca3af';
+        add2Btn.style.fontSize = '9px';
+        add2Btn.style.fontWeight = '700';
+        add2Btn.style.padding = '3px 6px';
+        add2Btn.style.cursor = 'pointer';
         add2Btn.textContent = inQ2 ? '✓ P2' : '+ Playlist 2';
         add2Btn.addEventListener('click', function(e) {
           e.stopPropagation();
@@ -2140,28 +2463,36 @@
         let addT3Btn = document.createElement('button');
         addT3Btn.style.background = inT3 ? 'rgba(34,197,94,0.3)' : 'rgba(255,255,255,0.08)';
         addT3Btn.style.border = inT3 ? '1px solid rgba(34,197,94,0.5)' : '1px solid rgba(255,255,255,0.15)';
-        addT3Btn.style.borderRadius = '4px'; addT3Btn.style.color = inT3 ? '#4ade80' : '#9ca3af';
-        addT3Btn.style.fontSize = '9px'; addT3Btn.style.fontWeight = '700'; addT3Btn.style.padding = '3px 6px'; addT3Btn.style.cursor = 'pointer';
+        addT3Btn.style.borderRadius = '4px';
+        addT3Btn.style.color = inT3 ? '#4ade80' : '#9ca3af';
+        addT3Btn.style.fontSize = '9px';
+        addT3Btn.style.fontWeight = '700';
+        addT3Btn.style.padding = '3px 6px';
+        addT3Btn.style.cursor = 'pointer';
         addT3Btn.textContent = inT3 ? '✓ T3' : '+ T3';
         addT3Btn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (!inT3) {
             if (customTop3.length < 3) { customTop3.push(track); savePlaylistsToStorage(); renderDrawerList(); }
-            else alert('Top 3 is full!');
+            else alert('Top 3 is full! Remove a song from Top 3 first.');
           } else {
             customTop3 = customTop3.filter(t => t.id !== track.id);
             savePlaylistsToStorage(); renderDrawerList();
           }
         });
 
-        btnContainer.appendChild(ytMusicBtn); btnContainer.appendChild(add1Btn); btnContainer.appendChild(add2Btn); btnContainer.appendChild(addT3Btn);
-        row.appendChild(titleSpan); row.appendChild(btnContainer);
+        btnContainer.appendChild(ytMusicBtn);
+        btnContainer.appendChild(add1Btn);
+        btnContainer.appendChild(add2Btn);
+        btnContainer.appendChild(addT3Btn);
+        row.appendChild(titleSpan);
+        row.appendChild(btnContainer);
         drawerList.appendChild(row);
       });
 
       if (q1CountSpan) q1CountSpan.textContent = customQueue1.length;
       if (q1ItemsContainer) {
-        q1ItemsContainer.innerHTML = customQueue1.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet.</div>' : '';
+        q1ItemsContainer.innerHTML = customQueue1.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 1" above!</div>' : '';
         customQueue1.forEach((track, cIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -2180,7 +2511,7 @@
 
       if (q2CountSpan) q2CountSpan.textContent = customQueue2.length;
       if (q2ItemsContainer) {
-        q2ItemsContainer.innerHTML = customQueue2.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet.</div>' : '';
+        q2ItemsContainer.innerHTML = customQueue2.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 2" above!</div>' : '';
         customQueue2.forEach((track, cIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -2199,7 +2530,7 @@
 
       updateT3Circles();
       if (t3ItemsContainer) {
-        t3ItemsContainer.innerHTML = customTop3.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected.</div>' : '';
+        t3ItemsContainer.innerHTML = customTop3.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected. Click "+ T3" next to any song!</div>' : '';
         customTop3.forEach((track, tIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -2265,7 +2596,15 @@
     const ambientGlow = document.getElementById('hbr-ambient-glow');
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
-    let isPlaying = false, currentTrackIndex = 0, isDragging = false, startAngle = 0, baseRotation = 0, currentRotation = 0, spinVelocity = 0, lastTime = Date.now(), animFrameReq = null;
+    let isPlaying = false;
+    let currentTrackIndex = 0;
+    let isDragging = false;
+    let startAngle = 0;
+    let baseRotation = 0;
+    let currentRotation = 0;
+    let spinVelocity = 0;
+    let lastTime = Date.now();
+    let animFrameReq = null;
 
     function sendCommand(func, args) {
       if (iframe && iframe.contentWindow) {
@@ -2289,7 +2628,8 @@
 
     if (modeBtn) {
       modeBtn.addEventListener('click', function() {
-        isInstrumentalMode = !isInstrumentalMode; activeQueueSource = null;
+        isInstrumentalMode = !isInstrumentalMode;
+        activeQueueSource = null;
         if (isInstrumentalMode) {
           currentMasterTracks = masterInstrumentalTracks; activePlaylist = masterInstrumentalTracks;
           if (modeBtnText) modeBtnText.textContent = 'Full Tracks 🎵';
@@ -2331,7 +2671,8 @@
 
     colorButtons.forEach(btn => {
       btn.addEventListener('click', function() {
-        let mc = this.getAttribute('data-color'), dc = this.getAttribute('data-dark');
+        let mc = this.getAttribute('data-color');
+        let dc = this.getAttribute('data-dark');
         if (label) label.style.background = 'radial-gradient(circle, ' + mc + ' 0%, ' + dc + ' 100%)';
         if (reflection) reflection.style.background = 'linear-gradient(135deg, ' + mc + '22 0%, rgba(255,255,255,0) 40%, ' + mc + '22 100%)';
         if (ambientGlow) ambientGlow.style.background = 'radial-gradient(circle, ' + mc + '22 0%, rgba(17,17,21,0.95) 70%)';
@@ -2346,7 +2687,8 @@
     function triggerPlayState() {
       isPlaying = true;
       if (tonearm) tonearm.style.transform = 'rotate(0deg)';
-      startNativeSpin(); startNotesSystem();
+      startNativeSpin();
+      startNotesSystem();
       if (toggleBtn) { toggleBtn.innerHTML = '❚❚'; toggleBtn.style.background = '#ef4444'; }
     }
 
@@ -2362,14 +2704,17 @@
     if (toggleBtn) {
       toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
-          triggerPlayState(); sendCommand('playVideo');
+          triggerPlayState();
+          sendCommand('playVideo');
         } else {
           isPlaying = false;
           if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
-          stopNativeSpin(); stopNotesSystem();
+          stopNativeSpin();
+          stopNotesSystem();
           if (countdownInterval) clearInterval(countdownInterval);
           if (animFrameReq) cancelAnimationFrame(animFrameReq);
-          toggleBtn.innerHTML = '▶'; toggleBtn.style.background = '#3b82f6';
+          toggleBtn.innerHTML = '▶';
+          toggleBtn.style.background = '#3b82f6';
           sendCommand('pauseVideo');
         }
       });
@@ -2381,14 +2726,16 @@
     renderDrawerList();
 
     function getAngle(e, rect) {
-      let cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+      let cx = rect.left + rect.width / 2;
+      let cy = rect.top + rect.height / 2;
       let clientX = e.touches ? e.touches[0].clientX : e.clientX;
       let clientY = e.touches ? e.touches[0].clientY : e.clientY;
       return Math.atan2(clientY - cy, clientX - cx) * (180 / Math.PI);
     }
 
     function getCurrentRotationAngle(el) {
-      let st = window.getComputedStyle(el, null), tr = st.getPropertyValue("transform");
+      let st = window.getComputedStyle(el, null);
+      let tr = st.getPropertyValue("transform");
       if (tr === "none" || !tr) return 0;
       let values = tr.split('(')[1].split(')')[0].split(',');
       let angle = Math.round(Math.atan2(values[1], values[0]) * (180 / Math.PI));
@@ -2397,7 +2744,8 @@
 
     function manualInertiaLoop() {
       if (!isDragging) {
-        spinVelocity *= 0.95; currentRotation += spinVelocity;
+        spinVelocity *= 0.95;
+        currentRotation += spinVelocity;
         if (record) record.style.transform = 'rotate(' + currentRotation + 'deg)';
         if (Math.abs(spinVelocity) < 0.2) {
           if (isPlaying) startNativeSpin();
@@ -2414,9 +2762,12 @@
         currentRotation = getCurrentRotationAngle(record);
         stopNativeSpin();
         if (record) record.style.transform = 'rotate(' + currentRotation + 'deg)';
-        isDragging = true; djContainer.style.cursor = 'grabbing';
-        startAngle = getAngle(e, rect); baseRotation = currentRotation;
-        spinVelocity = 0; lastTime = Date.now();
+        isDragging = true;
+        djContainer.style.cursor = 'grabbing';
+        startAngle = getAngle(e, rect);
+        baseRotation = currentRotation;
+        spinVelocity = 0;
+        lastTime = Date.now();
         if (e.type === 'touchstart') e.preventDefault();
       };
 
@@ -2425,15 +2776,18 @@
         let rect = djContainer.getBoundingClientRect();
         let currentAngle = getAngle(e, rect);
         let newRotation = baseRotation + (currentAngle - startAngle);
-        let now = Date.now(), dt = now - lastTime;
+        let now = Date.now();
+        let dt = now - lastTime;
         if (dt > 0) spinVelocity = (newRotation - currentRotation) / dt * 16.6;
-        currentRotation = newRotation; lastTime = now;
+        currentRotation = newRotation;
+        lastTime = now;
         if (record) record.style.transform = 'rotate(' + currentRotation + 'deg)';
       };
 
       const grabEnd = () => {
         if (!isDragging) return;
-        isDragging = false; djContainer.style.cursor = 'grab';
+        isDragging = false;
+        djContainer.style.cursor = 'grab';
         animFrameReq = requestAnimationFrame(manualInertiaLoop);
       };
 
