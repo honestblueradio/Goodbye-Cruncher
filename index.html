@@ -162,8 +162,14 @@
           </div>
         </div>
 
-        <!-- Store Event Alert Box -->
+        <!-- Store Event Alert Box & Interactive Shoplifter Catch Button -->
         <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
+
+        <!-- Interactive Quick-Action Shoplifter Catch Banner -->
+        <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(239,68,68,0.5); user-select: none;">
+          <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase;">🚨 SHOPLIFTER ESCAPING!</div>
+          <div style="font-size: 9px; color: #fee2e2; margin-top: 2px;">TAP HERE FAST TO TACKLE THE THIEF! (<span id="hbr-thief-timer">3</span>s)</div>
+        </div>
 
         <!-- Store Navigation Tabs (Stores vs Movies) -->
         <div style="display: flex; gap: 4px; margin-bottom: 8px;">
@@ -652,8 +658,13 @@
     const cashCountBadge = document.getElementById('hbr-cash-count');
     const storeItemsList = document.getElementById('hbr-store-items-list');
     const storeEventAlert = document.getElementById('hbr-store-event-alert');
+    const shoplifterCatchBox = document.getElementById('hbr-shoplifter-catch-box');
+    const thiefTimerSpan = document.getElementById('hbr-thief-timer');
     const tabStoresBtn = document.getElementById('hbr-tab-stores-btn');
     const tabMoviesBtn = document.getElementById('hbr-tab-movies-btn');
+
+    let shoplifterPending = null;
+    let shoplifterTimerInterval = null;
 
     function triggerStoreAlert(msg) {
       if (storeEventAlert) {
@@ -673,7 +684,7 @@
 
     updateCashUI();
 
-    // Pure Movie-Driven Passive Cash Engine ($0.00 Store Base Payout)
+    // Pure Movie-Driven Passive Cash & Interactive Events Engine ($0.00 Base Payout)
     setInterval(function() {
       let bCount = userOwnedStores.blockbuster;
       if (bCount > 0) {
@@ -692,6 +703,13 @@
           }
         });
 
+        // Small Late Fee Revenue Trickling In (Random $0.25 to $1.25 when owning movies)
+        if (totalMovies > 0 && Math.random() < 0.12) {
+          let lateFeeBonus = parseFloat((Math.random() * 1.00 + 0.25).toFixed(2));
+          netPerSec += lateFeeBonus;
+          triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on a overdue tape!');
+        }
+
         // Penalty for unrewound VHS tapes draining cash
         if (unrewoundTapesCount > 0) {
           netPerSec -= (unrewoundTapesCount * 0.10);
@@ -701,29 +719,61 @@
         saveCashToStorage();
         updateCashUI();
 
-        // Random Shoplifting Event (5% chance per tick if store has movies)
-        if (totalMovies > 0 && Math.random() < 0.05) {
+        // Shoplifting Event with Reaction Catch Window (6% chance per tick)
+        if (totalMovies > 0 && !shoplifterPending && Math.random() < 0.06) {
           let movieIds = Object.keys(userOwnedMovies).filter(id => {
             let inv = userOwnedMovies[id];
             return inv && ((inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0)) > 0;
           });
-          
+
           if (movieIds.length > 0) {
-            let stolenId = movieIds[Math.floor(Math.random() * movieIds.length)];
-            let inv = userOwnedMovies[stolenId];
+            let targetMovieId = movieIds[Math.floor(Math.random() * movieIds.length)];
+            let inv = userOwnedMovies[targetMovieId];
             let formats = [];
             if (inv.vhs > 0) formats.push('vhs');
             if (inv.dvd > 0) formats.push('dvd');
             if (inv.bluray > 0) formats.push('bluray');
-            
-            if (formats.length > 0) {
-              let stolenFmt = formats[Math.floor(Math.random() * formats.length)];
-              inv[stolenFmt]--;
-              saveOwnedMoviesToStorage();
 
-              let movieObj = movieCatalog.find(m => m.id === stolenId);
-              triggerStoreAlert('🚨 <strong>SHOPLIFTER ALERT!</strong> Someone stole a <strong>' + stolenFmt.toUpperCase() + '</strong> copy of ' + (movieObj ? movieObj.name : 'a movie') + '!');
-              renderStoreList();
+            if (formats.length > 0) {
+              let targetFmt = formats[Math.floor(Math.random() * formats.length)];
+              let movieObj = movieCatalog.find(m => m.id === targetMovieId);
+
+              shoplifterPending = {
+                movieId: targetMovieId,
+                format: targetFmt,
+                movieName: movieObj ? movieObj.name : 'Movie',
+                timeLeft: 3
+              };
+
+              if (shoplifterCatchBox && thiefTimerSpan) {
+                thiefTimerSpan.textContent = '3';
+                shoplifterCatchBox.style.display = 'block';
+              }
+
+              if (shoplifterTimerInterval) clearInterval(shoplifterTimerInterval);
+              shoplifterTimerInterval = setInterval(function() {
+                if (!shoplifterPending) {
+                  clearInterval(shoplifterTimerInterval);
+                  return;
+                }
+
+                shoplifterPending.timeLeft--;
+                if (thiefTimerSpan) thiefTimerSpan.textContent = shoplifterPending.timeLeft;
+
+                if (shoplifterPending.timeLeft <= 0) {
+                  clearInterval(shoplifterTimerInterval);
+                  // Escaped! Deduct tape stock
+                  let stolenInv = userOwnedMovies[shoplifterPending.movieId];
+                  if (stolenInv && stolenInv[shoplifterPending.format] > 0) {
+                    stolenInv[shoplifterPending.format]--;
+                    saveOwnedMoviesToStorage();
+                    triggerStoreAlert('🚨 <strong>SHOPLIFTER ESCAPED!</strong> They stole a <strong>' + shoplifterPending.format.toUpperCase() + '</strong> copy of ' + shoplifterPending.movieName + '!');
+                  }
+                  shoplifterPending = null;
+                  if (shoplifterCatchBox) shoplifterCatchBox.style.display = 'none';
+                  renderStoreList();
+                }
+              }, 1000);
             }
           }
         }
@@ -737,6 +787,29 @@
         }
       }
     }, 2000);
+
+    // Interactive Catch Shoplifter Tap Action
+    if (shoplifterCatchBox) {
+      shoplifterCatchBox.addEventListener('click', function() {
+        if (shoplifterPending) {
+          if (shoplifterTimerInterval) clearInterval(shoplifterTimerInterval);
+          let caughtMovie = shoplifterPending.movieName;
+          let caughtFmt = shoplifterPending.format.toUpperCase();
+          shoplifterPending = null;
+          
+          if (shoplifterCatchBox) shoplifterCatchBox.style.display = 'none';
+          
+          // Bonus reward for fast reflexes!
+          let rewardCash = 2.50;
+          storeCashTotal += rewardCash;
+          saveCashToStorage();
+          updateCashUI();
+
+          triggerStoreAlert('🛑 <strong>SHOPLIFTER CAUGHT!</strong> You tackled the thief, saved your <strong>' + caughtFmt + '</strong> copy of ' + caughtMovie + ', and received a <strong>$' + rewardCash.toFixed(2) + '</strong> reward!');
+          renderStoreList();
+        }
+      });
+    }
 
     function renderStoreList() {
       if (!storeItemsList) return;
@@ -900,8 +973,8 @@
         statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
         statusBox.style.textAlign = 'center';
         statusBox.innerHTML = totalMovies > 0 
-          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies + '.'
-          : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash!';
+          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies + '. Earns rental cash + occasional late fees!'
+          : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash & late fees!';
         
         storeItemsList.appendChild(statusBox);
 
