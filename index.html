@@ -125,11 +125,14 @@
       <button id="hbr-calm-mode-btn" style="display: none; background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #c084fc; cursor: pointer; transition: all 0.2s ease;">🍃 CALM</button>
     </div>
 
-    <!-- Bank Notes & Store Section -->
+    <!-- Bank Notes & Real Cash & Store Section -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
       <button id="hbr-bank-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4); transition: transform 0.15s ease, background 0.2s ease;">🏦 BANK NOTES</button>
       <span id="hbr-banked-badge" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #fbbf24; letter-spacing: 0.5px; display: inline-block; transition: transform 0.15s ease;">BANKED: <span id="hbr-banked-count" style="color: #fef08a;">0</span></span>
       
+      <!-- REAL STORE CASH COUNTER -->
+      <span id="hbr-cash-badge" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.5px; display: inline-block;">💵 CASH: <span id="hbr-cash-count" style="color: #86efac;">$0.00</span></span>
+
       <!-- STORE BUTTON NEXT TO BANKED -->
       <button id="hbr-store-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); transition: transform 0.15s ease;">🛍️ STORE</button>
     </div>
@@ -141,21 +144,32 @@
       <div id="hbr-times-up" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.92); border: 2px solid #ef4444; border-radius: 12px; padding: 12px 20px; z-index: 25; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center;"><span id="hbr-banner-title" style="font-size: 14px; font-weight: 800; color: #ef4444; display: block; margin-bottom: 2px;">TIME&#39;S UP!</span> <span style="font-size: 11px; color: #d1d5db;"><span id="hbr-banner-msg">You popped <strong id="hbr-final-count" style="color: #60a5fa;">0</strong> notes!</span></span></div>
 
       <!-- STORE MODAL OVERLAY (Covers the vinyl record deck) -->
-      <div id="hbr-store-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 17, 25, 0.96); backdrop-filter: blur(8px); z-index: 30; padding: 16px; box-sizing: border-box; text-align: left; flex-direction: column; overflow-y: auto;">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 10px;">
+      <div id="hbr-store-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 17, 25, 0.96); backdrop-filter: blur(8px); z-index: 30; padding: 14px; box-sizing: border-box; text-align: left; flex-direction: column; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px;">
           <div>
-            <div style="font-size: 13px; font-weight: 800; color: #10b981; letter-spacing: 0.5px;">🛍️ RETRO STORE EMPORIUM</div>
-            <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;">Prices fluctuate &amp; go on sale continuously!</div>
+            <div style="font-size: 12px; font-weight: 800; color: #10b981; letter-spacing: 0.5px;">🛍️ RETRO STORE &amp; MOVIE EMPORIUM</div>
+            <div style="font-size: 9px; color: #9ca3af; margin-top: 1px;">Prices &amp; sales fluctuate live! Buy movies for Blockbuster!</div>
           </div>
-          <button id="hbr-close-store-btn" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; border-radius: 6px; font-size: 11px; font-weight: 800; padding: 3px 8px; cursor: pointer;">✕ CLOSE</button>
+          <button id="hbr-close-store-btn" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; border-radius: 6px; font-size: 10px; font-weight: 800; padding: 3px 7px; cursor: pointer;">✕ CLOSE</button>
         </div>
 
-        <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 6px 10px; font-size: 10px; font-weight: 700; color: #fbbf24; margin-bottom: 10px; text-align: center;">
-          YOUR BANKED BALANCE: <span id="hbr-store-banked-count" style="color: #fff; font-size: 11px; font-weight: 800;">0</span> NOTES
+        <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+          <div style="flex: 1; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px; padding: 4px 6px; font-size: 9px; font-weight: 700; color: #fbbf24; text-align: center;">
+            BANKED: <span id="hbr-store-banked-count" style="color: #fff; font-weight: 800;">0</span> NOTES
+          </div>
+          <div style="flex: 1; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 6px; padding: 4px 6px; font-size: 9px; font-weight: 700; color: #4ade80; text-align: center;">
+            CASH: <span id="hbr-store-cash-count" style="color: #fff; font-weight: 800;">$0.00</span>
+          </div>
         </div>
 
-        <!-- Store List Container -->
-        <div id="hbr-store-items-list" style="display: flex; flex-direction: column; gap: 8px;">&nbsp;</div>
+        <!-- Store Navigation Tabs (Stores vs Movies) -->
+        <div style="display: flex; gap: 4px; margin-bottom: 8px;">
+          <button id="hbr-tab-stores-btn" style="flex: 1; background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 6px; color: #93c5fd; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🏪 STORES</button>
+          <button id="hbr-tab-movies-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🍿 BLOCKBUSTER MOVIES</button>
+        </div>
+
+        <!-- Store Items Container -->
+        <div id="hbr-store-items-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
       </div>
 
       <!-- DJ INTERACTIVE RECORD CONTAINER -->
@@ -404,7 +418,7 @@
     let currentDrawerPage = 1;
     const tracksPerPage = 6;
 
-    // Bulletproof Live Stream Status with Secret Admin Override
+    // Live Stream Status with Secret Admin Override
     const liveIndicator = document.getElementById('hbr-live-indicator');
     const liveDot = document.getElementById('hbr-live-dot');
     const liveText = document.getElementById('hbr-live-text');
@@ -505,13 +519,17 @@
 
     // Bank Notes & Stores State Data
     let bankedNotesTotal = 0;
+    let storeCashTotal = 0.00;
     
-    // User Purchased Stores Inventory (Count per store)
+    // User Purchased Stores Inventory
     let userOwnedStores = {
       blockbuster: 0,
       toysrus: 0,
       kbtoys: 0
     };
+
+    // User Purchased Movie Inventory { movieId: { vhs: 0, dvd: 0, bluray: 0 } }
+    let userOwnedMovies = {};
 
     // Store Catalog with base price ranges
     const storeCatalog = [
@@ -520,14 +538,24 @@
       { id: 'kbtoys', name: 'KB Toys', baseMin: 80, baseMax: 220, color: '#ef4444', icon: '🧸' }
     ];
 
-    // Current Fluctuation State
+    // Movie Catalog with Rotten Tomatoes Ratings
+    const movieCatalog = [
+      { id: 'titanic', name: 'Titanic', rtScore: 88, basePrice: 40 },
+      { id: 'godfather', name: 'The Godfather', rtScore: 98, basePrice: 60 },
+      { id: 'jurassic', name: 'Jurassic Park', rtScore: 92, basePrice: 50 },
+      { id: 'mario93', name: 'Super Mario Bros (1993)', rtScore: 28, basePrice: 20 },
+      { id: 'batmanrobin', name: 'Batman & Robin', rtScore: 12, basePrice: 15 },
+      { id: 'gigli', name: 'Gigli', rtScore: 6, basePrice: 10 }
+    ];
+
     let currentStorePrices = {};
+    let activeStoreTab = 'stores'; // 'stores' or 'movies'
 
     function randomizeStorePrices() {
       storeCatalog.forEach(store => {
         let base = Math.floor(Math.random() * (store.baseMax - store.baseMin + 1)) + store.baseMin;
-        let isOnSale = Math.random() < 0.35; // 35% chance to go on sale
-        let discount = isOnSale ? (Math.floor(Math.random() * 3) + 2) * 10 : 0; // 20%, 30%, or 40% off
+        let isOnSale = Math.random() < 0.35;
+        let discount = isOnSale ? (Math.floor(Math.random() * 3) + 2) * 10 : 0;
         let finalPrice = isOnSale ? Math.floor(base * (1 - discount / 100)) : base;
 
         currentStorePrices[store.id] = {
@@ -541,20 +569,24 @@
 
     randomizeStorePrices();
 
-    // Load Saved Playlists, Top 3, Banked Notes & Owned Stores from localStorage
+    // Load Saved Playlists, Top 3, Banked Notes, Cash & Stores from localStorage
     function loadSavedPlaylists() {
       try {
         const savedQ1 = localStorage.getItem('hbr_custom_queue_1');
         const savedQ2 = localStorage.getItem('hbr_custom_queue_2');
         const savedT3 = localStorage.getItem('hbr_custom_top3');
         const savedBanked = localStorage.getItem('hbr_banked_notes');
+        const savedCash = localStorage.getItem('hbr_store_cash');
         const savedStores = localStorage.getItem('hbr_owned_stores');
+        const savedMovies = localStorage.getItem('hbr_owned_movies');
 
         if (savedQ1) customQueue1 = JSON.parse(savedQ1);
         if (savedQ2) customQueue2 = JSON.parse(savedQ2);
         if (savedT3) customTop3 = JSON.parse(savedT3);
         if (savedBanked) bankedNotesTotal = parseInt(savedBanked, 10) || 0;
+        if (savedCash) storeCashTotal = parseFloat(savedCash) || 0.00;
         if (savedStores) userOwnedStores = Object.assign(userOwnedStores, JSON.parse(savedStores));
+        if (savedMovies) userOwnedMovies = Object.assign(userOwnedMovies, JSON.parse(savedMovies));
       } catch (e) {}
     }
 
@@ -572,9 +604,21 @@
       } catch (e) {}
     }
 
+    function saveCashToStorage() {
+      try {
+        localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2));
+      } catch (e) {}
+    }
+
     function saveOwnedStoresToStorage() {
       try {
         localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores));
+      } catch (e) {}
+    }
+
+    function saveOwnedMoviesToStorage() {
+      try {
+        localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
       } catch (e) {}
     }
 
@@ -585,99 +629,259 @@
     const storeOverlay = document.getElementById('hbr-store-overlay');
     const closeStoreBtn = document.getElementById('hbr-close-store-btn');
     const storeBankedCountSpan = document.getElementById('hbr-store-banked-count');
+    const storeCashCountSpan = document.getElementById('hbr-store-cash-count');
+    const cashCountBadge = document.getElementById('hbr-cash-count');
     const storeItemsList = document.getElementById('hbr-store-items-list');
+    const tabStoresBtn = document.getElementById('hbr-tab-stores-btn');
+    const tabMoviesBtn = document.getElementById('hbr-tab-movies-btn');
+
+    function updateCashUI() {
+      let formatted = '$' + storeCashTotal.toFixed(2);
+      if (cashCountBadge) cashCountBadge.textContent = formatted;
+      if (storeCashCountSpan) storeCashCountSpan.textContent = formatted;
+    }
+
+    updateCashUI();
+
+    // Passive Store Cash Flow Simulator (Ticks every 2 seconds)
+    setInterval(function() {
+      if (userOwnedStores.blockbuster > 0) {
+        let netPerSec = 0;
+        
+        // Base income per Blockbuster
+        netPerSec += userOwnedStores.blockbuster * 0.25;
+
+        // Movie impact
+        movieCatalog.forEach(movie => {
+          let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
+          let totalCopies = inv.vhs + inv.dvd + inv.bluray;
+
+          if (totalCopies > 0) {
+            let multiplier = (movie.rtScore >= 50) ? (movie.rtScore / 100) : -((50 - movie.rtScore) / 50);
+            let formatBoost = (inv.vhs * 0.15) + (inv.dvd * 0.35) + (inv.bluray * 0.65);
+            netPerSec += (formatBoost * multiplier);
+          }
+        });
+
+        storeCashTotal = Math.max(0, storeCashTotal + netPerSec);
+        saveCashToStorage();
+        updateCashUI();
+      }
+    }, 2000);
 
     function renderStoreList() {
       if (!storeItemsList) return;
       if (storeBankedCountSpan) storeBankedCountSpan.textContent = bankedNotesTotal.toLocaleString();
+      updateCashUI();
       storeItemsList.innerHTML = '';
 
-      storeCatalog.forEach(store => {
-        let priceData = currentStorePrices[store.id];
-        let ownedCount = userOwnedStores[store.id] || 0;
+      if (activeStoreTab === 'stores') {
+        storeCatalog.forEach(store => {
+          let priceData = currentStorePrices[store.id];
+          let ownedCount = userOwnedStores[store.id] || 0;
 
-        let itemBox = document.createElement('div');
-        itemBox.style.background = 'rgba(255, 255, 255, 0.04)';
-        itemBox.style.border = '1px solid rgba(255, 255, 255, 0.12)';
-        itemBox.style.borderRadius = '10px';
-        itemBox.style.padding = '10px';
-        itemBox.style.display = 'flex';
-        itemBox.style.justifyContent = 'space-between';
-        itemBox.style.alignItems = 'center';
+          let itemBox = document.createElement('div');
+          itemBox.style.background = 'rgba(255, 255, 255, 0.04)';
+          itemBox.style.border = '1px solid rgba(255, 255, 255, 0.12)';
+          itemBox.style.borderRadius = '8px';
+          itemBox.style.padding = '8px';
+          itemBox.style.display = 'flex';
+          itemBox.style.justifyContent = 'space-between';
+          itemBox.style.alignItems = 'center';
 
-        let infoDiv = document.createElement('div');
-        
-        let titleLine = document.createElement('div');
-        titleLine.style.fontSize = '12px';
-        titleLine.style.fontWeight = '800';
-        titleLine.style.color = '#ffffff';
-        titleLine.style.display = 'flex';
-        titleLine.style.alignItems = 'center';
-        titleLine.style.gap = '6px';
-        
-        let saleBadge = priceData.isOnSale ? ' <span style="background: #ef4444; color: #fff; font-size: 8px; font-weight: 800; padding: 1px 5px; border-radius: 4px;">' + priceData.discount + '% OFF!</span>' : '';
-        titleLine.innerHTML = store.icon + ' ' + store.name + saleBadge;
+          let infoDiv = document.createElement('div');
+          let titleLine = document.createElement('div');
+          titleLine.style.fontSize = '11px';
+          titleLine.style.fontWeight = '800';
+          titleLine.style.color = '#ffffff';
+          
+          let saleBadge = priceData.isOnSale ? ' <span style="background: #ef4444; color: #fff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + priceData.discount + '% OFF!</span>' : '';
+          titleLine.innerHTML = store.icon + ' ' + store.name + saleBadge;
 
-        let ownedLine = document.createElement('div');
-        ownedLine.style.fontSize = '9px';
-        ownedLine.style.color = '#9ca3af';
-        ownedLine.style.marginTop = '3px';
-        ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong>';
+          let ownedLine = document.createElement('div');
+          ownedLine.style.fontSize = '9px';
+          ownedLine.style.color = '#9ca3af';
+          ownedLine.style.marginTop = '2px';
+          ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong>';
 
-        infoDiv.appendChild(titleLine);
-        infoDiv.appendChild(ownedLine);
+          infoDiv.appendChild(titleLine);
+          infoDiv.appendChild(ownedLine);
 
-        let buyDiv = document.createElement('div');
-        buyDiv.style.textAlign = 'right';
+          let buyDiv = document.createElement('div');
+          buyDiv.style.textAlign = 'right';
 
-        let priceLine = document.createElement('div');
-        priceLine.style.fontSize = '11px';
-        priceLine.style.fontWeight = '800';
-        priceLine.style.color = '#fbbf24';
-        
-        if (priceData.isOnSale) {
-          priceLine.innerHTML = '<span style="text-decoration: line-through; color: #6b7280; font-size: 9px; margin-right: 4px;">' + priceData.originalPrice + '</span> ' + priceData.price + ' Notes';
-        } else {
-          priceLine.textContent = priceData.price + ' Notes';
+          let priceLine = document.createElement('div');
+          priceLine.style.fontSize = '10px';
+          priceLine.style.fontWeight = '800';
+          priceLine.style.color = '#fbbf24';
+          
+          if (priceData.isOnSale) {
+            priceLine.innerHTML = '<span style="text-decoration: line-through; color: #6b7280; font-size: 8px; margin-right: 3px;">' + priceData.originalPrice + '</span> ' + priceData.price + ' Notes';
+          } else {
+            priceLine.textContent = priceData.price + ' Notes';
+          }
+
+          let buyBtn = document.createElement('button');
+          let canAfford = bankedNotesTotal >= priceData.price;
+
+          buyBtn.style.marginTop = '3px';
+          buyBtn.style.background = canAfford ? 'linear-gradient(135deg, #10b981 0%, #047857 100%)' : '#374151';
+          buyBtn.style.border = 'none';
+          buyBtn.style.borderRadius = '5px';
+          buyBtn.style.color = canAfford ? '#ffffff' : '#9ca3af';
+          buyBtn.style.fontSize = '8px';
+          buyBtn.style.fontWeight = '800';
+          buyBtn.style.padding = '3px 8px';
+          buyBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed';
+          buyBtn.textContent = canAfford ? 'BUY STORE' : 'NEED NOTES';
+
+          if (canAfford) {
+            buyBtn.addEventListener('click', function() {
+              bankedNotesTotal -= priceData.price;
+              userOwnedStores[store.id] = (userOwnedStores[store.id] || 0) + 1;
+              
+              saveBankedNotesToStorage();
+              saveOwnedStoresToStorage();
+
+              const bankedCountDisplay = document.getElementById('hbr-banked-count');
+              if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+
+              randomizeStorePrices();
+              renderStoreList();
+            });
+          }
+
+          buyDiv.appendChild(priceLine);
+          buyDiv.appendChild(buyBtn);
+
+          itemBox.appendChild(infoDiv);
+          itemBox.appendChild(buyDiv);
+          storeItemsList.appendChild(itemBox);
+        });
+      } else {
+        // MOVIES TAB
+        if (userOwnedStores.blockbuster === 0) {
+          let warn = document.createElement('div');
+          warn.style.background = 'rgba(239, 68, 68, 0.15)';
+          warn.style.border = '1px solid rgba(239, 68, 68, 0.4)';
+          warn.style.borderRadius = '8px';
+          warn.style.padding = '8px';
+          warn.style.fontSize = '10px';
+          warn.style.color = '#fca5a5';
+          warn.style.textAlign = 'center';
+          warn.innerHTML = '⚠️ <strong>Blockbuster Required!</strong> You must buy at least 1 Blockbuster Video store in the Stores tab before stocking movies!';
+          storeItemsList.appendChild(warn);
+          return;
         }
 
-        let buyBtn = document.createElement('button');
-        let canAfford = bankedNotesTotal >= priceData.price;
+        movieCatalog.forEach(movie => {
+          let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
+          let isGoodMovie = movie.rtScore >= 50;
 
-        buyBtn.style.marginTop = '4px';
-        buyBtn.style.background = canAfford ? 'linear-gradient(135deg, #10b981 0%, #047857 100%)' : '#374151';
-        buyBtn.style.border = 'none';
-        buyBtn.style.borderRadius = '6px';
-        buyBtn.style.color = canAfford ? '#ffffff' : '#9ca3af';
-        buyBtn.style.fontSize = '9px';
-        buyBtn.style.fontWeight = '800';
-        buyBtn.style.padding = '4px 10px';
-        buyBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed';
-        buyBtn.textContent = canAfford ? 'BUY STORE' : 'NEED NOTES';
+          let itemBox = document.createElement('div');
+          itemBox.style.background = 'rgba(255, 255, 255, 0.04)';
+          itemBox.style.border = isGoodMovie ? '1px solid rgba(34, 197, 94, 0.25)' : '1px solid rgba(239, 68, 68, 0.25)';
+          itemBox.style.borderRadius = '8px';
+          itemBox.style.padding = '8px';
+          itemBox.style.display = 'flex';
+          itemBox.style.flexDirection = 'column';
+          itemBox.style.gap = '6px';
 
-        if (canAfford) {
-          buyBtn.addEventListener('click', function() {
-            bankedNotesTotal -= priceData.price;
-            userOwnedStores[store.id] = (userOwnedStores[store.id] || 0) + 1;
-            
-            saveBankedNotesToStorage();
-            saveOwnedStoresToStorage();
+          let topRow = document.createElement('div');
+          topRow.style.display = 'flex';
+          topRow.style.justifyContent = 'space-between';
+          topRow.style.alignItems = 'center';
 
-            const bankedCountDisplay = document.getElementById('hbr-banked-count');
-            if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+          let titleDiv = document.createElement('div');
+          titleDiv.style.fontSize = '11px';
+          titleDiv.style.fontWeight = '800';
+          titleDiv.style.color = '#ffffff';
 
-            randomizeStorePrices();
-            renderStoreList();
+          let rtBadge = isGoodMovie 
+            ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍅 ' + movie.rtScore + '% (PROFIT)</span>'
+            : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍿 ' + movie.rtScore + '% (DRAINS CASH)</span>';
+          
+          titleDiv.innerHTML = '🎬 ' + movie.name + rtBadge;
+
+          topRow.appendChild(titleDiv);
+          itemBox.appendChild(topRow);
+
+          // Formats Row (VHS / DVD / Blu-ray)
+          let formatsRow = document.createElement('div');
+          formatsRow.style.display = 'flex';
+          formatsRow.style.gap = '4px';
+
+          const formats = [
+            { key: 'vhs', label: 'VHS', costMult: 1 },
+            { key: 'dvd', label: 'DVD', costMult: 1.8 },
+            { key: 'bluray', label: 'Blu-ray', costMult: 2.8 }
+          ];
+
+          formats.forEach(fmt => {
+            let cost = Math.floor(movie.basePrice * fmt.costMult);
+            let count = inv[fmt.key] || 0;
+            let canAfford = bankedNotesTotal >= cost;
+
+            let fmtBtn = document.createElement('button');
+            fmtBtn.style.flex = '1';
+            fmtBtn.style.background = canAfford ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.03)';
+            fmtBtn.style.border = canAfford ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(255,255,255,0.1)';
+            fmtBtn.style.borderRadius = '5px';
+            fmtBtn.style.color = canAfford ? '#93c5fd' : '#6b7280';
+            fmtBtn.style.fontSize = '8px';
+            fmtBtn.style.fontWeight = '700';
+            fmtBtn.style.padding = '4px 2px';
+            fmtBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed';
+            fmtBtn.style.textAlign = 'center';
+
+            fmtBtn.innerHTML = fmt.label + '<br><span style="color: #fbbf24; font-weight: 800;">' + cost + ' N</span><br><span style="color: #a7f3d0;">(' + count + ')</span>';
+
+            if (canAfford) {
+              fmtBtn.addEventListener('click', function() {
+                bankedNotesTotal -= cost;
+                if (!userOwnedMovies[movie.id]) userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
+                userOwnedMovies[movie.id][fmt.key]++;
+
+                saveBankedNotesToStorage();
+                saveOwnedMoviesToStorage();
+
+                const bankedCountDisplay = document.getElementById('hbr-banked-count');
+                if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+
+                renderStoreList();
+              });
+            }
+
+            formatsRow.appendChild(fmtBtn);
           });
-        }
 
-        buyDiv.appendChild(priceLine);
-        buyDiv.appendChild(buyBtn);
+          itemBox.appendChild(formatsRow);
+          storeItemsList.appendChild(itemBox);
+        });
+      }
+    }
 
-        itemBox.appendChild(infoDiv);
-        itemBox.appendChild(buyDiv);
+    if (tabStoresBtn && tabMoviesBtn) {
+      tabStoresBtn.addEventListener('click', function() {
+        activeStoreTab = 'stores';
+        tabStoresBtn.style.background = 'rgba(59, 130, 246, 0.25)';
+        tabStoresBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)';
+        tabStoresBtn.style.color = '#93c5fd';
+        tabMoviesBtn.style.background = 'rgba(255,255,255,0.06)';
+        tabMoviesBtn.style.border = '1px solid rgba(255,255,255,0.15)';
+        tabMoviesBtn.style.color = '#9ca3af';
+        renderStoreList();
+      });
 
-        storeItemsList.appendChild(itemBox);
+      tabMoviesBtn.addEventListener('click', function() {
+        activeStoreTab = 'movies';
+        tabMoviesBtn.style.background = 'rgba(59, 130, 246, 0.25)';
+        tabMoviesBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)';
+        tabMoviesBtn.style.color = '#93c5fd';
+        tabStoresBtn.style.background = 'rgba(255,255,255,0.06)';
+        tabStoresBtn.style.border = '1px solid rgba(255,255,255,0.15)';
+        tabStoresBtn.style.color = '#9ca3af';
+        renderStoreList();
       });
     }
 
@@ -1990,7 +2194,7 @@
           if (modeTitleText) modeTitleText.textContent = 'Honest Blue Radio';
           if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Original Broadcast';
           if (labelSubText) labelSubText.textContent = 'FULL DECK';
-          if (modeBtn) modeBtn.style.background = 'linear-gradient(135deg, #a855f7 0%, #7e22ce 100%)';
+          if (modeBtn) modeBtn.style.background = 'gradient(135deg, #a855f7 0%, #7e22ce 100%)';
         }
         selectAndPlayTrack(0);
       });
