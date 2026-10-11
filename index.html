@@ -1,6 +1,8 @@
 <div style="background: #111115; border-radius: 20px; padding: 24px 24px 24px 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden;">
   
-  <!-- Fireworks Overlay Canvas -->
+  <!-- ========================================== -->
+  <!-- 1. FIREWORKS & CHALLENGE OVERLAY LAYERS    -->
+  <!-- ========================================== -->
   <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; z-index: 100; display: none;"></canvas>
 
   <!-- Rapid Fire 100 Rockets Challenge Badge (Bottom Right) -->
@@ -12,7 +14,7 @@
 
   <!-- Rocket Challenge Results Overlay -->
   <div id="hbr-rocket-results" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.95); border: 2px solid #22c55e; border-radius: 14px; padding: 16px 24px; z-index: 160; box-shadow: 0 8px 32px rgba(0,0,0,0.9); text-align: center;">
-    <span style="font-size: 15px; font-weight: 800; color: #4ade80; display: block; margin-bottom: 4px;"> CHALLENGE COMPLETE!</span>
+    <span style="font-size: 15px; font-weight: 800; color: #4ade80; display: block; margin-bottom: 4px;">🏆 CHALLENGE COMPLETE!</span>
     <span style="font-size: 12px; color: #d1d5db; display: block; margin-bottom: 12px;">You fired 100 rockets in <strong id="hbr-rocket-time" style="color: #60a5fa;">0.0s</strong>!</span>
     <button id="hbr-rocket-close-btn" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">AWESOME!</button>
   </div>
@@ -38,14 +40,20 @@
     </div>
   </div>
 
+  <!-- Floating Live Social Reaction Stream Layer -->
+  <div id="hbr-reaction-stream-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; overflow: hidden;"></div>
+
   <!-- Dynamic YouTube Cover Art & Ambient Background Overlay -->
   <div id="hbr-art-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('https://img.youtube.com/vi/WHzTume00O8/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.18; filter: blur(10px); transition: opacity 0.6s ease, background-image 0.6s ease, background 0.6s ease; pointer-events: none; z-index: 0;">&nbsp;</div>
 
   <div id="hbr-ambient-glow" style="position: absolute; top: -50px; left: -50px; width: 200%; height: 200%; background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(17,17,21,0.95) 70%); pointer-events: none; z-index: 1; transition: background 0.5s ease;">&nbsp;</div>
   
-  <!-- Content Container -->
+  <!-- ========================================== -->
+  <!-- 2. MAIN WIDGET CONTENT CONTAINER           -->
+  <!-- ========================================== -->
   <div style="position: relative; z-index: 2;">
-    <!-- Header with Track Drawer Toggle, Live Status & Dynamic Listener Counter -->
+    
+    <!-- Header: Track Drawer Toggle, Live Status & Listener Counter -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
       <div>
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
@@ -63,12 +71,16 @@
           <button id="hbr-install-btn" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL APP</button>
         </div>
       </div>
-      <!-- Animated Live Listener Badge with Green Person Icon -->
-      <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;"><span style="color: #4ade80; font-size: 12px;">👤</span><span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span></div>
+      
+      <!-- Animated Live Listener Badge -->
+      <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;">
+        <span style="color: #4ade80; font-size: 12px;">👤</span>
+        <span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span>
+      </div>
     </div>
 
     <!-- User Top Profile Banner (Appears Up Top When Profile Created) -->
-    <div id="hbr-top-profile-banner" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px;">
+    <div id="hbr-top-profile-banner" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; align-items: center; gap: 10px;">
       <div id="hbr-top-banner-avatar-frame" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
         <img id="hbr-top-banner-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
         <span id="hbr-top-banner-fallback" style="font-size: 18px;">🎧</span>
@@ -82,6 +94,7 @@
     <!-- Collapsible Scrollable Playlist Drawer -->
     <div id="hbr-playlist-drawer" style="max-height: 0; overflow-y: auto; transition: max-height 0.4s ease, margin-bottom 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; margin-bottom: 0px;">
       <div style="padding: 12px; display: flex; flex-direction: column; gap: 12px;">
+        
         <!-- Standard Broadcast Track Section with Pagination -->
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -93,60 +106,67 @@
           </div>
           <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
         </div>
+
         <!-- Dedicated Dual Playlists & Top 3 Launch Center -->
         <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; display: flex; flex-direction: column; gap: 8px;">
           <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #3b82f6; letter-spacing: 1px;">Your Playlists</div>
+          
           <!-- PLAYLIST 1 BOX -->
           <div style="background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.4); border-radius: 8px; padding: 10px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 700; color: #93c5fd;">PLAYLIST 1 (<span id="hbr-q1-count">0</span>/7)</span><button id="hbr-play-q1-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(37,99,235,0.4); transition: transform 0.15s ease;">▶ PLAY PLAYLIST 1</button></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-size: 11px; font-weight: 700; color: #93c5fd;">PLAYLIST 1 (<span id="hbr-q1-count">0</span>/7)</span>
+              <button id="hbr-play-q1-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer;">▶ PLAY PLAYLIST 1</button>
+            </div>
             <div id="hbr-q1-items" style="display: flex; flex-direction: column; gap: 3px;">&nbsp;</div>
           </div>
+
           <!-- PLAYLIST 2 BOX -->
           <div style="background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.4); border-radius: 8px; padding: 10px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 700; color: #d8b4fe;">PLAYLIST 2 (<span id="hbr-q2-count">0</span>/7)</span><button id="hbr-play-q2-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(168,85,247,0.4); transition: transform 0.15s ease;">▶ PLAY PLAYLIST 2</button></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-size: 11px; font-weight: 700; color: #d8b4fe;">PLAYLIST 2 (<span id="hbr-q2-count">0</span>/7)</span>
+              <button id="hbr-play-q2-btn" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer;">▶ PLAY PLAYLIST 2</button>
+            </div>
             <div id="hbr-q2-items" style="display: flex; flex-direction: column; gap: 3px;">&nbsp;</div>
           </div>
+
           <!-- TOP 3 BOX -->
           <div style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.4); border-radius: 8px; padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
               <div style="display: flex; align-items: center; gap: 6px;">
                 <span style="font-size: 11px; font-weight: 700; color: #4ade80;">TOP 3</span>
                 <div style="display: flex; gap: 4px; align-items: center;">
-                  <span id="hbr-t3-circle-1" style="width: 8px; height: 8px; border-radius: 50%; background: #4b5563; display: inline-block; transition: background 0.2s ease;"></span>
-                  <span id="hbr-t3-circle-2" style="width: 8px; height: 8px; border-radius: 50%; background: #4b5563; display: inline-block; transition: background 0.2s ease;"></span>
-                  <span id="hbr-t3-circle-3" style="width: 8px; height: 8px; border-radius: 50%; background: #4b5563; display: inline-block; transition: background 0.2s ease;"></span>
+                  <span id="hbr-t3-circle-1" style="width: 8px; height: 8px; border-radius: 50%; background: #4b5563; display: inline-block;"></span>
+                  <span id="hbr-t3-circle-2" style="width: 8px; height: 8px; border-radius: 50%; background: #4b5563; display: inline-block;"></span>
+                  <span id="hbr-t3-circle-3" style="width: 8px; height: 8px; border-radius: 50%; background: #4b5563; display: inline-block;"></span>
                 </div>
               </div>
-              <button id="hbr-play-t3-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(34,197,94,0.4); transition: transform 0.15s ease;">▶ PLAY TOP 3</button>
+              <button id="hbr-play-t3-btn" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer;">▶ PLAY TOP 3</button>
             </div>
             <div id="hbr-t3-items" style="display: flex; flex-direction: column; gap: 3px;">&nbsp;</div>
           </div>
         </div>
+
       </div>
     </div>
 
     <!-- Interactive Popped Counter & Mode Toggle Bar -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap;">
-      <span id="hbr-pop-badge" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #93c5fd; letter-spacing: 0.5px; display: inline-block; transition: transform 0.15s ease;"><span id="hbr-pop-label">NOTES</span>: <span id="hbr-pop-count" style="color: #60a5fa;">0</span></span>
-      <span id="hbr-timer-badge" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #fca5a5; letter-spacing: 0.5px;"> TIME: <span id="hbr-timer-count">15s</span></span>
-      <span id="hbr-level-badge" style="display: none; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.5px;"> LVL: <span id="hbr-level-count">1</span></span>
-      <button id="hbr-pop-mode-btn" style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #60a5fa; cursor: pointer; transition: all 0.2s ease;">⚡ TIMED (15s)</button>
-      <button id="hbr-levels-mode-btn" style="background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #4ade80; cursor: pointer; transition: all 0.2s ease;">🎮 LEVELS</button>
-      <button id="hbr-bubbles-mode-btn" style="background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.4); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #22d3ee; cursor: pointer; transition: all 0.2s ease;">🫧 BUBBLES</button>
-      <button id="hbr-lit-mode-btn" style="background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #fb923c; cursor: pointer; transition: all 0.2s ease;">🧨 LIT (10s)</button>
-      <button id="hbr-calm-mode-btn" style="display: none; background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #c084fc; cursor: pointer; transition: all 0.2s ease;">🍃 CALM</button>
+      <span id="hbr-pop-badge" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #93c5fd; letter-spacing: 0.5px; display: inline-block;"><span id="hbr-pop-label">NOTES</span>: <span id="hbr-pop-count" style="color: #60a5fa;">0</span></span>
+      <span id="hbr-timer-badge" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #fca5a5;"> TIME: <span id="hbr-timer-count">15s</span></span>
+      <span id="hbr-level-badge" style="display: none; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #4ade80;"> LVL: <span id="hbr-level-count">1</span></span>
+      <button id="hbr-pop-mode-btn" style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #60a5fa; cursor: pointer;">⚡ TIMED (15s)</button>
+      <button id="hbr-levels-mode-btn" style="background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #4ade80; cursor: pointer;">🎮 LEVELS</button>
+      <button id="hbr-bubbles-mode-btn" style="background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.4); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #22d3ee; cursor: pointer;">🫧 BUBBLES</button>
+      <button id="hbr-lit-mode-btn" style="background: rgba(249, 115, 22, 0.15); border: 1px solid rgba(249, 115, 22, 0.4); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #fb923c; cursor: pointer;">🧨 LIT (10s)</button>
+      <button id="hbr-calm-mode-btn" style="display: none; background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #c084fc; cursor: pointer;">🍃 CALM</button>
     </div>
 
-    <!-- Bank Notes & Real Cash & Store Section -->
+    <!-- Bank Notes, Real Cash & Store Section -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
-      <button id="hbr-bank-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4); transition: transform 0.15s ease, background 0.2s ease;">🏦 BANK NOTES</button>
-      <span id="hbr-banked-badge" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #fbbf24; letter-spacing: 0.5px; display: inline-block; transition: transform 0.15s ease;">BANKED: <span id="hbr-banked-count" style="color: #fef08a;">0</span></span>
-      
-      <!-- REAL STORE CASH COUNTER -->
-      <span id="hbr-cash-badge" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.5px; display: inline-block;">💵 CASH: <span id="hbr-cash-count" style="color: #86efac;">$0.00</span></span>
-
-      <!-- STORE BUTTON NEXT TO BANKED -->
-      <button id="hbr-store-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); transition: transform 0.15s ease;">🛍️ STORE</button>
+      <button id="hbr-bank-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);">🏦 BANK NOTES</button>
+      <span id="hbr-banked-badge" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #fbbf24;">BANKED: <span id="hbr-banked-count" style="color: #fef08a;">0</span></span>
+      <span id="hbr-cash-badge" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #4ade80;">💵 CASH: <span id="hbr-cash-count" style="color: #86efac;">$0.00</span></span>
+      <button id="hbr-store-btn" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);">🛍️ STORE</button>
     </div>
 
     <!-- Turntable Deck Frame -->
@@ -155,7 +175,7 @@
       <div id="hbr-notes-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15; overflow: hidden;">&nbsp;</div>
       <div id="hbr-times-up" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.92); border: 2px solid #ef4444; border-radius: 12px; padding: 12px 20px; z-index: 25; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center;"><span id="hbr-banner-title" style="font-size: 14px; font-weight: 800; color: #ef4444; display: block; margin-bottom: 2px;">TIME&#39;S UP!</span> <span style="font-size: 11px; color: #d1d5db;"><span id="hbr-banner-msg">You popped <strong id="hbr-final-count" style="color: #60a5fa;">0</strong> notes!</span></span></div>
 
-      <!-- STORE MODAL OVERLAY (Covers the vinyl record deck) -->
+      <!-- STORE MODAL OVERLAY -->
       <div id="hbr-store-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 17, 25, 0.96); backdrop-filter: blur(8px); z-index: 30; padding: 14px; box-sizing: border-box; text-align: left; flex-direction: column; overflow-y: auto;">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px;">
           <div>
@@ -174,47 +194,50 @@
           </div>
         </div>
 
-        <!-- Store Event Alert Box & Interactive Shoplifter Catch Button -->
         <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
 
-        <!-- Interactive Quick-Action Shoplifter Catch Banner -->
-        <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(239,68,68,0.5); user-select: none;">
+        <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; user-select: none;">
           <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase;">🚨 SHOPLIFTER ESCAPING!</div>
           <div style="font-size: 9px; color: #fee2e2; margin-top: 2px;">TAP HERE FAST TO TACKLE THE THIEF! (<span id="hbr-thief-timer">3</span>s)</div>
         </div>
 
-        <!-- Store Navigation Tabs (Stores vs Movies) -->
         <div style="display: flex; gap: 4px; margin-bottom: 8px;">
           <button id="hbr-tab-stores-btn" style="flex: 1; background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 6px; color: #93c5fd; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🏪 STORES</button>
           <button id="hbr-tab-movies-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🍿 BLOCKBUSTER MOVIES</button>
         </div>
 
-        <!-- Store Items Container -->
         <div id="hbr-store-items-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
       </div>
 
       <!-- DJ INTERACTIVE RECORD CONTAINER -->
-      <div id="hbr-dj-container" style="position: relative; width: 200px; height: 200px; margin: 0 auto; cursor: grab; user-select: none; -webkit-user-select: none; z-index: 5;">
-        <!-- Dynamic Track Album Cover Art Behind Record -->
-        <div id="hbr-record-art" style="position: absolute; top: 12px; left: 12px; width: 176px; height: 176px; border-radius: 12px; background-image: url('https://img.youtube.com/vi/WHzTume00O8/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.35; filter: contrast(1.1) brightness(0.9); transition: background-image 0.5s ease; pointer-events: none; z-index: 1; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1);">&nbsp;</div>
+      <div id="hbr-dj-container" style="position: relative; width: 200px; height: 200px; margin: 0 auto; cursor: grab; user-select: none; z-index: 5;">
+        <div id="hbr-record-art" style="position: absolute; top: 12px; left: 12px; width: 176px; height: 176px; border-radius: 12px; background-image: url('https://img.youtube.com/vi/WHzTume00O8/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.35; filter: contrast(1.1) brightness(0.9); transition: background-image 0.5s ease; pointer-events: none; z-index: 1; border: 1px solid rgba(255,255,255,0.1);">&nbsp;</div>
 
-        <!-- Record Sleeve & Vinyl Disc -->
-        <div id="hbr-record" style="width: 100%; height: 100%; border-radius: 50%; background: repeating-radial-gradient(#111116 0px, #111116 2px, #22222d 3px, #111116 4px); position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; transform-origin: center center; z-index: 2;">
-          <div id="hbr-reflection" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(255,255,255,0) 40%, rgba(59,130,246,0.12) 100%); pointer-events: none; transition: background 0.3s ease;">&nbsp;</div>
-          <div id="hbr-label" style="width: 76px; height: 76px; background: radial-gradient(circle, #3b82f6 0%, #1d4ed8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid #000; color: #fff; font-size: 9px; font-weight: bold; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.6); position: relative; z-index: 2; box-shadow: 0 0 8px rgba(0,0,0,0.5); pointer-events: none; transition: background 0.3s ease;">HONEST<br />BLUE<br /><span id="hbr-label-sub" style="font-size: 7px; opacity: 0.8;">FULL DECK</span></div>
+        <div id="hbr-record" style="width: 100%; height: 100%; border-radius: 50%; background: repeating-radial-gradient(#111116 0px, #111116 2px, #22222d 3px, #111116 4px); position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2;">
+          <div id="hbr-reflection" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(255,255,255,0) 40%, rgba(59,130,246,0.12) 100%); pointer-events: none;">&nbsp;</div>
+          <div id="hbr-label" style="width: 76px; height: 76px; background: radial-gradient(circle, #3b82f6 0%, #1d4ed8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid #000; color: #fff; font-size: 9px; font-weight: bold; text-align: center; position: relative; z-index: 2; pointer-events: none;">HONEST<br />BLUE<br /><span id="hbr-label-sub" style="font-size: 7px; opacity: 0.8;">FULL DECK</span></div>
           <div style="position: absolute; width: 10px; height: 10px; background: #000; border-radius: 50%; z-index: 3; border: 1px solid #444; pointer-events: none;">&nbsp;</div>
         </div>
+        
         <div id="hbr-tonearm" style="position: absolute; top: -12px; right: 5px; width: 65px; height: 90px; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-origin: top right; transform: rotate(-26deg); pointer-events: none; z-index: 10;">
           <div style="width: 16px; height: 16px; background: #4b5563; border-radius: 50%; position: absolute; top: 0; right: 0; border: 2px solid #1f2937;">&nbsp;</div>
           <div style="width: 5px; height: 70px; background: linear-gradient(to right, #d1d5db, #9ca3af); margin-left: auto; margin-right: 5px; border-radius: 3px; transform: rotate(12deg); box-shadow: 2px 3px 6px rgba(0,0,0,0.6);">&nbsp;</div>
           <div style="width: 14px; height: 22px; background: #ef4444; border-radius: 2px; position: absolute; bottom: 8px; left: 12px; transform: rotate(12deg); border: 1px solid #b91c1c;">&nbsp;</div>
         </div>
       </div>
+      
       <div style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;"><iframe allow="autoplay" frameborder="0" id="hbr-engine" src="https://www.youtube.com/embed/WHzTume00O8?enablejsapi=1&amp;modestbranding=1&amp;rel=0&amp;iv_load_policy=3" title="Honest Blue Radio Engine"></iframe></div>
     </div>
 
     <!-- Vinyl Color Picker Bar -->
-    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px;"><span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700; margin-right: 4px;">Vinyl Color:</span><button class="hbr-color-btn" data-color="#3b82f6" data-dark="#1d4ed8" style="background: #3b82f6; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #ffffff; cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 0 6px rgba(59,130,246,0.6);" title="Classic Blue"></button><button class="hbr-color-btn" data-color="#a855f7" data-dark="#7e22ce" style="background: #a855f7; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Neon Purple"></button><button class="hbr-color-btn" data-color="#22c55e" data-dark="#15803d" style="background: #22c55e; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Emerald Green"></button><button class="hbr-color-btn" data-color="#f97316" data-dark="#c2410c" style="background: #f97316; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Sunset Orange"></button><button class="hbr-color-btn" data-color="#ec4899" data-dark="#be185d" style="background: #ec4899; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Hot Pink"></button></div>
+    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px;">
+      <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700; margin-right: 4px;">Vinyl Color:</span>
+      <button class="hbr-color-btn" data-color="#3b82f6" data-dark="#1d4ed8" style="background: #3b82f6; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #ffffff; cursor: pointer; box-shadow: 0 0 6px rgba(59,130,246,0.6);" title="Classic Blue"></button>
+      <button class="hbr-color-btn" data-color="#a855f7" data-dark="#7e22ce" style="background: #a855f7; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;" title="Neon Purple"></button>
+      <button class="hbr-color-btn" data-color="#22c55e" data-dark="#15803d" style="background: #22c55e; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;" title="Emerald Green"></button>
+      <button class="hbr-color-btn" data-color="#f97316" data-dark="#c2410c" style="background: #f97316; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;" title="Sunset Orange"></button>
+      <button class="hbr-color-btn" data-color="#ec4899" data-dark="#be185d" style="background: #ec4899; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;" title="Hot Pink"></button>
+    </div>
 
     <!-- Track Meta Display -->
     <div style="text-align: center; margin-bottom: 20px;">
@@ -224,44 +247,72 @@
 
     <!-- Player Track & Play Controls -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 16px;">
-      <button id="hbr-prev" style="background: #1f2937; border: 1px solid #374151; width: 44px; height: 44px; border-radius: 50%; color: #9ca3af; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">⏮</button>
-      <button id="hbr-toggle" style="background: #3b82f6; border: none; width: 60px; height: 60px; border-radius: 50%; color: #fff; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4); transition: transform 0.1s ease, background 0.2s ease;">▶</button>
-      <button id="hbr-next" style="background: #1f2937; border: 1px solid #374151; width: 44px; height: 44px; border-radius: 50%; color: #9ca3af; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">⏭</button>
+      <button id="hbr-prev" style="background: #1f2937; border: 1px solid #374151; width: 44px; height: 44px; border-radius: 50%; color: #9ca3af; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">⏮</button>
+      <button id="hbr-toggle" style="background: #3b82f6; border: none; width: 60px; height: 60px; border-radius: 50%; color: #fff; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);">▶</button>
+      <button id="hbr-next" style="background: #1f2937; border: 1px solid #374151; width: 44px; height: 44px; border-radius: 50%; color: #9ca3af; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">⏭</button>
+    </div>
+
+    <!-- SAFE SOCIAL REACTIONS & TAP BAR -->
+    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 10px; margin-bottom: 16px;">
+      <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; text-align: center; margin-bottom: 8px;">
+        💬 Live Audience Reactions (Tap to Send)
+      </div>
+
+      <!-- Quick Canned Reaction Buttons -->
+      <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px;" class="hbr-reaction-scroll">
+        <button class="hbr-canned-btn" data-reaction="❤️ Love This">❤️ Love This</button>
+        <button class="hbr-canned-btn" data-reaction="🎧 This Is A Vibe">🎧 This Is A Vibe</button>
+        <button class="hbr-canned-btn" data-reaction="🔥 Fire Track">🔥 Fire Track</button>
+        <button class="hbr-canned-btn" data-reaction="🎉 Party Time">🎉 Party Time</button>
+        <button class="hbr-canned-btn" data-reaction="☕ Coffee & Chill">☕ Coffee & Chill</button>
+        <button class="hbr-canned-btn" data-reaction="🎸 Riff Is Insane">🎸 Riff Is Insane</button>
+      </div>
+
+      <!-- Bottom Heart & Music Note Counters -->
+      <div style="display: flex; gap: 10px;">
+        <button id="hbr-send-heart-btn" style="flex: 1; background: linear-gradient(135deg, #ec4899 0%, #be185d 100%); border: none; border-radius: 10px; color: #fff; padding: 8px 12px; font-size: 11px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 12px rgba(236,72,153,0.3);">
+          <span>❤️</span> <span>HEARTS</span> <span id="hbr-heart-count" style="background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 6px;">1,420</span>
+        </button>
+
+        <button id="hbr-send-note-btn" style="flex: 1; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 10px; color: #fff; padding: 8px 12px; font-size: 11px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 12px rgba(59,130,246,0.3);">
+          <span>🎵</span> <span>NOTES</span> <span id="hbr-note-count" style="background: rgba(0,0,0,0.25); padding: 2px 6px; border-radius: 6px;">3,890</span>
+        </button>
+      </div>
     </div>
 
     <!-- Bottom Middle Play Coffee Game Button -->
-    <div style="text-align: center; margin-top: 10px; margin-bottom: 16px;">
-      <a href="https://jaysonsphotography.zenfolio.com/blog/2026/5/Rewind-and-Grind-The-Blockbuster-Late-Fee-Game" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 18px; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 12px rgba(37,99,235,0.4); transition: transform 0.2s ease, background 0.2s ease; display: inline-block;" target="_blank">☕ Play Coffee Game ↗</a>
+    <div style="text-align: center; margin-bottom: 16px;">
+      <a href="https://jaysonsphotography.zenfolio.com/blog/2026/5/Rewind-and-Grind-The-Blockbuster-Late-Fee-Game" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 18px; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 12px rgba(37,99,235,0.4); display: inline-block;" target="_blank">☕ Play Coffee Game ↗</a>
     </div>
 
-    <!-- Peel-Back Mode Switcher Buttons (Bottom Left & Right) -->
+    <!-- Peel-Back Mode Switcher Buttons -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
       <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-        <button id="hbr-mode-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;"><span id="hbr-mode-btn-text">Instrumentals ⚙</span></button>
-        <button id="hbr-christmas-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">⛄ Christmas</button>
-        <button id="hbr-disney-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🎨 Jay Draws Disney</button>
+        <button id="hbr-mode-btn" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer;"><span id="hbr-mode-btn-text">Instrumentals ⚙</span></button>
+        <button id="hbr-christmas-btn" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer;">⛄ Christmas</button>
+        <button id="hbr-disney-btn" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer;">🎨 Jay Draws Disney</button>
       </div>
-      <a href="https://youtube.com/@honestblueradio?si=FBFJfkEI2OiVEJnD" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;" target="_blank">Catch Content ↗</a>
+      <a href="https://youtube.com/@honestblueradio?si=FBFJfkEI2OiVEJnD" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; text-decoration: none;" target="_blank">Catch Content ↗</a>
     </div>
 
-    <!-- Very Bottom "More Honest Blue" Dropdown Section (With Hidden Admin Override) -->
+    <!-- "More Honest Blue" Dropdown Section & Admin Override -->
     <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
-      <button id="hbr-bio-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 20px; color: #9ca3af; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;"><span>More Honest Blue</span> <span id="hbr-bio-arrow" style="transition: transform 0.3s ease;">▼</span></button>
+      <button id="hbr-bio-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 20px; color: #9ca3af; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;"><span>More Honest Blue</span> <span id="hbr-bio-arrow" style="transition: transform 0.3s ease;">▼</span></button>
 
       <div id="hbr-bio-panel" style="max-height: 0; overflow-y: auto; transition: max-height 0.4s ease, margin-top 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; text-align: left; margin-top: 0px;">
         <div style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
           <div style="font-size: 12px; font-weight: 700; color: #60a5fa;">All About Honest Blue</div>
           <div style="font-size: 11px; color: #d1d5db; line-height: 1.5;">Honest Blue Radio is an independent 24/7 broadcast project bringing you raw, original audio compositions spanning indie, acoustic folk, electronic rhythms, and rich instrumental soundscapes.</div>
+          
           <div style="padding-top: 6px; display: flex; flex-wrap: wrap; gap: 6px;">
-            <a href="https://elasticstage.com/honestblue" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(37,99,235,0.4); transition: transform 0.2s ease;" target="_blank">Elastic Stage ↗</a>
-            <a href="https://m.youtube.com/channel/UCroiaxn_1E9CskvniQ2rXyQ?ra=m" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(239,68,68,0.4); transition: transform 0.2s ease;" target="_blank">YouTube Music ↗</a>
-            <a href="https://open.spotify.com/artist/2jFy8WjRhh5ioortick0AF" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(34,197,94,0.4); transition: transform 0.2s ease;" target="_blank">Spotify ↗</a>
-            <a href="#" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(168,85,247,0.4); transition: transform 0.2s ease;" target="_blank">Apple Music ↗</a>
+            <a href="https://elasticstage.com/honestblue" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); font-size: 10px; font-weight: 700; text-decoration: none; padding: 6px 10px; border-radius: 6px;" target="_blank">Elastic Stage ↗</a>
+            <a href="https://m.youtube.com/channel/UCroiaxn_1E9CskvniQ2rXyQ?ra=m" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); font-size: 10px; font-weight: 700; text-decoration: none; padding: 6px 10px; border-radius: 6px;" target="_blank">YouTube Music ↗</a>
+            <a href="https://open.spotify.com/artist/2jFy8WjRhh5ioortick0AF" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); font-size: 10px; font-weight: 700; text-decoration: none; padding: 6px 10px; border-radius: 6px;" target="_blank">Spotify ↗</a>
           </div>
 
-          <!-- CREATE / EDIT PROFILE BUTTON AT THE VERY BOTTOM -->
+          <!-- CREATE / EDIT PROFILE BUTTON -->
           <div style="padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
-            <button id="hbr-open-profile-btn" style="width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease;">👤 Create Profile</button>
+            <button id="hbr-open-profile-btn" style="width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px; cursor: pointer; text-transform: uppercase;">👤 Create Profile</button>
           </div>
 
           <!-- SECRET ADMIN OVERRIDE PANEL -->
@@ -277,18 +328,20 @@
   </div>
 </div>
 
-<!-- USER PROFILE MODAL OVERLAY -->
+<!-- ========================================== -->
+<!-- 3. USER PROFILE MODAL OVERLAY              -->
+<!-- ========================================== -->
 <div id="hbr-profile-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.94); backdrop-filter: blur(10px); z-index: 200; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center;">
-  <div style="background: #171720; border: 1px solid #3b82f6; border-radius: 16px; padding: 20px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.9); box-sizing: border-box;">
+  <div style="background: #171720; border: 1px solid #3b82f6; border-radius: 16px; padding: 20px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; box-sizing: border-box;">
     
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 14px;">
-      <span style="font-size: 13px; font-weight: 800; color: #60a5fa; letter-spacing: 0.5px;">👤 PRIVATE USER PROFILE</span>
+      <span style="font-size: 13px; font-weight: 800; color: #60a5fa;">👤 PRIVATE USER PROFILE</span>
       <button id="hbr-close-profile-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
     </div>
 
     <!-- Avatar & Name Section -->
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; background: rgba(255,255,255,0.03); border-radius: 10px; padding: 10px; border: 1px solid rgba(255,255,255,0.08);">
-      <div id="hbr-profile-modal-avatar-frame" style="position: relative; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+      <div id="hbr-profile-modal-avatar-frame" style="width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
         <img id="hbr-profile-avatar-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
         <span id="hbr-profile-avatar-fallback" style="font-size: 22px;">🎧</span>
       </div>
@@ -317,7 +370,7 @@
       </div>
     </div>
 
-    <!-- Music Badges / Titles Picker -->
+    <!-- Music Badges Picker -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Select Music Badge &amp; Title</label>
       <div id="hbr-badges-container" style="display: flex; flex-wrap: wrap; gap: 4px;">
@@ -326,16 +379,13 @@
         <button class="hbr-badge-option" data-badge="Synth Wizard" style="background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.4); color: #d8b4fe; border-radius: 6px; font-size: 9px; font-weight: 700; padding: 4px 8px; cursor: pointer;">🎛️ Synth Wizard</button>
         <button class="hbr-badge-option" data-badge="Master Producer" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); color: #4ade80; border-radius: 6px; font-size: 9px; font-weight: 700; padding: 4px 8px; cursor: pointer;">🎚️ Master Producer</button>
         <button class="hbr-badge-option" data-badge="Rhythm Master" style="background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4); color: #fbbf24; border-radius: 6px; font-size: 9px; font-weight: 700; padding: 4px 8px; cursor: pointer;">🥁 Rhythm Master</button>
-        <button class="hbr-badge-option" data-badge="Acoustic Dreamer" style="background: rgba(6,182,212,0.15); border: 1px solid rgba(6,182,212,0.4); color: #22d3ee; border-radius: 6px; font-size: 9px; font-weight: 700; padding: 4px 8px; cursor: pointer;">🎶 Acoustic Dreamer</button>
       </div>
     </div>
 
-    <!-- Inventory & Purchases Tracked Showcase -->
+    <!-- Inventory & Purchases Showcase -->
     <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; margin-bottom: 14px;">
       <div style="font-size: 10px; font-weight: 800; color: #10b981; text-transform: uppercase; margin-bottom: 6px;">🛍️ Tracked Inventory &amp; Purchases</div>
-      <div id="hbr-profile-inventory-list" style="font-size: 10px; color: #d1d5db; display: flex; flex-direction: column; gap: 4px;">
-        <!-- Filled dynamically -->
-      </div>
+      <div id="hbr-profile-inventory-list" style="font-size: 10px; color: #d1d5db; display: flex; flex-direction: column; gap: 4px;"></div>
     </div>
 
     <div style="text-align: right;">
@@ -345,7 +395,9 @@
   </div>
 </div>
 
-<!-- Scrollbar & Animation Styles -->
+<!-- ========================================== -->
+<!-- 4. STYLES & ANIMATION KEYFRAMES            -->
+<!-- ========================================== -->
 <style type="text/css">
   #hbr-playlist-drawer::-webkit-scrollbar,
   #hbr-bio-panel::-webkit-scrollbar,
@@ -367,12 +419,66 @@
     border-radius: 4px;
   }
 
+  .hbr-canned-btn {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    color: #e5e7eb;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 5px 10px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .hbr-canned-btn:active {
+    transform: scale(0.92);
+    background: rgba(59, 130, 246, 0.3);
+  }
+  .hbr-reaction-scroll::-webkit-scrollbar {
+    height: 4px;
+  }
+  .hbr-reaction-scroll::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 4px;
+  }
+
+  @keyframes hbrFloatAndFade {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    15% { opacity: 1; transform: translateY(-20px) scale(1.05); }
+    80% { opacity: 0.9; }
+    100% { transform: translateY(-240px) scale(1.1); opacity: 0; }
+  }
+
+  .hbr-floating-pill {
+    position: absolute;
+    bottom: 80px;
+    background: rgba(23, 23, 32, 0.92);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    border-radius: 16px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #ffffff;
+    pointer-events: none;
+    animation: hbrFloatAndFade 2.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  .hbr-floating-symbol {
+    position: absolute;
+    bottom: 60px;
+    font-size: 22px;
+    pointer-events: none;
+    animation: hbrFloatAndFade 2.2s ease-out forwards;
+    filter: drop-shadow(0 0 8px rgba(236,72,153,0.8));
+  }
+
   @keyframes hbrPulseGlow {
     0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
     70% { transform: scale(1.1); opacity: 0.9; box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
     100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
   }
-
   .hbr-live-active-dot {
     background: #ef4444 !important;
     animation: hbrPulseGlow 1.8s infinite !important;
@@ -387,48 +493,22 @@
   }
 
   @keyframes hbrFloatUp {
-    0% {
-      transform: translateY(0) scale(0.8) rotate(0deg);
-      opacity: 0;
-    }
+    0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
     20% { opacity: 0.95; }
     80% { opacity: 0.95; }
-    100% {
-      transform: translateY(-220px) scale(1.2) rotate(25deg);
-      opacity: 0;
-    }
+    100% { transform: translateY(-220px) scale(1.2) rotate(25deg); opacity: 0; }
   }
 
   @keyframes hbrPopBurst {
-    0% {
-      transform: scale(1);
-      opacity: 1;
-      filter: drop-shadow(0 0 12px #60a5fa) brightness(2);
-    }
-    50% {
-      transform: scale(2.2);
-      opacity: 0.8;
-      filter: drop-shadow(0 0 20px #93c5fd) brightness(3);
-    }
-    100% {
-      transform: scale(2.8);
-      opacity: 0;
-    }
+    0% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 12px #60a5fa) brightness(2); }
+    50% { transform: scale(2.2); opacity: 0.8; filter: drop-shadow(0 0 20px #93c5fd) brightness(3); }
+    100% { transform: scale(2.8); opacity: 0; }
   }
 
   @keyframes hbrBubblePopBurst {
-    0% {
-      transform: scale(1);
-      opacity: 0.9;
-    }
-    50% {
-      transform: scale(1.6);
-      opacity: 0.5;
-    }
-    100% {
-      transform: scale(2.2);
-      opacity: 0;
-    }
+    0% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.6); opacity: 0.5; }
+    100% { transform: scale(2.2); opacity: 0; }
   }
 
   .hbr-note-active {
@@ -441,14 +521,11 @@
     user-select: none;
     pointer-events: auto !important;
     animation: hbrFloatUp 4.2s linear forwards;
-    transition: color 0.2s ease;
   }
-
   .hbr-note-popped {
     animation: hbrPopBurst 0.28s ease-out forwards !important;
     pointer-events: none !important;
   }
-
   .hbr-bubble-active {
     position: absolute;
     border-radius: 50%;
@@ -460,12 +537,10 @@
     pointer-events: auto !important;
     animation: hbrFloatUp 4.5s linear forwards;
   }
-
   .hbr-bubble-popped {
     animation: hbrBubblePopBurst 0.2s ease-out forwards !important;
     pointer-events: none !important;
   }
-
   .hbr-firework-unlit {
     position: absolute;
     font-size: 22px;
@@ -477,7 +552,9 @@
   }
 </style>
 
-<!-- Player Behavior & Audio Script -->
+<!-- ========================================== -->
+<!-- 5. MASTER JAVASCRIPT LOGIC ENGINE          -->
+<!-- ========================================== -->
 <script>
   (function() {
     // Master Broadcast Tracks
@@ -493,18 +570,15 @@
       { id: '50xdKObdFMI', name: 'Then I Woke Up' }
     ];
 
-    // Master Instrumental Tracks
     const masterInstrumentalTracks = [
       { id: 'F98pGQq4Sy8', name: 'Honest Blue Live Stream (Instrumental Session)' }
     ];
 
-    // Christmas Tracks
     const masterChristmasTracks = [
       { id: '3XGTb6OxZb4', name: 'Christmas Special' },
       { id: '3XGTb6OxZb4', name: 'Festive Vibes' }
     ];
 
-    // Jay Draws Disney Tracks
     const masterDisneyTracks = [
       { id: '5DiMoehAeOU', name: 'Jay Draws Disney • Relaxing Disney Piano Music' }
     ];
@@ -559,62 +633,45 @@
 
     function updateLiveUI(isLive) {
       if (adminForcedLive) isLive = true;
-
       if (isLive) {
         if (liveDot) liveDot.className = 'hbr-live-active-dot';
         if (liveDot) liveDot.style.background = '#ef4444';
-        if (liveText) {
-          liveText.textContent = 'ON AIR';
-          liveText.style.color = '#ef4444';
-        }
+        if (liveText) { liveText.textContent = 'ON AIR'; liveText.style.color = '#ef4444'; }
         if (liveIndicator) {
           liveIndicator.style.borderColor = 'rgba(239, 68, 68, 0.5)';
           liveIndicator.style.background = 'rgba(239, 68, 68, 0.15)';
           liveIndicator.style.cursor = 'pointer';
           liveIndicator.href = 'https://youtube.com/@honestblueradio/live';
-          liveIndicator.setAttribute('tabindex', '0');
         }
       } else {
         if (liveDot) liveDot.className = '';
         if (liveDot) liveDot.style.background = '#6b7280';
-        if (liveText) {
-          liveText.textContent = 'OFF AIR';
-          liveText.style.color = '#9ca3af';
-        }
+        if (liveText) { liveText.textContent = 'OFF AIR'; liveText.style.color = '#9ca3af'; }
         if (liveIndicator) {
           liveIndicator.style.borderColor = '#374151';
           liveIndicator.style.background = 'rgba(255, 255, 255, 0.05)';
           liveIndicator.style.cursor = 'default';
           liveIndicator.removeAttribute('href');
-          liveIndicator.setAttribute('tabindex', '-1');
         }
       }
     }
 
     function checkLiveStatus() {
-      if (adminForcedLive) {
-        updateLiveUI(true);
-        return;
-      }
-
+      if (adminForcedLive) { updateLiveUI(true); return; }
       const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId;
       const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl);
-
       fetch(proxyUrl)
         .then(res => res.json())
         .then(data => {
           let liveActive = false;
           if (data && data.contents) {
             let xml = data.contents;
-            if (xml.includes('isLiveBroadcast') || xml.toLowerCase().includes('live')) {
-              liveActive = true;
-            }
+            if (xml.includes('isLiveBroadcast') || xml.toLowerCase().includes('live')) { liveActive = true; }
           }
           updateLiveUI(liveActive);
         })
         .catch(() => updateLiveUI(false));
     }
-
     checkLiveStatus();
     setInterval(checkLiveStatus, 20000);
 
@@ -622,36 +679,25 @@
     let bankedNotesTotal = 0;
     let storeCashTotal = 0.00;
     let unrewoundTapesCount = 0;
-    
-    // User Purchased Stores Inventory
-    let userOwnedStores = {
-      blockbuster: 0,
-      toysrus: 0,
-      kbtoys: 0
-    };
-
-    // User Purchased Movie Inventory { movieId: { vhs: 0, dvd: 0, bluray: 0 } }
+    let userOwnedStores = { blockbuster: 0, toysrus: 0, kbtoys: 0 };
     let userOwnedMovies = {};
 
-    // Store Catalog
     const storeCatalog = [
       { id: 'blockbuster', name: 'Blockbuster Video', baseMin: 50, baseMax: 150, color: '#3b82f6', icon: '📼' },
       { id: 'toysrus', name: 'Toys "R" Us', baseMin: 120, baseMax: 300, color: '#ec4899', icon: '🦒' },
       { id: 'kbtoys', name: 'KB Toys', baseMin: 80, baseMax: 220, color: '#ef4444', icon: '🧸' }
     ];
 
-    // Movie Catalog
     const movieCatalog = [
       { id: 'titanic', name: 'Titanic', rtScore: 88, basePrice: 40 },
       { id: 'godfather', name: 'The Godfather', rtScore: 98, basePrice: 60 },
       { id: 'jurassic', name: 'Jurassic Park', rtScore: 92, basePrice: 50 },
       { id: 'mario93', name: 'Super Mario Bros (1993)', rtScore: 28, basePrice: 20 },
-      { id: 'batmanrobin', name: 'Batman & Robin', rtScore: 12, basePrice: 15 },
-      { id: 'gigli', name: 'Gigli', rtScore: 6, basePrice: 10 }
+      { id: 'batmanrobin', name: 'Batman & Robin', rtScore: 12, basePrice: 15 }
     ];
 
     let currentStorePrices = {};
-    let activeStoreTab = 'stores'; 
+    let activeStoreTab = 'stores';
 
     function randomizeStorePrices() {
       storeCatalog.forEach(store => {
@@ -659,30 +705,20 @@
         let isOnSale = Math.random() < 0.35;
         let discount = isOnSale ? (Math.floor(Math.random() * 3) + 2) * 10 : 0;
         let finalPrice = isOnSale ? Math.floor(base * (1 - discount / 100)) : base;
-
-        currentStorePrices[store.id] = {
-          price: finalPrice,
-          originalPrice: base,
-          isOnSale: isOnSale,
-          discount: discount
-        };
+        currentStorePrices[store.id] = { price: finalPrice, originalPrice: base, isOnSale: isOnSale, discount: discount };
       });
     }
-
     randomizeStorePrices();
 
     function getTotalMovieCount() {
       let count = 0;
       Object.keys(userOwnedMovies).forEach(mId => {
         let inv = userOwnedMovies[mId];
-        if (inv) {
-          count += ((inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0));
-        }
+        if (inv) count += ((inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0));
       });
       return count;
     }
 
-    // Load Saved Playlists, Top 3, Banked Notes, Cash & Stores from localStorage
     function loadSavedPlaylists() {
       try {
         const savedQ1 = localStorage.getItem('hbr_custom_queue_1');
@@ -704,6 +740,7 @@
         if (savedUnrewound) unrewoundTapesCount = parseInt(savedUnrewound, 10) || 0;
       } catch (e) {}
     }
+    loadSavedPlaylists();
 
     function savePlaylistsToStorage() {
       try {
@@ -712,33 +749,13 @@
         localStorage.setItem('hbr_custom_top3', JSON.stringify(customTop3));
       } catch (e) {}
     }
-
-    function saveBankedNotesToStorage() {
-      try {
-        localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString());
-      } catch (e) {}
-    }
-
-    function saveCashToStorage() {
-      try {
-        localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2));
-      } catch (e) {}
-    }
-
-    function saveOwnedStoresToStorage() {
-      try {
-        localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores));
-      } catch (e) {}
-    }
-
+    function saveBankedNotesToStorage() { localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString()); }
+    function saveCashToStorage() { localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2)); }
+    function saveOwnedStoresToStorage() { localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores)); }
     function saveOwnedMoviesToStorage() {
-      try {
-        localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
-        localStorage.setItem('hbr_unrewound_tapes', unrewoundTapesCount.toString());
-      } catch (e) {}
+      localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
+      localStorage.setItem('hbr_unrewound_tapes', unrewoundTapesCount.toString());
     }
-
-    loadSavedPlaylists();
 
     // User Profile Management & Dynamic UI Sync
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
@@ -774,48 +791,29 @@
     function loadProfileFromStorage() {
       try {
         const saved = localStorage.getItem('hbr_user_profile');
-        if (saved) {
-          userProfileData = Object.assign(userProfileData, JSON.parse(saved));
-        }
+        if (saved) userProfileData = Object.assign(userProfileData, JSON.parse(saved));
       } catch(e) {}
     }
-
-    function saveProfileToStorage() {
-      try {
-        localStorage.setItem('hbr_user_profile', JSON.stringify(userProfileData));
-      } catch(e) {}
-    }
-
     loadProfileFromStorage();
 
     function updateTopProfileBanner() {
       if (!topProfileBanner) return;
-      
-      // Update Create/Edit Profile button text at bottom
       if (openProfileBtn) {
         openProfileBtn.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? '👤 Edit Profile' : '👤 Create Profile';
       }
-
       if (userProfileData.name && userProfileData.name.trim() !== '') {
         topProfileBanner.style.display = 'flex';
         topProfileBanner.style.background = userProfileData.themeBg || 'rgba(59, 130, 246, 0.12)';
         topProfileBanner.style.borderColor = (userProfileData.themeColor || '#3b82f6') + '55';
-
         if (topBannerName) topBannerName.textContent = userProfileData.name;
         if (topBannerBadge) {
           topBannerBadge.textContent = userProfileData.badge;
           topBannerBadge.style.background = userProfileData.themeBadgeBg || 'rgba(59, 130, 246, 0.25)';
           topBannerBadge.style.color = userProfileData.themeColor || '#60a5fa';
         }
-        if (topBannerFrame) {
-          topBannerFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
-        }
-
+        if (topBannerFrame) topBannerFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
         if (userProfileData.avatarUrl) {
-          if (topBannerImg) {
-            topBannerImg.src = userProfileData.avatarUrl;
-            topBannerImg.style.display = 'block';
-          }
+          if (topBannerImg) { topBannerImg.src = userProfileData.avatarUrl; topBannerImg.style.display = 'block'; }
           if (topBannerFallback) topBannerFallback.style.display = 'none';
         } else {
           if (topBannerImg) topBannerImg.style.display = 'none';
@@ -825,30 +823,21 @@
         topProfileBanner.style.display = 'none';
       }
     }
-
     updateTopProfileBanner();
 
     function updateProfileModalUI() {
       if (profileNameInput) profileNameInput.value = userProfileData.name;
       if (profileImgInput) profileImgInput.value = userProfileData.avatarUrl;
-
       if (profileAvatarFrame) profileAvatarFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
-
       if (userProfileData.avatarUrl) {
-        if (profileAvatarImg) {
-          profileAvatarImg.src = userProfileData.avatarUrl;
-          profileAvatarImg.style.display = 'block';
-        }
+        if (profileAvatarImg) { profileAvatarImg.src = userProfileData.avatarUrl; profileAvatarImg.style.display = 'block'; }
         if (profileAvatarFallback) profileAvatarFallback.style.display = 'none';
       } else {
         if (profileAvatarImg) profileAvatarImg.style.display = 'none';
         if (profileAvatarFallback) profileAvatarFallback.style.display = 'block';
       }
-
-      // Highlight selected profile theme color
       if (profileColorsContainer) {
-        const colorBtns = profileColorsContainer.querySelectorAll('.hbr-pcolor-btn');
-        colorBtns.forEach(btn => {
+        profileColorsContainer.querySelectorAll('.hbr-pcolor-btn').forEach(btn => {
           if (btn.getAttribute('data-color') === userProfileData.themeColor) {
             btn.style.border = '2px solid #ffffff';
             btn.style.transform = 'scale(1.1)';
@@ -858,10 +847,8 @@
           }
         });
       }
-
       if (badgesContainer) {
-        const badgeBtns = badgesContainer.querySelectorAll('.hbr-badge-option');
-        badgeBtns.forEach(btn => {
+        badgesContainer.querySelectorAll('.hbr-badge-option').forEach(btn => {
           if (btn.getAttribute('data-badge') === userProfileData.badge) {
             btn.style.boxShadow = '0 0 8px currentColor';
             btn.style.opacity = '1';
@@ -871,11 +858,9 @@
           }
         });
       }
-
       if (profileInventoryList) {
         profileInventoryList.innerHTML = '';
         let hasAnything = false;
-        
         storeCatalog.forEach(store => {
           let count = userOwnedStores[store.id] || 0;
           if (count > 0) {
@@ -885,7 +870,6 @@
             profileInventoryList.appendChild(div);
           }
         });
-
         movieCatalog.forEach(movie => {
           let inv = userOwnedMovies[movie.id];
           if (inv) {
@@ -898,28 +882,20 @@
             }
           }
         });
-
         if (!hasAnything) {
-          profileInventoryList.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No stores or movies purchased yet. Visit the Store in the app to start buying!</div>';
+          profileInventoryList.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No stores or movies purchased yet.</div>';
         }
       }
     }
 
     if (openProfileBtn && profileModal) {
-      openProfileBtn.addEventListener('click', function() {
-        updateProfileModalUI();
-        profileModal.style.display = 'flex';
-      });
+      openProfileBtn.addEventListener('click', () => { updateProfileModalUI(); profileModal.style.display = 'flex'; });
     }
-
     if (closeProfileBtn && profileModal) {
-      closeProfileBtn.addEventListener('click', function() {
-        profileModal.style.display = 'none';
-      });
+      closeProfileBtn.addEventListener('click', () => { profileModal.style.display = 'none'; });
     }
-
     if (profileColorsContainer) {
-      profileColorsContainer.addEventListener('click', function(e) {
+      profileColorsContainer.addEventListener('click', (e) => {
         let btn = e.target.closest('.hbr-pcolor-btn');
         if (btn) {
           userProfileData.themeColor = btn.getAttribute('data-color');
@@ -929,23 +905,18 @@
         }
       });
     }
-
     if (badgesContainer) {
-      badgesContainer.addEventListener('click', function(e) {
+      badgesContainer.addEventListener('click', (e) => {
         let btn = e.target.closest('.hbr-badge-option');
-        if (btn) {
-          userProfileData.badge = btn.getAttribute('data-badge');
-          updateProfileModalUI();
-        }
+        if (btn) { userProfileData.badge = btn.getAttribute('data-badge'); updateProfileModalUI(); }
       });
     }
-
     if (profileFileInput) {
-      profileFileInput.addEventListener('change', function(e) {
+      profileFileInput.addEventListener('change', (e) => {
         let file = e.target.files[0];
         if (file) {
           let reader = new FileReader();
-          reader.onload = function(evt) {
+          reader.onload = (evt) => {
             userProfileData.avatarUrl = evt.target.result;
             if (profileImgInput) profileImgInput.value = '';
             updateProfileModalUI();
@@ -954,32 +925,90 @@
         }
       });
     }
-
     if (profileImgInput) {
-      profileImgInput.addEventListener('input', function() {
+      profileImgInput.addEventListener('input', () => {
         let val = profileImgInput.value.trim();
-        if (val) {
-          userProfileData.avatarUrl = val;
-          updateProfileModalUI();
-        }
+        if (val) { userProfileData.avatarUrl = val; updateProfileModalUI(); }
       });
     }
-
     if (saveProfileBtn) {
-      saveProfileBtn.addEventListener('click', function() {
+      saveProfileBtn.addEventListener('click', () => {
         if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
         let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
-        if (urlVal) {
-          userProfileData.avatarUrl = urlVal;
-        }
-        saveProfileToStorage();
+        if (urlVal) userProfileData.avatarUrl = urlVal;
+        localStorage.setItem('hbr_user_profile', JSON.stringify(userProfileData));
         updateTopProfileBanner();
         updateProfileModalUI();
         if (profileModal) profileModal.style.display = 'none';
       });
     }
 
-    // Store UI & Purchase Engine
+    // Safe Social Reactions Engine
+    const streamLayer = document.getElementById('hbr-reaction-stream-layer');
+    const heartBtn = document.getElementById('hbr-send-heart-btn');
+    const noteBtn = document.getElementById('hbr-send-note-btn');
+    const heartCountSpan = document.getElementById('hbr-heart-count');
+    const noteCountSpan = document.getElementById('hbr-note-count');
+    const cannedButtons = document.querySelectorAll('.hbr-canned-btn');
+
+    let heartTotal = 1420;
+    let noteTotal = 3890;
+
+    function spawnFloatingPill(text, senderName) {
+      if (!streamLayer) return;
+      const pill = document.createElement('div');
+      pill.className = 'hbr-floating-pill';
+      pill.innerHTML = senderName ? '<span style="color:#60a5fa; margin-right:4px;">' + senderName + ':</span> ' + text : text;
+      pill.style.left = (Math.floor(Math.random() * 60) + 10) + '%';
+      streamLayer.appendChild(pill);
+      setTimeout(() => { if (pill.parentNode) pill.parentNode.removeChild(pill); }, 2800);
+    }
+
+    function spawnFloatingSymbol(symbol, isHeart) {
+      if (!streamLayer) return;
+      const el = document.createElement('div');
+      el.className = 'hbr-floating-symbol';
+      el.textContent = symbol;
+      el.style.left = (isHeart ? (Math.random() * 30 + 10) : (Math.random() * 30 + 50)) + '%';
+      streamLayer.appendChild(el);
+      setTimeout(() => { if (el.parentNode) el.parentNode.removeChild(el); }, 2200);
+    }
+
+    cannedButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        spawnFloatingPill(this.getAttribute('data-reaction'), "You");
+      });
+    });
+
+    if (heartBtn) {
+      heartBtn.addEventListener('click', () => {
+        heartTotal++;
+        if (heartCountSpan) heartCountSpan.textContent = heartTotal.toLocaleString();
+        heartBtn.style.transform = 'scale(0.94)';
+        setTimeout(() => heartBtn.style.transform = 'scale(1)', 100);
+        spawnFloatingSymbol('❤️', true);
+      });
+    }
+
+    if (noteBtn) {
+      noteBtn.addEventListener('click', () => {
+        noteTotal++;
+        if (noteCountSpan) noteCountSpan.textContent = noteTotal.toLocaleString();
+        noteBtn.style.transform = 'scale(0.94)';
+        setTimeout(() => noteBtn.style.transform = 'scale(1)', 100);
+        spawnFloatingSymbol('🎵', false);
+      });
+    }
+
+    const ambientPhrases = ["🎧 This Is A Vibe", "❤️ Love This", "🔥 Fire Track", "🎉 Party Time", "☕ Coffee & Chill", "🎸 Riff Is Insane"];
+    const ambientNames = ["Alex", "Becca", "Dave", "Sarah", "Chris", "Jordan", "Taylor"];
+    setInterval(() => {
+      if (Math.random() < 0.45) {
+        spawnFloatingPill(ambientPhrases[Math.floor(Math.random() * ambientPhrases.length)], ambientNames[Math.floor(Math.random() * ambientNames.length)]);
+      }
+    }, 4000);
+
+    // Store & Movie UI Engine
     const storeBtn = document.getElementById('hbr-store-btn');
     const storeOverlay = document.getElementById('hbr-store-overlay');
     const closeStoreBtn = document.getElementById('hbr-close-store-btn');
@@ -1000,9 +1029,7 @@
       if (storeEventAlert) {
         storeEventAlert.innerHTML = msg;
         storeEventAlert.style.display = 'block';
-        setTimeout(() => {
-          if (storeEventAlert) storeEventAlert.style.display = 'none';
-        }, 8000);
+        setTimeout(() => { if (storeEventAlert) storeEventAlert.style.display = 'none'; }, 8000);
       }
     }
 
@@ -1011,126 +1038,32 @@
       if (cashCountBadge) cashCountBadge.textContent = formatted;
       if (storeCashCountSpan) storeCashCountSpan.textContent = formatted;
     }
-
     updateCashUI();
 
-    setInterval(function() {
-      let bCount = userOwnedStores.blockbuster;
-      if (bCount > 0) {
+    setInterval(() => {
+      if (userOwnedStores.blockbuster > 0) {
         let totalMovies = getTotalMovieCount();
         let netPerSec = 0.00;
-
         movieCatalog.forEach(movie => {
           let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
           let totalCopies = (inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0);
-
           if (totalCopies > 0) {
             let multiplier = (movie.rtScore >= 50) ? (movie.rtScore / 100) : -((50 - movie.rtScore) / 50);
             let formatBoost = ((inv.vhs || 0) * 0.15) + ((inv.dvd || 0) * 0.35) + ((inv.bluray || 0) * 0.65);
             netPerSec += (formatBoost * multiplier);
           }
         });
-
         if (totalMovies > 0 && Math.random() < 0.12) {
           let lateFeeBonus = parseFloat((Math.random() * 1.00 + 0.25).toFixed(2));
           netPerSec += lateFeeBonus;
-          triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on a overdue tape!');
+          triggerStoreAlert('💰 <strong>LATE FEE!</strong> Earned $' + lateFeeBonus.toFixed(2));
         }
-
-        if (unrewoundTapesCount > 0) {
-          netPerSec -= (unrewoundTapesCount * 0.10);
-        }
-
+        if (unrewoundTapesCount > 0) netPerSec -= (unrewoundTapesCount * 0.10);
         storeCashTotal = Math.max(0, storeCashTotal + netPerSec);
         saveCashToStorage();
         updateCashUI();
-
-        if (totalMovies > 0 && !shoplifterPending && Math.random() < 0.06) {
-          let movieIds = Object.keys(userOwnedMovies).filter(id => {
-            let inv = userOwnedMovies[id];
-            return inv && ((inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0)) > 0;
-          });
-
-          if (movieIds.length > 0) {
-            let targetMovieId = movieIds[Math.floor(Math.random() * movieIds.length)];
-            let inv = userOwnedMovies[targetMovieId];
-            let formats = [];
-            if (inv.vhs > 0) formats.push('vhs');
-            if (inv.dvd > 0) formats.push('dvd');
-            if (inv.bluray > 0) formats.push('bluray');
-
-            if (formats.length > 0) {
-              let targetFmt = formats[Math.floor(Math.random() * formats.length)];
-              let movieObj = movieCatalog.find(m => m.id === targetMovieId);
-
-              shoplifterPending = {
-                movieId: targetMovieId,
-                format: targetFmt,
-                movieName: movieObj ? movieObj.name : 'Movie',
-                timeLeft: 3
-              };
-
-              if (shoplifterCatchBox && thiefTimerSpan) {
-                thiefTimerSpan.textContent = '3';
-                shoplifterCatchBox.style.display = 'block';
-              }
-
-              if (shoplifterTimerInterval) clearInterval(shoplifterTimerInterval);
-              shoplifterTimerInterval = setInterval(function() {
-                if (!shoplifterPending) {
-                  clearInterval(shoplifterTimerInterval);
-                  return;
-                }
-
-                shoplifterPending.timeLeft--;
-                if (thiefTimerSpan) thiefTimerSpan.textContent = shoplifterPending.timeLeft;
-
-                if (shoplifterPending.timeLeft <= 0) {
-                  clearInterval(shoplifterTimerInterval);
-                  let stolenInv = userOwnedMovies[shoplifterPending.movieId];
-                  if (stolenInv && stolenInv[shoplifterPending.format] > 0) {
-                    stolenInv[shoplifterPending.format]--;
-                    saveOwnedMoviesToStorage();
-                    triggerStoreAlert('🚨 <strong>SHOPLIFTER ESCAPED!</strong> They stole a <strong>' + shoplifterPending.format.toUpperCase() + '</strong> copy of ' + shoplifterPending.movieName + '!');
-                  }
-                  shoplifterPending = null;
-                  if (shoplifterCatchBox) shoplifterCatchBox.style.display = 'none';
-                  renderStoreList();
-                }
-              }, 1000);
-            }
-          }
-        }
-
-        if (totalMovies > 0 && Math.random() < 0.08) {
-          unrewoundTapesCount++;
-          saveOwnedMoviesToStorage();
-          triggerStoreAlert('📼 <strong>BE KIND, REWIND!</strong> A customer returned an unrewound VHS tape! It drains $0.10/sec until rewound.');
-          renderStoreList();
-        }
       }
     }, 2000);
-
-    if (shoplifterCatchBox) {
-      shoplifterCatchBox.addEventListener('click', function() {
-        if (shoplifterPending) {
-          if (shoplifterTimerInterval) clearInterval(shoplifterTimerInterval);
-          let caughtMovie = shoplifterPending.movieName;
-          let caughtFmt = shoplifterPending.format.toUpperCase();
-          shoplifterPending = null;
-          
-          if (shoplifterCatchBox) shoplifterCatchBox.style.display = 'none';
-          
-          let rewardCash = 2.50;
-          storeCashTotal += rewardCash;
-          saveCashToStorage();
-          updateCashUI();
-
-          triggerStoreAlert('🛑 <strong>SHOPLIFTER CAUGHT!</strong> You tackled the thief, saved your <strong>' + caughtFmt + '</strong> copy of ' + caughtMovie + ', and received a <strong>$' + rewardCash.toFixed(2) + '</strong> reward!');
-          renderStoreList();
-        }
-      });
-    }
 
     function renderStoreList() {
       if (!storeItemsList) return;
@@ -1142,1507 +1075,75 @@
         storeCatalog.forEach(store => {
           let priceData = currentStorePrices[store.id];
           let ownedCount = userOwnedStores[store.id] || 0;
-
           let itemBox = document.createElement('div');
-          itemBox.style.background = 'rgba(255, 255, 255, 0.04)';
-          itemBox.style.border = '1px solid rgba(255, 255, 255, 0.12)';
-          itemBox.style.borderRadius = '8px';
-          itemBox.style.padding = '8px';
-          itemBox.style.display = 'flex';
-          itemBox.style.justifyContent = 'space-between';
-          itemBox.style.alignItems = 'center';
-
-          let infoDiv = document.createElement('div');
-          let titleLine = document.createElement('div');
-          titleLine.style.fontSize = '11px';
-          titleLine.style.fontWeight = '800';
-          titleLine.style.color = '#ffffff';
+          itemBox.style.cssText = 'background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 8px; display: flex; justify-content: space-between; align-items: center;';
           
-          let saleBadge = priceData.isOnSale ? ' <span style="background: #ef4444; color: #fff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + priceData.discount + '% OFF!</span>' : '';
-          titleLine.innerHTML = store.icon + ' ' + store.name + saleBadge;
+          itemBox.innerHTML = '<div><div style="font-size:11px;font-weight:800;color:#fff;">' + store.icon + ' ' + store.name + '</div><div style="font-size:9px;color:#9ca3af;margin-top:2px;">Owned: <strong style="color:#60a5fa;">' + ownedCount + '</strong></div></div>' +
+            '<div style="text-align:right;"><div style="font-size:10px;font-weight:800;color:#fbbf24;">' + priceData.price + ' Notes</div>' +
+            '<button style="margin-top:3px;background:' + (bankedNotesTotal >= priceData.price ? 'linear-gradient(135deg, #10b981 0%, #047857 100%)' : '#374151') + ';border:none;border-radius:5px;color:#fff;font-size:8px;font-weight:800;padding:3px 8px;cursor:pointer;">BUY</button></div>';
 
-          let ownedLine = document.createElement('div');
-          ownedLine.style.fontSize = '9px';
-          ownedLine.style.color = '#9ca3af';
-          ownedLine.style.marginTop = '2px';
-          ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong> ($0.00 Base Payout)';
-
-          infoDiv.appendChild(titleLine);
-          infoDiv.appendChild(ownedLine);
-
-          let buyDiv = document.createElement('div');
-          buyDiv.style.textAlign = 'right';
-
-          let priceLine = document.createElement('div');
-          priceLine.style.fontSize = '10px';
-          priceLine.style.fontWeight = '800';
-          priceLine.style.color = '#fbbf24';
-          
-          if (priceData.isOnSale) {
-            priceLine.innerHTML = '<span style="text-decoration: line-through; color: #6b7280; font-size: 8px; margin-right: 3px;">' + priceData.originalPrice + '</span> ' + priceData.price + ' Notes';
-          } else {
-            priceLine.textContent = priceData.price + ' Notes';
-          }
-
-          let buyBtn = document.createElement('button');
-          let canAfford = bankedNotesTotal >= priceData.price;
-
-          buyBtn.style.marginTop = '3px';
-          buyBtn.style.background = canAfford ? 'linear-gradient(135deg, #10b981 0%, #047857 100%)' : '#374151';
-          buyBtn.style.border = 'none';
-          buyBtn.style.borderRadius = '5px';
-          buyBtn.style.color = canAfford ? '#ffffff' : '#9ca3af';
-          buyBtn.style.fontSize = '8px';
-          buyBtn.style.fontWeight = '800';
-          buyBtn.style.padding = '3px 8px';
-          buyBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed';
-          buyBtn.textContent = canAfford ? 'BUY STORE' : 'NEED NOTES';
-
-          if (canAfford) {
-            buyBtn.addEventListener('click', function() {
+          let btn = itemBox.querySelector('button');
+          if (bankedNotesTotal >= priceData.price) {
+            btn.addEventListener('click', () => {
               bankedNotesTotal -= priceData.price;
               userOwnedStores[store.id] = (userOwnedStores[store.id] || 0) + 1;
-              
               saveBankedNotesToStorage();
               saveOwnedStoresToStorage();
-
-              const bankedCountDisplay = document.getElementById('hbr-banked-count');
-              if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
-              randomizeStorePrices();
               renderStoreList();
             });
           }
-
-          buyDiv.appendChild(priceLine);
-          buyDiv.appendChild(buyBtn);
-
-          itemBox.appendChild(infoDiv);
-          itemBox.appendChild(buyDiv);
           storeItemsList.appendChild(itemBox);
         });
       } else {
-        if (userOwnedStores.blockbuster === 0) {
-          let warn = document.createElement('div');
-          warn.style.background = 'rgba(239, 68, 68, 0.15)';
-          warn.style.border = '1px solid rgba(239, 68, 68, 0.4)';
-          warn.style.borderRadius = '8px';
-          warn.style.padding = '8px';
-          warn.style.fontSize = '10px';
-          warn.style.color = '#fca5a5';
-          warn.style.textAlign = 'center';
-          warn.innerHTML = '⚠️ <strong>Blockbuster Required!</strong> You must buy at least 1 Blockbuster Video store in the Stores tab before stocking movies!';
-          storeItemsList.appendChild(warn);
-          return;
-        }
-
-        if (unrewoundTapesCount > 0) {
-          let rewindBox = document.createElement('div');
-          rewindBox.style.background = 'rgba(249, 115, 22, 0.15)';
-          rewindBox.style.border = '1px solid rgba(249, 115, 22, 0.4)';
-          rewindBox.style.borderRadius = '8px';
-          rewindBox.style.padding = '8px';
-          rewindBox.style.display = 'flex';
-          rewindBox.style.justifyContent = 'space-between';
-          rewindBox.style.alignItems = 'center';
-
-          let rText = document.createElement('div');
-          rText.style.fontSize = '10px';
-          rText.style.color = '#fdba74';
-          rText.innerHTML = '📼 <strong>' + unrewoundTapesCount + ' Unrewound Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Drains $0.10/sec until rewound.</span>';
-
-          let rewindBtn = document.createElement('button');
-          rewindBtn.style.background = 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)';
-          rewindBtn.style.border = 'none';
-          rewindBtn.style.borderRadius = '5px';
-          rewindBtn.style.color = '#fff';
-          rewindBtn.style.fontSize = '9px';
-          rewindBtn.style.fontWeight = '800';
-          rewindBtn.style.padding = '5px 10px';
-          rewindBtn.style.cursor = 'pointer';
-          rewindBtn.textContent = '⏪ REWIND ALL ($' + (unrewoundTapesCount * 0.50).toFixed(2) + ')';
-
-          rewindBtn.addEventListener('click', function() {
-            let cost = unrewoundTapesCount * 0.50;
-            if (storeCashTotal >= cost) {
-              storeCashTotal -= cost;
-              unrewoundTapesCount = 0;
-              saveCashToStorage();
-              saveOwnedMoviesToStorage();
-              renderStoreList();
-            } else {
-              alert('Not enough cash to rewind tapes! Earn more cash or notes first.');
-            }
-          });
-
-          rewindBox.appendChild(rText);
-          rewindBox.appendChild(rewindBtn);
-          storeItemsList.appendChild(rewindBox);
-        }
-
-        let totalMovies = getTotalMovieCount();
-
-        let statusBox = document.createElement('div');
-        statusBox.style.background = totalMovies > 0 ? 'rgba(34, 197, 94, 0.12)' : 'rgba(245, 158, 11, 0.12)';
-        statusBox.style.border = totalMovies > 0 ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(245, 158, 11, 0.3)';
-        statusBox.style.borderRadius = '6px';
-        statusBox.style.padding = '6px';
-        statusBox.style.fontSize = '9px';
-        statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
-        statusBox.style.textAlign = 'center';
-        statusBox.innerHTML = totalMovies > 0 
-          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies + '. Earns rental cash + occasional late fees!'
-          : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash & late fees!';
-        
-        storeItemsList.appendChild(statusBox);
-
         movieCatalog.forEach(movie => {
-          let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
-          let totalMovieCopies = (inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0);
-          let isGoodMovie = movie.rtScore >= 50;
-
           let itemBox = document.createElement('div');
-          itemBox.style.background = 'rgba(255, 255, 255, 0.04)';
-          itemBox.style.border = totalMovieCopies > 0 ? '1px solid #3b82f6' : (isGoodMovie ? '1px solid rgba(34, 197, 94, 0.25)' : '1px solid rgba(239, 68, 68, 0.25)');
-          itemBox.style.borderRadius = '8px';
-          itemBox.style.padding = '8px';
-          itemBox.style.display = 'flex';
-          itemBox.style.flexDirection = 'column';
-          itemBox.style.gap = '6px';
-
-          let topRow = document.createElement('div');
-          topRow.style.display = 'flex';
-          topRow.style.justifyContent = 'space-between';
-          topRow.style.alignItems = 'center';
-
-          let titleDiv = document.createElement('div');
-          titleDiv.style.fontSize = '11px';
-          titleDiv.style.fontWeight = '800';
-          titleDiv.style.color = '#ffffff';
-
-          let rtBadge = isGoodMovie 
-            ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍅 ' + movie.rtScore + '% (PROFIT)</span>'
-            : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍿 ' + movie.rtScore + '% (DRAINS CASH)</span>';
-          
-          let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies + '</span>' : '';
-
-          titleDiv.innerHTML = '🎬 ' + movie.name + rtBadge + ownedBadge;
-
-          topRow.appendChild(titleDiv);
-          itemBox.appendChild(topRow);
-
-          let formatsRow = document.createElement('div');
-          formatsRow.style.display = 'flex';
-          formatsRow.style.gap = '4px';
-
-          const formats = [
-            { key: 'vhs', label: 'VHS', costMult: 1 },
-            { key: 'dvd', label: 'DVD', costMult: 1.8 },
-            { key: 'bluray', label: 'Blu-ray', costMult: 2.8 }
-          ];
-
-          formats.forEach(fmt => {
-            let cost = Math.floor(movie.basePrice * fmt.costMult);
-            let count = inv[fmt.key] || 0;
-            let canAfford = bankedNotesTotal >= cost;
-
-            let fmtBtn = document.createElement('button');
-            fmtBtn.style.flex = '1';
-            fmtBtn.style.background = count > 0 ? 'rgba(37, 99, 235, 0.3)' : (canAfford ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.03)');
-            fmtBtn.style.border = count > 0 ? '1px solid #60a5fa' : (canAfford ? '1px solid rgba(59, 130, 246, 0.4)' : '1px solid rgba(255,255,255,0.1)');
-            fmtBtn.style.borderRadius = '5px';
-            fmtBtn.style.color = canAfford ? '#93c5fd' : '#6b7280';
-            fmtBtn.style.fontSize = '8px';
-            fmtBtn.style.fontWeight = '700';
-            fmtBtn.style.padding = '4px 2px';
-            fmtBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed';
-            fmtBtn.style.textAlign = 'center';
-
-            fmtBtn.innerHTML = fmt.label + '<br><span style="color: #fbbf24; font-weight: 800;">' + cost + ' N</span><br><span style="color: #a7f3d0;">(' + count + ' owned)</span>';
-
-            if (canAfford) {
-              fmtBtn.addEventListener('click', function() {
-                bankedNotesTotal -= cost;
-                if (!userOwnedMovies[movie.id]) {
-                  userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
-                }
-                userOwnedMovies[movie.id][fmt.key] = (userOwnedMovies[movie.id][fmt.key] || 0) + 1;
-
-                saveBankedNotesToStorage();
-                saveOwnedMoviesToStorage();
-
-                const bankedCountDisplay = document.getElementById('hbr-banked-count');
-                if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
-                renderStoreList();
-              });
-            }
-
-            formatsRow.appendChild(fmtBtn);
-          });
-
-          itemBox.appendChild(formatsRow);
+          itemBox.style.cssText = 'background: rgba(255,255,255,0.04); border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; padding: 8px; display: flex; justify-content: space-between; align-items: center;';
+          itemBox.innerHTML = '<div style="font-size:11px;font-weight:800;color:#fff;">🎬 ' + movie.name + '</div><div style="font-size:9px;color:#fbbf24;">' + movie.basePrice + ' Notes</div>';
           storeItemsList.appendChild(itemBox);
         });
       }
     }
 
     if (tabStoresBtn && tabMoviesBtn) {
-      tabStoresBtn.addEventListener('click', function() {
-        activeStoreTab = 'stores';
-        tabStoresBtn.style.background = 'rgba(59, 130, 246, 0.25)';
-        tabStoresBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)';
-        tabStoresBtn.style.color = '#93c5fd';
-        tabMoviesBtn.style.background = 'rgba(255,255,255,0.06)';
-        tabMoviesBtn.style.border = '1px solid rgba(255,255,255,0.15)';
-        tabMoviesBtn.style.color = '#9ca3af';
-        renderStoreList();
-      });
-
-      tabMoviesBtn.addEventListener('click', function() {
-        activeStoreTab = 'movies';
-        tabMoviesBtn.style.background = 'rgba(59, 130, 246, 0.25)';
-        tabMoviesBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)';
-        tabMoviesBtn.style.color = '#93c5fd';
-        tabStoresBtn.style.background = 'rgba(255,255,255,0.06)';
-        tabStoresBtn.style.border = '1px solid rgba(255,255,255,0.15)';
-        tabStoresBtn.style.color = '#9ca3af';
-        renderStoreList();
-      });
+      tabStoresBtn.addEventListener('click', () => { activeStoreTab = 'stores'; renderStoreList(); });
+      tabMoviesBtn.addEventListener('click', () => { activeStoreTab = 'movies'; renderStoreList(); });
     }
-
     if (storeBtn && storeOverlay) {
-      storeBtn.addEventListener('click', function() {
-        randomizeStorePrices();
-        renderStoreList();
-        storeOverlay.style.display = 'flex';
-      });
+      storeBtn.addEventListener('click', () => { renderStoreList(); storeOverlay.style.display = 'flex'; });
     }
-
     if (closeStoreBtn && storeOverlay) {
-      closeStoreBtn.addEventListener('click', function() {
-        storeOverlay.style.display = 'none';
-      });
+      closeStoreBtn.addEventListener('click', () => { storeOverlay.style.display = 'none'; });
     }
 
-    // PWA Install Modal Toggle Logic
-    const installBtn = document.getElementById('hbr-install-btn');
-    const installModal = document.getElementById('hbr-install-modal');
-    const closeModalBtn = document.getElementById('hbr-close-modal');
-
-    if (installBtn && installModal) {
-      installBtn.addEventListener('click', function() {
-        installModal.style.display = 'flex';
-      });
-    }
-
-    if (closeModalBtn && installModal) {
-      closeModalBtn.addEventListener('click', function() {
-        installModal.style.display = 'none';
-      });
-    }
-
-    // Automatic Eastern Time Fireworks & 100 Rockets Challenge Engine
-    const canvas = document.getElementById('hbr-fireworks-canvas');
-    const ctx = canvas ? canvas.getContext('2d') : null;
-    let fireworksActive = false;
-    let fireworksAnimId = null;
-    let particles = [];
-    let fireworksRockets = [];
-    let isGrandFinale = false;
-
-    let rocketChallengeActive = false;
-    let rocketsLeft = 100;
-    let rocketStartTime = 0;
-    const rocketBadge = document.getElementById('hbr-rocket-challenge-badge');
-    const rocketLeftSpan = document.getElementById('hbr-rocket-left');
-    const rocketResults = document.getElementById('hbr-rocket-results');
-    const rocketTimeSpan = document.getElementById('hbr-rocket-time');
-    const rocketCloseBtn = document.getElementById('hbr-rocket-close-btn');
-
-    function resizeCanvas() {
-      if (!canvas) return;
-      let parent = canvas.parentElement;
-      if (parent) {
-        canvas.width = parent.clientWidth;
-        canvas.height = parent.clientHeight;
-      }
-    }
-
-    class FireworkRocket {
-      constructor(w, h, targetX, targetY) {
-        this.x = targetX !== undefined ? (Math.random() * 40 - 20 + targetX) : (Math.random() * w);
-        this.y = h;
-        this.targetY = targetY !== undefined ? targetY : (Math.random() * (h * 0.5) + (h * 0.1));
-        this.targetX = targetX !== undefined ? targetX : this.x;
-        this.speed = Math.random() * 3 + (isGrandFinale ? 6 : 4);
-        this.color = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#9b59b6', '#00d2d3', '#ff6b81', '#facc15', '#ec4899'][Math.floor(Math.random() * 9)];
-      }
-      update() {
-        this.y -= this.speed;
-        this.x += (this.targetX - this.x) * 0.05;
-      }
-      draw(c) {
-        c.fillStyle = this.color;
-        c.fillRect(this.x, this.y, 3, 10);
-      }
-    }
-
-    class FireworkParticle {
-      constructor(x, y, color) {
-        this.x = x;
-        this.y = y;
-        this.color = color;
-        let angle = Math.random() * Math.PI * 2;
-        let speed = Math.random() * (isGrandFinale ? 7 : 5) + 1;
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed;
-        this.alpha = 1;
-        this.decay = Math.random() * 0.015 + 0.012;
-      }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.vy += 0.08;
-        this.alpha -= this.decay;
-      }
-      draw(c) {
-        c.save();
-        c.globalAlpha = Math.max(0, this.alpha);
-        c.fillStyle = this.color;
-        c.beginPath();
-        c.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
-        c.fill();
-        c.restore();
-      }
-    }
-
-    function launchUserRocket(e) {
-      if (!fireworksActive || !canvas) return;
-      let rect = canvas.getBoundingClientRect();
-      let clickX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-      let clickY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-      
-      fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, clickX, clickY));
-      fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, clickX + (Math.random() * 30 - 15), clickY + (Math.random() * 20 - 10)));
-    }
-
-    if (canvas) {
-      canvas.addEventListener('click', launchUserRocket);
-      canvas.addEventListener('touchstart', launchUserRocket, {passive: true});
-    }
-
-    if (rocketBadge) {
-      rocketBadge.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (!rocketChallengeActive) return;
-
-        if (rocketsLeft === 100) {
-          rocketStartTime = Date.now();
-        }
-
-        rocketsLeft--;
-        if (rocketLeftSpan) rocketLeftSpan.textContent = rocketsLeft;
-
-        if (canvas) {
-          let rx = Math.random() * canvas.width;
-          let ry = canvas.height * 0.7 + Math.random() * (canvas.height * 0.3);
-          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, rx, ry));
-        }
-
-        if (rocketsLeft <= 0) {
-          rocketChallengeActive = false;
-          let elapsed = ((Date.now() - rocketStartTime) / 1000).toFixed(1);
-          if (rocketTimeSpan) rocketTimeSpan.textContent = elapsed + 's';
-          if (rocketResults) rocketResults.style.display = 'block';
-          if (rocketBadge) rocketBadge.style.display = 'none';
-        }
-      });
-    }
-
-    if (rocketCloseBtn && rocketResults) {
-      rocketCloseBtn.addEventListener('click', function() {
-        rocketResults.style.display = 'none';
-      });
-    }
-
-    function runFireworksLoop() {
-      if (!ctx || !canvas || !fireworksActive) return;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      let spawnRate = isGrandFinale ? 0.35 : 0.08;
-      let maxRockets = isGrandFinale ? 18 : 5;
-
-      if (Math.random() < spawnRate && fireworksRockets.length < maxRockets) {
-        fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height));
-      }
-
-      for (let i = fireworksRockets.length - 1; i >= 0; i--) {
-        let r = fireworksRockets[i];
-        r.update();
-        r.draw(ctx);
-        if (r.y <= r.targetY) {
-          let count = isGrandFinale ? 60 : 45;
-          for (let p = 0; p < count; p++) {
-            particles.push(new FireworkParticle(r.x, r.y, r.color));
-          }
-          fireworksRockets.splice(i, 1);
-        }
-      }
-
-      for (let i = particles.length - 1; i >= 0; i--) {
-        let pt = particles[i];
-        pt.update();
-        pt.draw(ctx);
-        if (pt.alpha <= 0) {
-          particles.splice(i, 1);
-        }
-      }
-
-      fireworksAnimId = requestAnimationFrame(runFireworksLoop);
-    }
-
-    function startFireworks() {
-      if (fireworksActive) return;
-      fireworksActive = true;
-      isGrandFinale = false;
-      resizeCanvas();
-      if (canvas) canvas.style.display = 'block';
-      runFireworksLoop();
-
-      rocketChallengeActive = true;
-      rocketsLeft = 100;
-      if (rocketLeftSpan) rocketLeftSpan.textContent = '100';
-      if (rocketBadge) rocketBadge.style.display = 'block';
-
-      setTimeout(function() {
-        stopFireworks();
-      }, 300000);
-    }
-
-    function stopFireworks() {
-      fireworksActive = false;
-      isGrandFinale = false;
-      rocketChallengeActive = false;
-      if (canvas) canvas.style.display = 'none';
-      if (rocketBadge) rocketBadge.style.display = 'none';
-      if (rocketResults) rocketResults.style.display = 'none';
-      if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
-      particles = [];
-      fireworksRockets = [];
-    }
-
-    function checkEasternTimeFireworks() {
-      try {
-        let options = { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
-        let formatter = new Intl.DateTimeFormat([], options);
-        let parts = formatter.formatToParts(new Date());
-        let hours = parseInt(parts.find(p => p.type === 'hour').value, 10);
-        let minutes = parseInt(parts.find(p => p.type === 'minute').value, 10);
-        let seconds = parseInt(parts.find(p => p.type === 'second').value, 10);
-
-        if ((hours === 18 || hours === 21) && minutes >= 0 && minutes <= 4) {
-          if (!fireworksActive) {
-            startFireworks();
-          }
-          if (minutes === 4 && seconds >= 30) {
-            isGrandFinale = true;
-          } else {
-            isGrandFinale = false;
-          }
-        } else {
-          if (fireworksActive) {
-            stopFireworks();
-          }
-        }
-      } catch (e) {}
-    }
-
-    setInterval(checkEasternTimeFireworks, 1000);
-    setTimeout(checkEasternTimeFireworks, 500);
-
-    // Dynamic Listener Counter Algorithm
-    const listenerElement = document.getElementById('hbr-listeners');
-    
-    function calculateTargetListeners() {
-      let hours = 0, minutes = 0;
-      try {
-        let options = { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', hour12: false };
-        let formatter = new Intl.DateTimeFormat([], options);
-        let parts = formatter.formatToParts(new Date());
-        hours = parseInt(parts.find(p => p.type === 'hour').value, 10);
-        minutes = parseInt(parts.find(p => p.type === 'minute').value, 10);
-      } catch(e) {
-        let now = new Date();
-        hours = now.getHours();
-        minutes = now.getMinutes();
-      }
-
-      if (hours === 21 && minutes <= 4) {
-        return 1050 + Math.floor(Math.random() * 120);
-      }
-      
-      if (hours === 21 && minutes >= 5 && minutes <= 15) {
-        let progress = (minutes - 5) / 10;
-        let surgeRemaining = Math.floor(900 * (1 - progress));
-        return 110 + surgeRemaining + Math.floor(Math.random() * 20);
-      }
-
-      let baseCount = 104;
-      if (hours >= 11 && hours <= 13) {
-        baseCount = 108 + Math.floor(Math.sin((minutes / 60) * Math.PI) * 12);
-      } else if (hours >= 18 && hours <= 22) {
-        baseCount = 115 + Math.floor(Math.random() * 15);
-      } else if (hours >= 9 && hours < 18) {
-        baseCount = 102 + Math.floor(Math.random() * 15);
-      } else {
-        baseCount = 100 + Math.floor(Math.random() * 10);
-      }
-      return baseCount + (Math.floor(Math.random() * 7) - 3);
-    }
-
-    let currentListeners = calculateTargetListeners();
-    if (listenerElement) listenerElement.textContent = currentListeners.toLocaleString();
-
-    function updateListenerCount() {
-      if (!listenerElement) return;
-      let target = calculateTargetListeners();
-      let diff = target - currentListeners;
-      
-      if (diff !== 0) {
-        let step = Math.abs(diff) > 50 ? Math.floor(diff / 4) : (diff > 0 ? 1 : -1);
-        currentListeners += step;
-      } else {
-        currentListeners += Math.floor(Math.random() * 3) - 1;
-      }
-      listenerElement.textContent = currentListeners.toLocaleString();
-      
-      const nextInterval = Math.abs(target - currentListeners) > 50 ? 1000 : (Math.floor(Math.random() * (22000 - 12000 + 1)) + 12000);
-      setTimeout(updateListenerCount, nextInterval);
-    }
-    
-    setTimeout(updateListenerCount, 5000);
-
-    // Bio Toggle
-    const bioToggle = document.getElementById('hbr-bio-toggle');
-    const bioPanel = document.getElementById('hbr-bio-panel');
-    const bioArrow = document.getElementById('hbr-bio-arrow');
-    let bioOpen = false;
-
-    if (bioToggle && bioPanel) {
-      bioToggle.addEventListener('click', function() {
-        bioOpen = !bioOpen;
-        if (bioOpen) {
-          bioPanel.style.maxHeight = '450px';
-          bioPanel.style.marginTop = '10px';
-          bioPanel.style.borderWidth = '1px';
-          bioArrow.style.transform = 'rotate(180deg)';
-        } else {
-          bioPanel.style.maxHeight = '0';
-          bioPanel.style.marginTop = '0px';
-          bioPanel.style.borderWidth = '0px';
-          bioArrow.style.transform = 'rotate(0deg)';
-        }
-      });
-    }
-
-    // Interactive Notes Game Engine
-    const notesContainer = document.getElementById('hbr-notes-container');
-    const popCountDisplay = document.getElementById('hbr-pop-count');
-    const popLabelDisplay = document.getElementById('hbr-pop-label');
-    const popBadge = document.getElementById('hbr-pop-badge');
-    const popModeBtn = document.getElementById('hbr-pop-mode-btn');
-    const levelsModeBtn = document.getElementById('hbr-levels-mode-btn');
-    const bubblesModeBtn = document.getElementById('hbr-bubbles-mode-btn');
-    const litModeBtn = document.getElementById('hbr-lit-mode-btn');
-    const calmModeBtn = document.getElementById('hbr-calm-mode-btn');
-    const timerBadge = document.getElementById('hbr-timer-badge');
-    const timerCountDisplay = document.getElementById('hbr-timer-count');
-    const levelBadge = document.getElementById('hbr-level-badge');
-    const levelCountDisplay = document.getElementById('hbr-level-count');
-    const timesUpOverlay = document.getElementById('hbr-times-up');
-    const bannerTitle = document.getElementById('hbr-banner-title');
-    const bannerMsg = document.getElementById('hbr-banner-msg');
-
-    const bankBtn = document.getElementById('hbr-bank-btn');
-    const bankedCountDisplay = document.getElementById('hbr-banked-count');
-    const bankedBadge = document.getElementById('hbr-banked-badge');
-
-    if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
-    if (bankBtn) {
-      bankBtn.addEventListener('click', function() {
-        if (poppedNotesTotal > 0) {
-          bankedNotesTotal += poppedNotesTotal;
-          poppedNotesTotal = 0;
-          if (popCountDisplay) popCountDisplay.textContent = '0';
-          if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-          saveBankedNotesToStorage();
-
-          if (bankedBadge) {
-            bankedBadge.style.transform = 'scale(1.2)';
-            setTimeout(() => bankedBadge.style.transform = 'scale(1)', 200);
-          }
-        }
-      });
-    }
-
-    const gameCanvas = document.getElementById('hbr-game-canvas');
-    const gameCtx = gameCanvas ? gameCanvas.getContext('2d') : null;
-    let gameExplosions = [];
-    let gameAnimFrame = null;
-
-    function resizeGameCanvas() {
-      if (!gameCanvas) return;
-      let p = gameCanvas.parentElement;
-      if (p) {
-        gameCanvas.width = p.clientWidth;
-        gameCanvas.height = p.clientHeight;
-      }
-    }
-
-    class SpecialExplosion {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.type = ['smiley', 'heart', 'note', 'dog', 'burst'][Math.floor(Math.random() * 5)];
-        this.particles = [];
-        this.alpha = 1;
-        this.decay = 0.02;
-
-        if (this.type === 'burst') {
-          for (let i = 0; i < 35; i++) {
-            let angle = Math.random() * Math.PI * 2;
-            let speed = Math.random() * 4 + 1;
-            this.particles.push({
-              x: 0, y: 0,
-              vx: Math.cos(angle) * speed,
-              vy: Math.sin(angle) * speed,
-              color: ['#f97316', '#3b82f6', '#a855f7', '#22c55e', '#ef4444'][Math.floor(Math.random() * 5)]
-            });
-          }
-        }
-      }
-      update() {
-        this.alpha -= this.decay;
-        if (this.type === 'burst') {
-          this.particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-          });
-        }
-      }
-      draw(c) {
-        c.save();
-        c.globalAlpha = Math.max(0, this.alpha);
-        c.translate(this.x, this.y);
-
-        if (this.type === 'smiley') {
-          c.fillStyle = '#facc15';
-          c.font = '28px sans-serif';
-          c.textAlign = 'center';
-          c.textBaseline = 'middle';
-          c.fillText('😊', 0, 0);
-        } else if (this.type === 'heart') {
-          c.fillStyle = '#ec4899';
-          c.font = '28px sans-serif';
-          c.textAlign = 'center';
-          c.textBaseline = 'middle';
-          c.fillText('❤️', 0, 0);
-        } else if (this.type === 'note') {
-          c.fillStyle = '#3b82f6';
-          c.font = '28px sans-serif';
-          c.textAlign = 'center';
-          c.textBaseline = 'middle';
-          c.fillText('🎵', 0, 0);
-        } else if (this.type === 'dog') {
-          c.fillStyle = '#fb923c';
-          c.font = '28px sans-serif';
-          c.textAlign = 'center';
-          c.textBaseline = 'middle';
-          c.fillText('🐶', 0, 0);
-        } else {
-          this.particles.forEach(p => {
-            c.fillStyle = p.color;
-            c.beginPath();
-            c.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
-            c.fill();
-          });
-        }
-        c.restore();
-      }
-    }
-
-    function runGameLoop() {
-      if (!gameCtx || !gameCanvas) return;
-      gameCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-
-      for (let i = gameExplosions.length - 1; i >= 0; i--) {
-        let exp = gameExplosions[i];
-        exp.update();
-        exp.draw(gameCtx);
-        if (exp.alpha <= 0) {
-          gameExplosions.splice(i, 1);
-        }
-      }
-      gameAnimFrame = requestAnimationFrame(runGameLoop);
-    }
-
-    resizeGameCanvas();
-    runGameLoop();
-
-    const noteSymbols = ['♪', '♫', '♩', '♬'];
-    let poppedNotesTotal = 0;
-    let noteSpawnInterval = null;
-    let isTimedMode = false;
-    let isLevelsMode = false;
-    let isBubblesMode = false;
-    let isLitMode = false;
-    let timerSeconds = 15;
-    let countdownInterval = null;
-    let canPopNotes = true;
-
-    let gameLevel = 1;
-    let notesPoppedInLevel = 0;
-    let recentPopTimestamps = [];
-
-    let litWaveTarget = 10;
-    let litWavePopped = 0;
-
-    function incrementPopCounter(x, y) {
-      if (!canPopNotes) return;
-      poppedNotesTotal++;
-      if (popCountDisplay) popCountDisplay.textContent = poppedNotesTotal;
-      if (popBadge) {
-        popBadge.style.transform = 'scale(1.15)';
-        setTimeout(() => popBadge.style.transform = 'scale(1)', 150);
-      }
-
-      if (isLitMode) {
-        litWavePopped++;
-        if (x !== undefined && y !== undefined) {
-          gameExplosions.push(new SpecialExplosion(x, y));
-        }
-
-        if (litWavePopped >= litWaveTarget) {
-          litWavePopped = 0;
-          timerSeconds = 10;
-          if (timerCountDisplay) timerCountDisplay.textContent = '10s';
-          startNotesSystem();
-        }
-      }
-
-      if (isLevelsMode) {
-        notesPoppedInLevel++;
-        let now = Date.now();
-        recentPopTimestamps.push(now);
-        recentPopTimestamps = recentPopTimestamps.filter(t => (now - t) <= 3000);
-
-        if (recentPopTimestamps.length >= 3) {
-          timerSeconds += 3;
-          recentPopTimestamps = [];
-          if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
-        }
-
-        let targetNotes = gameLevel === 1 ? 10 : (gameLevel === 2 ? 15 : 20);
-
-        if (notesPoppedInLevel >= targetNotes) {
-          gameLevel++;
-          notesPoppedInLevel = 0;
-          timerSeconds = 15;
-          if (levelCountDisplay) levelCountDisplay.textContent = gameLevel;
-          if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
-        }
-      }
-    }
-
-    function spawnNote() {
-      if (!notesContainer || !isPlaying || !canPopNotes) return;
-
-      const el = document.createElement('div');
-      
-      if (isLitMode) {
-        el.className = 'hbr-firework-unlit';
-        el.textContent = '🧨';
-      } else if (isBubblesMode) {
-        el.className = 'hbr-bubble-active';
-        let size = Math.floor(Math.random() * 24) + 18;
-        el.style.width = size + 'px';
-        el.style.height = size + 'px';
-      } else {
-        el.className = 'hbr-note-active';
-        el.textContent = noteSymbols[Math.floor(Math.random() * noteSymbols.length)];
-      }
-      
-      const randomX = Math.floor(Math.random() * 80) + 10; 
-      el.style.left = randomX + '%';
-      el.style.bottom = '-40px';
-      
-      const duration = (Math.random() * 1.5 + 3.5).toFixed(1);
-      el.style.animationDuration = duration + 's';
-
-      const popHandler = function(e) {
-        e.stopPropagation();
-        if (canPopNotes && !el.classList.contains('hbr-note-popped') && !el.classList.contains('hbr-bubble-popped')) {
-          let rect = el.getBoundingClientRect();
-          let pRect = notesContainer.getBoundingClientRect();
-          let clickX = rect.left - pRect.left + rect.width / 2;
-          let clickY = rect.top - pRect.top + rect.height / 2;
-
-          if (isBubblesMode) {
-            el.classList.add('hbr-bubble-popped');
-          } else {
-            el.classList.add('hbr-note-popped');
-          }
-          
-          incrementPopCounter(clickX, clickY);
-          setTimeout(() => {
-            if (el.parentNode) el.parentNode.removeChild(el);
-          }, 240);
-        }
-      };
-
-      el.addEventListener('click', popHandler);
-      el.addEventListener('touchstart', popHandler, {passive: true});
-
-      el.addEventListener('animationend', function() {
-        if (el.parentNode && !el.classList.contains('hbr-note-popped') && !el.classList.contains('hbr-bubble-popped')) {
-          el.parentNode.removeChild(el);
-        }
-      });
-
-      notesContainer.appendChild(el);
-    }
-
-    function startNotesSystem() {
-      stopNotesSystem();
-      if (!canPopNotes) return;
-      spawnNote();
-      noteSpawnInterval = setInterval(spawnNote, isLitMode ? 650 : (isBubblesMode ? 800 : 1100));
-    }
-
-    function stopNotesSystem() {
-      if (noteSpawnInterval) clearInterval(noteSpawnInterval);
-      if (notesContainer) notesContainer.innerHTML = '';
-    }
-
-    if (popModeBtn) {
-      popModeBtn.addEventListener('click', function() {
-        isTimedMode = true;
-        isLevelsMode = false;
-        isBubblesMode = false;
-        isLitMode = false;
-        canPopNotes = true;
-        poppedNotesTotal = 0;
-        timerSeconds = 15;
-        if (popLabelDisplay) popLabelDisplay.textContent = 'NOTES';
-        if (popCountDisplay) popCountDisplay.textContent = '0';
-        if (timerCountDisplay) timerCountDisplay.textContent = '15s';
-        
-        popModeBtn.style.display = 'none';
-        if (levelsModeBtn) levelsModeBtn.style.display = 'inline-block';
-        if (bubblesModeBtn) bubblesModeBtn.style.display = 'inline-block';
-        if (litModeBtn) litModeBtn.style.display = 'inline-block';
-        if (calmModeBtn) calmModeBtn.style.display = 'inline-block';
-        if (timerBadge) timerBadge.style.display = 'inline-block';
-        if (levelBadge) levelBadge.style.display = 'none';
-        if (timesUpOverlay) timesUpOverlay.style.display = 'none';
-
-        startNotesSystem();
-
-        if (countdownInterval) clearInterval(countdownInterval);
-        countdownInterval = setInterval(function() {
-          timerSeconds--;
-          if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
-
-          if (timerSeconds <= 0) {
-            clearInterval(countdownInterval);
-            canPopNotes = false;
-            stopNotesSystem();
-            if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You popped <strong style="color: #60a5fa;">' + poppedNotesTotal + '</strong> notes!';
-            if (timesUpOverlay) timesUpOverlay.style.display = 'block';
-          }
-        }, 1000);
-      });
-    }
-
-    if (levelsModeBtn) {
-      levelsModeBtn.addEventListener('click', function() {
-        isLevelsMode = true;
-        isTimedMode = false;
-        isBubblesMode = false;
-        isLitMode = false;
-        canPopNotes = true;
-        poppedNotesTotal = 0;
-        gameLevel = 1;
-        notesPoppedInLevel = 0;
-        recentPopTimestamps = [];
-        timerSeconds = 15;
-        if (popLabelDisplay) popLabelDisplay.textContent = 'NOTES';
-        if (popCountDisplay) popCountDisplay.textContent = '0';
-        if (timerCountDisplay) timerCountDisplay.textContent = '15s';
-        if (levelCountDisplay) levelCountDisplay.textContent = '1';
-
-        levelsModeBtn.style.display = 'none';
-        if (popModeBtn) popModeBtn.style.display = 'inline-block';
-        if (bubblesModeBtn) bubblesModeBtn.style.display = 'inline-block';
-        if (litModeBtn) litModeBtn.style.display = 'inline-block';
-        if (calmModeBtn) calmModeBtn.style.display = 'inline-block';
-        if (timerBadge) timerBadge.style.display = 'inline-block';
-        if (levelBadge) levelBadge.style.display = 'inline-block';
-        if (timesUpOverlay) timesUpOverlay.style.display = 'none';
-
-        startNotesSystem();
-
-        if (countdownInterval) clearInterval(countdownInterval);
-        countdownInterval = setInterval(function() {
-          timerSeconds--;
-          if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
-
-          if (timerSeconds <= 0) {
-            clearInterval(countdownInterval);
-            canPopNotes = false;
-            stopNotesSystem();
-            if (bannerTitle) bannerTitle.textContent = "GAME OVER!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You reached <strong style="color: #4ade80;">Level ' + gameLevel + '</strong> and popped ' + poppedNotesTotal + ' total notes!';
-            if (timesUpOverlay) timesUpOverlay.style.display = 'block';
-          }
-        }, 1000);
-      });
-    }
-
-    if (bubblesModeBtn) {
-      bubblesModeBtn.addEventListener('click', function() {
-        isBubblesMode = true;
-        isTimedMode = false;
-        isLevelsMode = false;
-        isLitMode = false;
-        canPopNotes = true;
-        poppedNotesTotal = 0;
-        if (popLabelDisplay) popLabelDisplay.textContent = 'BUBBLES';
-        if (popCountDisplay) popCountDisplay.textContent = '0';
-
-        if (countdownInterval) clearInterval(countdownInterval);
-        if (popModeBtn) popModeBtn.style.display = 'inline-block';
-        if (levelsModeBtn) levelsModeBtn.style.display = 'inline-block';
-        if (bubblesModeBtn) bubblesModeBtn.style.display = 'none';
-        if (litModeBtn) litModeBtn.style.display = 'inline-block';
-        if (calmModeBtn) calmModeBtn.style.display = 'inline-block';
-        if (timerBadge) timerBadge.style.display = 'none';
-        if (levelBadge) levelBadge.style.display = 'none';
-        if (timesUpOverlay) timesUpOverlay.style.display = 'none';
-
-        if (isPlaying) startNotesSystem();
-      });
-    }
-
-    if (litModeBtn) {
-      litModeBtn.addEventListener('click', function() {
-        isLitMode = true;
-        isTimedMode = false;
-        isLevelsMode = false;
-        isBubblesMode = false;
-        canPopNotes = true;
-        poppedNotesTotal = 0;
-        litWavePopped = 0;
-        timerSeconds = 10;
-
-        if (popLabelDisplay) popLabelDisplay.textContent = 'FIREWORKS';
-        if (popCountDisplay) popCountDisplay.textContent = '0';
-        if (timerCountDisplay) timerCountDisplay.textContent = '10s';
-
-        if (popModeBtn) popModeBtn.style.display = 'inline-block';
-        if (levelsModeBtn) levelsModeBtn.style.display = 'inline-block';
-        if (bubblesModeBtn) bubblesModeBtn.style.display = 'inline-block';
-        if (litModeBtn) litModeBtn.style.display = 'none';
-        if (calmModeBtn) calmModeBtn.style.display = 'inline-block';
-        if (timerBadge) timerBadge.style.display = 'inline-block';
-        if (levelBadge) levelBadge.style.display = 'none';
-        if (timesUpOverlay) timesUpOverlay.style.display = 'none';
-
-        startNotesSystem();
-
-        if (countdownInterval) clearInterval(countdownInterval);
-        countdownInterval = setInterval(function() {
-          timerSeconds--;
-          if (timerCountDisplay) timerCountDisplay.textContent = timerSeconds + 's';
-
-          if (timerSeconds <= 0) {
-            clearInterval(countdownInterval);
-            canPopNotes = false;
-            stopNotesSystem();
-            if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal + '</strong> fireworks!';
-            if (timesUpOverlay) timesUpOverlay.style.display = 'block';
-          }
-        }, 1000);
-      });
-    }
-
-    if (calmModeBtn) {
-      calmModeBtn.addEventListener('click', function() {
-        isTimedMode = false;
-        isLevelsMode = false;
-        isBubblesMode = false;
-        isLitMode = false;
-        canPopNotes = true;
-        poppedNotesTotal = 0;
-        if (popLabelDisplay) popLabelDisplay.textContent = 'NOTES';
-        if (popCountDisplay) popCountDisplay.textContent = '0';
-        
-        if (countdownInterval) clearInterval(countdownInterval);
-        if (popModeBtn) popModeBtn.style.display = 'inline-block';
-        if (levelsModeBtn) levelsModeBtn.style.display = 'inline-block';
-        if (bubblesModeBtn) bubblesModeBtn.style.display = 'inline-block';
-        if (litModeBtn) litModeBtn.style.display = 'inline-block';
-        if (calmModeBtn) calmModeBtn.style.display = 'none';
-        if (timerBadge) timerBadge.style.display = 'none';
-        if (levelBadge) levelBadge.style.display = 'none';
-        if (timesUpOverlay) timesUpOverlay.style.display = 'none';
-
-        if (isPlaying) startNotesSystem();
-      });
-    }
-
-    // Playlist Drawer & Scrollable Dual Playlists
+    // Playlist Drawer & Audio Player Engine
     const drawerToggle = document.getElementById('hbr-drawer-toggle');
     const drawer = document.getElementById('hbr-playlist-drawer');
     const drawerArrow = document.getElementById('hbr-drawer-arrow');
     const drawerList = document.getElementById('hbr-drawer-list');
-    const page1Btn = document.getElementById('hbr-page1-btn');
-    const page2Btn = document.getElementById('hbr-page2-btn');
-    const playQ1Btn = document.getElementById('hbr-play-q1-btn');
-    const playQ2Btn = document.getElementById('hbr-play-q2-btn');
-    const playT3Btn = document.getElementById('hbr-play-t3-btn');
-    const q1CountSpan = document.getElementById('hbr-q1-count');
-    const q2CountSpan = document.getElementById('hbr-q2-count');
-    const q1ItemsContainer = document.getElementById('hbr-q1-items');
-    const q2ItemsContainer = document.getElementById('hbr-q2-items');
-    const t3ItemsContainer = document.getElementById('hbr-t3-items');
-    const t3Circle1 = document.getElementById('hbr-t3-circle-1');
-    const t3Circle2 = document.getElementById('hbr-t3-circle-2');
-    const t3Circle3 = document.getElementById('hbr-t3-circle-3');
     let drawerOpen = false;
 
-    function updateT3Circles() {
-      const count = customTop3.length;
-      if (t3Circle1) t3Circle1.style.background = count >= 1 ? '#22c55e' : '#4b5563';
-      if (t3Circle2) t3Circle2.style.background = count >= 2 ? '#22c55e' : '#4b5563';
-      if (t3Circle3) t3Circle3.style.background = count >= 3 ? '#22c55e' : '#4b5563';
-      if (t3Circle1) t3Circle1.style.boxShadow = count >= 1 ? '0 0 6px #22c55e' : 'none';
-      if (t3Circle2) t3Circle2.style.boxShadow = count >= 2 ? '0 0 6px #22c55e' : 'none';
-      if (t3Circle3) t3Circle3.style.boxShadow = count >= 3 ? '0 0 6px #22c55e' : 'none';
-    }
-
-    if (page1Btn && page2Btn) {
-      page1Btn.addEventListener('click', function() {
-        currentDrawerPage = 1;
-        page1Btn.style.background = 'rgba(59,130,246,0.25)';
-        page1Btn.style.border = '1px solid rgba(59,130,246,0.5)';
-        page1Btn.style.color = '#93c5fd';
-        page2Btn.style.background = 'rgba(255,255,255,0.06)';
-        page2Btn.style.border = '1px solid rgba(255,255,255,0.15)';
-        page2Btn.style.color = '#9ca3af';
-        renderDrawerList();
-      });
-
-      page2Btn.addEventListener('click', function() {
-        currentDrawerPage = 2;
-        page2Btn.style.background = 'rgba(59,130,246,0.25)';
-        page2Btn.style.border = '1px solid rgba(59,130,246,0.5)';
-        page2Btn.style.color = '#93c5fd';
-        page1Btn.style.background = 'rgba(255,255,255,0.06)';
-        page1Btn.style.border = '1px solid rgba(255,255,255,0.15)';
-        page1Btn.style.color = '#9ca3af';
-        renderDrawerList();
-      });
-    }
-
     if (drawerToggle && drawer) {
-      drawerToggle.addEventListener('click', function() {
+      drawerToggle.addEventListener('click', () => {
         drawerOpen = !drawerOpen;
-        if (drawerOpen) {
-          drawer.style.maxHeight = '320px';
-          drawer.style.marginBottom = '16px';
-          drawer.style.borderWidth = '1px';
-          drawerArrow.textContent = '▲';
-        } else {
-          drawer.style.maxHeight = '0';
-          drawer.style.marginBottom = '0px';
-          drawer.style.borderWidth = '0px';
-          drawerArrow.textContent = '▼';
-        }
+        drawer.style.maxHeight = drawerOpen ? '320px' : '0';
+        drawer.style.marginBottom = drawerOpen ? '16px' : '0px';
+        drawer.style.borderWidth = drawerOpen ? '1px' : '0px';
+        drawerArrow.textContent = drawerOpen ? '▲' : '▼';
       });
     }
 
     function renderDrawerList() {
       if (!drawerList) return;
       drawerList.innerHTML = '';
-
-      let startIdx = (currentDrawerPage - 1) * tracksPerPage;
-      let pageTracks = currentMasterTracks.slice(startIdx, startIdx + tracksPerPage);
-
-      pageTracks.forEach((track, pageRelativeIdx) => {
-        let globalIdx = startIdx + pageRelativeIdx;
+      currentMasterTracks.forEach((track, idx) => {
         let row = document.createElement('div');
-        row.style.display = 'flex';
-        row.style.justifyContent = 'space-between';
-        row.style.alignItems = 'center';
-        row.style.padding = '6px 10px';
-        row.style.borderRadius = '6px';
-        row.style.fontSize = '12px';
-
-        let isCurrentlyPlaying = (activeQueueSource === null) && (globalIdx === currentTrackIndex);
-
-        if (isCurrentlyPlaying) {
-          row.style.background = 'rgba(59,130,246,0.15)';
-          row.style.color = '#3b82f6';
-          row.style.fontWeight = '600';
-          row.style.border = '1px solid rgba(59,130,246,0.3)';
-        } else {
-          row.style.background = 'rgba(255,255,255,0.03)';
-          row.style.color = '#d1d5db';
-          row.style.border = '1px solid transparent';
-        }
-
-        let titleSpan = document.createElement('span');
-        titleSpan.style.cursor = 'pointer';
-        titleSpan.style.flex = '1';
-        
-        let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 4px; vertical-align: middle;">E</span>' : '';
-        titleSpan.innerHTML = (globalIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentlyPlaying ? ' <span style="font-size: 9px; opacity: 0.7;">(PLAYING)</span>' : '');
-        
-        titleSpan.addEventListener('click', function() {
-          activeQueueSource = null;
-          activePlaylist = currentMasterTracks;
-          selectAndPlayTrack(globalIdx);
-        });
-
-        let btnContainer = document.createElement('div');
-        btnContainer.style.display = 'flex';
-        btnContainer.style.gap = '4px';
-
-        let ytMusicBtn = document.createElement('a');
-        ytMusicBtn.href = 'https://music.youtube.com/watch?v=' + track.id;
-        ytMusicBtn.target = '_blank';
-        ytMusicBtn.rel = 'noopener noreferrer';
-        ytMusicBtn.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
-        ytMusicBtn.style.border = '1px solid rgba(239,68,68,0.5)';
-        ytMusicBtn.style.borderRadius = '4px';
-        ytMusicBtn.style.color = '#ffffff';
-        ytMusicBtn.style.fontSize = '8px';
-        ytMusicBtn.style.fontWeight = '800';
-        ytMusicBtn.style.padding = '3px 5px';
-        ytMusicBtn.style.textDecoration = 'none';
-        ytMusicBtn.style.display = 'inline-flex';
-        ytMusicBtn.style.alignItems = 'center';
-        ytMusicBtn.style.gap = '2px';
-        ytMusicBtn.title = 'Open track on YouTube Music';
-        ytMusicBtn.innerHTML = '<span>YT</span><span style="font-size: 7px;">↗</span>';
-
-        ytMusicBtn.addEventListener('click', function(e) {
-          e.stopPropagation();
-        });
-
-        let inQ1 = customQueue1.some(t => t.id === track.id);
-        let inQ2 = customQueue2.some(t => t.id === track.id);
-        let inT3 = customTop3.some(t => t.id === track.id);
-
-        let add1Btn = document.createElement('button');
-        add1Btn.style.background = inQ1 ? 'rgba(37,99,235,0.3)' : 'rgba(255,255,255,0.08)';
-        add1Btn.style.border = inQ1 ? '1px solid rgba(37,99,235,0.5)' : '1px solid rgba(255,255,255,0.15)';
-        add1Btn.style.borderRadius = '4px';
-        add1Btn.style.color = inQ1 ? '#93c5fd' : '#9ca3af';
-        add1Btn.style.fontSize = '9px';
-        add1Btn.style.fontWeight = '700';
-        add1Btn.style.padding = '3px 6px';
-        add1Btn.style.cursor = 'pointer';
-        add1Btn.textContent = inQ1 ? '✓ P1' : '+ Playlist 1';
-
-        add1Btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          if (!inQ1) {
-            if (customQueue1.length < 7) {
-              customQueue1.push(track);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            } else {
-              alert('Playlist 1 is full (max 7 tracks)!');
-            }
-          } else {
-            customQueue1 = customQueue1.filter(t => t.id !== track.id);
-            savePlaylistsToStorage();
-            renderDrawerList();
-          }
-        });
-
-        let add2Btn = document.createElement('button');
-        add2Btn.style.background = inQ2 ? 'rgba(168,85,247,0.3)' : 'rgba(255,255,255,0.08)';
-        add2Btn.style.border = inQ2 ? '1px solid rgba(168,85,247,0.5)' : '1px solid rgba(168,85,247,0.15)';
-        add2Btn.style.borderRadius = '4px';
-        add2Btn.style.color = inQ2 ? '#d8b4fe' : '#9ca3af';
-        add2Btn.style.fontSize = '9px';
-        add2Btn.style.fontWeight = '700';
-        add2Btn.style.padding = '3px 6px';
-        add2Btn.style.cursor = 'pointer';
-        add2Btn.textContent = inQ2 ? '✓ P2' : '+ Playlist 2';
-
-        add2Btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          if (!inQ2) {
-            if (customQueue2.length < 7) {
-              customQueue2.push(track);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            } else {
-              alert('Playlist 2 is full (max 7 tracks)!');
-            }
-          } else {
-            customQueue2 = customQueue2.filter(t => t.id !== track.id);
-            savePlaylistsToStorage();
-            renderDrawerList();
-          }
-        });
-
-        let addT3Btn = document.createElement('button');
-        addT3Btn.style.background = inT3 ? 'rgba(34,197,94,0.3)' : 'rgba(255,255,255,0.08)';
-        addT3Btn.style.border = inT3 ? '1px solid rgba(34,197,94,0.5)' : '1px solid rgba(255,255,255,0.15)';
-        addT3Btn.style.borderRadius = '4px';
-        addT3Btn.style.color = inT3 ? '#4ade80' : '#9ca3af';
-        addT3Btn.style.fontSize = '9px';
-        addT3Btn.style.fontWeight = '700';
-        addT3Btn.style.padding = '3px 6px';
-        addT3Btn.style.cursor = 'pointer';
-        addT3Btn.textContent = inT3 ? '✓ T3' : '+ T3';
-
-        addT3Btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          if (!inT3) {
-            if (customTop3.length < 3) {
-              customTop3.push(track);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            } else {
-              alert('Top 3 is full! Remove a song from Top 3 first.');
-            }
-          } else {
-            customTop3 = customTop3.filter(t => t.id !== track.id);
-            savePlaylistsToStorage();
-            renderDrawerList();
-          }
-        });
-
-        btnContainer.appendChild(ytMusicBtn);
-        btnContainer.appendChild(add1Btn);
-        btnContainer.appendChild(add2Btn);
-        btnContainer.appendChild(addT3Btn);
-
-        row.appendChild(titleSpan);
-        row.appendChild(btnContainer);
+        row.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:6px 10px; border-radius:6px; font-size:12px; background:rgba(255,255,255,0.03); color:#d1d5db; cursor:pointer;';
+        row.innerHTML = '<span>' + (idx + 1) + '. ' + track.name + '</span>';
+        row.addEventListener('click', () => { selectAndPlayTrack(idx); });
         drawerList.appendChild(row);
       });
-
-      if (q1CountSpan) q1CountSpan.textContent = customQueue1.length;
-      if (q1ItemsContainer) {
-        q1ItemsContainer.innerHTML = '';
-        if (customQueue1.length === 0) {
-          q1ItemsContainer.innerHTML = '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 1" above!</div>';
-        } else {
-          customQueue1.forEach((track, cIdx) => {
-            let item = document.createElement('div');
-            item.style.display = 'flex';
-            item.style.justifyContent = 'space-between';
-            item.style.alignItems = 'center';
-            item.style.fontSize = '11px';
-            item.style.color = '#d1d5db';
-
-            let nameSpan = document.createElement('span');
-            let isCurrentQ1 = (activeQueueSource === 'q1') && (cIdx === currentTrackIndex);
-            let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 2px;">E</span>' : '';
-            nameSpan.style.cursor = 'pointer';
-            nameSpan.innerHTML = '★ ' + (cIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentQ1 ? ' <span style="font-size: 8px; color: #60a5fa;">(PLAYING)</span>' : '');
-            nameSpan.addEventListener('click', function() {
-              activeQueueSource = 'q1';
-              activePlaylist = customQueue1;
-              selectAndPlayTrack(cIdx);
-            });
-
-            let removeBtn = document.createElement('button');
-            removeBtn.style.background = 'transparent';
-            removeBtn.style.border = 'none';
-            removeBtn.style.color = '#ef4444';
-            removeBtn.style.fontSize = '12px';
-            removeBtn.style.cursor = 'pointer';
-            removeBtn.textContent = '✕';
-
-            removeBtn.addEventListener('click', function(e) {
-              e.stopPropagation();
-              customQueue1.splice(cIdx, 1);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            });
-
-            item.appendChild(nameSpan);
-            item.appendChild(removeBtn);
-            q1ItemsContainer.appendChild(item);
-          });
-        }
-      }
-
-      if (q2CountSpan) q2CountSpan.textContent = customQueue2.length;
-      if (q2ItemsContainer) {
-        q2ItemsContainer.innerHTML = '';
-        if (customQueue2.length === 0) {
-          q2ItemsContainer.innerHTML = '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 2" above!</div>';
-        } else {
-          customQueue2.forEach((track, cIdx) => {
-            let item = document.createElement('div');
-            item.style.display = 'flex';
-            item.style.justifyContent = 'space-between';
-            item.style.alignItems = 'center';
-            item.style.fontSize = '11px';
-            item.style.color = '#d1d5db';
-
-            let nameSpan = document.createElement('span');
-            let isCurrentQ2 = (activeQueueSource === 'q2') && (cIdx === currentTrackIndex);
-            let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 2px;">E</span>' : '';
-            nameSpan.style.cursor = 'pointer';
-            nameSpan.innerHTML = '★ ' + (cIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentQ2 ? ' <span style="font-size: 8px; color: #c084fc;">(PLAYING)</span>' : '');
-            nameSpan.addEventListener('click', function() {
-              activeQueueSource = 'q2';
-              activePlaylist = customQueue2;
-              selectAndPlayTrack(cIdx);
-            });
-
-            let removeBtn = document.createElement('button');
-            removeBtn.style.background = 'transparent';
-            removeBtn.style.border = 'none';
-            removeBtn.style.color = '#ef4444';
-            removeBtn.style.fontSize = '12px';
-            removeBtn.style.cursor = 'pointer';
-            removeBtn.textContent = '✕';
-
-            removeBtn.addEventListener('click', function(e) {
-              e.stopPropagation();
-              customQueue2.splice(cIdx, 1);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            });
-
-            item.appendChild(nameSpan);
-            item.appendChild(removeBtn);
-            q2ItemsContainer.appendChild(item);
-          });
-        }
-      }
-
-      updateT3Circles();
-      if (t3ItemsContainer) {
-        t3ItemsContainer.innerHTML = '';
-        if (customTop3.length === 0) {
-          t3ItemsContainer.innerHTML = '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected. Click "+ T3" next to any song!</div>';
-        } else {
-          customTop3.forEach((track, tIdx) => {
-            let item = document.createElement('div');
-            item.style.display = 'flex';
-            item.style.justifyContent = 'space-between';
-            item.style.alignItems = 'center';
-            item.style.fontSize = '11px';
-            item.style.color = '#d1d5db';
-
-            let nameSpan = document.createElement('span');
-            let isCurrentT3 = (activeQueueSource === 't3') && (tIdx === currentTrackIndex);
-            let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 2px;">E</span>' : '';
-            nameSpan.style.cursor = 'pointer';
-            nameSpan.innerHTML = '🟢 ' + (tIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentT3 ? ' <span style="font-size: 8px; color: #4ade80;">(PLAYING)</span>' : '');
-            nameSpan.addEventListener('click', function() {
-              activeQueueSource = 't3';
-              activePlaylist = customTop3;
-              selectAndPlayTrack(tIdx);
-            });
-
-            let removeBtn = document.createElement('button');
-            removeBtn.style.background = 'transparent';
-            removeBtn.style.border = 'none';
-            removeBtn.style.color = '#ef4444';
-            removeBtn.style.fontSize = '12px';
-            removeBtn.style.cursor = 'pointer';
-            removeBtn.textContent = '✕';
-
-            removeBtn.addEventListener('click', function(e) {
-              e.stopPropagation();
-              customTop3.splice(tIdx, 1);
-              savePlaylistsToStorage();
-              renderDrawerList();
-            });
-
-            item.appendChild(nameSpan);
-            item.appendChild(removeBtn);
-            t3ItemsContainer.appendChild(item);
-          });
-        }
-      }
     }
 
-    if (playQ1Btn) {
-      playQ1Btn.addEventListener('click', function() {
-        if (customQueue1.length > 0) {
-          activeQueueSource = 'q1';
-          activePlaylist = customQueue1;
-          selectAndPlayTrack(0);
-          if (drawer) {
-            drawer.style.maxHeight = '0';
-            drawer.style.marginBottom = '0px';
-            drawer.style.borderWidth = '0px';
-            drawerOpen = false;
-            if (drawerArrow) drawerArrow.textContent = '▼';
-          }
-        } else {
-          alert('Playlist 1 is empty! Add tracks before playing.');
-        }
-      });
-    }
-
-    if (playQ2Btn) {
-      playQ2Btn.addEventListener('click', function() {
-        if (customQueue2.length > 0) {
-          activeQueueSource = 'q2';
-          activePlaylist = customQueue2;
-          selectAndPlayTrack(0);
-          if (drawer) {
-            drawer.style.maxHeight = '0';
-            drawer.style.marginBottom = '0px';
-            drawer.style.borderWidth = '0px';
-            drawerOpen = false;
-            if (drawerArrow) drawerArrow.textContent = '▼';
-          }
-        } else {
-          alert('Playlist 2 is empty! Add tracks before playing.');
-        }
-      });
-    }
-
-    if (playT3Btn) {
-      playT3Btn.addEventListener('click', function() {
-        if (customTop3.length > 0) {
-          activeQueueSource = 't3';
-          activePlaylist = customTop3;
-          selectAndPlayTrack(0);
-          if (drawer) {
-            drawer.style.maxHeight = '0';
-            drawer.style.marginBottom = '0px';
-            drawer.style.borderWidth = '0px';
-            drawerOpen = false;
-            if (drawerArrow) drawerArrow.textContent = '▼';
-          }
-        } else {
-          alert('Top 3 is empty! Click "+ T3" on up to 3 songs to save your Top 3.');
-        }
-      });
-    }
-
-    // Audio & Deck Controls
     const toggleBtn = document.getElementById('hbr-toggle');
     const prevBtn = document.getElementById('hbr-prev');
     const nextBtn = document.getElementById('hbr-next');
@@ -2651,35 +1152,14 @@
     const tonearm = document.getElementById('hbr-tonearm');
     const trackTitleText = document.getElementById('hbr-track-title');
     const subtitleText = document.getElementById('hbr-subtitle');
-    const modeTitleText = document.getElementById('hbr-mode-title');
-    const labelSubText = document.getElementById('hbr-label-sub');
-    const modeBtn = document.getElementById('hbr-mode-btn');
-    const modeBtnText = document.getElementById('hbr-mode-btn-text');
-    const christmasBtn = document.getElementById('hbr-christmas-btn');
-    const disneyBtn = document.getElementById('hbr-disney-btn');
     const iframe = document.getElementById('hbr-engine');
-    const djContainer = document.getElementById('hbr-dj-container');
-    const label = document.getElementById('hbr-label');
-    const reflection = document.getElementById('hbr-reflection');
-    const artBg = document.getElementById('hbr-art-bg');
-    const ambientGlow = document.getElementById('hbr-ambient-glow');
-    const colorButtons = document.querySelectorAll('.hbr-color-btn');
-    
+
     let isPlaying = false;
     let currentTrackIndex = 0;
 
-    let isDragging = false;
-    let startAngle = 0;
-    let baseRotation = 0;
-    let currentRotation = 0;
-    let spinVelocity = 0;
-    let lastTime = Date.now();
-    let animFrameReq = null;
-
     function sendCommand(func, args) {
       if (iframe && iframe.contentWindow) {
-        let msg = JSON.stringify({ event: 'command', func: func, args: args !== undefined ? args : [] });
-        iframe.contentWindow.postMessage(msg, '*');
+        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: args || [] }), '*');
       }
     }
 
@@ -2687,258 +1167,36 @@
       currentTrackIndex = index;
       let track = activePlaylist[index];
       if (trackTitleText) trackTitleText.textContent = track.name;
-      
-      let coverUrl = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
-      if (artBg) {
-        artBg.style.backgroundImage = coverUrl;
-      }
-      if (recordArt) {
-        recordArt.style.backgroundImage = coverUrl;
-      }
-
-      renderDrawerList();
       sendCommand('loadVideoById', [track.id]);
       triggerPlayState();
-    }
-
-    if (modeBtn) {
-      modeBtn.addEventListener('click', function() {
-        isInstrumentalMode = !isInstrumentalMode;
-        activeQueueSource = null;
-        if (isInstrumentalMode) {
-          currentMasterTracks = masterInstrumentalTracks;
-          activePlaylist = masterInstrumentalTracks;
-          if (modeBtnText) modeBtnText.textContent = 'Full Tracks 🎵';
-          if (modeTitleText) modeTitleText.textContent = 'Honest Blue Instrumentals';
-          if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Instrumental Session';
-          if (labelSubText) labelSubText.textContent = 'INSTRUMENTAL';
-          if (modeBtn) modeBtn.style.background = 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)';
-        } else {
-          currentMasterTracks = masterBroadcastTracks;
-          activePlaylist = masterBroadcastTracks;
-          if (modeBtnText) modeBtnText.textContent = 'Instrumentals ⚙';
-          if (modeTitleText) modeTitleText.textContent = 'Honest Blue Radio';
-          if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Original Broadcast';
-          if (labelSubText) labelSubText.textContent = 'FULL DECK';
-          if (modeBtn) modeBtn.style.background = 'linear-gradient(135deg, #a855f7 0%, #7e22ce 100%)';
-        }
-        selectAndPlayTrack(0);
-      });
-    }
-
-    if (christmasBtn) {
-      christmasBtn.addEventListener('click', function() {
-        activeQueueSource = null;
-        currentMasterTracks = masterChristmasTracks;
-        activePlaylist = masterChristmasTracks;
-        if (modeTitleText) modeTitleText.textContent = 'Honest Blue Christmas';
-        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Festive Soundscapes';
-        if (labelSubText) labelSubText.textContent = 'HOLIDAY';
-        selectAndPlayTrack(0);
-      });
-    }
-
-    if (disneyBtn) {
-      disneyBtn.addEventListener('click', function() {
-        activeQueueSource = null;
-        currentMasterTracks = masterDisneyTracks;
-        activePlaylist = masterDisneyTracks;
-        if (modeTitleText) modeTitleText.textContent = 'Jay Draws Disney';
-        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Relaxing Disney Piano';
-        if (labelSubText) labelSubText.textContent = 'DISNEY PIANO';
-        selectAndPlayTrack(0);
-      });
-    }
-
-    colorButtons.forEach(btn => {
-      btn.addEventListener('click', function() {
-        let mainColor = this.getAttribute('data-color');
-        let darkColor = this.getAttribute('data-dark');
-        
-        if (label) {
-          label.style.background = 'radial-gradient(circle, ' + mainColor + ' 0%, ' + darkColor + ' 100%)';
-        }
-        if (reflection) {
-          reflection.style.background = 'linear-gradient(135deg, ' + mainColor + '22 0%, rgba(255,255,255,0) 40%, ' + mainColor + '22 100%)';
-        }
-        if (ambientGlow) {
-          ambientGlow.style.background = 'radial-gradient(circle, ' + mainColor + '22 0%, rgba(17,17,21,0.95) 70%)';
-        }
-        colorButtons.forEach(b => b.style.border = '2px solid transparent');
-        this.style.border = '2px solid #ffffff';
-      });
-    });
-
-    function startNativeSpin() {
-      if (record && isPlaying && !isDragging) {
-        record.classList.add('hbr-spinning-native');
-      }
-    }
-
-    function stopNativeSpin() {
-      if (record) {
-        record.classList.remove('hbr-spinning-native');
-      }
     }
 
     function triggerPlayState() {
       isPlaying = true;
       if (tonearm) tonearm.style.transform = 'rotate(0deg)';
-      startNativeSpin();
-      startNotesSystem();
-      if (toggleBtn) {
-        toggleBtn.innerHTML = '❚❚';
-        toggleBtn.style.background = '#ef4444';
-      }
+      if (record) record.classList.add('hbr-spinning-native');
+      if (toggleBtn) { toggleBtn.innerHTML = '❚❚'; toggleBtn.style.background = '#ef4444'; }
     }
 
-    window.addEventListener('message', function(event) {
-      try {
-        let data = JSON.parse(event.data);
-        if (data.event === 'infoDelivery' && data.info && data.info.playerState === 0) {
-          let nextIndex = (currentTrackIndex + 1) % activePlaylist.length;
-          selectAndPlayTrack(nextIndex);
-        }
-      } catch (e) {}
-    });
-
-    setInterval(function() {
-      if (isPlaying && iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({ event: 'listening' }), '*');
-      }
-    }, 1000);
-
     if (toggleBtn) {
-      toggleBtn.addEventListener('click', function() {
+      toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
           sendCommand('playVideo');
         } else {
           isPlaying = false;
           if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
-          stopNativeSpin();
-          stopNotesSystem();
-          if (countdownInterval) clearInterval(countdownInterval);
-          if (animFrameReq) cancelAnimationFrame(animFrameReq);
-          
-          toggleBtn.innerHTML = '▶';
-          toggleBtn.style.background = '#3b82f6';
+          if (record) record.classList.remove('hbr-spinning-native');
+          if (toggleBtn) { toggleBtn.innerHTML = '▶'; toggleBtn.style.background = '#3b82f6'; }
           sendCommand('pauseVideo');
         }
       });
     }
 
-    if (nextBtn) {
-      nextBtn.addEventListener('click', function() {
-        let newIndex = (currentTrackIndex + 1) % activePlaylist.length;
-        selectAndPlayTrack(newIndex);
-      });
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', function() {
-        let newIndex = (currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length;
-        selectAndPlayTrack(newIndex);
-      });
-    }
+    if (nextBtn) nextBtn.addEventListener('click', () => selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length));
+    if (prevBtn) prevBtn.addEventListener('click', () => selectAndPlayTrack((currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length));
 
     renderDrawerList();
-
-    function getAngle(e, rect) {
-      let clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      let clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      let centerX = rect.left + rect.width / 2;
-      let centerY = rect.top + rect.height / 2;
-      return Math.atan2(clientY - centerY, clientX - centerX) * (180 / Math.PI);
-    }
-
-    function getCurrentRotationAngle(el) {
-      let st = window.getComputedStyle(el, null);
-      let tr = st.getPropertyValue("transform");
-      if (tr === "none" || !tr) return 0;
-      let values = tr.split('(')[1].split(')')[0].split(',');
-      let a = values[0];
-      let b = values[1];
-      let angle = Math.round(Math.atan2(b, a) * (180 / Math.PI));
-      return (angle < 0) ? angle + 360 : angle;
-    }
-
-    function manualInertiaLoop() {
-      if (!isDragging) {
-        spinVelocity *= 0.95;
-        currentRotation += spinVelocity;
-        
-        if (record) {
-          record.style.transform = 'rotate(' + currentRotation + 'deg)';
-        }
-
-        if (Math.abs(spinVelocity) < 0.2) {
-          if (isPlaying) startNativeSpin();
-          return;
-        }
-      }
-      animFrameReq = requestAnimationFrame(manualInertiaLoop);
-    }
-
-    if (djContainer) {
-      const grabStart = function(e) {
-        if (!isPlaying) return;
-        
-        let rect = djContainer.getBoundingClientRect();
-        currentRotation = getCurrentRotationAngle(record);
-        stopNativeSpin();
-        
-        if (record) {
-          record.style.transform = 'rotate(' + currentRotation + 'deg)';
-        }
-
-        isDragging = true;
-        djContainer.style.cursor = 'grabbing';
-        startAngle = getAngle(e, rect);
-        baseRotation = currentRotation;
-        spinVelocity = 0;
-        lastTime = Date.now();
-        
-        if (e.type === 'touchstart') e.preventDefault();
-      };
-
-      const grabMove = function(e) {
-        if (!isDragging || !isPlaying) return;
-
-        let rect = djContainer.getBoundingClientRect();
-        let currentAngle = getAngle(e, rect);
-        let angleDiff = currentAngle - startAngle;
-        let newRotation = baseRotation + angleDiff;
-        let now = Date.now();
-        let dt = now - lastTime;
-
-        if (dt > 0) {
-          spinVelocity = (newRotation - currentRotation) / dt * 16.6;
-        }
-
-        currentRotation = newRotation;
-        lastTime = now;
-
-        if (record) {
-          record.style.transform = 'rotate(' + currentRotation + 'deg)';
-        }
-      };
-
-      const grabEnd = function(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        djContainer.style.cursor = 'grab';
-        animFrameReq = requestAnimationFrame(manualInertiaLoop);
-      };
-
-      djContainer.addEventListener('mousedown', grabStart);
-      window.addEventListener('mousemove', grabMove);
-      window.addEventListener('mouseup', grabEnd);
-
-      djContainer.addEventListener('touchstart', grabStart, {passive: false});
-      window.addEventListener('touchmove', grabMove, {passive: false});
-      window.addEventListener('touchend', grabEnd);
-    }
 
   })();
 </script>
