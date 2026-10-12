@@ -387,6 +387,11 @@
           </div>
         </div>
 
+        <!-- MANUAL CLEAR BANKED NOTES BUTTON -->
+        <div style="margin-bottom: 8px;">
+          <button id="hbr-store-clear-notes-btn" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; border-radius: 6px; font-size: 9px; font-weight: 800; padding: 5px 10px; cursor: pointer; width: 100%;">🗑️ RESET / CLEAR BANKED NOTES TO 0</button>
+        </div>
+
         <!-- Store Event Alert Box & Interactive Shoplifter Catch Button -->
         <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
 
@@ -907,7 +912,7 @@
       return count;
     }
 
-    // BULLETPROOF PERSISTENT SAVE ENGINE
+    // BULLETPROOF PERSISTENT SAVE ENGINE (AUTO-CLIMB DISABLED)
     function saveEverything() {
       try {
         const masterSave = {
@@ -985,20 +990,8 @@
           userProfileData.mantraDate = todayStr;
         }
 
-        let nowTime = Date.now();
-        if (lastSessionTimestamp > 0 && nowTime > lastSessionTimestamp) {
-          let elapsedSeconds = Math.floor((nowTime - lastSessionTimestamp) / 1000);
-          let totalStoresOwned = 0;
-          Object.values(userOwnedStores).forEach(val => totalStoresOwned += (val || 0));
-          
-          let notesPerSec = Math.max(1, totalStoresOwned * 2); 
-          let accumulatedOfflineNotes = elapsedSeconds * notesPerSec;
-          
-          if (accumulatedOfflineNotes > 0) {
-            bankedNotesTotal += accumulatedOfflineNotes;
-          }
-        }
-        lastSessionTimestamp = nowTime;
+        // Automatic/offline note climbing is completely disabled per user preference.
+        lastSessionTimestamp = Date.now();
         saveEverything();
 
       } catch (e) {
@@ -1465,6 +1458,20 @@
     const tabStoresBtn = document.getElementById('hbr-tab-stores-btn');
     const tabMoviesBtn = document.getElementById('hbr-tab-movies-btn');
     const tabCharsBtn = document.getElementById('hbr-tab-chars-btn');
+    const storeClearNotesBtn = document.getElementById('hbr-store-clear-notes-btn');
+
+    if (storeClearNotesBtn) {
+      storeClearNotesBtn.addEventListener('click', function() {
+        if (confirm("Are you sure you want to clear all banked notes to 0?")) {
+          bankedNotesTotal = 0;
+          saveEverything();
+          renderStoreList();
+          const bankedCountDisplay = document.getElementById('hbr-banked-count');
+          if (bankedCountDisplay) bankedCountDisplay.textContent = '0';
+          alert('Banked notes cleared to 0!');
+        }
+      });
+    }
 
     let shoplifterPending = null;
     let shoplifterTimerInterval = null;
