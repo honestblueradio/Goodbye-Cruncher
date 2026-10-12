@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.4 FULL BUILD) -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.5 FULL BUILD) -->
 <!-- OVER 3,000 LINES OF EMBEDDED STYLES, ENGINES, STORES & GAME MECHANICS -->
 <!-- ====================================================================== -->
 
@@ -27,6 +27,7 @@
   #hbr-store-overlay::-webkit-scrollbar,
   #hbr-profile-modal::-webkit-scrollbar,
   #hbr-mantra-modal::-webkit-scrollbar,
+  #hbr-art-modal::-webkit-scrollbar,
   #hbr-main-app-card::-webkit-scrollbar {
     width: 6px;
   }
@@ -35,6 +36,7 @@
   #hbr-store-overlay::-webkit-scrollbar-track,
   #hbr-profile-modal::-webkit-scrollbar-track,
   #hbr-mantra-modal::-webkit-scrollbar-track,
+  #hbr-art-modal::-webkit-scrollbar-track,
   #hbr-main-app-card::-webkit-scrollbar-track {
     background: rgba(0,0,0,0.2);
   }
@@ -43,6 +45,7 @@
   #hbr-store-overlay::-webkit-scrollbar-thumb,
   #hbr-profile-modal::-webkit-scrollbar-thumb,
   #hbr-mantra-modal::-webkit-scrollbar-thumb,
+  #hbr-art-modal::-webkit-scrollbar-thumb,
   #hbr-main-app-card::-webkit-scrollbar-thumb {
     background: #374151;
     border-radius: 4px;
@@ -81,6 +84,16 @@
   }
   .hbr-spinning-native {
     animation: hbrNaturalSpin 2.2s linear infinite !important;
+  }
+
+  @keyframes hbrCoverFlipSpin {
+    0% { transform: scale(0.3) rotate(-180deg); opacity: 0; filter: brightness(2) blur(8px); }
+    60% { transform: scale(1.08) rotate(10deg); opacity: 1; filter: brightness(1.2) blur(0px); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1) blur(0px); }
+  }
+
+  .hbr-cover-spin-forward {
+    animation: hbrCoverFlipSpin 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
   }
 
   @keyframes hbrGoldRingShine {
@@ -201,7 +214,6 @@
     filter: drop-shadow(0 0 6px #f97316);
   }
 
-  /* Extended structural code blocks generated to exceed 3,000 lines of robust architecture */
   .hbr-theme-dark-obsidian { background: #0b0b0f !important; color: #f3f4f6 !important; }
   .hbr-theme-neon-cyan { border-color: #06b6d4 !important; box-shadow: 0 0 25px rgba(6,182,212,0.35) !important; }
   .hbr-theme-amber-glow { border-color: #f59e0b !important; box-shadow: 0 0 25px rgba(245,158,11,0.35) !important; }
@@ -486,12 +498,22 @@
       <button id="hbr-dog-toggle-btn" style="background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.5); border-radius: 12px; padding: 4px 12px; font-size: 10px; font-weight: 800; color: #4ade80; cursor: pointer; transition: all 0.2s ease;">🐕 ACTIVE</button>
     </div>
 
-    <!-- Vinyl Color Picker Bar -->
-    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px;"><span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700; margin-right: 4px;">Vinyl Color:</span><button class="hbr-color-btn" data-color="#3b82f6" data-dark="#1d4ed8" style="background: #3b82f6; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #ffffff; cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 0 6px rgba(59,130,246,0.6);" title="Classic Blue"></button><button class="hbr-color-btn" data-color="#a855f7" data-dark="#7e22ce" style="background: #a855f7; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Neon Purple"></button><button class="hbr-color-btn" data-color="#22c55e" data-dark="#15803d" style="background: #22c55e; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Emerald Green"></button><button class="hbr-color-btn" data-color="#f97316" data-dark="#c2410c" style="background: #f97316; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Sunset Orange"></button><button class="hbr-color-btn" data-color="#ec4899" data-dark="#be185d" style="background: #ec4899; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Hot Pink"></button></div>
+    <!-- Vinyl Color Picker Bar & See Cover Art Button -->
+    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+      <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700; margin-right: 2px;">Vinyl:</span>
+      <button class="hbr-color-btn" data-color="#3b82f6" data-dark="#1d4ed8" style="background: #3b82f6; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #ffffff; cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 0 6px rgba(59,130,246,0.6);" title="Classic Blue"></button>
+      <button class="hbr-color-btn" data-color="#a855f7" data-dark="#7e22ce" style="background: #a855f7; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Neon Purple"></button>
+      <button class="hbr-color-btn" data-color="#22c55e" data-dark="#15803d" style="background: #22c55e; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Emerald Green"></button>
+      <button class="hbr-color-btn" data-color="#f97316" data-dark="#c2410c" style="background: #f97316; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Sunset Orange"></button>
+      <button class="hbr-color-btn" data-color="#ec4899" data-dark="#be185d" style="background: #ec4899; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Hot Pink"></button>
+      
+      <!-- SEE COVER ART BUTTON -->
+      <button id="hbr-see-cover-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease; margin-left: 4px;">🖼️ SEE COVER ART</button>
+    </div>
 
     <!-- Track Meta Display -->
     <div style="text-align: center; margin-bottom: 20px;">
-      <div id="hbr-track-title" style="font-size: 16px; font-weight: 700; color: #f3f4f6; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Everybody Wants To Be Rich</div>
+      <div id="hbr-track-title" style="font-size: 16px; font-weight: 700; color: #f3f4f6; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pocketful of Rain</div>
       <div id="hbr-subtitle" style="font-size: 12px; color: #6b7280;">Honest Blue Radio &bull; Continuous Play Enabled</div>
     </div>
 
@@ -540,6 +562,31 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- COVER ART GALLERY & SPINNING SHOWCASE MODAL -->
+<div id="hbr-art-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.95); backdrop-filter: blur(12px); z-index: 300; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center;">
+  <div style="background: #171720; border: 1px solid #3b82f6; border-radius: 16px; padding: 20px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.9); box-sizing: border-box; text-align: center;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 14px;">
+      <span style="font-size: 12px; font-weight: 800; color: #60a5fa; letter-spacing: 0.5px;">🖼️ COVER ART GALLERY &amp; SPIN</span>
+      <button id="hbr-close-art-modal" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
+    </div>
+
+    <p style="font-size: 10px; color: #d1d5db; line-height: 1.4; margin-bottom: 14px;">
+      Click any track below to spin its YouTube cover art forward onto your turntable deck and switch playing track instantly!
+    </p>
+
+    <!-- Interactive Cover Art List -->
+    <div id="hbr-art-gallery-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; text-align: left;">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <div style="text-align: right;">
+      <button id="hbr-art-modal-done-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">DONE</button>
+    </div>
+
   </div>
 </div>
 
@@ -835,20 +882,20 @@
 
     if (appCard) {
       appCard.addEventListener('click', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-install-modal')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-install-modal')) {
           return;
         }
         handleCardTap(e);
       });
       appCard.addEventListener('touchstart', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-install-modal')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-install-modal')) {
           return;
         }
         handleCardTap(e);
       }, {passive: true});
     }
 
-    // Master Broadcast Tracks (Includes Track 12: Pocketful of Rain / lCrOsTj9QhY)
+    // Master Broadcast Tracks (With Track 12 updated to Pocketful of Rain / lCrOsTj9QhY)
     const masterBroadcastTracks = [
       { id: 'WHzTume00O8', name: 'Track One' },
       { id: '4eU3OZFhuHs', name: 'Track Two' },
@@ -983,7 +1030,7 @@
       return count;
     }
 
-    // BULLETPROOF PERSISTENT SAVE ENGINE (AUTO-CLIMB DISABLED)
+    // BULLETPROOF PERSISTENT SAVE ENGINE
     function saveEverything() {
       try {
         const masterSave = {
@@ -2061,6 +2108,91 @@
       });
     }
 
+    // Cover Art Gallery Modal & Spinning Showcase Engine
+    const seeCoverBtn = document.getElementById('hbr-see-cover-btn');
+    const artModal = document.getElementById('hbr-art-modal');
+    const closeArtModalBtn = document.getElementById('hbr-close-art-modal');
+    const artModalDoneBtn = document.getElementById('hbr-art-modal-done-btn');
+    const artGalleryList = document.getElementById('hbr-art-gallery-list');
+
+    function renderArtGallery() {
+      if (!artGalleryList) return;
+      artGalleryList.innerHTML = '';
+
+      currentMasterTracks.forEach((track, idx) => {
+        let item = document.createElement('div');
+        item.style.display = 'flex';
+        item.style.alignItems = 'center';
+        item.style.gap = '10px';
+        item.style.background = 'rgba(255, 255, 255, 0.04)';
+        item.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+        item.style.borderRadius = '8px';
+        item.style.padding = '6px 8px';
+        item.style.cursor = 'pointer';
+        item.style.transition = 'all 0.2s ease';
+
+        let thumb = document.createElement('div');
+        thumb.style.width = '36px';
+        thumb.style.height = '36px';
+        thumb.style.borderRadius = '6px';
+        thumb.style.backgroundImage = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
+        thumb.style.backgroundSize = 'cover';
+        thumb.style.backgroundPosition = 'center';
+        thumb.style.flexShrink = '0';
+        thumb.style.border = '1px solid rgba(255,255,255,0.2)';
+
+        let info = document.createElement('div');
+        info.style.flex = '1';
+        info.style.fontSize = '11px';
+        info.style.fontWeight = '700';
+        info.style.color = '#fff';
+        info.innerHTML = (idx + 1) + '. ' + track.name + '<br><span style="font-size: 8px; color: #60a5fa; font-weight: normal;">Click to spin cover forward 🖼️</span>';
+
+        item.appendChild(thumb);
+        item.appendChild(info);
+
+        item.addEventListener('click', function() {
+          autoBankUnsavedNotes();
+          activeQueueSource = null;
+          activePlaylist = currentMasterTracks;
+          selectAndPlayTrack(idx);
+
+          if (artModal) artModal.style.display = 'none';
+
+          // Trigger spin forward animation on record art
+          if (recordArt) {
+            recordArt.classList.remove('hbr-cover-spin-forward');
+            void recordArt.offsetWidth; // Force reflow
+            recordArt.classList.add('hbr-cover-spin-forward');
+            setTimeout(() => {
+              recordArt.classList.remove('hbr-cover-spin-forward');
+            }, 550);
+          }
+        });
+
+        artGalleryList.appendChild(item);
+      });
+    }
+
+    if (seeCoverBtn && artModal) {
+      seeCoverBtn.addEventListener('click', function() {
+        renderArtGallery();
+        artModal.style.display = 'flex';
+      });
+    }
+
+    if (closeArtModalBtn && artModal) {
+      closeArtModalBtn.addEventListener('click', function() {
+        artModal.style.display = 'none';
+      });
+    }
+
+    if (artModalDoneBtn && artModal) {
+      artModalDoneBtn.addEventListener('click', function() {
+        artModal.style.display = 'none';
+      });
+    }
+
     // Automatic Eastern Time Fireworks & Interactive Heart Filling Challenge Engine
     const canvas = document.getElementById('hbr-fireworks-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
@@ -2997,7 +3129,7 @@
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
     let isPlaying = false;
-    let currentTrackIndex = 0;
+    let currentTrackIndex = 11; // Default to Pocketful of Rain (index 11)
     let ytPlayer = null;
     let isDragging = false;
     let startAngle = 0;
@@ -3018,7 +3150,7 @@
       ytPlayer = new YT.Player('hbr-yt-player', {
         height: '100',
         width: '100',
-        videoId: activePlaylist[0].id,
+        videoId: activePlaylist[currentTrackIndex].id,
         playerVars: {
           'autoplay': 0,
           'controls': 0,
@@ -3034,7 +3166,13 @@
     };
 
     function onPlayerReady(event) {
-      // Player is ready
+      // Initialize with Pocketful of Rain loaded
+      let track = activePlaylist[currentTrackIndex];
+      if (trackTitleText) trackTitleText.textContent = track.name;
+      checkPurpleRainEffect(track);
+      let coverUrl = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
+      if (artBg) artBg.style.backgroundImage = coverUrl;
+      if (recordArt) recordArt.style.backgroundImage = coverUrl;
     }
 
     function onPlayerStateChange(event) {
