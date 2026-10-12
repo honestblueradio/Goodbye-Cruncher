@@ -45,7 +45,7 @@
   <!-- Content Container -->
   <div style="position: relative; z-index: 2;">
     <!-- Header with Track Drawer Toggle, Fullscreen Toggle & Dynamic Listener Counter -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
       <div>
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
           <span id="hbr-mode-title" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #3b82f6; font-weight: 700; display: block;">Honest Blue Radio</span>
@@ -67,7 +67,7 @@
       <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;"><span style="color: #4ade80; font-size: 12px;">👤</span><span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span></div>
     </div>
 
-    <!-- User Top Profile Banner (Appears Up Top When Profile Created) -->
+    <!-- User Top Profile Banner (Restored to Front Page) -->
     <div id="hbr-top-profile-banner" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; align-items: center; gap: 10px;">
       <div id="hbr-top-banner-avatar-frame" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
         <img id="hbr-top-banner-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
@@ -751,7 +751,7 @@
       return count;
     }
 
-    // BULLETPROOF PERSISTENT SAVE ENGINE (Merges old keys & unified save)
+    // BULLETPROOF PERSISTENT SAVE ENGINE
     function saveEverything() {
       try {
         const masterSave = {
@@ -769,7 +769,6 @@
         };
         localStorage.setItem('hbr_persistent_save_v1', JSON.stringify(masterSave));
         
-        // Also update individual keys for backwards compatibility
         localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString());
         localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2));
         localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores));
@@ -798,7 +797,6 @@
           loaded = true;
         }
 
-        // Fallback / recovery from legacy individual keys if master save wasn't found
         const savedBanked = localStorage.getItem('hbr_banked_notes');
         const savedCash = localStorage.getItem('hbr_store_cash');
         const savedStores = localStorage.getItem('hbr_owned_stores');
@@ -820,7 +818,7 @@
         if (savedT3) customTop3 = JSON.parse(savedT3);
 
         if (!loaded && savedBanked === null && savedCash === null && !savedProfile) {
-          bankedNotesTotal = 0; // Start at 0 so new players aren't given random starting notes
+          bankedNotesTotal = 0;
         }
       } catch (e) {
         bankedNotesTotal = 0;
