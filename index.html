@@ -799,13 +799,15 @@
       { id: 'kbtoys', name: 'KB Toys', label: 'KB Toys', baseMin: 80, baseMax: 220, color: '#ef4444', icon: '🧸' }
     ];
 
+    // Movie Catalog with Batman Added & Rotten Tomatoes Links Included
     const movieCatalog = [
-      { id: 'titanic', name: 'Titanic', rtScore: 88, basePrice: 40 },
-      { id: 'godfather', name: 'The Godfather', rtScore: 98, basePrice: 60 },
-      { id: 'jurassic', name: 'Jurassic Park', rtScore: 92, basePrice: 50 },
-      { id: 'mario93', name: 'Super Mario Bros (1993)', rtScore: 28, basePrice: 20 },
-      { id: 'batmanrobin', name: 'Batman & Robin', rtScore: 12, basePrice: 15 },
-      { id: 'gigli', name: 'Gigli', rtScore: 6, basePrice: 10 }
+      { id: 'batman89', name: 'Batman (1989)', rtScore: 77, rtUrl: 'https://www.rottentomatoes.com/m/batman', basePrice: 45 },
+      { id: 'titanic', name: 'Titanic', rtScore: 88, rtUrl: 'https://www.rottentomatoes.com/m/titanic', basePrice: 40 },
+      { id: 'godfather', name: 'The Godfather', rtScore: 98, rtUrl: 'https://www.rottentomatoes.com/m/the_godfather', basePrice: 60 },
+      { id: 'jurassic', name: 'Jurassic Park', rtScore: 92, rtUrl: 'https://www.rottentomatoes.com/m/jurassic_park', basePrice: 50 },
+      { id: 'mario93', name: 'Super Mario Bros (1993)', rtScore: 28, rtUrl: 'https://www.rottentomatoes.com/m/super_mario_bros', basePrice: 20 },
+      { id: 'batmanrobin', name: 'Batman & Robin', rtScore: 12, rtUrl: 'https://www.rottentomatoes.com/m/batman_and_robin', basePrice: 15 },
+      { id: 'gigli', name: 'Gigli', rtScore: 6, rtUrl: 'https://www.rottentomatoes.com/m/gigli', basePrice: 10 }
     ];
 
     const characterCatalog = [
@@ -913,7 +915,6 @@
         let nowTime = Date.now();
         if (lastSessionTimestamp > 0 && nowTime > lastSessionTimestamp) {
           let elapsedSeconds = Math.floor((nowTime - lastSessionTimestamp) / 1000);
-          // Accumulate notes offline based on total stores or baseline activity (e.g. 1 note every 10 seconds per store owned, or at least base passive accumulation)
           let totalStoresOwned = 0;
           Object.values(userOwnedStores).forEach(val => totalStoresOwned += (val || 0));
           
@@ -1358,6 +1359,7 @@
         let totalMovies = getTotalMovieCount();
         let netPerSec = 0.00;
 
+        // Payout Calculations (Scaled by format: VHS = base, DVD = 2x, Blu-ray = 3.5x)
         movieCatalog.forEach(movie => {
           let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
           let totalCopies = (inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0);
@@ -1375,6 +1377,7 @@
           triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on a overdue tape!');
         }
 
+        // Unrewound tapes penalties are strictly applied to VHS format
         if (unrewoundTapesCount > 0) {
           netPerSec -= (unrewoundTapesCount * 0.10);
         }
@@ -1440,10 +1443,16 @@
           }
         }
 
-        if (totalMovies > 0 && Math.random() < 0.08) {
+        // Unrewound VHS Tape Trigger - Strictly checks if VHS copies are owned!
+        let hasVhsCopies = false;
+        Object.keys(userOwnedMovies).forEach(mId => {
+          if (userOwnedMovies[mId] && userOwnedMovies[mId].vhs > 0) hasVhsCopies = true;
+        });
+
+        if (hasVhsCopies && Math.random() < 0.08) {
           unrewoundTapesCount++;
           saveEverything();
-          triggerStoreAlert('📼 <strong>BE KIND, REWIND!</strong> A customer returned an unrewound VHS tape! It drains $0.10/sec until rewound.');
+          triggerStoreAlert('📼 <strong>BE KIND, REWIND!</strong> A customer returned an unrewound VHS tape! It drains $0.10/sec until rewound. (DVDs & Blu-rays never require rewinding!)');
           renderStoreList();
         }
       }
@@ -1663,7 +1672,7 @@
           let rText = document.createElement('div');
           rText.style.fontSize = '10px';
           rText.style.color = '#fdba74';
-          rText.innerHTML = '📼 <strong>' + unrewoundTapesCount.toLocaleString() + ' Unrewound Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Drains $0.10/sec until rewound.</span>';
+          rText.innerHTML = '📼 <strong>' + unrewoundTapesCount.toLocaleString() + ' Unrewound VHS Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Drains $0.10/sec until rewound.</span>';
 
           let rewindBtn = document.createElement('button');
           rewindBtn.style.background = 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)';
@@ -1704,11 +1713,12 @@
         statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
         statusBox.style.textAlign = 'center';
         statusBox.innerHTML = totalMovies > 0 
-          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString() + '. Earns rental cash + occasional late fees!'
+          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString() + '. Higher formats = higher payouts (DVD & Blu-ray never need rewinding)!'
           : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash & late fees!';
         
         storeItemsList.appendChild(statusBox);
 
+        // Render Movie Catalog with Rotten Tomatoes Score Link and Format Options
         movieCatalog.forEach(movie => {
           let inv = userOwnedMovies[movie.id] || { vhs: 0, dvd: 0, bluray: 0 };
           let totalMovieCopies = (inv.vhs || 0) + (inv.dvd || 0) + (inv.bluray || 0);
@@ -1733,9 +1743,14 @@
           titleDiv.style.fontWeight = '800';
           titleDiv.style.color = '#ffffff';
 
+          let rtLink = movie.rtUrl 
+            ? '<a href="' + movie.rtUrl + '" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">'
+            : '';
+          let rtClose = movie.rtUrl ? '↗</a>' : '';
+
           let rtBadge = isGoodMovie 
-            ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍅 ' + movie.rtScore + '% (PROFIT)</span>'
-            : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍿 ' + movie.rtScore + '% (DRAINS CASH)</span>';
+            ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + rtLink + '🍅 ' + movie.rtScore + '% (PROFIT)' + rtClose + '</span>'
+            : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + rtLink + '🍿 ' + movie.rtScore + '% (DRAINS CASH)' + rtClose + '</span>';
           
           let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies.toLocaleString() + '</span>' : '';
 
@@ -1748,10 +1763,11 @@
           formatsRow.style.display = 'flex';
           formatsRow.style.gap = '4px';
 
+          // VHS (1x cost, baseline payout), DVD (1.8x cost, 2.3x payout), Blu-ray (2.8x cost, 4.3x payout)
           const formats = [
-            { key: 'vhs', label: 'VHS', costMult: 1 },
-            { key: 'dvd', label: 'DVD', costMult: 1.8 },
-            { key: 'bluray', label: 'Blu-ray', costMult: 2.8 }
+            { key: 'vhs', label: 'VHS 📼', costMult: 1, desc: 'Base Payout' },
+            { key: 'dvd', label: 'DVD 📀', costMult: 1.8, desc: 'Higher Payout' },
+            { key: 'bluray', label: 'Blu-ray 💿', costMult: 2.8, desc: 'Max Payout' }
           ];
 
           formats.forEach(fmt => {
