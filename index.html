@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.2 FULL BUILD) -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.3 FULL BUILD) -->
 <!-- OVER 3,000 LINES OF EMBEDDED STYLES, ENGINES, STORES & GAME MECHANICS -->
 <!-- ====================================================================== -->
 
@@ -137,6 +137,25 @@
     100% { transform: scale(2.2); opacity: 0; }
   }
 
+  /* Purple Rain Drop Animation */
+  @keyframes hbrPurpleRainFall {
+    0% { transform: translateY(-20px); opacity: 0; }
+    15% { opacity: 0.9; }
+    85% { opacity: 0.9; }
+    100% { transform: translateY(340px); opacity: 0; }
+  }
+
+  .hbr-purple-raindrop {
+    position: absolute;
+    width: 2px;
+    height: 16px;
+    background: linear-gradient(to bottom, rgba(168,85,247,0), #c084fc, #9333ea);
+    border-radius: 2px;
+    pointer-events: none;
+    animation: hbrPurpleRainFall 1.4s linear infinite;
+    z-index: 13;
+  }
+
   .hbr-note-active {
     position: absolute;
     color: #60a5fa;
@@ -211,6 +230,9 @@
   
   <!-- FLOATING HEART STREAM LAYER -->
   <div id="hbr-reaction-stream-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; overflow: hidden;"></div>
+
+  <!-- PURPLE RAIN OVERLAY CONTAINER -->
+  <div id="hbr-purple-rain-layer" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 12; overflow: hidden; background: radial-gradient(circle at center, rgba(147, 51, 234, 0.18) 0%, rgba(11, 11, 15, 0.4) 100%);"></div>
 
   <!-- RUNNING & NAPPING DOG COMPANION LAYER -->
   <div id="hbr-dog-companion" style="display: none; position: absolute; bottom: 18px; left: 20px; font-size: 26px; z-index: 85; pointer-events: none; user-select: none; transition: transform 0.4s ease, bottom 0.4s ease; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8);">🐕</div>
@@ -634,6 +656,7 @@
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
+    const purpleRainLayer = document.getElementById('hbr-purple-rain-layer');
 
     // Fullscreen Toggle Logic
     const fullscreenToggleBtn = document.getElementById('hbr-fullscreen-toggle');
@@ -829,7 +852,7 @@
       }, {passive: true});
     }
 
-    // Master Broadcast Tracks
+    // Master Broadcast Tracks (Includes Track 12: Purple Rain)
     const masterBroadcastTracks = [
       { id: 'WHzTume00O8', name: 'Track One' },
       { id: '4eU3OZFhuHs', name: 'Track Two' },
@@ -841,7 +864,8 @@
       { id: 'av859AL6HOs', name: "Let's Put A Smile On That Face", explicit: true },
       { id: '50xdKObdFMI', name: 'Then I Woke Up' },
       { id: 'xbp4fkDo5Jc', name: 'Hooka La' },
-      { id: 'Sp8_ymmFVGY', name: 'Everybody Wants To Be Rich' }
+      { id: 'Sp8_ymmFVGY', name: 'Everybody Wants To Be Rich' },
+      { id: 'LCrOsTj9QhY', name: 'Purple Rain' }
     ];
 
     const masterInstrumentalTracks = [
@@ -3019,11 +3043,34 @@
       }
     }
 
+    function checkPurpleRainEffect(track) {
+      if (!purpleRainLayer) return;
+      if (track && track.id === 'LCrOsTj9QhY') {
+        purpleRainLayer.style.display = 'block';
+        if (purpleRainLayer.children.length === 0) {
+          for (let i = 0; i < 28; i++) {
+            let drop = document.createElement('div');
+            drop.className = 'hbr-purple-raindrop';
+            drop.style.left = (Math.random() * 100) + '%';
+            drop.style.top = (Math.random() * -50) + 'px';
+            drop.style.animationDuration = (Math.random() * 0.8 + 0.9).toFixed(1) + 's';
+            drop.style.animationDelay = (Math.random() * 1.5) + 's';
+            purpleRainLayer.appendChild(drop);
+          }
+        }
+      } else {
+        purpleRainLayer.style.display = 'none';
+        purpleRainLayer.innerHTML = '';
+      }
+    }
+
     function selectAndPlayTrack(index) {
       currentTrackIndex = index;
       let track = activePlaylist[index];
       if (trackTitleText) trackTitleText.textContent = track.name;
       
+      checkPurpleRainEffect(track);
+
       let coverUrl = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
       if (artBg) artBg.style.backgroundImage = coverUrl;
       if (recordArt) recordArt.style.backgroundImage = coverUrl;
@@ -3205,4 +3252,3 @@
 
   })();
 </script>
-
