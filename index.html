@@ -1,4 +1,4 @@
-<div style="background: #111115; border-radius: 20px; padding: 24px 24px 24px 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden;" id="hbr-main-app-card">
+<div style="background: #111115; border-radius: 20px; padding: 24px 24px 24px 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden; transition: all 0.3s ease;" id="hbr-main-app-card">
   
   <!-- FLOATING HEART STREAM LAYER -->
   <div id="hbr-reaction-stream-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; overflow: hidden;"></div>
@@ -44,7 +44,7 @@
   
   <!-- Content Container -->
   <div style="position: relative; z-index: 2;">
-    <!-- Header with Track Drawer Toggle, Pulsing On Air Status & Dynamic Listener Counter -->
+    <!-- Header with Track Drawer Toggle, Fullscreen Toggle & Dynamic Listener Counter -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
       <div>
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
@@ -57,9 +57,10 @@
           </a>
         </div>
 
-        <div style="display: flex; gap: 6px;">
-          <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS &amp; PLAYLISTS</button>
-          <button id="hbr-install-btn" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL APP</button>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS</button>
+          <button id="hbr-fullscreen-toggle" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">⛶ FULLSCREEN</button>
+          <button id="hbr-install-btn" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); border-radius: 6px; color: #4ade80; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL</button>
         </div>
       </div>
       <!-- Animated Live Listener Badge with Green Person Icon -->
@@ -356,22 +357,39 @@
 
 <!-- Scrollbar & Animation Styles -->
 <style type="text/css">
+  .hbr-fullscreen-mode {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+    z-index: 9999 !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+    padding: 20px !important;
+  }
+
   #hbr-playlist-drawer::-webkit-scrollbar,
   #hbr-bio-panel::-webkit-scrollbar,
   #hbr-store-overlay::-webkit-scrollbar,
-  #hbr-profile-modal::-webkit-scrollbar {
+  #hbr-profile-modal::-webkit-scrollbar,
+  #hbr-main-app-card::-webkit-scrollbar {
     width: 6px;
   }
   #hbr-playlist-drawer::-webkit-scrollbar-track,
   #hbr-bio-panel::-webkit-scrollbar-track,
   #hbr-store-overlay::-webkit-scrollbar-track,
-  #hbr-profile-modal::-webkit-scrollbar-track {
+  #hbr-profile-modal::-webkit-scrollbar-track,
+  #hbr-main-app-card::-webkit-scrollbar-track {
     background: rgba(0,0,0,0.2);
   }
   #hbr-playlist-drawer::-webkit-scrollbar-thumb,
   #hbr-bio-panel::-webkit-scrollbar-thumb,
   #hbr-store-overlay::-webkit-scrollbar-thumb,
-  #hbr-profile-modal::-webkit-scrollbar-thumb {
+  #hbr-profile-modal::-webkit-scrollbar-thumb,
+  #hbr-main-app-card::-webkit-scrollbar-thumb {
     background: #374151;
     border-radius: 4px;
   }
@@ -507,6 +525,29 @@
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
+
+    // Fullscreen Toggle Logic
+    const fullscreenToggleBtn = document.getElementById('hbr-fullscreen-toggle');
+    let isFullscreenMode = false;
+
+    if (fullscreenToggleBtn && appCard) {
+      fullscreenToggleBtn.addEventListener('click', function() {
+        isFullscreenMode = !isFullscreenMode;
+        if (isFullscreenMode) {
+          appCard.classList.add('hbr-fullscreen-mode');
+          fullscreenToggleBtn.textContent = '✕ EXIT FULLSCREEN';
+          fullscreenToggleBtn.style.background = 'rgba(239, 68, 68, 0.15)';
+          fullscreenToggleBtn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+          fullscreenToggleBtn.style.color = '#fca5a5';
+        } else {
+          appCard.classList.remove('hbr-fullscreen-mode');
+          fullscreenToggleBtn.textContent = '⛶ FULLSCREEN';
+          fullscreenToggleBtn.style.background = 'rgba(59, 130, 246, 0.15)';
+          fullscreenToggleBtn.style.borderColor = 'rgba(59, 130, 246, 0.4)';
+          fullscreenToggleBtn.style.color = '#60a5fa';
+        }
+      });
+    }
 
     // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync
     let globalSocket = null;
