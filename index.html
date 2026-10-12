@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.5 FULL BUILD) -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.6 FULL BUILD) -->
 <!-- OVER 3,000 LINES OF EMBEDDED STYLES, ENGINES, STORES & GAME MECHANICS -->
 <!-- ====================================================================== -->
 
@@ -28,6 +28,7 @@
   #hbr-profile-modal::-webkit-scrollbar,
   #hbr-mantra-modal::-webkit-scrollbar,
   #hbr-art-modal::-webkit-scrollbar,
+  #hbr-art-lightbox-modal::-webkit-scrollbar,
   #hbr-main-app-card::-webkit-scrollbar {
     width: 6px;
   }
@@ -37,6 +38,7 @@
   #hbr-profile-modal::-webkit-scrollbar-track,
   #hbr-mantra-modal::-webkit-scrollbar-track,
   #hbr-art-modal::-webkit-scrollbar-track,
+  #hbr-art-lightbox-modal::-webkit-scrollbar-track,
   #hbr-main-app-card::-webkit-scrollbar-track {
     background: rgba(0,0,0,0.2);
   }
@@ -46,6 +48,7 @@
   #hbr-profile-modal::-webkit-scrollbar-thumb,
   #hbr-mantra-modal::-webkit-scrollbar-thumb,
   #hbr-art-modal::-webkit-scrollbar-thumb,
+  #hbr-art-lightbox-modal::-webkit-scrollbar-thumb,
   #hbr-main-app-card::-webkit-scrollbar-thumb {
     background: #374151;
     border-radius: 4px;
@@ -94,6 +97,16 @@
 
   .hbr-cover-spin-forward {
     animation: hbrCoverFlipSpin 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+  }
+
+  @keyframes hbrLightboxZoomIn {
+    0% { transform: scale(0.4) rotate(-10deg); opacity: 0; filter: blur(12px); }
+    70% { transform: scale(1.05) rotate(2deg); opacity: 1; filter: blur(0px); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0px); }
+  }
+
+  .hbr-lightbox-zoom-anim {
+    animation: hbrLightboxZoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
   }
 
   @keyframes hbrGoldRingShine {
@@ -565,17 +578,17 @@
   </div>
 </div>
 
-<!-- COVER ART GALLERY & SPINNING SHOWCASE MODAL -->
+<!-- COVER ART GALLERY & SPIN/ENLARGE MODAL -->
 <div id="hbr-art-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.95); backdrop-filter: blur(12px); z-index: 300; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center;">
   <div style="background: #171720; border: 1px solid #3b82f6; border-radius: 16px; padding: 20px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.9); box-sizing: border-box; text-align: center;">
     
     <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 14px;">
-      <span style="font-size: 12px; font-weight: 800; color: #60a5fa; letter-spacing: 0.5px;">🖼️ COVER ART GALLERY &amp; SPIN</span>
+      <span style="font-size: 12px; font-weight: 800; color: #60a5fa; letter-spacing: 0.5px;">🖼️ COVER ART GALLERY</span>
       <button id="hbr-close-art-modal" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
     </div>
 
     <p style="font-size: 10px; color: #d1d5db; line-height: 1.4; margin-bottom: 14px;">
-      Click any track below to spin its YouTube cover art forward onto your turntable deck and switch playing track instantly!
+      Select <strong style="color: #4ade80;">ENLARGE</strong> to zoom in and view cover art up close, or <strong style="color: #60a5fa;">PLAY</strong> to spin the art forward onto your turntable!
     </p>
 
     <!-- Interactive Cover Art List -->
@@ -585,6 +598,26 @@
 
     <div style="text-align: right;">
       <button id="hbr-art-modal-done-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">DONE</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- COVER ART LIGHTBOX ZOOM-IN MODAL (FOR VIEWING) -->
+<div id="hbr-art-lightbox-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.96); backdrop-filter: blur(14px); z-index: 400; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center; flex-direction: column;">
+  <div style="background: #171720; border: 2px solid #3b82f6; border-radius: 16px; padding: 16px; width: 100%; max-width: 340px; box-shadow: 0 16px 50px rgba(0,0,0,0.9); box-sizing: border-box; text-align: center; position: relative;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <span id="hbr-lightbox-title" style="font-size: 12px; font-weight: 800; color: #60a5fa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 270px;">Cover Art</span>
+      <button id="hbr-close-lightbox-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
+    </div>
+
+    <!-- Enlarged Zoomed Cover Art Image Container -->
+    <div id="hbr-lightbox-img-box" style="width: 260px; height: 260px; margin: 0 auto 14px auto; border-radius: 12px; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 8px 30px rgba(0,0,0,0.8);">&nbsp;</div>
+
+    <div style="display: flex; gap: 8px;">
+      <button id="hbr-lightbox-play-btn" style="flex: 1; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 8px; color: #fff; font-size: 10px; font-weight: 800; padding: 8px; cursor: pointer; box-shadow: 0 2px 8px rgba(59,130,246,0.4);">▶ PLAY THIS TRACK</button>
+      <button id="hbr-lightbox-close-btn" style="background: #374151; border: none; border-radius: 8px; color: #fff; font-size: 10px; font-weight: 800; padding: 8px 12px; cursor: pointer;">CLOSE</button>
     </div>
 
   </div>
@@ -882,13 +915,13 @@
 
     if (appCard) {
       appCard.addEventListener('click', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-install-modal')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal')) {
           return;
         }
         handleCardTap(e);
       });
       appCard.addEventListener('touchstart', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-install-modal')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal')) {
           return;
         }
         handleCardTap(e);
@@ -2108,12 +2141,20 @@
       });
     }
 
-    // Cover Art Gallery Modal & Spinning Showcase Engine
+    // Cover Art Gallery Modal & Enlarge / Play Engine
     const seeCoverBtn = document.getElementById('hbr-see-cover-btn');
     const artModal = document.getElementById('hbr-art-modal');
     const closeArtModalBtn = document.getElementById('hbr-close-art-modal');
     const artModalDoneBtn = document.getElementById('hbr-art-modal-done-btn');
     const artGalleryList = document.getElementById('hbr-art-gallery-list');
+
+    const artLightboxModal = document.getElementById('hbr-art-lightbox-modal');
+    const lightboxTitle = document.getElementById('hbr-lightbox-title');
+    const lightboxImgBox = document.getElementById('hbr-lightbox-img-box');
+    const lightboxPlayBtn = document.getElementById('hbr-lightbox-play-btn');
+    const lightboxCloseBtn = document.getElementById('hbr-lightbox-close-btn');
+    const closeLightboxBtn = document.getElementById('hbr-close-lightbox-btn');
+    let lightboxSelectedTrackIdx = 0;
 
     function renderArtGallery() {
       if (!artGalleryList) return;
@@ -2123,13 +2164,11 @@
         let item = document.createElement('div');
         item.style.display = 'flex';
         item.style.alignItems = 'center';
-        item.style.gap = '10px';
+        item.style.gap = '8px';
         item.style.background = 'rgba(255, 255, 255, 0.04)';
         item.style.border = '1px solid rgba(255, 255, 255, 0.1)';
         item.style.borderRadius = '8px';
         item.style.padding = '6px 8px';
-        item.style.cursor = 'pointer';
-        item.style.transition = 'all 0.2s ease';
 
         let thumb = document.createElement('div');
         thumb.style.width = '36px';
@@ -2140,26 +2179,64 @@
         thumb.style.backgroundPosition = 'center';
         thumb.style.flexShrink = '0';
         thumb.style.border = '1px solid rgba(255,255,255,0.2)';
+        thumb.style.cursor = 'pointer';
+
+        thumb.addEventListener('click', function() {
+          openLightboxForTrack(idx);
+        });
 
         let info = document.createElement('div');
         info.style.flex = '1';
         info.style.fontSize = '11px';
         info.style.fontWeight = '700';
         info.style.color = '#fff';
-        info.innerHTML = (idx + 1) + '. ' + track.name + '<br><span style="font-size: 8px; color: #60a5fa; font-weight: normal;">Click to spin cover forward 🖼️</span>';
+        info.style.overflow = 'hidden';
+        info.style.textOverflow = 'ellipsis';
+        info.style.whiteSpace = 'nowrap';
+        info.textContent = (idx + 1) + '. ' + track.name;
 
-        item.appendChild(thumb);
-        item.appendChild(info);
+        let btnContainer = document.createElement('div');
+        btnContainer.style.display = 'flex';
+        btnContainer.style.gap = '4px';
+        btnContainer.style.flexShrink = '0';
 
-        item.addEventListener('click', function() {
+        // Enlarge Button
+        let enlargeBtn = document.createElement('button');
+        enlargeBtn.style.background = 'rgba(34, 197, 94, 0.2)';
+        enlargeBtn.style.border = '1px solid rgba(34, 197, 94, 0.5)';
+        enlargeBtn.style.borderRadius = '5px';
+        enlargeBtn.style.color = '#4ade80';
+        enlargeBtn.style.fontSize = '8px';
+        enlargeBtn.style.fontWeight = '800';
+        enlargeBtn.style.padding = '4px 8px';
+        enlargeBtn.style.cursor = 'pointer';
+        enlargeBtn.textContent = '🔍 ENLARGE';
+
+        enlargeBtn.addEventListener('click', function() {
+          openLightboxForTrack(idx);
+        });
+
+        // Play Button (Spin forward & play song)
+        let playBtn = document.createElement('button');
+        playBtn.style.background = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)';
+        playBtn.style.border = 'none';
+        playBtn.style.borderRadius = '5px';
+        playBtn.style.color = '#fff';
+        playBtn.style.fontSize = '8px';
+        playBtn.style.fontWeight = '800';
+        playBtn.style.padding = '4px 8px';
+        playBtn.style.cursor = 'pointer';
+        playBtn.textContent = '▶ PLAY';
+
+        playBtn.addEventListener('click', function() {
           autoBankUnsavedNotes();
           activeQueueSource = null;
           activePlaylist = currentMasterTracks;
           selectAndPlayTrack(idx);
 
           if (artModal) artModal.style.display = 'none';
+          if (artLightboxModal) artLightboxModal.style.display = 'none';
 
-          // Trigger spin forward animation on record art
           if (recordArt) {
             recordArt.classList.remove('hbr-cover-spin-forward');
             void recordArt.offsetWidth; // Force reflow
@@ -2170,8 +2247,56 @@
           }
         });
 
+        btnContainer.appendChild(enlargeBtn);
+        btnContainer.appendChild(playBtn);
+
+        item.appendChild(thumb);
+        item.appendChild(info);
+        item.appendChild(btnContainer);
         artGalleryList.appendChild(item);
       });
+    }
+
+    function openLightboxForTrack(idx) {
+      lightboxSelectedTrackIdx = idx;
+      let track = currentMasterTracks[idx];
+      if (lightboxTitle) lightboxTitle.textContent = (idx + 1) + '. ' + track.name;
+      if (lightboxImgBox) {
+        lightboxImgBox.style.backgroundImage = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
+        lightboxImgBox.classList.remove('hbr-lightbox-zoom-anim');
+        void lightboxImgBox.offsetWidth;
+        lightboxImgBox.classList.add('hbr-lightbox-zoom-anim');
+      }
+      if (artLightboxModal) artLightboxModal.style.display = 'flex';
+    }
+
+    if (lightboxPlayBtn) {
+      lightboxPlayBtn.addEventListener('click', function() {
+        let idx = lightboxSelectedTrackIdx;
+        autoBankUnsavedNotes();
+        activeQueueSource = null;
+        activePlaylist = currentMasterTracks;
+        selectAndPlayTrack(idx);
+
+        if (artLightboxModal) artLightboxModal.style.display = 'none';
+        if (artModal) artModal.style.display = 'none';
+
+        if (recordArt) {
+          recordArt.classList.remove('hbr-cover-spin-forward');
+          void recordArt.offsetWidth;
+          recordArt.classList.add('hbr-cover-spin-forward');
+          setTimeout(() => {
+            recordArt.classList.remove('hbr-cover-spin-forward');
+          }, 550);
+        }
+      });
+    }
+
+    if (lightboxCloseBtn && artLightboxModal) {
+      lightboxCloseBtn.addEventListener('click', () => { artLightboxModal.style.display = 'none'; });
+    }
+    if (closeLightboxBtn && artLightboxModal) {
+      closeLightboxBtn.addEventListener('click', () => { artLightboxModal.style.display = 'none'; });
     }
 
     if (seeCoverBtn && artModal) {
