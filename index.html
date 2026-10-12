@@ -348,6 +348,17 @@
       </div>
     </div>
 
+    <!-- BULLETPROOF BACKUP TOOLS (EXPORT / IMPORT) -->
+    <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; padding: 10px; margin-bottom: 14px;">
+      <div style="font-size: 10px; font-weight: 800; color: #60a5fa; text-transform: uppercase; margin-bottom: 4px;">💾 Bulletproof Save Backup</div>
+      <div style="font-size: 9px; color: #9ca3af; margin-bottom: 8px;">Export your save data as a backup file so you never lose your cash or progress!</div>
+      <div style="display: flex; gap: 6px;">
+        <button id="hbr-export-save-btn" style="flex: 1; background: #2563eb; border: none; border-radius: 6px; color: #fff; font-size: 9px; font-weight: 800; padding: 6px; cursor: pointer;">📤 EXPORT SAVE</button>
+        <button id="hbr-import-save-btn" style="flex: 1; background: #4b5563; border: none; border-radius: 6px; color: #fff; font-size: 9px; font-weight: 800; padding: 6px; cursor: pointer;">📥 IMPORT SAVE</button>
+        <input type="file" id="hbr-import-file-input" accept=".json" style="display: none;">
+      </div>
+    </div>
+
     <div style="text-align: right;">
       <button id="hbr-save-profile-btn" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">💾 SAVE PROFILE</button>
     </div>
@@ -687,6 +698,15 @@
     let userOwnedMovies = {};
     let userOwnedCharacters = { mollydog: 0 };
 
+    let userProfileData = {
+      name: '',
+      avatarUrl: '',
+      badge: 'Excellent Keyboardist',
+      themeColor: '#3b82f6',
+      themeBg: 'rgba(59, 130, 246, 0.12)',
+      themeBadgeBg: 'rgba(59, 130, 246, 0.25)'
+    };
+
     const storeCatalog = [
       { id: 'blockbuster', name: 'Blockbuster Video', baseMin: 50, baseMax: 150, color: '#3b82f6', icon: '📼' },
       { id: 'toysrus', name: 'Toys "R" Us', baseMin: 120, baseMax: 300, color: '#ec4899', icon: '🦒' },
@@ -731,65 +751,83 @@
       return count;
     }
 
-    function loadSavedPlaylists() {
+    // BULLETPROOF PERSISTENT SAVE ENGINE (Merges old keys & unified save)
+    function saveEverything() {
       try {
-        const savedQ1 = localStorage.getItem('hbr_custom_queue_1');
-        const savedQ2 = localStorage.getItem('hbr_custom_queue_2');
-        const savedT3 = localStorage.getItem('hbr_custom_top3');
+        const masterSave = {
+          bankedNotes: bankedNotesTotal,
+          storeCash: storeCashTotal,
+          unrewoundTapes: unrewoundTapesCount,
+          ownedStores: userOwnedStores,
+          ownedMovies: userOwnedMovies,
+          ownedChars: userOwnedCharacters,
+          userProfile: userProfileData,
+          queue1: customQueue1,
+          queue2: customQueue2,
+          top3: customTop3,
+          dogActive: localStorage.getItem('hbr_dog_active') !== 'false'
+        };
+        localStorage.setItem('hbr_persistent_save_v1', JSON.stringify(masterSave));
+        
+        // Also update individual keys for backwards compatibility
+        localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString());
+        localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2));
+        localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores));
+        localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
+        localStorage.setItem('hbr_owned_chars', JSON.stringify(userOwnedCharacters));
+        localStorage.setItem('hbr_user_profile', JSON.stringify(userProfileData));
+      } catch(e) {}
+    }
+
+    function loadEverything() {
+      try {
+        let loaded = false;
+        const masterJSON = localStorage.getItem('hbr_persistent_save_v1');
+        if (masterJSON) {
+          const master = JSON.parse(masterJSON);
+          if (master.bankedNotes !== undefined) bankedNotesTotal = master.bankedNotes;
+          if (master.storeCash !== undefined) storeCashTotal = master.storeCash;
+          if (master.unrewoundTapes !== undefined) unrewoundTapesCount = master.unrewoundTapes;
+          if (master.ownedStores) userOwnedStores = master.ownedStores;
+          if (master.ownedMovies) userOwnedMovies = master.ownedMovies;
+          if (master.ownedChars) userOwnedCharacters = master.ownedChars;
+          if (master.userProfile) userProfileData = master.userProfile;
+          if (master.queue1) customQueue1 = master.queue1;
+          if (master.queue2) customQueue2 = master.queue2;
+          if (master.top3) customTop3 = master.top3;
+          loaded = true;
+        }
+
+        // Fallback / recovery from legacy individual keys if master save wasn't found
         const savedBanked = localStorage.getItem('hbr_banked_notes');
         const savedCash = localStorage.getItem('hbr_store_cash');
         const savedStores = localStorage.getItem('hbr_owned_stores');
         const savedMovies = localStorage.getItem('hbr_owned_movies');
         const savedChars = localStorage.getItem('hbr_owned_chars');
-        const savedUnrewound = localStorage.getItem('hbr_unrewound_tapes');
+        const savedProfile = localStorage.getItem('hbr_user_profile');
+        const savedQ1 = localStorage.getItem('hbr_custom_queue_1');
+        const savedQ2 = localStorage.getItem('hbr_custom_queue_2');
+        const savedT3 = localStorage.getItem('hbr_custom_top3');
 
-        if (savedQ1) customQueue1 = JSON.parse(savedQ1);
-        if (savedQ2) customQueue2 = JSON.parse(savedQ2);
-        if (savedT3) customTop3 = JSON.parse(savedT3);
-        
-        if (savedBanked !== null) {
-          bankedNotesTotal = parseInt(savedBanked, 10) || 0;
-        } else {
-          bankedNotesTotal = 250;
-          saveBankedNotesToStorage();
-        }
-
-        if (bankedNotesTotal === 0 && (savedStores || savedMovies || savedChars || localStorage.getItem('hbr_user_profile'))) {
-          bankedNotesTotal = 250;
-          saveBankedNotesToStorage();
-        }
-
-        if (savedCash) storeCashTotal = parseFloat(savedCash) || 0.00;
+        if (savedBanked !== null) bankedNotesTotal = parseInt(savedBanked, 10) || 0;
+        if (savedCash !== null) storeCashTotal = parseFloat(savedCash) || 0.00;
         if (savedStores) userOwnedStores = Object.assign(userOwnedStores, JSON.parse(savedStores));
         if (savedMovies) userOwnedMovies = Object.assign(userOwnedMovies, JSON.parse(savedMovies));
         if (savedChars) userOwnedCharacters = Object.assign(userOwnedCharacters, JSON.parse(savedChars));
-        if (savedUnrewound) unrewoundTapesCount = parseInt(savedUnrewound, 10) || 0;
+        if (savedProfile) userProfileData = Object.assign(userProfileData, JSON.parse(savedProfile));
+        if (savedQ1) customQueue1 = JSON.parse(savedQ1);
+        if (savedQ2) customQueue2 = JSON.parse(savedQ2);
+        if (savedT3) customTop3 = JSON.parse(savedT3);
+
+        if (!loaded && savedBanked === null && savedCash === null && !savedProfile) {
+          bankedNotesTotal = 0; // Start at 0 so new players aren't given random starting notes
+        }
       } catch (e) {
-        bankedNotesTotal = 250;
+        bankedNotesTotal = 0;
       }
     }
 
-    function savePlaylistsToStorage() {
-      try {
-        localStorage.setItem('hbr_custom_queue_1', JSON.stringify(customQueue1));
-        localStorage.setItem('hbr_custom_queue_2', JSON.stringify(customQueue2));
-        localStorage.setItem('hbr_custom_top3', JSON.stringify(customTop3));
-      } catch (e) {}
-    }
-
-    function saveBankedNotesToStorage() { 
-      if (bankedNotesTotal < 0) bankedNotesTotal = 0;
-      localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString()); 
-    }
-    function saveCashToStorage() { localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2)); }
-    function saveOwnedStoresToStorage() { localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores)); }
-    function saveOwnedCharsToStorage() { localStorage.setItem('hbr_owned_chars', JSON.stringify(userOwnedCharacters)); }
-    function saveOwnedMoviesToStorage() {
-      localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
-      localStorage.setItem('hbr_unrewound_tapes', unrewoundTapesCount.toString());
-    }
-
-    loadSavedPlaylists();
+    loadEverything();
 
     // Dog Companion Animation & Toggle Engine
     const dogCompanion = document.getElementById('hbr-dog-companion');
@@ -870,36 +908,16 @@
     const profileColorsContainer = document.getElementById('hbr-profile-colors-container');
     const profileInventoryList = document.getElementById('hbr-profile-inventory-list');
 
+    const exportSaveBtn = document.getElementById('hbr-export-save-btn');
+    const importSaveBtn = document.getElementById('hbr-import-save-btn');
+    const importFileInput = document.getElementById('hbr-import-file-input');
+
     const topProfileBanner = document.getElementById('hbr-top-profile-banner');
     const topBannerImg = document.getElementById('hbr-top-banner-img');
     const topBannerFallback = document.getElementById('hbr-top-banner-fallback');
     const topBannerFrame = document.getElementById('hbr-top-banner-avatar-frame');
     const topBannerName = document.getElementById('hbr-top-banner-name');
     const topBannerBadge = document.getElementById('hbr-top-banner-badge');
-
-    let userProfileData = {
-      name: '',
-      avatarUrl: '',
-      badge: 'Excellent Keyboardist',
-      themeColor: '#3b82f6',
-      themeBg: 'rgba(59, 130, 246, 0.12)',
-      themeBadgeBg: 'rgba(59, 130, 246, 0.25)'
-    };
-
-    function loadProfileFromStorage() {
-      try {
-        const saved = localStorage.getItem('hbr_user_profile');
-        if (saved) userProfileData = Object.assign(userProfileData, JSON.parse(saved));
-      } catch(e) {}
-    }
-
-    function saveProfileToStorage() {
-      try {
-        localStorage.setItem('hbr_user_profile', JSON.stringify(userProfileData));
-      } catch(e) {}
-    }
-
-    loadProfileFromStorage();
 
     function updateTopProfileBanner() {
       if (!topProfileBanner) return;
@@ -1121,10 +1139,55 @@
         if (urlVal !== '') {
           userProfileData.avatarUrl = urlVal;
         }
-        saveProfileToStorage();
+        saveEverything();
         updateTopProfileBanner();
         updateProfileModalUI();
         if (profileModal) profileModal.style.display = 'none';
+      });
+    }
+
+    // Export / Import Backup Handlers
+    if (exportSaveBtn) {
+      exportSaveBtn.addEventListener('click', function() {
+        saveEverything();
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem('hbr_persistent_save_v1'));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", "HonestBlueRadio_SaveBackup.json");
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+      });
+    }
+
+    if (importSaveBtn && importFileInput) {
+      importSaveBtn.addEventListener('click', () => importFileInput.click());
+      importFileInput.addEventListener('change', function(e) {
+        let file = e.target.files[0];
+        if (file) {
+          let reader = new FileReader();
+          reader.onload = function(evt) {
+            try {
+              let parsed = JSON.parse(evt.target.result);
+              if (parsed && typeof parsed === 'object') {
+                localStorage.setItem('hbr_persistent_save_v1', JSON.stringify(parsed));
+                loadEverything();
+                updateTopProfileBanner();
+                updateProfileModalUI();
+                renderStoreList();
+                const bankedCountDisplay = document.getElementById('hbr-banked-count');
+                if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+                updateCashUI();
+                alert('🎉 Save backup imported successfully! Your cash, notes, and profile have been restored.');
+              } else {
+                alert('Invalid save file.');
+              }
+            } catch(err) {
+              alert('Error reading save file.');
+            }
+          };
+          reader.readAsText(file);
+        }
       });
     }
 
@@ -1163,6 +1226,8 @@
     }
 
     updateCashUI();
+    const initialBankedDisplay = document.getElementById('hbr-banked-count');
+    if (initialBankedDisplay) initialBankedDisplay.textContent = bankedNotesTotal.toLocaleString();
 
     setInterval(function() {
       let bCount = userOwnedStores.blockbuster;
@@ -1192,7 +1257,7 @@
         }
 
         storeCashTotal = Math.max(0, storeCashTotal + netPerSec);
-        saveCashToStorage();
+        saveEverything();
         updateCashUI();
 
         if (totalMovies > 0 && !shoplifterPending && Math.random() < 0.06) {
@@ -1240,7 +1305,7 @@
                   let stolenInv = userOwnedMovies[shoplifterPending.movieId];
                   if (stolenInv && stolenInv[shoplifterPending.format] > 0) {
                     stolenInv[shoplifterPending.format]--;
-                    saveOwnedMoviesToStorage();
+                    saveEverything();
                     triggerStoreAlert('🚨 <strong>SHOPLIFTER ESCAPED!</strong> They stole a <strong>' + shoplifterPending.format.toUpperCase() + '</strong> copy of ' + shoplifterPending.movieName + '!');
                   }
                   shoplifterPending = null;
@@ -1254,7 +1319,7 @@
 
         if (totalMovies > 0 && Math.random() < 0.08) {
           unrewoundTapesCount++;
-          saveOwnedMoviesToStorage();
+          saveEverything();
           triggerStoreAlert('📼 <strong>BE KIND, REWIND!</strong> A customer returned an unrewound VHS tape! It drains $0.10/sec until rewound.');
           renderStoreList();
         }
@@ -1273,7 +1338,7 @@
           
           let rewardCash = 2.50;
           storeCashTotal += rewardCash;
-          saveCashToStorage();
+          saveEverything();
           updateCashUI();
 
           triggerStoreAlert('🛑 <strong>SHOPLIFTER CAUGHT!</strong> You tackled the thief, saved your <strong>' + caughtFmt + '</strong> copy of ' + caughtMovie + ', and received a <strong>$' + rewardCash.toFixed(2) + '</strong> reward!');
@@ -1353,8 +1418,7 @@
               bankedNotesTotal -= priceData.price;
               userOwnedStores[store.id] = (userOwnedStores[store.id] || 0) + 1;
               
-              saveBankedNotesToStorage();
-              saveOwnedStoresToStorage();
+              saveEverything();
 
               const bankedCountDisplay = document.getElementById('hbr-banked-count');
               if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
@@ -1428,8 +1492,7 @@
               bankedNotesTotal -= char.price;
               userOwnedCharacters[char.id] = 1;
               
-              saveBankedNotesToStorage();
-              saveOwnedCharsToStorage();
+              saveEverything();
               updateDogUIState();
 
               const bankedCountDisplay = document.getElementById('hbr-banked-count');
@@ -1492,8 +1555,7 @@
             if (storeCashTotal >= cost) {
               storeCashTotal -= cost;
               unrewoundTapesCount = 0;
-              saveCashToStorage();
-              saveOwnedMoviesToStorage();
+              saveEverything();
               renderStoreList();
             } else {
               alert('Not enough cash to rewind tapes! Earn more cash or notes first.');
@@ -1593,8 +1655,7 @@
                 }
                 userOwnedMovies[movie.id][fmt.key] = (userOwnedMovies[movie.id][fmt.key] || 0) + 1;
 
-                saveBankedNotesToStorage();
-                saveOwnedMoviesToStorage();
+                saveEverything();
 
                 const bankedCountDisplay = document.getElementById('hbr-banked-count');
                 if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
@@ -1949,7 +2010,7 @@
         poppedNotesTotal = 0;
         if (popCountDisplay) popCountDisplay.textContent = '0';
         if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-        saveBankedNotesToStorage();
+        saveEverything();
       }
     }
 
@@ -2422,11 +2483,11 @@
         add1Btn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (!inQ1) {
-            if (customQueue1.length < 7) { customQueue1.push(track); savePlaylistsToStorage(); renderDrawerList(); }
+            if (customQueue1.length < 7) { customQueue1.push(track); saveEverything(); renderDrawerList(); }
             else alert('Playlist 1 is full (max 7 tracks)!');
           } else {
             customQueue1 = customQueue1.filter(t => t.id !== track.id);
-            savePlaylistsToStorage(); renderDrawerList();
+            saveEverything(); renderDrawerList();
           }
         });
 
@@ -2443,11 +2504,11 @@
         add2Btn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (!inQ2) {
-            if (customQueue2.length < 7) { customQueue2.push(track); savePlaylistsToStorage(); renderDrawerList(); }
+            if (customQueue2.length < 7) { customQueue2.push(track); saveEverything(); renderDrawerList(); }
             else alert('Playlist 2 is full (max 7 tracks)!');
           } else {
             customQueue2 = customQueue2.filter(t => t.id !== track.id);
-            savePlaylistsToStorage(); renderDrawerList();
+            saveEverything(); renderDrawerList();
           }
         });
 
@@ -2464,11 +2525,11 @@
         addT3Btn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (!inT3) {
-            if (customTop3.length < 3) { customTop3.push(track); savePlaylistsToStorage(); renderDrawerList(); }
+            if (customTop3.length < 3) { customTop3.push(track); saveEverything(); renderDrawerList(); }
             else alert('Top 3 is full! Remove a song from Top 3 first.');
           } else {
             customTop3 = customTop3.filter(t => t.id !== track.id);
-            savePlaylistsToStorage(); renderDrawerList();
+            saveEverything(); renderDrawerList();
           }
         });
 
@@ -2494,7 +2555,7 @@
           nameSpan.addEventListener('click', () => { autoBankUnsavedNotes(); activeQueueSource = 'q1'; activePlaylist = customQueue1; selectAndPlayTrack(cIdx); });
           let removeBtn = document.createElement('button');
           removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
-          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue1.splice(cIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
+          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue1.splice(cIdx, 1); saveEverything(); renderDrawerList(); });
           item.appendChild(nameSpan); item.appendChild(removeBtn);
           q1ItemsContainer.appendChild(item);
         });
@@ -2513,7 +2574,7 @@
           nameSpan.addEventListener('click', () => { autoBankUnsavedNotes(); activeQueueSource = 'q2'; activePlaylist = customQueue2; selectAndPlayTrack(cIdx); });
           let removeBtn = document.createElement('button');
           removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
-          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue2.splice(cIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
+          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue2.splice(cIdx, 1); saveEverything(); renderDrawerList(); });
           item.appendChild(nameSpan); item.appendChild(removeBtn);
           q2ItemsContainer.appendChild(item);
         });
@@ -2532,7 +2593,7 @@
           nameSpan.addEventListener('click', () => { autoBankUnsavedNotes(); activeQueueSource = 't3'; activePlaylist = customTop3; selectAndPlayTrack(tIdx); });
           let removeBtn = document.createElement('button');
           removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
-          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customTop3.splice(tIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
+          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customTop3.splice(tIdx, 1); saveEverything(); renderDrawerList(); });
           item.appendChild(nameSpan); item.appendChild(removeBtn);
           t3ItemsContainer.appendChild(item);
         });
