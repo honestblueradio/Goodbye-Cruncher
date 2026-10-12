@@ -59,7 +59,7 @@
 
         <div style="display: flex; gap: 6px; flex-wrap: wrap;">
           <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS</button>
-          <button id="hbr-fullscreen-toggle" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">⛶ FULLSCREEN</button>
+          <button id="hbr-fullscreen-toggle" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">⛶ POP OUT</button>
           <button id="hbr-install-btn" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); border-radius: 6px; color: #4ade80; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL</button>
         </div>
       </div>
@@ -365,10 +365,13 @@
     height: 100vh !important;
     max-width: none !important;
     border-radius: 0 !important;
-    z-index: 9999 !important;
+    z-index: 999999 !important;
     overflow-y: auto !important;
     box-sizing: border-box !important;
-    padding: 20px !important;
+    padding: 24px 16px !important;
+    background: #111115 !important;
+    box-shadow: none !important;
+    border: none !important;
   }
 
   #hbr-playlist-drawer::-webkit-scrollbar,
@@ -535,13 +538,15 @@
         isFullscreenMode = !isFullscreenMode;
         if (isFullscreenMode) {
           appCard.classList.add('hbr-fullscreen-mode');
-          fullscreenToggleBtn.textContent = '✕ EXIT FULLSCREEN';
+          document.body.style.overflow = 'hidden';
+          fullscreenToggleBtn.textContent = '✕ EXIT POP-OUT';
           fullscreenToggleBtn.style.background = 'rgba(239, 68, 68, 0.15)';
           fullscreenToggleBtn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
           fullscreenToggleBtn.style.color = '#fca5a5';
         } else {
           appCard.classList.remove('hbr-fullscreen-mode');
-          fullscreenToggleBtn.textContent = '⛶ FULLSCREEN';
+          document.body.style.overflow = '';
+          fullscreenToggleBtn.textContent = '⛶ POP OUT';
           fullscreenToggleBtn.style.background = 'rgba(59, 130, 246, 0.15)';
           fullscreenToggleBtn.style.borderColor = 'rgba(59, 130, 246, 0.4)';
           fullscreenToggleBtn.style.color = '#60a5fa';
