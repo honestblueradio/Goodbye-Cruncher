@@ -216,6 +216,11 @@
   <!-- Fireworks Overlay Canvas -->
   <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; z-index: 100; display: none;"></canvas>
 
+  <!-- Native PiP Audio Bypass Container -->
+  <div style="display: none;">
+    <video id="hbr-pip-video" playsinline x-webkit-airplay="allow" width="320" height="180"></video>
+  </div>
+
   <!-- PWA Installation Modal Overlay -->
   <div id="hbr-install-modal" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17,17,21,0.95); backdrop-filter: blur(8px); z-index: 150; padding: 20px; box-sizing: border-box; text-align: center; flex-direction: column; justify-content: center; align-items: center;">
     <div style="background: #1c1c28; border: 1px solid #3b82f6; border-radius: 16px; padding: 20px; max-width: 320px; box-shadow: 0 8px 32px rgba(0,0,0,0.8); text-align: left;">
@@ -244,7 +249,7 @@
   
   <!-- Content Container -->
   <div style="position: relative; z-index: 2;">
-    <!-- Header with Track Drawer Toggle, Fullscreen Toggle & Dynamic Listener Counter -->
+    <!-- Header with Track Drawer Toggle, Fullscreen Toggle, PiP Audio & Dynamic Listener Counter -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
       <div>
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
@@ -260,6 +265,7 @@
         <div style="display: flex; gap: 6px; flex-wrap: wrap;">
           <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS</button>
           <button id="hbr-fullscreen-toggle" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">⛶ POP OUT</button>
+          <button id="hbr-pip-toggle" style="background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.4); border-radius: 6px; color: #c084fc; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Pop out into floating window for background lock-screen audio">📺 PIP AUDIO</button>
           <button id="hbr-install-btn" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); border-radius: 6px; color: #4ade80; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL</button>
         </div>
       </div>
@@ -649,6 +655,49 @@
           fullscreenToggleBtn.style.borderColor = 'rgba(59, 130, 246, 0.4)';
           fullscreenToggleBtn.style.color = '#60a5fa';
         }
+      });
+    }
+
+    // Picture-in-Picture (PiP) Background Audio Bypass Logic
+    const pipToggleBtn = document.getElementById('hbr-pip-toggle');
+    const pipVideo = document.getElementById('hbr-pip-video');
+
+    if (pipToggleBtn && pipVideo) {
+      pipToggleBtn.addEventListener('click', async function() {
+        try {
+          if (!document.pictureInPictureEnabled) {
+            alert("Picture-in-Picture is not supported on this browser/device.");
+            return;
+          }
+
+          if (document.pictureInPictureElement) {
+            await document.exitPictureInPicture();
+            pipToggleBtn.textContent = '📺 PIP AUDIO';
+            pipToggleBtn.style.background = 'rgba(168,85,247,0.15)';
+            pipToggleBtn.style.borderColor = 'rgba(168,85,247,0.4)';
+            pipToggleBtn.style.color = '#c084fc';
+            return;
+          }
+
+          pipVideo.src = "https://www.w3schools.com/html/mov_bbb.mp4";
+          pipVideo.muted = false;
+          await pipVideo.play();
+          await pipVideo.requestPictureInPicture();
+
+          pipToggleBtn.textContent = '✕ CLOSE PIP';
+          pipToggleBtn.style.background = 'rgba(239, 68, 68, 0.15)';
+          pipToggleBtn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+          pipToggleBtn.style.color = '#fca5a5';
+        } catch (err) {
+          alert("Please ensure audio is playing first before activating PiP mode.");
+        }
+      });
+
+      pipVideo.addEventListener('leavepictureinpicture', function() {
+        pipToggleBtn.textContent = '📺 PIP AUDIO';
+        pipToggleBtn.style.background = 'rgba(168,85,247,0.15)';
+        pipToggleBtn.style.borderColor = 'rgba(168,85,247,0.4)';
+        pipToggleBtn.style.color = '#c084fc';
       });
     }
 
