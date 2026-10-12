@@ -1,6 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.7 FULL BUILD) -->
-<!-- OVER 3,000 LINES OF EMBEDDED STYLES, ENGINES, STORES & GAME MECHANICS -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.8 VOICE FIX) -->
 <!-- ====================================================================== -->
 
 <!-- Scrollbar & Advanced Animation Styles -->
@@ -803,7 +802,7 @@
       });
     }
 
-    // Voice Control Implementation
+    // Robust Voice Control Implementation (Fixed for mic capture conflicts)
     const voiceToggleBtn = document.getElementById('hbr-voice-toggle');
     let recognition = null;
     let isVoiceActive = false;
@@ -820,9 +819,9 @@
         let transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
         console.log("Voice command heard:", transcript);
 
-        if (transcript.includes('skip track') || transcript.includes('next')) {
+        if (transcript.includes('skip') || transcript.includes('next') || transcript.includes('track')) {
           if (typeof nextBtn !== 'undefined' && nextBtn) nextBtn.click();
-        } else if (transcript.includes('previous') || transcript.includes('go back')) {
+        } else if (transcript.includes('previous') || transcript.includes('back')) {
           if (typeof prevBtn !== 'undefined' && prevBtn) prevBtn.click();
         } else if (transcript.includes('play') || transcript.includes('start')) {
           if (!isPlaying && toggleBtn) toggleBtn.click();
@@ -833,6 +832,16 @@
 
       recognition.onerror = function(event) {
         console.warn("Speech recognition error:", event.error);
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          alert("Microphone permission was blocked. Please check your browser settings to allow microphone access for voice control.");
+          isVoiceActive = false;
+          if (voiceToggleBtn) {
+            voiceToggleBtn.textContent = '🎙️ VOICE OFF';
+            voiceToggleBtn.style.background = 'rgba(236,72,153,0.15)';
+            voiceToggleBtn.style.borderColor = 'rgba(236,72,153,0.4)';
+            voiceToggleBtn.style.color = '#f472b6';
+          }
+        }
       };
 
       recognition.onend = function() {
@@ -857,6 +866,7 @@
               voiceToggleBtn.style.color = '#fca5a5';
             } catch(e) {
               isVoiceActive = false;
+              alert("Could not start microphone. Please ensure microphone permissions are granted.");
             }
           } else {
             try { recognition.stop(); } catch(e) {}
