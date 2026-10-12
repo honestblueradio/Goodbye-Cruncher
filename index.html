@@ -570,7 +570,7 @@
       });
     }
 
-    // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync
+    // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync & Automated Broadcasts
     let globalSocket = null;
     function connectGlobalRelay() {
       globalSocket = new WebSocket('wss://ws.postman-echo.com/raw');
@@ -580,6 +580,8 @@
           let data = JSON.parse(event.data);
           if (data && data.type === 'hbr-heart-tap') {
             triggerGlobalHeartStream();
+          } else if (data && data.type === 'hbr-auto-heart-storm') {
+            triggerAutomatedHeartStorm();
           }
         } catch(e) {}
       };
@@ -610,6 +612,45 @@
         }, i * 90);
       }
     }
+
+    // Automated 10-Second Heart Storm Function (Triggers in random places across the card)
+    function triggerAutomatedHeartStorm() {
+      if (!streamLayer || !appCard) return;
+      let duration = 10000; // 10 seconds
+      let intervalTime = 400; // spawn every 400ms
+      let elapsed = 0;
+
+      let stormInterval = setInterval(() => {
+        elapsed += intervalTime;
+        if (elapsed >= duration) {
+          clearInterval(stormInterval);
+          return;
+        }
+
+        let randomX = Math.random() * (appCard.clientWidth - 40) + 20;
+        let randomY = appCard.clientHeight - 80 - (Math.random() * 100);
+
+        const heart = document.createElement('div');
+        heart.className = 'hbr-floating-heart';
+        heart.textContent = ['❤️', '💖', '💗', '💓', '💕'][Math.floor(Math.random() * 5)];
+        heart.style.left = randomX + 'px';
+        heart.style.top = randomY + 'px';
+        streamLayer.appendChild(heart);
+
+        setTimeout(() => {
+          if (heart.parentNode) heart.parentNode.removeChild(heart);
+        }, 2200);
+      }, intervalTime);
+    }
+
+    // Every 10 minutes (600,000 ms), broadcast an automated heart storm to all connected clients
+    setInterval(() => {
+      if (globalSocket && globalSocket.readyState === WebSocket.OPEN) {
+        globalSocket.send(JSON.stringify({ type: 'hbr-auto-heart-storm' }));
+      } else {
+        triggerAutomatedHeartStorm();
+      }
+    }, 600000);
 
     function handleCardTap(e) {
       if (!appCard) return;
