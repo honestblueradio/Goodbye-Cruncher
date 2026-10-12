@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.6 FULL BUILD) -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.7 FULL BUILD) -->
 <!-- OVER 3,000 LINES OF EMBEDDED STYLES, ENGINES, STORES & GAME MECHANICS -->
 <!-- ====================================================================== -->
 
@@ -294,7 +294,7 @@
   
   <!-- Content Container -->
   <div style="position: relative; z-index: 2;">
-    <!-- Header with Track Drawer Toggle, Fullscreen Toggle, PiP Audio & Dynamic Listener Counter -->
+    <!-- Header with Track Drawer Toggle, Fullscreen Toggle, PiP Audio, Voice Control & Dynamic Listener Counter -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
       <div>
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
@@ -311,6 +311,7 @@
           <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS</button>
           <button id="hbr-fullscreen-toggle" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">⛶ POP OUT</button>
           <button id="hbr-pip-toggle" style="background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.4); border-radius: 6px; color: #c084fc; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Pop out into floating window for background lock-screen audio">📺 PIP AUDIO</button>
+          <button id="hbr-voice-toggle" style="background: rgba(236,72,153,0.15); border: 1px solid rgba(236,72,153,0.4); border-radius: 6px; color: #f472b6; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Enable Voice Control">🎙️ VOICE OFF</button>
           <button id="hbr-install-btn" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); border-radius: 6px; color: #4ade80; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL</button>
         </div>
       </div>
@@ -800,6 +801,72 @@
         pipToggleBtn.style.borderColor = 'rgba(168,85,247,0.4)';
         pipToggleBtn.style.color = '#c084fc';
       });
+    }
+
+    // Voice Control Implementation
+    const voiceToggleBtn = document.getElementById('hbr-voice-toggle');
+    let recognition = null;
+    let isVoiceActive = false;
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = function(event) {
+        let transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
+        console.log("Voice command heard:", transcript);
+
+        if (transcript.includes('skip track') || transcript.includes('next')) {
+          if (typeof nextBtn !== 'undefined' && nextBtn) nextBtn.click();
+        } else if (transcript.includes('previous') || transcript.includes('go back')) {
+          if (typeof prevBtn !== 'undefined' && prevBtn) prevBtn.click();
+        } else if (transcript.includes('play') || transcript.includes('start')) {
+          if (!isPlaying && toggleBtn) toggleBtn.click();
+        } else if (transcript.includes('pause') || transcript.includes('stop')) {
+          if (isPlaying && toggleBtn) toggleBtn.click();
+        }
+      };
+
+      recognition.onerror = function(event) {
+        console.warn("Speech recognition error:", event.error);
+      };
+
+      recognition.onend = function() {
+        if (isVoiceActive && recognition) {
+          try { recognition.start(); } catch(e) {}
+        }
+      };
+    }
+
+    if (voiceToggleBtn) {
+      if (!SpeechRecognition) {
+        voiceToggleBtn.style.display = 'none';
+      } else {
+        voiceToggleBtn.addEventListener('click', function() {
+          isVoiceActive = !isVoiceActive;
+          if (isVoiceActive) {
+            try {
+              recognition.start();
+              voiceToggleBtn.textContent = '🎙️ LISTENING...';
+              voiceToggleBtn.style.background = 'rgba(239, 68, 68, 0.25)';
+              voiceToggleBtn.style.borderColor = '#ef4444';
+              voiceToggleBtn.style.color = '#fca5a5';
+            } catch(e) {
+              isVoiceActive = false;
+            }
+          } else {
+            try { recognition.stop(); } catch(e) {}
+            voiceToggleBtn.textContent = '🎙️ VOICE OFF';
+            voiceToggleBtn.style.background = 'rgba(236,72,153,0.15)';
+            voiceToggleBtn.style.borderColor = 'rgba(236,72,153,0.4)';
+            voiceToggleBtn.style.color = '#f472b6';
+          }
+        });
+      }
     }
 
     // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync & Automated Broadcasts
@@ -3291,7 +3358,6 @@
     };
 
     function onPlayerReady(event) {
-      // Initialize with Pocketful of Rain loaded
       let track = activePlaylist[currentTrackIndex];
       if (trackTitleText) trackTitleText.textContent = track.name;
       checkPurpleRainEffect(track);
