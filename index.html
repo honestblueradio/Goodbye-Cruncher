@@ -775,9 +775,10 @@
     const tracksPerPage = 6;
 
     // Bank Notes & Stores State Data
-    let bankedNotesTotal = 0;
+    let bankedNotesTotal = 50;
     let storeCashTotal = 0.00;
     let unrewoundTapesCount = 0;
+    let lastSessionTimestamp = Date.now();
     
     let userOwnedStores = { blockbuster: 0, toysrus: 0, kbtoys: 0 };
     let userOwnedMovies = {};
@@ -843,6 +844,7 @@
           bankedNotes: bankedNotesTotal,
           storeCash: storeCashTotal,
           unrewoundTapes: unrewoundTapesCount,
+          lastSessionTime: lastSessionTimestamp,
           ownedStores: userOwnedStores,
           ownedMovies: userOwnedMovies,
           ownedChars: userOwnedCharacters,
@@ -872,6 +874,7 @@
           if (master.bankedNotes !== undefined) bankedNotesTotal = master.bankedNotes;
           if (master.storeCash !== undefined) storeCashTotal = master.storeCash;
           if (master.unrewoundTapes !== undefined) unrewoundTapesCount = master.unrewoundTapes;
+          if (master.lastSessionTime !== undefined) lastSessionTimestamp = master.lastSessionTime;
           if (master.ownedStores) userOwnedStores = master.ownedStores;
           if (master.ownedMovies) userOwnedMovies = master.ownedMovies;
           if (master.ownedChars) userOwnedCharacters = master.ownedChars;
@@ -903,10 +906,29 @@
         if (savedT3) customTop3 = JSON.parse(savedT3);
 
         if (!loaded && savedBanked === null && savedCash === null && !savedProfile) {
-          bankedNotesTotal = 0;
+          bankedNotesTotal = 50; // Every new account starts with 50 banked notes
         }
+
+        // Calculate overnight / offline accumulated notes
+        let nowTime = Date.now();
+        if (lastSessionTimestamp > 0 && nowTime > lastSessionTimestamp) {
+          let elapsedSeconds = Math.floor((nowTime - lastSessionTimestamp) / 1000);
+          // Accumulate notes offline based on total stores or baseline activity (e.g. 1 note every 10 seconds per store owned, or at least base passive accumulation)
+          let totalStoresOwned = 0;
+          Object.values(userOwnedStores).forEach(val => totalStoresOwned += (val || 0));
+          
+          let notesPerSec = Math.max(1, totalStoresOwned * 2); 
+          let accumulatedOfflineNotes = elapsedSeconds * notesPerSec;
+          
+          if (accumulatedOfflineNotes > 0) {
+            bankedNotesTotal += accumulatedOfflineNotes;
+          }
+        }
+        lastSessionTimestamp = nowTime;
+        saveEverything();
+
       } catch (e) {
-        bankedNotesTotal = 0;
+        bankedNotesTotal = 50;
       }
     }
 
@@ -1023,7 +1045,7 @@
         }
         if (topBannerFrame) topBannerFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
 
-        // Render Gold Rings for Owned Stores
+        // Render Gold Rings for Owned Stores (with exact quantities up into millions/trillions)
         if (topBannerGoldRings) {
           topBannerGoldRings.innerHTML = '';
           let hasStores = false;
@@ -1033,7 +1055,7 @@
               hasStores = true;
               let ring = document.createElement('div');
               ring.className = 'hbr-gold-ring-badge';
-              ring.innerHTML = store.icon + ' ' + store.label + (count > 1 ? ' (' + count + ')' : '');
+              ring.innerHTML = store.icon + ' ' + store.label + ' ' + count.toLocaleString();
               topBannerGoldRings.appendChild(ring);
             }
           });
@@ -1113,7 +1135,7 @@
           if (count > 0) {
             hasAnything = true;
             let div = document.createElement('div');
-            div.innerHTML = store.icon + ' ' + store.name + ': <strong style="color: #fbbf24;">' + count + ' owned (Gold Ring Badge Active)</strong>';
+            div.innerHTML = store.icon + ' ' + store.name + ': <strong style="color: #fbbf24;">' + count.toLocaleString() + ' owned (Gold Ring Badge Active)</strong>';
             profileInventoryList.appendChild(div);
           }
         });
@@ -1135,7 +1157,7 @@
             if (total > 0) {
               hasAnything = true;
               let div = document.createElement('div');
-              div.innerHTML = '🎬 ' + movie.name + ' (VHS: ' + (inv.vhs || 0) + ', DVD: ' + (inv.dvd || 0) + ', Blu-ray: ' + (inv.bluray || 0) + ')';
+              div.innerHTML = '🎬 ' + movie.name + ' (VHS: ' + (inv.vhs || 0).toLocaleString() + ', DVD: ' + (inv.dvd || 0).toLocaleString() + ', Blu-ray: ' + (inv.bluray || 0).toLocaleString() + ')';
               profileInventoryList.appendChild(div);
             }
           }
@@ -1321,7 +1343,7 @@
     }
 
     function updateCashUI() {
-      let formatted = '$' + storeCashTotal.toFixed(2);
+      let formatted = '$' + storeCashTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
       if (cashCountBadge) cashCountBadge.textContent = formatted;
       if (storeCashCountSpan) storeCashCountSpan.textContent = formatted;
     }
@@ -1481,7 +1503,7 @@
           ownedLine.style.fontSize = '9px';
           ownedLine.style.color = '#9ca3af';
           ownedLine.style.marginTop = '2px';
-          ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong> (Grants Gold Ring Badge up top!)';
+          ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount.toLocaleString() + '</strong> (Grants Gold Ring Badge up top!)';
 
           infoDiv.appendChild(titleLine);
           infoDiv.appendChild(ownedLine);
@@ -1495,9 +1517,9 @@
           priceLine.style.color = '#fbbf24';
           
           if (priceData.isOnSale) {
-            priceLine.innerHTML = '<span style="text-decoration: line-through; color: #6b7280; font-size: 8px; margin-right: 3px;">' + priceData.originalPrice + '</span> ' + priceData.price + ' Notes';
+            priceLine.innerHTML = '<span style="text-decoration: line-through; color: #6b7280; font-size: 8px; margin-right: 3px;">' + priceData.originalPrice.toLocaleString() + '</span> ' + priceData.price.toLocaleString() + ' Notes';
           } else {
-            priceLine.textContent = priceData.price + ' Notes';
+            priceLine.textContent = priceData.price.toLocaleString() + ' Notes';
           }
 
           let buyBtn = document.createElement('button');
@@ -1574,7 +1596,7 @@
           priceLine.style.fontSize = '10px';
           priceLine.style.fontWeight = '800';
           priceLine.style.color = '#fbbf24';
-          priceLine.textContent = char.price + ' Notes';
+          priceLine.textContent = char.price.toLocaleString() + ' Notes';
 
           let buyBtn = document.createElement('button');
           let canAfford = bankedNotesTotal >= char.price;
@@ -1641,7 +1663,7 @@
           let rText = document.createElement('div');
           rText.style.fontSize = '10px';
           rText.style.color = '#fdba74';
-          rText.innerHTML = '📼 <strong>' + unrewoundTapesCount + ' Unrewound Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Drains $0.10/sec until rewound.</span>';
+          rText.innerHTML = '📼 <strong>' + unrewoundTapesCount.toLocaleString() + ' Unrewound Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Drains $0.10/sec until rewound.</span>';
 
           let rewindBtn = document.createElement('button');
           rewindBtn.style.background = 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)';
@@ -1682,7 +1704,7 @@
         statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
         statusBox.style.textAlign = 'center';
         statusBox.innerHTML = totalMovies > 0 
-          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies + '. Earns rental cash + occasional late fees!'
+          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString() + '. Earns rental cash + occasional late fees!'
           : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash & late fees!';
         
         storeItemsList.appendChild(statusBox);
@@ -1715,7 +1737,7 @@
             ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍅 ' + movie.rtScore + '% (PROFIT)</span>'
             : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍿 ' + movie.rtScore + '% (DRAINS CASH)</span>';
           
-          let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies + '</span>' : '';
+          let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies.toLocaleString() + '</span>' : '';
 
           titleDiv.innerHTML = '🎬 ' + movie.name + rtBadge + ownedBadge;
 
@@ -1749,7 +1771,7 @@
             fmtBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed';
             fmtBtn.style.textAlign = 'center';
 
-            fmtBtn.innerHTML = fmt.label + '<br><span style="color: #fbbf24; font-weight: 800;">' + cost + ' N</span><br><span style="color: #a7f3d0;">(' + count + ' owned)</span>';
+            fmtBtn.innerHTML = fmt.label + '<br><span style="color: #fbbf24; font-weight: 800;">' + cost.toLocaleString() + ' N</span><br><span style="color: #a7f3d0;">(' + count.toLocaleString() + ' owned)</span>';
 
             if (canAfford) {
               fmtBtn.addEventListener('click', function() {
@@ -2224,7 +2246,7 @@
     function incrementPopCounter(x, y) {
       if (!canPopNotes) return;
       poppedNotesTotal++;
-      if (popCountDisplay) popCountDisplay.textContent = poppedNotesTotal;
+      if (popCountDisplay) popCountDisplay.textContent = poppedNotesTotal.toLocaleString();
       if (popBadge) {
         popBadge.style.transform = 'scale(1.15)';
         setTimeout(() => popBadge.style.transform = 'scale(1)', 150);
@@ -2343,7 +2365,7 @@
             stopNotesSystem();
             autoBankUnsavedNotes();
             if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You popped <strong style="color: #60a5fa;">' + poppedNotesTotal + '</strong> notes (banked automatically)!';
+            if (bannerMsg) bannerMsg.innerHTML = 'You popped <strong style="color: #60a5fa;">' + poppedNotesTotal.toLocaleString() + '</strong> notes (banked automatically)!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
@@ -2431,7 +2453,7 @@
             stopNotesSystem();
             autoBankUnsavedNotes();
             if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal + '</strong> fireworks (banked automatically)!';
+            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal.toLocaleString() + '</strong> fireworks (banked automatically)!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
