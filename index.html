@@ -44,16 +44,16 @@
   
   <!-- Content Container -->
   <div style="position: relative; z-index: 2;">
-    <!-- Header with Track Drawer Toggle, Live Status & Dynamic Listener Counter -->
+    <!-- Header with Track Drawer Toggle, Pulsing On Air Status & Dynamic Listener Counter -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
       <div>
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
           <span id="hbr-mode-title" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #3b82f6; font-weight: 700; display: block;">Honest Blue Radio</span>
           
-          <!-- Live Stream Indicator Badge -->
-          <a id="hbr-live-indicator" href="https://youtube.com/@honestblueradio/live" target="_blank" rel="noopener noreferrer" title="Watch live stream on YouTube" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 255, 255, 0.05); border: 1px solid #374151; border-radius: 12px; padding: 2px 7px; text-decoration: none; transition: all 0.3s ease; cursor: default; user-select: none;">
-            <span id="hbr-live-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #6b7280; display: inline-block; transition: background 0.3s ease;"></span>
-            <span id="hbr-live-text" style="font-size: 9px; font-weight: 800; color: #9ca3af; letter-spacing: 0.5px; transition: color 0.3s ease;">OFF AIR</span>
+          <!-- Pulsing On Air Indicator Badge Linking to Most Recent Video -->
+          <a id="hbr-live-indicator" href="https://youtube.com/@honestblueradio/videos" target="_blank" rel="noopener noreferrer" title="Watch most recent video on YouTube" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 12px; padding: 2px 7px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; user-select: none;">
+            <span id="hbr-live-dot" class="hbr-live-active-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+            <span id="hbr-live-text" style="font-size: 9px; font-weight: 800; color: #ef4444; letter-spacing: 0.5px;">ON AIR</span>
           </a>
         </div>
 
@@ -210,6 +210,7 @@
           <div style="width: 14px; height: 22px; background: #ef4444; border-radius: 2px; position: absolute; bottom: 8px; left: 12px; transform: rotate(12deg); border: 1px solid #b91c1c;">&nbsp;</div>
         </div>
       </div>
+      <!-- Hidden YouTube iframe embed with enablejsapi=1 -->
       <div style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;"><iframe allow="autoplay" frameborder="0" id="hbr-engine" src="https://www.youtube.com/embed/WHzTume00O8?enablejsapi=1&amp;modestbranding=1&amp;rel=0&amp;iv_load_policy=3" title="Honest Blue Radio Engine"></iframe></div>
     </div>
 
@@ -275,13 +276,6 @@
           <!-- CREATE / EDIT PROFILE BUTTON AT THE VERY BOTTOM -->
           <div style="padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
             <button id="hbr-open-profile-btn" style="width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease;">👤 Create Profile</button>
-          </div>
-
-          <!-- SECRET ADMIN OVERRIDE PANEL -->
-          <div id="hbr-admin-section" style="display: none; margin-top: 12px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 10px;">
-            <div style="font-size: 10px; font-weight: 800; color: #ef4444; margin-bottom: 4px; text-transform: uppercase;">🔒 Host Global Remote Override</div>
-            <div style="font-size: 10px; color: #9ca3af; margin-bottom: 6px;">Force ON AIR globally for all listening devices:</div>
-            <button id="hbr-admin-toggle-btn" style="background: #374151; border: 1px solid #4b5563; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 10px; cursor: pointer;">Global ON AIR: OFF</button>
           </div>
 
         </div>
@@ -399,13 +393,12 @@
 
   @keyframes hbrPulseGlow {
     0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-    70% { transform: scale(1.1); opacity: 0.9; box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+    70% { transform: scale(1.08); opacity: 0.85; box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
     100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
   }
 
   .hbr-live-active-dot {
-    background: #ef4444 !important;
-    animation: hbrPulseGlow 1.8s infinite !important;
+    animation: hbrPulseGlow 1.6s infinite ease-in-out !important;
   }
 
   @keyframes hbrNaturalSpin {
@@ -636,110 +629,6 @@
     let currentDrawerPage = 1;
     const tracksPerPage = 6;
 
-    // Live Stream Status with Secret Admin Override
-    const liveIndicator = document.getElementById('hbr-live-indicator');
-    const liveDot = document.getElementById('hbr-live-dot');
-    const liveText = document.getElementById('hbr-live-text');
-    const adminSection = document.getElementById('hbr-admin-section');
-    const adminToggleBtn = document.getElementById('hbr-admin-toggle-btn');
-    const channelId = 'UC43e62x4y5Qh6U6z9fUj2gA';
-
-    let remoteGlobalLive = localStorage.getItem('hbr_global_forced_live') === 'true';
-
-    function publishGlobalLiveState(isLive) {
-      remoteGlobalLive = isLive;
-      localStorage.setItem('hbr_global_forced_live', isLive ? 'true' : 'false');
-      updateLiveUI(isLive);
-    }
-
-    if (adminToggleBtn) {
-      adminToggleBtn.textContent = 'Global ON AIR: ' + (remoteGlobalLive ? 'ON' : 'OFF');
-      adminToggleBtn.style.background = remoteGlobalLive ? '#dc2626' : '#374151';
-      
-      adminToggleBtn.addEventListener('click', function() {
-        const newState = !remoteGlobalLive;
-        publishGlobalLiveState(newState);
-        adminToggleBtn.textContent = 'Global ON AIR: ' + (newState ? 'ON' : 'OFF');
-        adminToggleBtn.style.background = newState ? '#dc2626' : '#374151';
-      });
-    }
-
-    let adminClickCount = 0;
-    const bioTitle = document.querySelector('#hbr-bio-panel div div');
-    if (bioTitle) {
-      bioTitle.style.cursor = 'pointer';
-      bioTitle.addEventListener('click', function() {
-        adminClickCount++;
-        if (adminClickCount >= 3) {
-          adminClickCount = 0;
-          if (adminSection) {
-            adminSection.style.display = adminSection.style.display === 'block' ? 'none' : 'block';
-          }
-        }
-      });
-    }
-
-    function updateLiveUI(isLive) {
-      if (remoteGlobalLive) isLive = true;
-
-      if (isLive) {
-        if (liveDot) liveDot.className = 'hbr-live-active-dot';
-        if (liveDot) liveDot.style.background = '#ef4444';
-        if (liveText) {
-          liveText.textContent = 'ON AIR';
-          liveText.style.color = '#ef4444';
-        }
-        if (liveIndicator) {
-          liveIndicator.style.borderColor = 'rgba(239, 68, 68, 0.5)';
-          liveIndicator.style.background = 'rgba(239, 68, 68, 0.15)';
-          liveIndicator.style.cursor = 'pointer';
-          liveIndicator.href = 'https://youtube.com/@honestblueradio/live';
-          liveIndicator.setAttribute('tabindex', '0');
-        }
-      } else {
-        if (liveDot) liveDot.className = '';
-        if (liveDot) liveDot.style.background = '#6b7280';
-        if (liveText) {
-          liveText.textContent = 'OFF AIR';
-          liveText.style.color = '#9ca3af';
-        }
-        if (liveIndicator) {
-          liveIndicator.style.borderColor = '#374151';
-          liveIndicator.style.background = 'rgba(255, 255, 255, 0.05)';
-          liveIndicator.style.cursor = 'default';
-          liveIndicator.removeAttribute('href');
-          liveIndicator.setAttribute('tabindex', '-1');
-        }
-      }
-    }
-
-    function checkLiveStatus() {
-      if (remoteGlobalLive) {
-        updateLiveUI(true);
-        return;
-      }
-
-      const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId;
-      const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl);
-
-      fetch(proxyUrl)
-        .then(res => res.json())
-        .then(data => {
-          let liveActive = false;
-          if (data && data.contents) {
-            let xml = data.contents;
-            if (xml.includes('isLiveBroadcast') || xml.toLowerCase().includes('live')) {
-              liveActive = true;
-            }
-          }
-          updateLiveUI(liveActive);
-        })
-        .catch(() => updateLiveUI(false));
-    }
-
-    checkLiveStatus();
-    setInterval(checkLiveStatus, 20000);
-
     // Bank Notes & Stores State Data
     let bankedNotesTotal = 0;
     let storeCashTotal = 0.00;
@@ -917,7 +806,7 @@
       dogInterval = setInterval(runDogBehavior, 4500);
     }, 500);
 
-    // User Profile Management & Dynamic UI Sync with Robust Image Compression (PNG/Large Photos Fix)
+    // User Profile Management & Dynamic UI Sync
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
     const closeProfileBtn = document.getElementById('hbr-close-profile-btn');
     const profileModal = document.getElementById('hbr-profile-modal');
@@ -2349,7 +2238,7 @@
         if (litModeBtn) litModeBtn.style.display = 'inline-block';
         if (calmModeBtn) calmModeBtn.style.display = 'none';
         if (timerBadge) timerBadge.style.display = 'none';
-        if (levelBadge) levelBadge.style.display = 'none';
+        if (levelBadge) timerBadge.style.display = 'none';
         if (timesUpOverlay) timesUpOverlay.style.display = 'none';
         if (isPlaying) startNotesSystem();
       });
@@ -2751,6 +2640,7 @@
       if (toggleBtn) { toggleBtn.innerHTML = '❚❚'; toggleBtn.style.background = '#ef4444'; }
     }
 
+    // Robust continuous playback listener via YouTube PostMessage API
     window.addEventListener('message', (event) => {
       try {
         let data = JSON.parse(event.data);
@@ -2759,6 +2649,23 @@
           selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
         }
       } catch (e) {}
+    });
+
+    // Fallback timer check in case YouTube postMessage is blocked by browser cross-origin frame policies
+    setInterval(function() {
+      if (isPlaying) {
+        sendCommand('getPlayerState');
+      }
+    }, 2000);
+
+    window.addEventListener('message', (event) => {
+      try {
+        let data = JSON.parse(event.data);
+        if (data.event === 'onStateChange' && data.info === 0) {
+          autoBankUnsavedNotes();
+          selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
+        }
+      } catch(e) {}
     });
 
     if (toggleBtn) {
