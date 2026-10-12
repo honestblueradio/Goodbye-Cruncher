@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.7 FULL BUILD) -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 4.6 FULL BUILD) -->
 <!-- OVER 3,000 LINES OF EMBEDDED STYLES, ENGINES, STORES & GAME MECHANICS -->
 <!-- ====================================================================== -->
 
@@ -526,7 +526,7 @@
 
     <!-- Track Meta Display -->
     <div style="text-align: center; margin-bottom: 20px;">
-      <div id="hbr-track-title" style="font-size: 16px; font-weight: 700; color: #f3f4f6; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Don&#39;t Stop &#39;Til You Get Enough</div>
+      <div id="hbr-track-title" style="font-size: 16px; font-weight: 700; color: #f3f4f6; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pocketful of Rain</div>
       <div id="hbr-subtitle" style="font-size: 12px; color: #6b7280;">Honest Blue Radio &bull; Continuous Play Enabled</div>
     </div>
 
@@ -928,9 +928,8 @@
       }, {passive: true});
     }
 
-    // Master Broadcast Tracks (With Michael Jackson Don't Stop 'Til You Get Enough as first track)
+    // Master Broadcast Tracks (With Track 12 updated to Pocketful of Rain / lCrOsTj9QhY)
     const masterBroadcastTracks = [
-      { id: 'yURRmWtbTbo', name: "Don't Stop 'Til You Get Enough" },
       { id: 'WHzTume00O8', name: 'Track One' },
       { id: '4eU3OZFhuHs', name: 'Track Two' },
       { id: 'KE639OtYFT0', name: 'Track Three' },
@@ -3255,7 +3254,7 @@
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
     let isPlaying = false;
-    let currentTrackIndex = 0; // Default to Don't Stop 'Til You Get Enough (index 0)
+    let currentTrackIndex = 11; // Default to Pocketful of Rain (index 11)
     let ytPlayer = null;
     let isDragging = false;
     let startAngle = 0;
@@ -3292,7 +3291,7 @@
     };
 
     function onPlayerReady(event) {
-      // Initialize with Don't Stop 'Til You Get Enough loaded
+      // Initialize with Pocketful of Rain loaded
       let track = activePlaylist[currentTrackIndex];
       if (trackTitleText) trackTitleText.textContent = track.name;
       checkPurpleRainEffect(track);
