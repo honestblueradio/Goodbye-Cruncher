@@ -210,8 +210,10 @@
           <div style="width: 14px; height: 22px; background: #ef4444; border-radius: 2px; position: absolute; bottom: 8px; left: 12px; transform: rotate(12deg); border: 1px solid #b91c1c;">&nbsp;</div>
         </div>
       </div>
-      <!-- Hidden YouTube iframe embed with enablejsapi=1 -->
-      <div style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;"><iframe allow="autoplay" frameborder="0" id="hbr-engine" src="https://www.youtube.com/embed/WHzTume00O8?enablejsapi=1&amp;modestbranding=1&amp;rel=0&amp;iv_load_policy=3" title="Honest Blue Radio Engine"></iframe></div>
+      <!-- YouTube API Player Container (Interactive JavaScript API Mount with enablejsapi=1) -->
+      <div id="hbr-player-container" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;">
+        <div id="hbr-yt-player"></div>
+      </div>
     </div>
 
     <!-- Rapid Fire 23 Rockets Challenge Badge (Right Under Record / Turntable Deck) -->
@@ -233,7 +235,7 @@
     <!-- Track Meta Display -->
     <div style="text-align: center; margin-bottom: 20px;">
       <div id="hbr-track-title" style="font-size: 16px; font-weight: 700; color: #f3f4f6; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Track One</div>
-      <div id="hbr-subtitle" style="font-size: 12px; color: #6b7280;">Honest Blue Radio &bull; Original Broadcast</div>
+      <div id="hbr-subtitle" style="font-size: 12px; color: #6b7280;">Honest Blue Radio &bull; Continuous Play Enabled</div>
     </div>
 
     <!-- Player Track & Play Controls -->
@@ -2518,7 +2520,7 @@
       });
     }
 
-    // Audio & Deck Controls
+    // Audio & Deck Controls with YouTube IFrame API
     const toggleBtn = document.getElementById('hbr-toggle');
     const prevBtn = document.getElementById('hbr-prev');
     const nextBtn = document.getElementById('hbr-next');
@@ -2533,7 +2535,6 @@
     const modeBtnText = document.getElementById('hbr-mode-btn-text');
     const christmasBtn = document.getElementById('hbr-christmas-btn');
     const disneyBtn = document.getElementById('hbr-disney-btn');
-    const iframe = document.getElementById('hbr-engine');
     const djContainer = document.getElementById('hbr-dj-container');
     const label = document.getElementById('hbr-label');
     const reflection = document.getElementById('hbr-reflection');
@@ -2543,6 +2544,7 @@
     
     let isPlaying = false;
     let currentTrackIndex = 0;
+    let ytPlayer = null;
     let isDragging = false;
     let startAngle = 0;
     let baseRotation = 0;
@@ -2551,9 +2553,37 @@
     let lastTime = Date.now();
     let animFrameReq = null;
 
-    function sendCommand(func, args) {
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: args !== undefined ? args : [] }), '*');
+    // Load YouTube IFrame Player API
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    window.onYouTubeIframeAPIReady = function() {
+      ytPlayer = new YT.Player('hbr-yt-player', {
+        height: '100',
+        width: '100',
+        videoId: activePlaylist[0].id,
+        playerVars: {
+          'autoplay': 0,
+          'controls': 0,
+          'modestbranding': 1,
+          'rel': 0,
+          'iv_load_policy': 3
+        },
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    };
+
+    // Automatic transition to next track when song finishes (State 0 = ENDED)
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        autoBankUnsavedNotes();
+        selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
       }
     }
 
@@ -2567,8 +2597,10 @@
       if (recordArt) recordArt.style.backgroundImage = coverUrl;
 
       renderDrawerList();
-      sendCommand('loadVideoById', [track.id]);
-      triggerPlayState();
+      if (ytPlayer && ytPlayer.loadVideoById) {
+        ytPlayer.loadVideoById(track.id);
+        triggerPlayState();
+      }
     }
 
     if (modeBtn) {
@@ -2640,39 +2672,11 @@
       if (toggleBtn) { toggleBtn.innerHTML = '❚❚'; toggleBtn.style.background = '#ef4444'; }
     }
 
-    // Robust continuous playback listener via YouTube PostMessage API
-    window.addEventListener('message', (event) => {
-      try {
-        let data = JSON.parse(event.data);
-        if (data.event === 'infoDelivery' && data.info && data.info.playerState === 0) {
-          autoBankUnsavedNotes();
-          selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
-        }
-      } catch (e) {}
-    });
-
-    // Fallback timer check in case YouTube postMessage is blocked by browser cross-origin frame policies
-    setInterval(function() {
-      if (isPlaying) {
-        sendCommand('getPlayerState');
-      }
-    }, 2000);
-
-    window.addEventListener('message', (event) => {
-      try {
-        let data = JSON.parse(event.data);
-        if (data.event === 'onStateChange' && data.info === 0) {
-          autoBankUnsavedNotes();
-          selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
-        }
-      } catch(e) {}
-    });
-
     if (toggleBtn) {
       toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
-          sendCommand('playVideo');
+          if (ytPlayer && ytPlayer.playVideo) ytPlayer.playVideo();
         } else {
           isPlaying = false;
           if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
@@ -2683,7 +2687,7 @@
           if (animFrameReq) cancelAnimationFrame(animFrameReq);
           toggleBtn.innerHTML = '▶';
           toggleBtn.style.background = '#3b82f6';
-          sendCommand('pauseVideo');
+          if (ytPlayer && ytPlayer.pauseVideo) ytPlayer.pauseVideo();
         }
       });
     }
