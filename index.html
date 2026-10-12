@@ -9,13 +9,6 @@
   <!-- Fireworks Overlay Canvas -->
   <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; z-index: 100; display: none;"></canvas>
 
-  <!-- Rocket Challenge Results Overlay -->
-  <div id="hbr-rocket-results" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.95); border: 2px solid #22c55e; border-radius: 14px; padding: 16px 24px; z-index: 160; box-shadow: 0 8px 32px rgba(0,0,0,0.9); text-align: center;">
-    <span style="font-size: 15px; font-weight: 800; color: #4ade80; display: block; margin-bottom: 4px;">🏆 CHALLENGE COMPLETE!</span>
-    <span style="font-size: 12px; color: #d1d5db; display: block; margin-bottom: 12px;">You fired 23 rockets in <strong id="hbr-rocket-time" style="color: #60a5fa;">0.0s</strong>!</span>
-    <button id="hbr-rocket-close-btn" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">AWESOME!</button>
-  </div>
-
   <!-- PWA Installation Modal Overlay -->
   <div id="hbr-install-modal" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17,17,21,0.95); backdrop-filter: blur(8px); z-index: 150; padding: 20px; box-sizing: border-box; text-align: center; flex-direction: column; justify-content: center; align-items: center;">
     <div style="background: #1c1c28; border: 1px solid #3b82f6; border-radius: 16px; padding: 20px; max-width: 320px; box-shadow: 0 8px 32px rgba(0,0,0,0.8); text-align: left;">
@@ -67,7 +60,7 @@
       <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;"><span style="color: #4ade80; font-size: 12px;">👤</span><span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span></div>
     </div>
 
-    <!-- User Top Profile Banner (Restored to Front Page) -->
+    <!-- User Top Profile Banner -->
     <div id="hbr-top-profile-banner" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; align-items: center; gap: 10px;">
       <div id="hbr-top-banner-avatar-frame" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
         <img id="hbr-top-banner-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
@@ -217,11 +210,23 @@
       </div>
     </div>
 
-    <!-- Rapid Fire 23 Rockets Challenge Badge (Right Under Record / Turntable Deck) -->
-    <div id="hbr-rocket-challenge-badge" style="display: none; margin: 0 auto 16px auto; background: rgba(17,17,21,0.92); border: 2px solid #f97316; border-radius: 12px; padding: 10px 14px; max-width: 280px; box-shadow: 0 6px 20px rgba(0,0,0,0.8); text-align: center; cursor: pointer; user-select: none;">
-      <div style="font-size: 10px; font-weight: 800; color: #fb923c; text-transform: uppercase; margin-bottom: 2px;">🚀 ROCKET CHALLENGE</div>
-      <div style="font-size: 12px; font-weight: 700; color: #fff;"><span id="hbr-rocket-left">23</span> / 23 LEFT</div>
-      <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;">Tap fast to fire!</div>
+    <!-- Interactive Heart Filling Challenge Overlay Card (Right Under Record Deck) -->
+    <div id="hbr-heart-challenge-card" style="display: none; margin: 0 auto 16px auto; background: rgba(17,17,21,0.95); border: 2px solid #ef4444; border-radius: 14px; padding: 14px 16px; max-width: 290px; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center; user-select: none;">
+      <div style="font-size: 10px; font-weight: 800; color: #fca5a5; text-transform: uppercase; margin-bottom: 8px;" id="hbr-heart-title">💖 EVENING HEART CHALLENGE</div>
+      
+      <!-- Interactive SVG Heart Container -->
+      <div id="hbr-heart-target-btn" style="position: relative; width: 90px; height: 90px; margin: 0 auto 8px auto; cursor: pointer; transition: transform 0.1s ease;" title="Press in the middle of the heart!">
+        <svg viewBox="0 0 32 29.6" style="width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(239,68,68,0.7);">
+          <!-- Background Empty/Outline Path -->
+          <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="rgba(239,68,68,0.1)" stroke="#ef4444" stroke-width="2"/>
+          <!-- Filling Path Masked or Scaled by Progress -->
+          <path id="hbr-heart-fill-path" d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="#ef4444" transform="scale(0)" style="transform-origin: center; transition: transform 0.15s ease;" />
+        </svg>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 9px; font-weight: 800; color: #ffffff; text-shadow: 0 1px 3px rgba(0,0,0,0.9); pointer-events: none;" id="hbr-heart-cta">PRESS HERE</div>
+      </div>
+
+      <div style="font-size: 11px; font-weight: 700; color: #fff;" id="hbr-heart-status"><span id="hbr-heart-taps-left">23</span> taps remaining</div>
+      <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;" id="hbr-heart-sub">Fill the heart to complete the challenge!</div>
     </div>
 
     <!-- Companion Dog Toggle Bar (Appears when character purchased) -->
@@ -1723,7 +1728,7 @@
       closeModalBtn.addEventListener('click', () => installModal.style.display = 'none');
     }
 
-    // Automatic Eastern Time Fireworks & 23 Rockets Challenge Engine
+    // Automatic Eastern Time Fireworks & Interactive Heart Filling Challenge Engine
     const canvas = document.getElementById('hbr-fireworks-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
     let fireworksActive = false;
@@ -1732,14 +1737,17 @@
     let fireworksRockets = [];
     let isGrandFinale = false;
 
-    let rocketChallengeActive = false;
-    let rocketsLeft = 23;
-    let rocketStartTime = 0;
-    const rocketBadge = document.getElementById('hbr-rocket-challenge-badge');
-    const rocketLeftSpan = document.getElementById('hbr-rocket-left');
-    const rocketResults = document.getElementById('hbr-rocket-results');
-    const rocketTimeSpan = document.getElementById('hbr-rocket-time');
-    const rocketCloseBtn = document.getElementById('hbr-rocket-close-btn');
+    let heartChallengeActive = false;
+    let heartTapsLeft = 23;
+    let heartStartTime = 0;
+    const heartCard = document.getElementById('hbr-heart-challenge-card');
+    const heartTargetBtn = document.getElementById('hbr-heart-target-btn');
+    const heartFillPath = document.getElementById('hbr-heart-fill-path');
+    const heartTapsLeftSpan = document.getElementById('hbr-heart-taps-left');
+    const heartCta = document.getElementById('hbr-heart-cta');
+    const heartStatus = document.getElementById('hbr-heart-status');
+    const heartTitle = document.getElementById('hbr-heart-title');
+    const heartSub = document.getElementById('hbr-heart-sub');
 
     function resizeCanvas() {
       if (!canvas) return;
@@ -1812,31 +1820,33 @@
       canvas.addEventListener('touchstart', launchUserRocket);
     }
 
-    if (rocketBadge) {
-      rocketBadge.addEventListener('click', function(e) {
+    if (heartTargetBtn) {
+      heartTargetBtn.addEventListener('click', function(e) {
         e.stopPropagation();
-        if (!rocketChallengeActive) return;
+        if (!heartChallengeActive) return;
 
-        if (rocketsLeft === 23) rocketStartTime = Date.now();
-        rocketsLeft--;
-        if (rocketLeftSpan) rocketLeftSpan.textContent = rocketsLeft;
+        if (heartTapsLeft === 23) heartStartTime = Date.now();
+        heartTapsLeft--;
+        
+        let progress = (23 - heartTapsLeft) / 23;
+        if (heartFillPath) heartFillPath.style.transform = 'scale(' + progress + ')';
 
+        if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = heartTapsLeft;
+
+        // Launch celebratory spark on heart tap
         if (canvas) {
-          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, Math.random() * canvas.width, canvas.height * 0.7));
+          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, Math.random() * canvas.width, canvas.height * 0.6));
         }
 
-        if (rocketsLeft <= 0) {
-          rocketChallengeActive = false;
-          let elapsed = ((Date.now() - rocketStartTime) / 1000).toFixed(1);
-          if (rocketTimeSpan) rocketTimeSpan.textContent = elapsed + 's';
-          if (rocketResults) rocketResults.style.display = 'block';
-          if (rocketBadge) rocketBadge.style.display = 'none';
+        if (heartTapsLeft <= 0) {
+          heartChallengeActive = false;
+          let elapsed = ((Date.now() - heartStartTime) / 1000).toFixed(1);
+          if (heartTitle) heartTitle.textContent = '💖 CHALLENGE COMPLETE!';
+          if (heartStatus) heartStatus.innerHTML = '<strong style="color: #4ade80;">Completed in ' + elapsed + 's!</strong>';
+          if (heartSub) heartSub.innerHTML = '<strong style="font-size: 11px; color: #f472b6;">You Are Loved ❤️</strong>';
+          if (heartCta) heartCta.style.display = 'none';
         }
       });
-    }
-
-    if (rocketCloseBtn && rocketResults) {
-      rocketCloseBtn.addEventListener('click', () => rocketResults.style.display = 'none');
     }
 
     function runFireworksLoop() {
@@ -1877,10 +1887,17 @@
       if (canvas) canvas.style.display = 'block';
       runFireworksLoop();
 
-      rocketChallengeActive = true;
-      rocketsLeft = 23;
-      if (rocketLeftSpan) rocketLeftSpan.textContent = '23';
-      if (rocketBadge) rocketBadge.style.display = 'block';
+      heartChallengeActive = true;
+      heartTapsLeft = 23;
+      if (heartFillPath) heartFillPath.style.transform = 'scale(0)';
+      if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = '23';
+      if (heartTitle) heartTitle.textContent = '💖 EVENING HEART CHALLENGE';
+      if (heartStatus) {
+        heartStatus.innerHTML = '<span id="hbr-heart-taps-left">23</span> taps remaining';
+      }
+      if (heartSub) heartSub.textContent = 'Fill the heart to complete the challenge!';
+      if (heartCta) heartCta.style.display = 'block';
+      if (heartCard) heartCard.style.display = 'block';
 
       setTimeout(() => stopFireworks(), 300000);
     }
@@ -1888,10 +1905,9 @@
     function stopFireworks() {
       fireworksActive = false;
       isGrandFinale = false;
-      rocketChallengeActive = false;
+      heartChallengeActive = false;
       if (canvas) canvas.style.display = 'none';
-      if (rocketBadge) rocketBadge.style.display = 'none';
-      if (rocketResults) rocketResults.style.display = 'none';
+      if (heartCard) heartCard.style.display = 'none';
       if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
       particles = [];
       fireworksRockets = [];
