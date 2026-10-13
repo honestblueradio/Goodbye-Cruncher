@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.0 iOS FIX) -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.1 PAGE 3) -->
 <!-- ====================================================================== -->
 
 <!-- Scrollbar & Advanced Animation Styles -->
@@ -353,6 +353,7 @@
             <div id="hbr-page-controls" style="display: flex; gap: 4px;">
               <button id="hbr-page1-btn" style="background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.5); border-radius: 4px; color: #93c5fd; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 1</button>
               <button id="hbr-page2-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 2</button>
+              <button id="hbr-page3-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 3</button>
             </div>
           </div>
           <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
@@ -1014,7 +1015,7 @@
       }, {passive: true});
     }
 
-    // Master Broadcast Tracks (With Track 12 updated to Pocketful of Rain / lCrOsTj9QhY)
+    // Master Broadcast Tracks (With Track 13 "Flip The Boss Off" added as first song on Page 3)
     const masterBroadcastTracks = [
       { id: 'WHzTume00O8', name: 'Track One' },
       { id: '4eU3OZFhuHs', name: 'Track Two' },
@@ -1027,7 +1028,8 @@
       { id: '50xdKObdFMI', name: 'Then I Woke Up' },
       { id: 'xbp4fkDo5Jc', name: 'Hooka La' },
       { id: 'Sp8_ymmFVGY', name: 'Everybody Wants To Be Rich' },
-      { id: 'lCrOsTj9QhY', name: 'Pocketful of Rain' }
+      { id: 'lCrOsTj9QhY', name: 'Pocketful of Rain' },
+      { id: 'PPK-QMAYvcI', name: 'Flip The Boss Off', explicit: true }
     ];
 
     const masterInstrumentalTracks = [
@@ -3050,6 +3052,7 @@
     const drawerList = document.getElementById('hbr-drawer-list');
     const page1Btn = document.getElementById('hbr-page1-btn');
     const page2Btn = document.getElementById('hbr-page2-btn');
+    const page3Btn = document.getElementById('hbr-page3-btn');
     const playQ1Btn = document.getElementById('hbr-play-q1-btn');
     const playQ2Btn = document.getElementById('hbr-play-q2-btn');
     const playT3Btn = document.getElementById('hbr-play-t3-btn');
@@ -3070,19 +3073,22 @@
       if (t3Circle3) { t3Circle3.style.background = count >= 3 ? '#22c55e' : '#4b5563'; t3Circle3.style.boxShadow = count >= 3 ? '0 0 6px #22c55e' : 'none'; }
     }
 
-    if (page1Btn && page2Btn) {
-      page1Btn.addEventListener('click', function() {
-        currentDrawerPage = 1;
-        page1Btn.style.background = 'rgba(59,130,246,0.25)'; page1Btn.style.border = '1px solid rgba(59,130,246,0.5)'; page1Btn.style.color = '#93c5fd';
-        page2Btn.style.background = 'rgba(255,255,255,0.06)'; page2Btn.style.border = '1px solid rgba(255,255,255,0.15)'; page2Btn.style.color = '#9ca3af';
-        renderDrawerList();
+    function setActivePage(pageNo) {
+      currentDrawerPage = pageNo;
+      [page1Btn, page2Btn, page3Btn].forEach((btn, idx) => {
+        if (!btn) return;
+        let isSelected = (idx + 1) === pageNo;
+        btn.style.background = isSelected ? 'rgba(59,130,246,0.25)' : 'rgba(255,255,255,0.06)';
+        btn.style.border = isSelected ? '1px solid rgba(59,130,246,0.5)' : '1px solid rgba(255,255,255,0.15)';
+        btn.style.color = isSelected ? '#93c5fd' : '#9ca3af';
       });
-      page2Btn.addEventListener('click', function() {
-        currentDrawerPage = 2;
-        page2Btn.style.background = 'rgba(59,130,246,0.25)'; page2Btn.style.border = '1px solid rgba(59,130,246,0.5)'; page2Btn.style.color = '#93c5fd';
-        page1Btn.style.background = 'rgba(255,255,255,0.06)'; page1Btn.style.border = '1px solid rgba(255,255,255,0.15)'; page1Btn.style.color = '#9ca3af';
-        renderDrawerList();
-      });
+      renderDrawerList();
+    }
+
+    if (page1Btn && page2Btn && page3Btn) {
+      page1Btn.addEventListener('click', () => setActivePage(1));
+      page2Btn.addEventListener('click', () => setActivePage(2));
+      page3Btn.addEventListener('click', () => setActivePage(3));
     }
 
     if (drawerToggle && drawer) {
@@ -3340,7 +3346,7 @@
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
     let isPlaying = false;
-    let currentTrackIndex = 11; // Default to Pocketful of Rain (index 11)
+    let currentTrackIndex = 11; // Pocketful of Rain
     let ytPlayer = null;
     let isDragging = false;
     let startAngle = 0;
@@ -3609,4 +3615,3 @@
 
   })();
 </script>
-
