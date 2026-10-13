@@ -3528,6 +3528,13 @@ function checkEasternTimeFireworks() {
       let track = activePlaylist[index];
       if (trackTitleText) trackTitleText.textContent = track.name;
       
+      if (track && track.name && track.name.toLowerCase().includes("pocketful of rain")) {
+      bankedNotesTotal += 23;
+      saveEverything();
+      if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+      }
+
+      
       checkPurpleRainEffect(track);
 
       let coverUrl = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
