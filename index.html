@@ -249,7 +249,7 @@
   <div id="hbr-birthday-banner" style="display: none; position: relative; z-index: 25; background: linear-gradient(135deg, rgba(236, 72, 153, 0.18) 0%, rgba(190, 24, 93, 0.28) 100%); border: 2px solid #ec4899; border-radius: 14px; padding: 12px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 25px rgba(236,72,153,0.4); pointer-events: none;">
     <div style="font-size: 16px; margin-bottom: 2px; pointer-events: auto;">🌸🌺🌷🌼🌻</div>
     <div class="hbr-birthday-text" style="font-size: 16px; font-weight: 900; color: #f472b6; text-transform: uppercase; letter-spacing: 1px; pointer-events: auto;">
-      Happy Birthday Becca 007 
+      Happy Birthday Becca
     </div>
     <div style="font-size: 16px; margin-top: 2px; pointer-events: auto;">🌼🌻🌸🌺🌷</div>
   </div>
@@ -314,10 +314,6 @@
 
         <div style="display: flex; gap: 6px; flex-wrap: wrap;">
           <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS</button>
-          
-          <!-- NEW RADIO BUTTON ADDED HERE -->
-          <a id="hbr-radio-btn" href="https://youtube.com/@honestblueradio/live" target="_blank" rel="noopener noreferrer" style="background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); border-radius: 6px; color: #fca5a5; font-size: 10px; font-weight: 700; padding: 3px 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;" title="Tune into Honest Blue Radio Station Live">📻 STATION</a>
-
           <button id="hbr-fullscreen-toggle" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">⛶ POP OUT</button>
           <button id="hbr-pip-toggle" style="background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.4); border-radius: 6px; color: #c084fc; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Pop out into floating window for background lock-screen audio">📺 PIP AUDIO</button>
           <button id="hbr-voice-toggle" style="background: rgba(236,72,153,0.15); border: 1px solid rgba(236,72,153,0.4); border-radius: 6px; color: #f472b6; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Enable Voice Control">🎙️ VOICE OFF</button>
@@ -1057,10 +1053,10 @@
 
     // Master Broadcast Tracks
     const masterBroadcastTracks = [
-      { id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
-      { id: '4eU3OZFhuHs', name: 'Dice On The Table' },
-      { id: 'KE639OtYFT0', name: 'Created To Be Creative' },
-      { id: 'LUeRO7sRCNs', name: 'One Mans Heart' },
+      { id: 'WHzTume00O8', name: 'Track One' },
+      { id: '4eU3OZFhuHs', name: 'Track Two' },
+      { id: 'KE639OtYFT0', name: 'Track Three' },
+      { id: 'LUeRO7sRCNs', name: 'Track Four' },
       { id: '8RBKgI3gXUU', name: 'Tiger Woods Is The GOAT Remix' },
       { id: 'XAwHccEPYhQ', name: 'Be Kind' },
       { id: 'nxt1BB0zr_8', name: 'Mickey' },
@@ -1069,11 +1065,6 @@
       { id: 'xbp4fkDo5Jc', name: 'Hooka La' },
       { id: 'Sp8_ymmFVGY', name: 'Everybody Wants To Be Rich' },
       { id: 'lCrOsTj9QhY', name: 'Pocketful of Rain' },
-      { id: 'AaU-C7RzhQQ', name: 'Becca Bond' },
-      { id: 'sM2jmxQfcUw', name: 'Small Little Ripple' },
-      { id: 'RGP2AokFDsw', name: 'Facebook Ghosts' },
-      { id: 'uKpMfAAz340', name: 'Happily Ever After' },
-      { id: 'j6N_CdCYUTw', name: 'Smile Jay' },
       { id: 'PPK-QMAYvcI', name: 'Flip The Boss Off', explicit: true }
     ];
 
@@ -2227,61 +2218,6 @@
                 renderStoreList();
               });
             }
-function stopFireworks() {
-  fireworksActive = false;
-  isGrandFinale = false;
-  heartChallengeActive = false;
-  if (canvas) canvas.style.display = 'none';
-  if (heartCard) heartCard.style.display = 'none';
-  if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
-  particles = [];
-  fireworksRockets = [];
-  showGoodnightMessage();
-}
-
-function showGoodnightMessage() {
-  let existing = document.getElementById('hbr-goodnight-text');
-  if (existing) existing.remove();
-
-  const msg = document.createElement('div');
-  msg.id = 'hbr-goodnight-text';
-  msg.textContent = 'Goodnight Sweethearts';
-  
-  Object.assign(msg.style, {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%) scale(0.5)',
-    color: '#f472b6',
-    fontSize: '32px',
-    fontWeight: '900',
-    fontFamily: 'sans-serif',
-    textTransform: 'uppercase',
-    letterSpacing: '2px',
-    textAlign: 'center',
-    textShadow: '0 0 20px rgba(244, 114, 182, 0.8), 0 0 40px rgba(236, 72, 153, 0.6)',
-    zIndex: '999999',
-    pointerEvents: 'none',
-    opacity: '0',
-    transition: 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-  });
-
-  document.body.appendChild(msg);
-
-  requestAnimationFrame(() => {
-    msg.style.opacity = '1';
-    msg.style.transform = 'translate(-50%, -50%) scale(1.1)';
-  });
-
-  setTimeout(() => {
-    msg.style.opacity = '0';
-    msg.style.transform = 'translate(-50%, -50%) scale(0.8)';
-    setTimeout(() => msg.remove(), 600);
-  }, 4000);
-}
-
-function checkEasternTimeFireworks() {
-...
 
             formatsRow.appendChild(fmtBtn);
           });
@@ -2711,7 +2647,6 @@ function checkEasternTimeFireworks() {
     }
 
     setInterval(checkEasternTimeFireworks, 1000);
-
 
     // Dynamic Listener Counter Algorithm
     const listenerElement = document.getElementById('hbr-listeners');
@@ -3528,13 +3463,6 @@ function checkEasternTimeFireworks() {
       currentTrackIndex = index;
       let track = activePlaylist[index];
       if (trackTitleText) trackTitleText.textContent = track.name;
-      
-      if (track && track.name && track.name.toLowerCase().includes("pocketful of rain")) {
-      bankedNotesTotal += 23;
-      saveEverything();
-      if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-      }
-
       
       checkPurpleRainEffect(track);
 
