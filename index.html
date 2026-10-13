@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.1 PAGE 3) -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.1 PAGE 4) -->
 <!-- ====================================================================== -->
 
 <!-- Scrollbar & Advanced Animation Styles -->
@@ -162,7 +162,6 @@
     100% { transform: scale(2.2); opacity: 0; }
   }
 
-  /* Purple Rain Drop Animation */
   @keyframes hbrPurpleRainFall {
     0% { transform: translateY(-20px); opacity: 0; }
     15% { opacity: 0.9; }
@@ -226,28 +225,35 @@
     filter: drop-shadow(0 0 6px #f97316);
   }
 
-  .hbr-theme-dark-obsidian { background: #0b0b0f !important; color: #f3f4f6 !important; }
-  .hbr-theme-neon-cyan { border-color: #06b6d4 !important; box-shadow: 0 0 25px rgba(6,182,212,0.35) !important; }
-  .hbr-theme-amber-glow { border-color: #f59e0b !important; box-shadow: 0 0 25px rgba(245,158,11,0.35) !important; }
-  .hbr-flex-center { display: flex; align-items: center; justify-content: center; }
-  .hbr-card-glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(23,23,32,0.85); }
-  
-  .hbr-particle-fx-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 12; overflow: hidden; }
-  .hbr-audio-spectrum-bar { width: 4px; background: linear-gradient(to top, #3b82f6, #60a5fa); border-radius: 2px; transition: height 0.1s ease; }
-  .hbr-storefront-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .hbr-badge-ribbon { background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); color: #fff; font-size: 8px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+  /* Birthday Banner Animation */
+  @keyframes hbrBirthdayGlow {
+    0%, 100% { text-shadow: 0 0 10px #ec4899, 0 0 20px #f472b6, 0 0 30px #db2777; transform: scale(1); }
+    50% { text-shadow: 0 0 15px #f472b6, 0 0 25px #fb7185, 0 0 35px #f43f5e; transform: scale(1.02); }
+  }
 
+  .hbr-birthday-text {
+    animation: hbrBirthdayGlow 3s infinite ease-in-out;
+  }
+
+  .hbr-theme-dark-obsidian { background: #0b0b0f !important; color: #f3f4f6 !important; }
+  .hbr-flex-center { display: flex; align-items: center; justify-content: center; }
+  .hbr-particle-fx-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 12; overflow: hidden; }
+  .hbr-storefront-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .hbr-drawer-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,0.03); transition: background 0.2s ease; }
   .hbr-drawer-row:hover { background: rgba(59,130,246,0.12); }
-  .hbr-button-glow { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-  .hbr-button-glow:hover { transform: translateY(-1px); filter: brightness(1.15); }
-
-  .hbr-modal-backdrop { position: fixed; inset: 0; background: rgba(11,11,15,0.92); backdrop-filter: blur(10px); z-index: 500; display: none; align-items: center; justify-content: center; padding: 16px; }
-  .hbr-modal-card { background: #171720; border: 1px solid #374151; border-radius: 16px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; padding: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.9); }
 </style>
 
 <div style="background: #111115; border-radius: 20px; padding: 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden; transition: all 0.3s ease;" id="hbr-main-app-card">
   
+  <!-- BIRTHDAY BANNER (Displays automatically on October 13th every year, disappears at midnight) -->
+  <div id="hbr-birthday-banner" style="display: none; position: relative; z-index: 25; background: linear-gradient(135deg, rgba(236, 72, 153, 0.18) 0%, rgba(190, 24, 93, 0.28) 100%); border: 2px solid #ec4899; border-radius: 14px; padding: 12px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 25px rgba(236,72,153,0.4); pointer-events: none;">
+    <div style="font-size: 16px; margin-bottom: 2px; pointer-events: auto;">🌸🌺🌷🌼🌻</div>
+    <div class="hbr-birthday-text" style="font-size: 16px; font-weight: 900; color: #f472b6; text-transform: uppercase; letter-spacing: 1px; pointer-events: auto;">
+      Happy Birthday Becca
+    </div>
+    <div style="font-size: 16px; margin-top: 2px; pointer-events: auto;">🌼🌻🌸🌺🌷</div>
+  </div>
+
   <!-- FLOATING HEART STREAM LAYER -->
   <div id="hbr-reaction-stream-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; overflow: hidden;"></div>
 
@@ -744,6 +750,35 @@
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
     const purpleRainLayer = document.getElementById('hbr-purple-rain-layer');
+    const birthdayBanner = document.getElementById('hbr-birthday-banner');
+
+    // Automatic Birthday Banner Check (October 13th every year, displays all day until midnight Eastern Time)
+    function checkBirthdayBanner() {
+      if (!birthdayBanner) return;
+      try {
+        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', month: 'numeric', day: 'numeric', hour: 'numeric', hour12: false });
+        let parts = formatter.formatToParts(new Date());
+        let month = parseInt(parts.find(p => p.type === 'month').value, 10);
+        let day = parseInt(parts.find(p => p.type === 'day').value, 10);
+
+        // October 13th (Month 10, Day 13)
+        if (month === 10 && day === 13) {
+          birthdayBanner.style.display = 'block';
+        } else {
+          birthdayBanner.style.display = 'none';
+        }
+      } catch(e) {
+        let now = new Date();
+        if (now.getMonth() + 1 === 10 && now.getDate() === 13) {
+          birthdayBanner.style.display = 'block';
+        } else {
+          birthdayBanner.style.display = 'none';
+        }
+      }
+    }
+
+    checkBirthdayBanner();
+    setInterval(checkBirthdayBanner, 30000);
 
     // Fullscreen Toggle Logic
     const fullscreenToggleBtn = document.getElementById('hbr-fullscreen-toggle');
@@ -1081,7 +1116,6 @@
       mantraDate: ''
     };
 
-    // Master Positive Mantra Pool (3 selected based on day of year)
     const masterMantrasPool = [
       "I am loved",
       "Today will be a great day",
