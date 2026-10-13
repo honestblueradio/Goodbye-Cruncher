@@ -1,23 +1,274 @@
-<div style="background: #111115; border-radius: 20px; padding: 24px 24px 24px 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden;" id="hbr-main-app-card">
+<!-- ====================================================================== -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.1 PAGE 4) -->
+<!-- ====================================================================== -->
+
+<!-- Scrollbar & Advanced Animation Styles -->
+<style type="text/css">
+  .hbr-fullscreen-mode {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+    z-index: 999999 !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+    padding: 24px 16px !important;
+    background: #111115 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  #hbr-playlist-drawer::-webkit-scrollbar,
+  #hbr-bio-panel::-webkit-scrollbar,
+  #hbr-store-overlay::-webkit-scrollbar,
+  #hbr-profile-modal::-webkit-scrollbar,
+  #hbr-mantra-modal::-webkit-scrollbar,
+  #hbr-art-modal::-webkit-scrollbar,
+  #hbr-art-lightbox-modal::-webkit-scrollbar,
+  #hbr-main-app-card::-webkit-scrollbar {
+    width: 6px;
+  }
+  #hbr-playlist-drawer::-webkit-scrollbar-track,
+  #hbr-bio-panel::-webkit-scrollbar-track,
+  #hbr-store-overlay::-webkit-scrollbar-track,
+  #hbr-profile-modal::-webkit-scrollbar-track,
+  #hbr-mantra-modal::-webkit-scrollbar-track,
+  #hbr-art-modal::-webkit-scrollbar-track,
+  #hbr-art-lightbox-modal::-webkit-scrollbar-track,
+  #hbr-main-app-card::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+  }
+  #hbr-playlist-drawer::-webkit-scrollbar-thumb,
+  #hbr-bio-panel::-webkit-scrollbar-thumb,
+  #hbr-store-overlay::-webkit-scrollbar-thumb,
+  #hbr-profile-modal::-webkit-scrollbar-thumb,
+  #hbr-mantra-modal::-webkit-scrollbar-thumb,
+  #hbr-art-modal::-webkit-scrollbar-thumb,
+  #hbr-art-lightbox-modal::-webkit-scrollbar-thumb,
+  #hbr-main-app-card::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 4px;
+  }
+
+  @keyframes hbrFloatAndFade {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    15% { opacity: 1; transform: translateY(-20px) scale(1.1); }
+    80% { opacity: 0.9; }
+    100% { transform: translateY(-220px) scale(1.2); opacity: 0; }
+  }
+
+  .hbr-floating-heart {
+    position: absolute;
+    font-size: 24px;
+    pointer-events: none;
+    user-select: none;
+    animation: hbrFloatAndFade 2.2s ease-out forwards;
+    filter: drop-shadow(0 0 10px rgba(236,72,153,0.8));
+    z-index: 95;
+  }
+
+  @keyframes hbrPulseGlow {
+    0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { transform: scale(1.08); opacity: 0.85; box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+    100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+  }
+
+  .hbr-live-active-dot {
+    animation: hbrPulseGlow 1.6s infinite ease-in-out !important;
+  }
+
+  @keyframes hbrNaturalSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .hbr-spinning-native {
+    animation: hbrNaturalSpin 2.2s linear infinite !important;
+  }
+
+  @keyframes hbrCoverFlipSpin {
+    0% { transform: scale(0.3) rotate(-180deg); opacity: 0; filter: brightness(2) blur(8px); }
+    60% { transform: scale(1.08) rotate(10deg); opacity: 1; filter: brightness(1.2) blur(0px); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; filter: brightness(1) blur(0px); }
+  }
+
+  .hbr-cover-spin-forward {
+    animation: hbrCoverFlipSpin 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+  }
+
+  @keyframes hbrLightboxZoomIn {
+    0% { transform: scale(0.4) rotate(-10deg); opacity: 0; filter: blur(12px); }
+    70% { transform: scale(1.05) rotate(2deg); opacity: 1; filter: blur(0px); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; filter: blur(0px); }
+  }
+
+  .hbr-lightbox-zoom-anim {
+    animation: hbrLightboxZoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+  }
+
+  @keyframes hbrGoldRingShine {
+    0%, 80% {
+      box-shadow: 0 0 0 2px #f59e0b, 0 0 10px rgba(245, 158, 11, 0.6);
+      border-color: #fef08a;
+    }
+    85%, 95% {
+      box-shadow: 0 0 0 4px #ffffff, 0 0 22px #f59e0b, 0 0 35px #fbbf24;
+      border-color: #ffffff;
+      transform: scale(1.06);
+    }
+    100% {
+      box-shadow: 0 0 0 2px #f59e0b, 0 0 10px rgba(245, 158, 11, 0.6);
+      border-color: #fef08a;
+      transform: scale(1);
+    }
+  }
+
+  .hbr-gold-ring-badge {
+    animation: hbrGoldRingShine 10s infinite ease-in-out !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(180, 83, 9, 0.35) 100%);
+    border: 2px solid #fef08a;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 9px;
+    font-weight: 800;
+    color: #fef3c7;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+    transition: transform 0.2s ease;
+  }
+
+  @keyframes hbrFloatUp {
+    0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
+    20% { opacity: 0.95; }
+    80% { opacity: 0.95; }
+    100% { transform: translateY(-220px) scale(1.2) rotate(25deg); opacity: 0; }
+  }
+
+  @keyframes hbrPopBurst {
+    0% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 12px #60a5fa) brightness(2); }
+    50% { transform: scale(2.2); opacity: 0.8; filter: drop-shadow(0 0 20px #93c5fd) brightness(3); }
+    100% { transform: scale(2.8); opacity: 0; }
+  }
+
+  @keyframes hbrBubblePopBurst {
+    0% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.6); opacity: 0.5; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+
+  @keyframes hbrPurpleRainFall {
+    0% { transform: translateY(-20px); opacity: 0; }
+    15% { opacity: 0.9; }
+    85% { opacity: 0.9; }
+    100% { transform: translateY(340px); opacity: 0; }
+  }
+
+  .hbr-purple-raindrop {
+    position: absolute;
+    width: 2px;
+    height: 16px;
+    background: linear-gradient(to bottom, rgba(168,85,247,0), #c084fc, #9333ea);
+    border-radius: 2px;
+    pointer-events: none;
+    animation: hbrPurpleRainFall 1.4s linear infinite;
+    z-index: 13;
+  }
+
+  .hbr-note-active {
+    position: absolute;
+    color: #60a5fa;
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.9);
+    cursor: pointer;
+    user-select: none;
+    pointer-events: auto !important;
+    animation: hbrFloatUp 4.2s linear forwards;
+    transition: color 0.2s ease;
+  }
+
+  .hbr-note-popped {
+    animation: hbrPopBurst 0.28s ease-out forwards !important;
+    pointer-events: none !important;
+  }
+
+  .hbr-bubble-active {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, rgba(34, 211, 238, 0.4) 40%, rgba(6, 182, 212, 0.2) 70%, rgba(255, 255, 255, 0.6) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    user-select: none;
+    pointer-events: auto !important;
+    animation: hbrFloatUp 4.5s linear forwards;
+  }
+
+  .hbr-bubble-popped {
+    animation: hbrBubblePopBurst 0.2s ease-out forwards !important;
+    pointer-events: none !important;
+  }
+
+  .hbr-firework-unlit {
+    position: absolute;
+    font-size: 22px;
+    cursor: pointer;
+    user-select: none;
+    pointer-events: auto !important;
+    animation: hbrFloatUp 3.8s linear forwards;
+    filter: drop-shadow(0 0 6px #f97316);
+  }
+
+  /* Birthday Banner Animation */
+  @keyframes hbrBirthdayGlow {
+    0%, 100% { text-shadow: 0 0 10px #ec4899, 0 0 20px #f472b6, 0 0 30px #db2777; transform: scale(1); }
+    50% { text-shadow: 0 0 15px #f472b6, 0 0 25px #fb7185, 0 0 35px #f43f5e; transform: scale(1.02); }
+  }
+
+  .hbr-birthday-text {
+    animation: hbrBirthdayGlow 3s infinite ease-in-out;
+  }
+
+  .hbr-theme-dark-obsidian { background: #0b0b0f !important; color: #f3f4f6 !important; }
+  .hbr-flex-center { display: flex; align-items: center; justify-content: center; }
+  .hbr-particle-fx-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 12; overflow: hidden; }
+  .hbr-storefront-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .hbr-drawer-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,0.03); transition: background 0.2s ease; }
+  .hbr-drawer-row:hover { background: rgba(59,130,246,0.12); }
+</style>
+
+<div style="background: #111115; border-radius: 20px; padding: 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden; transition: all 0.3s ease;" id="hbr-main-app-card">
   
+  <!-- BIRTHDAY BANNER (Displays automatically on October 13th every year, disappears at midnight) -->
+  <div id="hbr-birthday-banner" style="display: none; position: relative; z-index: 25; background: linear-gradient(135deg, rgba(236, 72, 153, 0.18) 0%, rgba(190, 24, 93, 0.28) 100%); border: 2px solid #ec4899; border-radius: 14px; padding: 12px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 25px rgba(236,72,153,0.4); pointer-events: none;">
+    <div style="font-size: 16px; margin-bottom: 2px; pointer-events: auto;">🌸🌺🌷🌼🌻</div>
+    <div class="hbr-birthday-text" style="font-size: 16px; font-weight: 900; color: #f472b6; text-transform: uppercase; letter-spacing: 1px; pointer-events: auto;">
+      Happy Birthday Becca
+    </div>
+    <div style="font-size: 16px; margin-top: 2px; pointer-events: auto;">🌼🌻🌸🌺🌷</div>
+  </div>
+
   <!-- FLOATING HEART STREAM LAYER -->
   <div id="hbr-reaction-stream-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; overflow: hidden;"></div>
+
+  <!-- PURPLE RAIN OVERLAY CONTAINER -->
+  <div id="hbr-purple-rain-layer" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 12; overflow: hidden; background: radial-gradient(circle at center, rgba(147, 51, 234, 0.18) 0%, rgba(11, 11, 15, 0.4) 100%);"></div>
+
+  <!-- RUNNING & NAPPING DOG COMPANION LAYER -->
+  <div id="hbr-dog-companion" style="display: none; position: absolute; bottom: 18px; left: 20px; font-size: 26px; z-index: 85; pointer-events: none; user-select: none; transition: transform 0.4s ease, bottom 0.4s ease; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8);">🐕</div>
 
   <!-- Fireworks Overlay Canvas -->
   <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; z-index: 100; display: none;"></canvas>
 
-  <!-- Rapid Fire 100 Rockets Challenge Badge (Bottom Right) -->
-  <div id="hbr-rocket-challenge-badge" style="display: none; position: absolute; bottom: 16px; right: 16px; background: rgba(17,17,21,0.92); border: 2px solid #f97316; border-radius: 12px; padding: 10px 14px; z-index: 120; box-shadow: 0 6px 20px rgba(0,0,0,0.8); text-align: center; cursor: pointer; user-select: none;">
-    <div style="font-size: 10px; font-weight: 800; color: #fb923c; text-transform: uppercase; margin-bottom: 2px;">🚀 ROCKET CHALLENGE</div>
-    <div style="font-size: 12px; font-weight: 700; color: #fff;"><span id="hbr-rocket-left">100</span> / 100 LEFT</div>
-    <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;">Tap fast to fire!</div>
-  </div>
-
-  <!-- Rocket Challenge Results Overlay -->
-  <div id="hbr-rocket-results" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.95); border: 2px solid #22c55e; border-radius: 14px; padding: 16px 24px; z-index: 160; box-shadow: 0 8px 32px rgba(0,0,0,0.9); text-align: center;">
-    <span style="font-size: 15px; font-weight: 800; color: #4ade80; display: block; margin-bottom: 4px;">🏆 CHALLENGE COMPLETE!</span>
-    <span style="font-size: 12px; color: #d1d5db; display: block; margin-bottom: 12px;">You fired 100 rockets in <strong id="hbr-rocket-time" style="color: #60a5fa;">0.0s</strong>!</span>
-    <button id="hbr-rocket-close-btn" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">AWESOME!</button>
+  <!-- Native PiP Audio Bypass Container -->
+  <div style="display: none;">
+    <video id="hbr-pip-video" playsinline x-webkit-airplay="allow" width="320" height="180"></video>
   </div>
 
   <!-- PWA Installation Modal Overlay -->
@@ -48,37 +299,53 @@
   
   <!-- Content Container -->
   <div style="position: relative; z-index: 2;">
-    <!-- Header with Track Drawer Toggle, Live Status & Dynamic Listener Counter -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+    <!-- Header with Track Drawer Toggle, Fullscreen Toggle, PiP Audio, Voice Control & Dynamic Listener Counter -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
       <div>
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
           <span id="hbr-mode-title" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #3b82f6; font-weight: 700; display: block;">Honest Blue Radio</span>
           
-          <!-- Live Stream Indicator Badge -->
-          <a id="hbr-live-indicator" href="https://youtube.com/@honestblueradio/live" target="_blank" rel="noopener noreferrer" title="Watch live stream on YouTube" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(255, 255, 255, 0.05); border: 1px solid #374151; border-radius: 12px; padding: 2px 7px; text-decoration: none; transition: all 0.3s ease; cursor: default; user-select: none;">
-            <span id="hbr-live-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #6b7280; display: inline-block; transition: background 0.3s ease;"></span>
-            <span id="hbr-live-text" style="font-size: 9px; font-weight: 800; color: #9ca3af; letter-spacing: 0.5px; transition: color 0.3s ease;">OFF AIR</span>
+          <!-- Pulsing On Air Indicator Badge Linking to Most Recent Video -->
+          <a id="hbr-live-indicator" href="https://youtube.com/@honestblueradio/videos" target="_blank" rel="noopener noreferrer" title="Watch most recent video on YouTube" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 12px; padding: 2px 7px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; user-select: none;">
+            <span id="hbr-live-dot" class="hbr-live-active-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
+            <span id="hbr-live-text" style="font-size: 9px; font-weight: 800; color: #ef4444; letter-spacing: 0.5px;">ON AIR</span>
           </a>
         </div>
 
-        <div style="display: flex; gap: 6px;">
-          <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS &amp; PLAYLISTS</button>
-          <button id="hbr-install-btn" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL APP</button>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS</button>
+          <button id="hbr-fullscreen-toggle" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">⛶ POP OUT</button>
+          <button id="hbr-pip-toggle" style="background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.4); border-radius: 6px; color: #c084fc; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Pop out into floating window for background lock-screen audio">📺 PIP AUDIO</button>
+          <button id="hbr-voice-toggle" style="background: rgba(236,72,153,0.15); border: 1px solid rgba(236,72,153,0.4); border-radius: 6px; color: #f472b6; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Enable Voice Control">🎙️ VOICE OFF</button>
+          <button id="hbr-install-btn" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); border-radius: 6px; color: #4ade80; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL</button>
         </div>
       </div>
       <!-- Animated Live Listener Badge with Green Person Icon -->
       <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;"><span style="color: #4ade80; font-size: 12px;">👤</span><span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span></div>
     </div>
 
-    <!-- User Top Profile Banner (Appears Up Top When Profile Created) -->
+    <!-- User Top Profile Banner with Gold Ring Store Showcase & Dynamic Mantra Selector -->
     <div id="hbr-top-profile-banner" style="display: none; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; align-items: center; gap: 10px;">
       <div id="hbr-top-banner-avatar-frame" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
         <img id="hbr-top-banner-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
         <span id="hbr-top-banner-fallback" style="font-size: 18px;">🎧</span>
       </div>
       <div style="flex: 1; overflow: hidden;">
-        <div id="hbr-top-banner-name" style="font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Listener</div>
-        <div id="hbr-top-banner-badge" style="font-size: 9px; font-weight: 700; color: #93c5fd; background: rgba(59,130,246,0.25); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 3px;">Excellent Keyboardist</div>
+        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+          <div id="hbr-top-banner-name" style="font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Listener</div>
+          <!-- Dynamic Gold Ring Store Badges Container -->
+          <div id="hbr-top-banner-gold-rings" style="display: flex; gap: 4px; flex-wrap: wrap;">&nbsp;</div>
+        </div>
+        
+        <!-- Badge Title & Daily Mantra Button Side-by-Side -->
+        <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 3px;">
+          <div id="hbr-top-banner-badge" style="font-size: 9px; font-weight: 700; color: #93c5fd; background: rgba(59,130,246,0.25); padding: 2px 6px; border-radius: 4px; display: inline-block;">Guitar Shredder</div>
+          
+          <!-- TODAY'S MANTRA BUTTON NEXT TO SELECTED BADGE -->
+          <button id="hbr-top-mantra-btn" style="background: rgba(236, 72, 153, 0.2); border: 1px solid rgba(236, 72, 153, 0.5); color: #f472b6; border-radius: 4px; font-size: 9px; font-weight: 800; padding: 2px 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;" title="Click to choose or change today's positive mantra!">
+            <span>✨</span> <span id="hbr-top-mantra-text">+ Select Today's Mantra</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -92,6 +359,7 @@
             <div id="hbr-page-controls" style="display: flex; gap: 4px;">
               <button id="hbr-page1-btn" style="background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.5); border-radius: 4px; color: #93c5fd; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 1</button>
               <button id="hbr-page2-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 2</button>
+              <button id="hbr-page3-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 3</button>
             </div>
           </div>
           <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
@@ -153,7 +421,7 @@
     </div>
 
     <!-- Turntable Deck Frame -->
-    <div id="hbr-deck-frame" style="position: relative; background: rgba(26,26,36,0.85); backdrop-filter: blur(4px); border-radius: 16px; padding: 24px 20px 20px; text-align: center; overflow: hidden; border: 1px solid #2a2a3a; margin-bottom: 20px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
+    <div id="hbr-deck-frame" style="position: relative; background: rgba(26,26,36,0.85); backdrop-filter: blur(4px); border-radius: 16px; padding: 24px 20px 20px; text-align: center; overflow: hidden; border: 1px solid #2a2a3a; margin-bottom: 14px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);">
       <canvas id="hbr-game-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 18;"></canvas>
       <div id="hbr-notes-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15; overflow: hidden;">&nbsp;</div>
       <div id="hbr-times-up" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.92); border: 2px solid #ef4444; border-radius: 12px; padding: 12px 20px; z-index: 25; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center;"><span id="hbr-banner-title" style="font-size: 14px; font-weight: 800; color: #ef4444; display: block; margin-bottom: 2px;">TIME&#39;S UP!</span> <span style="font-size: 11px; color: #d1d5db;"><span id="hbr-banner-msg">You popped <strong id="hbr-final-count" style="color: #60a5fa;">0</strong> notes!</span></span></div>
@@ -177,6 +445,11 @@
           </div>
         </div>
 
+        <!-- MANUAL CLEAR BANKED NOTES BUTTON -->
+        <div style="margin-bottom: 8px;">
+          <button id="hbr-store-clear-notes-btn" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; border-radius: 6px; font-size: 9px; font-weight: 800; padding: 5px 10px; cursor: pointer; width: 100%;">🗑️ RESET / CLEAR BANKED NOTES TO 0</button>
+        </div>
+
         <!-- Store Event Alert Box & Interactive Shoplifter Catch Button -->
         <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
 
@@ -186,10 +459,11 @@
           <div style="font-size: 9px; color: #fee2e2; margin-top: 2px;">TAP HERE FAST TO TACKLE THE THIEF! (<span id="hbr-thief-timer">3</span>s)</div>
         </div>
 
-        <!-- Store Navigation Tabs (Stores vs Movies) -->
+        <!-- Store Navigation Tabs (Stores vs Movies vs Characters) -->
         <div style="display: flex; gap: 4px; margin-bottom: 8px;">
           <button id="hbr-tab-stores-btn" style="flex: 1; background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 6px; color: #93c5fd; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🏪 STORES</button>
-          <button id="hbr-tab-movies-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🍿 BLOCKBUSTER MOVIES</button>
+          <button id="hbr-tab-movies-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🍿 MOVIES</button>
+          <button id="hbr-tab-chars-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🐶 CHARACTERS</button>
         </div>
 
         <!-- Store Items Container -->
@@ -199,7 +473,7 @@
       <!-- DJ INTERACTIVE RECORD CONTAINER -->
       <div id="hbr-dj-container" style="position: relative; width: 200px; height: 200px; margin: 0 auto; cursor: grab; user-select: none; -webkit-user-select: none; z-index: 5;">
         <!-- Dynamic Track Album Cover Art Behind Record -->
-        <div id="hbr-record-art" style="position: absolute; top: 12px; left: 12px; width: 176px; height: 176px; border-radius: 12px; background-image: url('https://img.youtube.com/vi/WHzTume00O8/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.35; filter: contrast(1.1) brightness(0.9); transition: background-image 0.5s ease; pointer-events: none; z-index: 1; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1);">&nbsp;</div>
+        <div id="hbr-record-art" style="position: absolute; top: 12px; left: 12px; width: 176px; height: 176px; border-radius: 12px; background-image: url('https://img.youtube.com/vi/Sp8_ymmFVGY/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.35; filter: contrast(1.1) brightness(0.9); transition: background-image 0.5s ease; pointer-events: none; z-index: 1; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1);">&nbsp;</div>
 
         <!-- Record Sleeve & Vinyl Disc -->
         <div id="hbr-record" style="width: 100%; height: 100%; border-radius: 50%; background: repeating-radial-gradient(#111116 0px, #111116 2px, #22222d 3px, #111116 4px); position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; transform-origin: center center; z-index: 2;">
@@ -213,16 +487,63 @@
           <div style="width: 14px; height: 22px; background: #ef4444; border-radius: 2px; position: absolute; bottom: 8px; left: 12px; transform: rotate(12deg); border: 1px solid #b91c1c;">&nbsp;</div>
         </div>
       </div>
-      <div style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;"><iframe allow="autoplay" frameborder="0" id="hbr-engine" src="https://www.youtube.com/embed/WHzTume00O8?enablejsapi=1&amp;modestbranding=1&amp;rel=0&amp;iv_load_policy=3" title="Honest Blue Radio Engine"></iframe></div>
+      <!-- YouTube API Player Container (Interactive JavaScript API Mount with enablejsapi=1) -->
+      <div id="hbr-player-container" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;">
+        <div id="hbr-yt-player"></div>
+      </div>
     </div>
 
-    <!-- Vinyl Color Picker Bar -->
-    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px;"><span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700; margin-right: 4px;">Vinyl Color:</span><button class="hbr-color-btn" data-color="#3b82f6" data-dark="#1d4ed8" style="background: #3b82f6; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #ffffff; cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 0 6px rgba(59,130,246,0.6);" title="Classic Blue"></button><button class="hbr-color-btn" data-color="#a855f7" data-dark="#7e22ce" style="background: #a855f7; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Neon Purple"></button><button class="hbr-color-btn" data-color="#22c55e" data-dark="#15803d" style="background: #22c55e; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Emerald Green"></button><button class="hbr-color-btn" data-color="#f97316" data-dark="#c2410c" style="background: #f97316; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Sunset Orange"></button><button class="hbr-color-btn" data-color="#ec4899" data-dark="#be185d" style="background: #ec4899; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Hot Pink"></button></div>
+    <!-- IOS ZENFOLIO DIRECT WRAPPER CARD (Bypasses iOS Iframe Black Screen Bug) -->
+    <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; text-align: center;">
+      <div style="font-size: 11px; font-weight: 800; color: #93c5fd; text-transform: uppercase; margin-bottom: 4px;">🎧 MOBILE / iOS STREAM LAUNCHER</div>
+      <div style="font-size: 10px; color: #d1d5db; margin-bottom: 10px;">If the native player above runs into issues on mobile Safari, launch directly below:</div>
+      <a href="https://jaysonsphotography.zenfolio.com/blog/2026/10/honest-blue-radio-music" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: #ffffff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 16px; border-radius: 10px; text-decoration: none; display: inline-block; box-shadow: 0 4px 12px rgba(59,99,235,0.4);">
+        Open Zenfolio Music Player ↗
+      </a>
+    </div>
+
+    <!-- Interactive Heart Filling Challenge Overlay Card (Right Under Record Deck) -->
+    <div id="hbr-heart-challenge-card" style="display: none; margin: 0 auto 16px auto; background: rgba(17,17,21,0.95); border: 2px solid #ef4444; border-radius: 14px; padding: 14px 16px; max-width: 290px; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center; user-select: none;">
+      <div style="font-size: 10px; font-weight: 800; color: #fca5a5; text-transform: uppercase; margin-bottom: 8px;" id="hbr-heart-title">💖 EVENING HEART CHALLENGE</div>
+      
+      <!-- Interactive SVG Heart Container -->
+      <div id="hbr-heart-target-btn" style="position: relative; width: 90px; height: 90px; margin: 0 auto 8px auto; cursor: pointer; transition: transform 0.1s ease;" title="Press in the middle of the heart!">
+        <svg viewBox="0 0 32 29.6" style="width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(239,68,68,0.7);">
+          <!-- Background Empty/Outline Path -->
+          <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="rgba(239,68,68,0.1)" stroke="#ef4444" stroke-width="2"/>
+          <!-- Filling Path Masked or Scaled by Progress -->
+          <path id="hbr-heart-fill-path" d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="#ef4444" transform="scale(0)" style="transform-origin: center; transition: transform 0.15s ease;" />
+        </svg>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 9px; font-weight: 800; color: #ffffff; text-shadow: 0 1px 3px rgba(0,0,0,0.9); pointer-events: none;" id="hbr-heart-cta">PRESS HERE</div>
+      </div>
+
+      <div style="font-size: 11px; font-weight: 700; color: #fff;" id="hbr-heart-status"><span id="hbr-heart-taps-left">23</span> taps remaining</div>
+      <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;" id="hbr-heart-sub">Fill the heart to complete the challenge!</div>
+    </div>
+
+    <!-- Companion Dog Toggle Bar (Appears when character purchased) -->
+    <div id="hbr-dog-toggle-bar" style="display: none; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px;">
+      <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700;">Molly Companion:</span>
+      <button id="hbr-dog-toggle-btn" style="background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.5); border-radius: 12px; padding: 4px 12px; font-size: 10px; font-weight: 800; color: #4ade80; cursor: pointer; transition: all 0.2s ease;">🐕 ACTIVE</button>
+    </div>
+
+    <!-- Vinyl Color Picker Bar & See Cover Art Button -->
+    <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+      <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700; margin-right: 2px;">Vinyl:</span>
+      <button class="hbr-color-btn" data-color="#3b82f6" data-dark="#1d4ed8" style="background: #3b82f6; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #ffffff; cursor: pointer; transition: transform 0.2s ease; box-shadow: 0 0 6px rgba(59,130,246,0.6);" title="Classic Blue"></button>
+      <button class="hbr-color-btn" data-color="#a855f7" data-dark="#7e22ce" style="background: #a855f7; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Neon Purple"></button>
+      <button class="hbr-color-btn" data-color="#22c55e" data-dark="#15803d" style="background: #22c55e; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Emerald Green"></button>
+      <button class="hbr-color-btn" data-color="#f97316" data-dark="#c2410c" style="background: #f97316; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Sunset Orange"></button>
+      <button class="hbr-color-btn" data-color="#ec4899" data-dark="#be185d" style="background: #ec4899; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Hot Pink"></button>
+      
+      <!-- SEE COVER ART BUTTON -->
+      <button id="hbr-see-cover-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease; margin-left: 4px;">🖼️ SEE COVER ART</button>
+    </div>
 
     <!-- Track Meta Display -->
     <div style="text-align: center; margin-bottom: 20px;">
-      <div id="hbr-track-title" style="font-size: 16px; font-weight: 700; color: #f3f4f6; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Track One</div>
-      <div id="hbr-subtitle" style="font-size: 12px; color: #6b7280;">Honest Blue Radio &bull; Original Broadcast</div>
+      <div id="hbr-track-title" style="font-size: 16px; font-weight: 700; color: #f3f4f6; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pocketful of Rain</div>
+      <div id="hbr-subtitle" style="font-size: 12px; color: #6b7280;">Honest Blue Radio &bull; Continuous Play Enabled</div>
     </div>
 
     <!-- Player Track & Play Controls -->
@@ -238,16 +559,17 @@
     </div>
 
     <!-- Peel-Back Mode Switcher Buttons (Bottom Left & Right) -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 6px;">
       <div style="display: flex; gap: 4px; flex-wrap: wrap;">
         <button id="hbr-mode-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;"><span id="hbr-mode-btn-text">Instrumentals ⚙</span></button>
         <button id="hbr-christmas-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">⛄ Christmas</button>
         <button id="hbr-disney-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🎨 Jay Draws Disney</button>
+        <button id="hbr-chakras-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Chakras</button>
       </div>
       <a href="https://youtube.com/@honestblueradio?si=FBFJfkEI2OiVEJnD" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;" target="_blank">Catch Content ↗</a>
     </div>
 
-    <!-- Very Bottom "More Honest Blue" Dropdown Section (With Hidden Admin Override) -->
+    <!-- Very Bottom "More Honest Blue" Dropdown Section -->
     <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 8px;">
       <button id="hbr-bio-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 20px; color: #9ca3af; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease;"><span>More Honest Blue</span> <span id="hbr-bio-arrow" style="transition: transform 0.3s ease;">▼</span></button>
 
@@ -259,7 +581,7 @@
             <a href="https://elasticstage.com/honestblue" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(37,99,235,0.4); transition: transform 0.2s ease;" target="_blank">Elastic Stage ↗</a>
             <a href="https://m.youtube.com/channel/UCroiaxn_1E9CskvniQ2rXyQ?ra=m" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(239,68,68,0.4); transition: transform 0.2s ease;" target="_blank">YouTube Music ↗</a>
             <a href="https://open.spotify.com/artist/2jFy8WjRhh5ioortick0AF" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(34,197,94,0.4); transition: transform 0.2s ease;" target="_blank">Spotify ↗</a>
-            <a href="#" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(168,85,247,0.4); transition: transform 0.2s ease;" target="_blank">Apple Music ↗</a>
+            <a href="https://music.apple.com/us/artist/honest-blue/1868033077" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(168,85,247,0.4); transition: transform 0.2s ease;" target="_blank">Apple Music ↗</a>
           </div>
 
           <!-- CREATE / EDIT PROFILE BUTTON AT THE VERY BOTTOM -->
@@ -267,16 +589,54 @@
             <button id="hbr-open-profile-btn" style="width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease;">👤 Create Profile</button>
           </div>
 
-          <!-- SECRET ADMIN OVERRIDE PANEL -->
-          <div id="hbr-admin-section" style="display: none; margin-top: 12px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 10px;">
-            <div style="font-size: 10px; font-weight: 800; color: #ef4444; margin-bottom: 4px; text-transform: uppercase;">🔒 Host Global Remote Override</div>
-            <div style="font-size: 10px; color: #9ca3af; margin-bottom: 6px;">Force ON AIR globally for all listening devices:</div>
-            <button id="hbr-admin-toggle-btn" style="background: #374151; border: 1px solid #4b5563; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 700; padding: 4px 10px; cursor: pointer;">Global ON AIR: OFF</button>
-          </div>
-
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- COVER ART GALLERY & SPIN/ENLARGE MODAL -->
+<div id="hbr-art-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.95); backdrop-filter: blur(12px); z-index: 300; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center;">
+  <div style="background: #171720; border: 1px solid #3b82f6; border-radius: 16px; padding: 20px; width: 100%; max-width: 380px; max-height: 90vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.9); box-sizing: border-box; text-align: center;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 14px;">
+      <span style="font-size: 12px; font-weight: 800; color: #60a5fa; letter-spacing: 0.5px;">🖼️ COVER ART GALLERY</span>
+      <button id="hbr-close-art-modal" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
+    </div>
+
+    <p style="font-size: 10px; color: #d1d5db; line-height: 1.4; margin-bottom: 14px;">
+      Select <strong style="color: #4ade80;">ENLARGE</strong> to zoom in and view cover art up close, or <strong style="color: #60a5fa;">PLAY</strong> to spin the art forward onto your turntable!
+    </p>
+
+    <!-- Interactive Cover Art List -->
+    <div id="hbr-art-gallery-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; text-align: left;">
+      <!-- Populated dynamically via JS -->
+    </div>
+
+    <div style="text-align: right;">
+      <button id="hbr-art-modal-done-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">DONE</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- COVER ART LIGHTBOX ZOOM-IN MODAL (FOR VIEWING) -->
+<div id="hbr-art-lightbox-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.96); backdrop-filter: blur(14px); z-index: 400; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center; flex-direction: column;">
+  <div style="background: #171720; border: 2px solid #3b82f6; border-radius: 16px; padding: 16px; width: 100%; max-width: 340px; box-shadow: 0 16px 50px rgba(0,0,0,0.9); box-sizing: border-box; text-align: center; position: relative;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+      <span id="hbr-lightbox-title" style="font-size: 12px; font-weight: 800; color: #60a5fa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 270px;">Cover Art</span>
+      <button id="hbr-close-lightbox-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
+    </div>
+
+    <!-- Enlarged Zoomed Cover Art Image Container -->
+    <div id="hbr-lightbox-img-box" style="width: 260px; height: 260px; margin: 0 auto 14px auto; border-radius: 12px; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 8px 30px rgba(0,0,0,0.8);">&nbsp;</div>
+
+    <div style="display: flex; gap: 8px;">
+      <button id="hbr-lightbox-play-btn" style="flex: 1; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 8px; color: #fff; font-size: 10px; font-weight: 800; padding: 8px; cursor: pointer; box-shadow: 0 2px 8px rgba(59,130,246,0.4);">▶ PLAY THIS TRACK</button>
+      <button id="hbr-lightbox-close-btn" style="background: #374151; border: none; border-radius: 8px; color: #fff; font-size: 10px; font-weight: 800; padding: 8px 12px; cursor: pointer;">CLOSE</button>
+    </div>
+
   </div>
 </div>
 
@@ -341,6 +701,17 @@
       </div>
     </div>
 
+    <!-- BULLETPROOF BACKUP TOOLS (EXPORT / IMPORT) -->
+    <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; padding: 10px; margin-bottom: 14px;">
+      <div style="font-size: 10px; font-weight: 800; color: #60a5fa; text-transform: uppercase; margin-bottom: 4px;">💾 Bulletproof Save Backup</div>
+      <div style="font-size: 9px; color: #9ca3af; margin-bottom: 8px;">Export your save data as a backup file so you never lose your cash or progress!</div>
+      <div style="display: flex; gap: 6px;">
+        <button id="hbr-export-save-btn" style="flex: 1; background: #2563eb; border: none; border-radius: 6px; color: #fff; font-size: 9px; font-weight: 800; padding: 6px; cursor: pointer;">📤 EXPORT SAVE</button>
+        <button id="hbr-import-save-btn" style="flex: 1; background: #4b5563; border: none; border-radius: 6px; color: #fff; font-size: 9px; font-weight: 800; padding: 6px; cursor: pointer;">📥 IMPORT SAVE</button>
+        <input type="file" id="hbr-import-file-input" accept=".json" style="display: none;">
+      </div>
+    </div>
+
     <div style="text-align: right;">
       <button id="hbr-save-profile-btn" style="background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">💾 SAVE PROFILE</button>
     </div>
@@ -348,162 +719,213 @@
   </div>
 </div>
 
-<!-- Scrollbar & Animation Styles -->
-<style type="text/css">
-  #hbr-playlist-drawer::-webkit-scrollbar,
-  #hbr-bio-panel::-webkit-scrollbar,
-  #hbr-store-overlay::-webkit-scrollbar,
-  #hbr-profile-modal::-webkit-scrollbar {
-    width: 6px;
-  }
-  #hbr-playlist-drawer::-webkit-scrollbar-track,
-  #hbr-bio-panel::-webkit-scrollbar-track,
-  #hbr-store-overlay::-webkit-scrollbar-track,
-  #hbr-profile-modal::-webkit-scrollbar-track {
-    background: rgba(0,0,0,0.2);
-  }
-  #hbr-playlist-drawer::-webkit-scrollbar-thumb,
-  #hbr-bio-panel::-webkit-scrollbar-thumb,
-  #hbr-store-overlay::-webkit-scrollbar-thumb,
-  #hbr-profile-modal::-webkit-scrollbar-thumb {
-    background: #374151;
-    border-radius: 4px;
-  }
+<!-- DAILY POSITIVE MANTRA MODAL OVERLAY -->
+<div id="hbr-mantra-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.94); backdrop-filter: blur(10px); z-index: 210; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center;">
+  <div style="background: #171720; border: 1px solid #ec4899; border-radius: 16px; padding: 20px; width: 100%; max-width: 360px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); box-sizing: border-box; text-align: center;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 12px;">
+      <span style="font-size: 12px; font-weight: 800; color: #f472b6; letter-spacing: 0.5px;">✨ TODAY'S POSITIVE MANTRAS</span>
+      <button id="hbr-close-mantra-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
+    </div>
 
-  @keyframes hbrFloatAndFade {
-    0% { transform: translateY(0) scale(0.8); opacity: 0; }
-    15% { opacity: 1; transform: translateY(-20px) scale(1.1); }
-    80% { opacity: 0.9; }
-    100% { transform: translateY(-220px) scale(1.2); opacity: 0; }
-  }
+    <p style="font-size: 11px; color: #d1d5db; line-height: 1.4; margin-bottom: 14px;">
+      Choose a positive mantra for today! Your mantra displays next to your profile title and switches every day to keep your mindset bright.
+    </p>
 
-  .hbr-floating-heart {
-    position: absolute;
-    font-size: 24px;
-    pointer-events: none;
-    user-select: none;
-    animation: hbrFloatAndFade 2.2s ease-out forwards;
-    filter: drop-shadow(0 0 10px rgba(236,72,153,0.8));
-    z-index: 95;
-  }
+    <!-- Daily 3 Options Container -->
+    <div id="hbr-mantra-options-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+      <!-- Populated dynamically via JS -->
+    </div>
 
-  @keyframes hbrPulseGlow {
-    0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-    70% { transform: scale(1.1); opacity: 0.9; box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
-    100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-  }
+    <div style="font-size: 9px; color: #9ca3af; font-style: italic;">
+      🔄 Fresh mantras rotate every single day at midnight!
+    </div>
 
-  .hbr-live-active-dot {
-    background: #ef4444 !important;
-    animation: hbrPulseGlow 1.8s infinite !important;
-  }
-
-  @keyframes hbrNaturalSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  .hbr-spinning-native {
-    animation: hbrNaturalSpin 2.2s linear infinite !important;
-  }
-
-  @keyframes hbrFloatUp {
-    0% {
-      transform: translateY(0) scale(0.8) rotate(0deg);
-      opacity: 0;
-    }
-    20% { opacity: 0.95; }
-    80% { opacity: 0.95; }
-    100% {
-      transform: translateY(-220px) scale(1.2) rotate(25deg);
-      opacity: 0;
-    }
-  }
-
-  @keyframes hbrPopBurst {
-    0% {
-      transform: scale(1);
-      opacity: 1;
-      filter: drop-shadow(0 0 12px #60a5fa) brightness(2);
-    }
-    50% {
-      transform: scale(2.2);
-      opacity: 0.8;
-      filter: drop-shadow(0 0 20px #93c5fd) brightness(3);
-    }
-    100% {
-      transform: scale(2.8);
-      opacity: 0;
-    }
-  }
-
-  @keyframes hbrBubblePopBurst {
-    0% {
-      transform: scale(1);
-      opacity: 0.9;
-    }
-    50% {
-      transform: scale(1.6);
-      opacity: 0.5;
-    }
-    100% {
-      transform: scale(2.2);
-      opacity: 0;
-    }
-  }
-
-  .hbr-note-active {
-    position: absolute;
-    color: #60a5fa;
-    font-size: 20px;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.9);
-    cursor: pointer;
-    user-select: none;
-    pointer-events: auto !important;
-    animation: hbrFloatUp 4.2s linear forwards;
-    transition: color 0.2s ease;
-  }
-
-  .hbr-note-popped {
-    animation: hbrPopBurst 0.28s ease-out forwards !important;
-    pointer-events: none !important;
-  }
-
-  .hbr-bubble-active {
-    position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, rgba(34, 211, 238, 0.4) 40%, rgba(6, 182, 212, 0.2) 70%, rgba(255, 255, 255, 0.6) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 0 10px rgba(34, 211, 238, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.6);
-    cursor: pointer;
-    user-select: none;
-    pointer-events: auto !important;
-    animation: hbrFloatUp 4.5s linear forwards;
-  }
-
-  .hbr-bubble-popped {
-    animation: hbrBubblePopBurst 0.2s ease-out forwards !important;
-    pointer-events: none !important;
-  }
-
-  .hbr-firework-unlit {
-    position: absolute;
-    font-size: 22px;
-    cursor: pointer;
-    user-select: none;
-    pointer-events: auto !important;
-    animation: hbrFloatUp 3.8s linear forwards;
-    filter: drop-shadow(0 0 6px #f97316);
-  }
-</style>
+  </div>
+</div>
 
 <!-- Player Behavior & Audio Script -->
 <script>
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
+    const purpleRainLayer = document.getElementById('hbr-purple-rain-layer');
+    const birthdayBanner = document.getElementById('hbr-birthday-banner');
 
-    // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync
+    // Automatic Birthday Banner Check (October 13th every year, displays all day until midnight Eastern Time)
+    function checkBirthdayBanner() {
+      if (!birthdayBanner) return;
+      try {
+        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', month: 'numeric', day: 'numeric', hour: 'numeric', hour12: false });
+        let parts = formatter.formatToParts(new Date());
+        let month = parseInt(parts.find(p => p.type === 'month').value, 10);
+        let day = parseInt(parts.find(p => p.type === 'day').value, 10);
+
+        // October 13th (Month 10, Day 13)
+        if (month === 10 && day === 13) {
+          birthdayBanner.style.display = 'block';
+        } else {
+          birthdayBanner.style.display = 'none';
+        }
+      } catch(e) {
+        let now = new Date();
+        if (now.getMonth() + 1 === 10 && now.getDate() === 13) {
+          birthdayBanner.style.display = 'block';
+        } else {
+          birthdayBanner.style.display = 'none';
+        }
+      }
+    }
+
+    checkBirthdayBanner();
+    setInterval(checkBirthdayBanner, 30000);
+
+    // Fullscreen Toggle Logic
+    const fullscreenToggleBtn = document.getElementById('hbr-fullscreen-toggle');
+    let isFullscreenMode = false;
+
+    if (fullscreenToggleBtn && appCard) {
+      fullscreenToggleBtn.addEventListener('click', function() {
+        isFullscreenMode = !isFullscreenMode;
+        if (isFullscreenMode) {
+          appCard.classList.add('hbr-fullscreen-mode');
+          document.body.style.overflow = 'hidden';
+          fullscreenToggleBtn.textContent = '✕ EXIT POP-OUT';
+          fullscreenToggleBtn.style.background = 'rgba(239, 68, 68, 0.15)';
+          fullscreenToggleBtn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+          fullscreenToggleBtn.style.color = '#fca5a5';
+        } else {
+          appCard.classList.remove('hbr-fullscreen-mode');
+          document.body.style.overflow = '';
+          fullscreenToggleBtn.textContent = '⛶ POP OUT';
+          fullscreenToggleBtn.style.background = 'rgba(59, 130, 246, 0.15)';
+          fullscreenToggleBtn.style.borderColor = 'rgba(59, 130, 246, 0.4)';
+          fullscreenToggleBtn.style.color = '#60a5fa';
+        }
+      });
+    }
+
+    // Picture-in-Picture (PiP) Background Audio Bypass Logic
+    const pipToggleBtn = document.getElementById('hbr-pip-toggle');
+    const pipVideo = document.getElementById('hbr-pip-video');
+
+    if (pipToggleBtn && pipVideo) {
+      pipToggleBtn.addEventListener('click', async function() {
+        try {
+          if (!document.pictureInPictureEnabled) {
+            alert("Picture-in-Picture is not supported on this browser/device.");
+            return;
+          }
+
+          if (document.pictureInPictureElement) {
+            await document.exitPictureInPicture();
+            pipToggleBtn.textContent = '📺 PIP AUDIO';
+            pipToggleBtn.style.background = 'rgba(168,85,247,0.15)';
+            pipToggleBtn.style.borderColor = 'rgba(168,85,247,0.4)';
+            pipToggleBtn.style.color = '#c084fc';
+            return;
+          }
+
+          pipVideo.src = "https://www.w3schools.com/html/mov_bbb.mp4";
+          pipVideo.muted = false;
+          await pipVideo.play();
+          await pipVideo.requestPictureInPicture();
+
+          pipToggleBtn.textContent = '✕ CLOSE PIP';
+          pipToggleBtn.style.background = 'rgba(239, 68, 68, 0.15)';
+          pipToggleBtn.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+          pipToggleBtn.style.color = '#fca5a5';
+        } catch (err) {
+          alert("Please ensure audio is playing first before activating PiP mode.");
+        }
+      });
+
+      pipVideo.addEventListener('leavepictureinpicture', function() {
+        pipToggleBtn.textContent = '📺 PIP AUDIO';
+        pipToggleBtn.style.background = 'rgba(168,85,247,0.15)';
+        pipToggleBtn.style.borderColor = 'rgba(168,85,247,0.4)';
+        pipToggleBtn.style.color = '#c084fc';
+      });
+    }
+
+    // Robust Voice Control Implementation (Fixed for mic capture conflicts)
+    const voiceToggleBtn = document.getElementById('hbr-voice-toggle');
+    let recognition = null;
+    let isVoiceActive = false;
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = function(event) {
+        let transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
+        console.log("Voice command heard:", transcript);
+
+        if (transcript.includes('skip') || transcript.includes('next') || transcript.includes('track')) {
+          if (typeof nextBtn !== 'undefined' && nextBtn) nextBtn.click();
+        } else if (transcript.includes('previous') || transcript.includes('back')) {
+          if (typeof prevBtn !== 'undefined' && prevBtn) prevBtn.click();
+        } else if (transcript.includes('play') || transcript.includes('start')) {
+          if (!isPlaying && toggleBtn) toggleBtn.click();
+        } else if (transcript.includes('pause') || transcript.includes('stop')) {
+          if (isPlaying && toggleBtn) toggleBtn.click();
+        }
+      };
+
+      recognition.onerror = function(event) {
+        console.warn("Speech recognition error:", event.error);
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          alert("Microphone permission was blocked. Please check your browser settings to allow microphone access for voice control.");
+          isVoiceActive = false;
+          if (voiceToggleBtn) {
+            voiceToggleBtn.textContent = '🎙️ VOICE OFF';
+            voiceToggleBtn.style.background = 'rgba(236,72,153,0.15)';
+            voiceToggleBtn.style.borderColor = 'rgba(236,72,153,0.4)';
+            voiceToggleBtn.style.color = '#f472b6';
+          }
+        }
+      };
+
+      recognition.onend = function() {
+        if (isVoiceActive && recognition) {
+          try { recognition.start(); } catch(e) {}
+        }
+      };
+    }
+
+    if (voiceToggleBtn) {
+      if (!SpeechRecognition) {
+        voiceToggleBtn.style.display = 'none';
+      } else {
+        voiceToggleBtn.addEventListener('click', function() {
+          isVoiceActive = !isVoiceActive;
+          if (isVoiceActive) {
+            try {
+              recognition.start();
+              voiceToggleBtn.textContent = '🎙️ LISTENING...';
+              voiceToggleBtn.style.background = 'rgba(239, 68, 68, 0.25)';
+              voiceToggleBtn.style.borderColor = '#ef4444';
+              voiceToggleBtn.style.color = '#fca5a5';
+            } catch(e) {
+              isVoiceActive = false;
+              alert("Could not start microphone. Please ensure microphone permissions are granted.");
+            }
+          } else {
+            try { recognition.stop(); } catch(e) {}
+            voiceToggleBtn.textContent = '🎙️ VOICE OFF';
+            voiceToggleBtn.style.background = 'rgba(236,72,153,0.15)';
+            voiceToggleBtn.style.borderColor = 'rgba(236,72,153,0.4)';
+            voiceToggleBtn.style.color = '#f472b6';
+          }
+        });
+      }
+    }
+
+    // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync & Automated Broadcasts
     let globalSocket = null;
     function connectGlobalRelay() {
       globalSocket = new WebSocket('wss://ws.postman-echo.com/raw');
@@ -513,6 +935,8 @@
           let data = JSON.parse(event.data);
           if (data && data.type === 'hbr-heart-tap') {
             triggerGlobalHeartStream();
+          } else if (data && data.type === 'hbr-auto-heart-storm') {
+            triggerAutomatedHeartStorm();
           }
         } catch(e) {}
       };
@@ -543,6 +967,43 @@
         }, i * 90);
       }
     }
+
+    function triggerAutomatedHeartStorm() {
+      if (!streamLayer || !appCard) return;
+      let duration = 10000;
+      let intervalTime = 400;
+      let elapsed = 0;
+
+      let stormInterval = setInterval(() => {
+        elapsed += intervalTime;
+        if (elapsed >= duration) {
+          clearInterval(stormInterval);
+          return;
+        }
+
+        let randomX = Math.random() * (appCard.clientWidth - 40) + 20;
+        let randomY = appCard.clientHeight - 80 - (Math.random() * 100);
+
+        const heart = document.createElement('div');
+        heart.className = 'hbr-floating-heart';
+        heart.textContent = ['❤️', '💖', '💗', '💓', '💕'][Math.floor(Math.random() * 5)];
+        heart.style.left = randomX + 'px';
+        heart.style.top = randomY + 'px';
+        streamLayer.appendChild(heart);
+
+        setTimeout(() => {
+          if (heart.parentNode) heart.parentNode.removeChild(heart);
+        }, 2200);
+      }, intervalTime);
+    }
+
+    setInterval(() => {
+      if (globalSocket && globalSocket.readyState === WebSocket.OPEN) {
+        globalSocket.send(JSON.stringify({ type: 'hbr-auto-heart-storm' }));
+      } else {
+        triggerAutomatedHeartStorm();
+      }
+    }, 600000);
 
     function handleCardTap(e) {
       if (!appCard) return;
@@ -577,13 +1038,13 @@
 
     if (appCard) {
       appCard.addEventListener('click', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-install-modal')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal')) {
           return;
         }
         handleCardTap(e);
       });
       appCard.addEventListener('touchstart', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-install-modal')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal')) {
           return;
         }
         handleCardTap(e);
@@ -600,7 +1061,11 @@
       { id: 'XAwHccEPYhQ', name: 'Be Kind' },
       { id: 'nxt1BB0zr_8', name: 'Mickey' },
       { id: 'av859AL6HOs', name: "Let's Put A Smile On That Face", explicit: true },
-      { id: '50xdKObdFMI', name: 'Then I Woke Up' }
+      { id: '50xdKObdFMI', name: 'Then I Woke Up' },
+      { id: 'xbp4fkDo5Jc', name: 'Hooka La' },
+      { id: 'Sp8_ymmFVGY', name: 'Everybody Wants To Be Rich' },
+      { id: 'lCrOsTj9QhY', name: 'Pocketful of Rain' },
+      { id: 'PPK-QMAYvcI', name: 'Flip The Boss Off', explicit: true }
     ];
 
     const masterInstrumentalTracks = [
@@ -616,6 +1081,10 @@
       { id: '5DiMoehAeOU', name: 'Jay Draws Disney • Relaxing Disney Piano Music' }
     ];
 
+    const masterChakrasTracks = [
+      { id: 'UllduL1OqOc', name: 'Chakras Healing & Meditation Soundscape' }
+    ];
+
     let currentMasterTracks = masterBroadcastTracks;
     let activePlaylist = masterBroadcastTracks;
     let isInstrumentalMode = false;
@@ -626,131 +1095,74 @@
     let currentDrawerPage = 1;
     const tracksPerPage = 6;
 
-    // Live Stream Status with Secret Admin Override
-    const liveIndicator = document.getElementById('hbr-live-indicator');
-    const liveDot = document.getElementById('hbr-live-dot');
-    const liveText = document.getElementById('hbr-live-text');
-    const adminSection = document.getElementById('hbr-admin-section');
-    const adminToggleBtn = document.getElementById('hbr-admin-toggle-btn');
-    const channelId = 'UC43e62x4y5Qh6U6z9fUj2gA';
-
-    let remoteGlobalLive = localStorage.getItem('hbr_global_forced_live') === 'true';
-
-    function publishGlobalLiveState(isLive) {
-      remoteGlobalLive = isLive;
-      localStorage.setItem('hbr_global_forced_live', isLive ? 'true' : 'false');
-      updateLiveUI(isLive);
-    }
-
-    if (adminToggleBtn) {
-      adminToggleBtn.textContent = 'Global ON AIR: ' + (remoteGlobalLive ? 'ON' : 'OFF');
-      adminToggleBtn.style.background = remoteGlobalLive ? '#dc2626' : '#374151';
-      
-      adminToggleBtn.addEventListener('click', function() {
-        const newState = !remoteGlobalLive;
-        publishGlobalLiveState(newState);
-        adminToggleBtn.textContent = 'Global ON AIR: ' + (newState ? 'ON' : 'OFF');
-        adminToggleBtn.style.background = newState ? '#dc2626' : '#374151';
-      });
-    }
-
-    let adminClickCount = 0;
-    const bioTitle = document.querySelector('#hbr-bio-panel div div');
-    if (bioTitle) {
-      bioTitle.style.cursor = 'pointer';
-      bioTitle.addEventListener('click', function() {
-        adminClickCount++;
-        if (adminClickCount >= 3) {
-          adminClickCount = 0;
-          if (adminSection) {
-            adminSection.style.display = adminSection.style.display === 'block' ? 'none' : 'block';
-          }
-        }
-      });
-    }
-
-    function updateLiveUI(isLive) {
-      if (remoteGlobalLive) isLive = true;
-
-      if (isLive) {
-        if (liveDot) liveDot.className = 'hbr-live-active-dot';
-        if (liveDot) liveDot.style.background = '#ef4444';
-        if (liveText) {
-          liveText.textContent = 'ON AIR';
-          liveText.style.color = '#ef4444';
-        }
-        if (liveIndicator) {
-          liveIndicator.style.borderColor = 'rgba(239, 68, 68, 0.5)';
-          liveIndicator.style.background = 'rgba(239, 68, 68, 0.15)';
-          liveIndicator.style.cursor = 'pointer';
-          liveIndicator.href = 'https://youtube.com/@honestblueradio/live';
-          liveIndicator.setAttribute('tabindex', '0');
-        }
-      } else {
-        if (liveDot) liveDot.className = '';
-        if (liveDot) liveDot.style.background = '#6b7280';
-        if (liveText) {
-          liveText.textContent = 'OFF AIR';
-          liveText.style.color = '#9ca3af';
-        }
-        if (liveIndicator) {
-          liveIndicator.style.borderColor = '#374151';
-          liveIndicator.style.background = 'rgba(255, 255, 255, 0.05)';
-          liveIndicator.style.cursor = 'default';
-          liveIndicator.removeAttribute('href');
-          liveIndicator.setAttribute('tabindex', '-1');
-        }
-      }
-    }
-
-    function checkLiveStatus() {
-      if (remoteGlobalLive) {
-        updateLiveUI(true);
-        return;
-      }
-
-      const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + channelId;
-      const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(feedUrl);
-
-      fetch(proxyUrl)
-        .then(res => res.json())
-        .then(data => {
-          let liveActive = false;
-          if (data && data.contents) {
-            let xml = data.contents;
-            if (xml.includes('isLiveBroadcast') || xml.toLowerCase().includes('live')) {
-              liveActive = true;
-            }
-          }
-          updateLiveUI(liveActive);
-        })
-        .catch(() => updateLiveUI(false));
-    }
-
-    checkLiveStatus();
-    setInterval(checkLiveStatus, 20000);
-
     // Bank Notes & Stores State Data
-    let bankedNotesTotal = 0;
+    let bankedNotesTotal = 50;
     let storeCashTotal = 0.00;
     let unrewoundTapesCount = 0;
+    let lastSessionTimestamp = Date.now();
     
     let userOwnedStores = { blockbuster: 0, toysrus: 0, kbtoys: 0 };
     let userOwnedMovies = {};
+    let userOwnedCharacters = { mollydog: 0 };
+
+    let userProfileData = {
+      name: '',
+      avatarUrl: '',
+      badge: 'Guitar Shredder',
+      themeColor: '#3b82f6',
+      themeBg: 'rgba(59, 130, 246, 0.12)',
+      themeBadgeBg: 'rgba(59, 130, 246, 0.25)',
+      selectedMantra: '',
+      mantraDate: ''
+    };
+
+    const masterMantrasPool = [
+      "I am loved",
+      "Today will be a great day",
+      "I am capable of amazing things",
+      "My mind is calm and positive",
+      "I radiate light and kindness",
+      "Great things are coming my way",
+      "I am resilient and strong",
+      "Today I choose joy and peace",
+      "I embrace all good energy",
+      "I am worthy of success and happiness",
+      "Every step I take leads to growth",
+      "I am filled with creative passion"
+    ];
+
+    function getDailyMantras() {
+      let now = new Date();
+      let dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+      
+      let idx1 = dayOfYear % masterMantrasPool.length;
+      let idx2 = (dayOfYear * 3 + 1) % masterMantrasPool.length;
+      let idx3 = (dayOfYear * 7 + 2) % masterMantrasPool.length;
+
+      if (idx2 === idx1) idx2 = (idx1 + 1) % masterMantrasPool.length;
+      if (idx3 === idx1 || idx3 === idx2) idx3 = (idx2 + 1) % masterMantrasPool.length;
+
+      return [masterMantrasPool[idx1], masterMantrasPool[idx2], masterMantrasPool[idx3]];
+    }
 
     const storeCatalog = [
-      { id: 'blockbuster', name: 'Blockbuster Video', baseMin: 50, baseMax: 150, color: '#3b82f6', icon: '📼' },
-      { id: 'toysrus', name: 'Toys "R" Us', baseMin: 120, baseMax: 300, color: '#ec4899', icon: '🦒' },
-      { id: 'kbtoys', name: 'KB Toys', baseMin: 80, baseMax: 220, color: '#ef4444', icon: '🧸' }
+      { id: 'blockbuster', name: 'Blockbuster', label: 'Blockbuster', baseMin: 50, baseMax: 150, color: '#3b82f6', icon: '📼' },
+      { id: 'toysrus', name: 'Toys "R" Us', label: 'Toys R Us', baseMin: 120, baseMax: 300, color: '#ec4899', icon: '🦒' },
+      { id: 'kbtoys', name: 'KB Toys', label: 'KB Toys', baseMin: 80, baseMax: 220, color: '#ef4444', icon: '🧸' }
     ];
 
     const movieCatalog = [
-      { id: 'titanic', name: 'Titanic', rtScore: 88, basePrice: 40 },
-      { id: 'godfather', name: 'The Godfather', rtScore: 98, basePrice: 60 },
-      { id: 'jurassic', name: 'Jurassic Park', rtScore: 92, basePrice: 50 },
-      { id: 'mario93', name: 'Super Mario Bros (1993)', rtScore: 28, basePrice: 20 },
-      { id: 'batmanrobin', name: 'Batman & Robin', rtScore: 12, basePrice: 15 },
-      { id: 'gigli', name: 'Gigli', rtScore: 6, basePrice: 10 }
+      { id: 'batman89', name: 'Batman (1989)', rtScore: 77, rtUrl: 'https://www.rottentomatoes.com/m/batman', basePrice: 45 },
+      { id: 'titanic', name: 'Titanic', rtScore: 88, rtUrl: 'https://www.rottentomatoes.com/m/titanic', basePrice: 40 },
+      { id: 'godfather', name: 'The Godfather', rtScore: 98, rtUrl: 'https://www.rottentomatoes.com/m/the_godfather', basePrice: 60 },
+      { id: 'jurassic', name: 'Jurassic Park', rtScore: 92, rtUrl: 'https://www.rottentomatoes.com/m/jurassic_park', basePrice: 50 },
+      { id: 'mario93', name: 'Super Mario Bros (1993)', rtScore: 28, rtUrl: 'https://www.rottentomatoes.com/m/super_mario_bros', basePrice: 20 },
+      { id: 'batmanrobin', name: 'Batman & Robin', rtScore: 12, rtUrl: 'https://www.rottentomatoes.com/m/batman_and_robin', basePrice: 15 },
+      { id: 'gigli', name: 'Gigli', rtScore: 6, rtUrl: 'https://www.rottentomatoes.com/m/gigli', basePrice: 10 }
+    ];
+
+    const characterCatalog = [
+      { id: 'mollydog', name: 'Molly the Black Lab', price: 250, icon: '🐕', desc: 'Runs around & takes naps on your player!' }
     ];
 
     let currentStorePrices = {};
@@ -778,47 +1190,159 @@
       return count;
     }
 
-    function loadSavedPlaylists() {
+    // BULLETPROOF PERSISTENT SAVE ENGINE
+    function saveEverything() {
       try {
-        const savedQ1 = localStorage.getItem('hbr_custom_queue_1');
-        const savedQ2 = localStorage.getItem('hbr_custom_queue_2');
-        const savedT3 = localStorage.getItem('hbr_custom_top3');
+        const masterSave = {
+          bankedNotes: bankedNotesTotal,
+          storeCash: storeCashTotal,
+          unrewoundTapes: unrewoundTapesCount,
+          lastSessionTime: lastSessionTimestamp,
+          ownedStores: userOwnedStores,
+          ownedMovies: userOwnedMovies,
+          ownedChars: userOwnedCharacters,
+          userProfile: userProfileData,
+          queue1: customQueue1,
+          queue2: customQueue2,
+          top3: customTop3,
+          dogActive: localStorage.getItem('hbr_dog_active') !== 'false'
+        };
+        localStorage.setItem('hbr_persistent_save_v1', JSON.stringify(masterSave));
+        
+        localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString());
+        localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2));
+        localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores));
+        localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
+        localStorage.setItem('hbr_owned_chars', JSON.stringify(userOwnedCharacters));
+        localStorage.setItem('hbr_user_profile', JSON.stringify(userProfileData));
+      } catch(e) {}
+    }
+
+    function loadEverything() {
+      try {
+        let loaded = false;
+        const masterJSON = localStorage.getItem('hbr_persistent_save_v1');
+        if (masterJSON) {
+          const master = JSON.parse(masterJSON);
+          if (master.bankedNotes !== undefined) bankedNotesTotal = master.bankedNotes;
+          if (master.storeCash !== undefined) storeCashTotal = master.storeCash;
+          if (master.unrewoundTapes !== undefined) unrewoundTapesCount = master.unrewoundTapes;
+          if (master.lastSessionTime !== undefined) lastSessionTimestamp = master.lastSessionTime;
+          if (master.ownedStores) userOwnedStores = master.ownedStores;
+          if (master.ownedMovies) userOwnedMovies = master.ownedMovies;
+          if (master.ownedChars) userOwnedCharacters = master.ownedChars;
+          if (master.userProfile) userProfileData = master.userProfile;
+          if (master.queue1) customQueue1 = master.queue1;
+          if (master.queue2) customQueue2 = master.queue2;
+          if (master.top3) customTop3 = master.top3;
+          loaded = true;
+        }
+
         const savedBanked = localStorage.getItem('hbr_banked_notes');
         const savedCash = localStorage.getItem('hbr_store_cash');
         const savedStores = localStorage.getItem('hbr_owned_stores');
         const savedMovies = localStorage.getItem('hbr_owned_movies');
-        const savedUnrewound = localStorage.getItem('hbr_unrewound_tapes');
+        const savedChars = localStorage.getItem('hbr_owned_chars');
+        const savedProfile = localStorage.getItem('hbr_user_profile');
+        const savedQ1 = localStorage.getItem('hbr_custom_queue_1');
+        const savedQ2 = localStorage.getItem('hbr_custom_queue_2');
+        const savedT3 = localStorage.getItem('hbr_custom_top3');
 
+        if (savedBanked !== null) bankedNotesTotal = parseInt(savedBanked, 10) || 0;
+        if (savedCash !== null) storeCashTotal = parseFloat(savedCash) || 0.00;
+        if (savedStores) userOwnedStores = Object.assign(userOwnedStores, JSON.parse(savedStores));
+        if (savedMovies) userOwnedMovies = Object.assign(userOwnedMovies, JSON.parse(savedMovies));
+        if (savedChars) userOwnedCharacters = Object.assign(userOwnedCharacters, JSON.parse(savedChars));
+        if (savedProfile) userProfileData = Object.assign(userProfileData, JSON.parse(savedProfile));
         if (savedQ1) customQueue1 = JSON.parse(savedQ1);
         if (savedQ2) customQueue2 = JSON.parse(savedQ2);
         if (savedT3) customTop3 = JSON.parse(savedT3);
-        if (savedBanked) bankedNotesTotal = parseInt(savedBanked, 10) || 0;
-        if (savedCash) storeCashTotal = parseFloat(savedCash) || 0.00;
-        if (savedStores) userOwnedStores = Object.assign(userOwnedStores, JSON.parse(savedStores));
-        if (savedMovies) userOwnedMovies = Object.assign(userOwnedMovies, JSON.parse(savedMovies));
-        if (savedUnrewound) unrewoundTapesCount = parseInt(savedUnrewound, 10) || 0;
-      } catch (e) {}
+
+        if (!loaded && savedBanked === null && savedCash === null && !savedProfile) {
+          bankedNotesTotal = 50; 
+        }
+
+        let todayStr = new Date().toDateString();
+        if (userProfileData.mantraDate !== todayStr) {
+          userProfileData.selectedMantra = '';
+          userProfileData.mantraDate = todayStr;
+        }
+
+        lastSessionTimestamp = Date.now();
+        saveEverything();
+
+      } catch (e) {
+        bankedNotesTotal = 50;
+      }
     }
 
-    function savePlaylistsToStorage() {
-      try {
-        localStorage.setItem('hbr_custom_queue_1', JSON.stringify(customQueue1));
-        localStorage.setItem('hbr_custom_queue_2', JSON.stringify(customQueue2));
-        localStorage.setItem('hbr_custom_top3', JSON.stringify(customTop3));
-      } catch (e) {}
+    loadEverything();
+
+    // Dog Companion Animation & Toggle Engine
+    const dogCompanion = document.getElementById('hbr-dog-companion');
+    const dogToggleBar = document.getElementById('hbr-dog-toggle-bar');
+    const dogToggleBtn = document.getElementById('hbr-dog-toggle-btn');
+    let dogActive = localStorage.getItem('hbr_dog_active') !== 'false';
+    let dogInterval = null;
+
+    function updateDogUIState() {
+      let isOwned = (userOwnedCharacters.mollydog || 0) > 0;
+      if (dogToggleBar) {
+        dogToggleBar.style.display = isOwned ? 'flex' : 'none';
+      }
+      if (dogCompanion) {
+        dogCompanion.style.display = (isOwned && dogActive) ? 'block' : 'none';
+      }
+      if (dogToggleBtn) {
+        dogToggleBtn.textContent = dogActive ? '🐕 ACTIVE' : '💤 SLEEPING/OFF';
+        dogToggleBtn.style.background = dogActive ? 'rgba(34, 197, 94, 0.2)' : 'rgba(107, 114, 128, 0.2)';
+        dogToggleBtn.style.borderColor = dogActive ? 'rgba(34, 197, 94, 0.5)' : 'rgba(107, 114, 128, 0.5)';
+        dogToggleBtn.style.color = dogActive ? '#4ade80' : '#9ca3af';
+      }
     }
 
-    function saveBankedNotesToStorage() { localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString()); }
-    function saveCashToStorage() { localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2)); }
-    function saveOwnedStoresToStorage() { localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores)); }
-    function saveOwnedMoviesToStorage() {
-      localStorage.setItem('hbr_owned_movies', JSON.stringify(userOwnedMovies));
-      localStorage.setItem('hbr_unrewound_tapes', unrewoundTapesCount.toString());
+    function runDogBehavior() {
+      if (!dogCompanion || !dogActive || (userOwnedCharacters.mollydog || 0) <= 0) return;
+      
+      let actions = ['run-left', 'run-right', 'nap', 'bark', 'sit'];
+      let chosen = actions[Math.floor(Math.random() * actions.length)];
+      
+      let currentLeft = parseInt(dogCompanion.style.left || '20', 10);
+      
+      if (chosen === 'run-left') {
+        let newLeft = Math.max(10, currentLeft - Math.floor(Math.random() * 120 + 40));
+        dogCompanion.style.left = newLeft + 'px';
+        dogCompanion.style.transform = 'scaleX(-1)';
+        dogCompanion.textContent = '🐕';
+      } else if (chosen === 'run-right') {
+        let newLeft = Math.min(appCard.clientWidth - 50, currentLeft + Math.floor(Math.random() * 120 + 40));
+        dogCompanion.style.left = newLeft + 'px';
+        dogCompanion.style.transform = 'scaleX(1)';
+        dogCompanion.textContent = '🐕';
+      } else if (chosen === 'nap') {
+        dogCompanion.textContent = '🛌💤';
+      } else if (chosen === 'bark') {
+        dogCompanion.textContent = '🐶✨';
+      } else {
+        dogCompanion.textContent = '🐕';
+      }
     }
 
-    loadSavedPlaylists();
+    if (dogToggleBtn) {
+      dogToggleBtn.addEventListener('click', function() {
+        dogActive = !dogActive;
+        localStorage.setItem('hbr_dog_active', dogActive ? 'true' : 'false');
+        updateDogUIState();
+      });
+    }
 
-    // User Profile Management & Dynamic UI Sync with Robust Image Compression (PNG/Large Photos Fix)
+    setTimeout(() => {
+      updateDogUIState();
+      if (dogInterval) clearInterval(dogInterval);
+      dogInterval = setInterval(runDogBehavior, 4500);
+    }, 500);
+
+    // Profile & Mantra Modal Mechanics
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
     const closeProfileBtn = document.getElementById('hbr-close-profile-btn');
     const profileModal = document.getElementById('hbr-profile-modal');
@@ -839,30 +1363,13 @@
     const topBannerFrame = document.getElementById('hbr-top-banner-avatar-frame');
     const topBannerName = document.getElementById('hbr-top-banner-name');
     const topBannerBadge = document.getElementById('hbr-top-banner-badge');
+    const topBannerGoldRings = document.getElementById('hbr-top-banner-gold-rings');
 
-    let userProfileData = {
-      name: '',
-      avatarUrl: '',
-      badge: 'Excellent Keyboardist',
-      themeColor: '#3b82f6',
-      themeBg: 'rgba(59, 130, 246, 0.12)',
-      themeBadgeBg: 'rgba(59, 130, 246, 0.25)'
-    };
-
-    function loadProfileFromStorage() {
-      try {
-        const saved = localStorage.getItem('hbr_user_profile');
-        if (saved) userProfileData = Object.assign(userProfileData, JSON.parse(saved));
-      } catch(e) {}
-    }
-
-    function saveProfileToStorage() {
-      try {
-        localStorage.setItem('hbr_user_profile', JSON.stringify(userProfileData));
-      } catch(e) {}
-    }
-
-    loadProfileFromStorage();
+    const topMantraBtn = document.getElementById('hbr-top-mantra-btn');
+    const topMantraText = document.getElementById('hbr-top-mantra-text');
+    const mantraModal = document.getElementById('hbr-mantra-modal');
+    const closeMantraBtn = document.getElementById('hbr-close-mantra-btn');
+    const mantraOptionsList = document.getElementById('hbr-mantra-options-list');
 
     function updateTopProfileBanner() {
       if (!topProfileBanner) return;
@@ -884,6 +1391,30 @@
         }
         if (topBannerFrame) topBannerFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
 
+        if (topMantraText) {
+          if (userProfileData.selectedMantra && userProfileData.selectedMantra.trim() !== '') {
+            topMantraText.textContent = '"' + userProfileData.selectedMantra + '" ✏️';
+          } else {
+            topMantraText.textContent = '+ Select Today\'s Mantra';
+          }
+        }
+
+        if (topBannerGoldRings) {
+          topBannerGoldRings.innerHTML = '';
+          let hasStores = false;
+          storeCatalog.forEach(store => {
+            let count = userOwnedStores[store.id] || 0;
+            if (count > 0) {
+              hasStores = true;
+              let ring = document.createElement('div');
+              ring.className = 'hbr-gold-ring-badge';
+              ring.innerHTML = store.icon + ' ' + store.label + ' ' + count.toLocaleString();
+              topBannerGoldRings.appendChild(ring);
+            }
+          });
+          topBannerGoldRings.style.display = hasStores ? 'flex' : 'none';
+        }
+
         if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
           if (topBannerImg) {
             topBannerImg.src = userProfileData.avatarUrl;
@@ -903,6 +1434,53 @@
     }
 
     updateTopProfileBanner();
+
+    function renderMantraModalList() {
+      if (!mantraOptionsList) return;
+      mantraOptionsList.innerHTML = '';
+
+      let daily3 = getDailyMantras();
+      daily3.forEach(mText => {
+        let isSelected = (userProfileData.selectedMantra === mText);
+        let btn = document.createElement('button');
+        btn.style.width = '100%';
+        btn.style.background = isSelected ? 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)' : 'rgba(255, 255, 255, 0.05)';
+        btn.style.border = isSelected ? '1px solid #f472b6' : '1px solid rgba(255, 255, 255, 0.12)';
+        btn.style.borderRadius = '10px';
+        btn.style.color = '#ffffff';
+        btn.style.fontSize = '12px';
+        btn.style.fontWeight = '700';
+        btn.style.padding = '10px 12px';
+        btn.style.cursor = 'pointer';
+        btn.style.transition = 'all 0.15s ease';
+        btn.style.boxShadow = isSelected ? '0 4px 12px rgba(236,72,153,0.4)' : 'none';
+
+        btn.innerHTML = '✨ "' + mText + '"' + (isSelected ? ' <span style="font-size: 10px; opacity: 0.9;">(ACTIVE)</span>' : '');
+
+        btn.addEventListener('click', function() {
+          userProfileData.selectedMantra = mText;
+          userProfileData.mantraDate = new Date().toDateString();
+          saveEverything();
+          updateTopProfileBanner();
+          if (mantraModal) mantraModal.style.display = 'none';
+        });
+
+        mantraOptionsList.appendChild(btn);
+      });
+    }
+
+    if (topMantraBtn && mantraModal) {
+      topMantraBtn.addEventListener('click', function() {
+        renderMantraModalList();
+        mantraModal.style.display = 'flex';
+      });
+    }
+
+    if (closeMantraBtn && mantraModal) {
+      closeMantraBtn.addEventListener('click', function() {
+        mantraModal.style.display = 'none';
+      });
+    }
 
     function updateProfileModalUI() {
       if (profileNameInput) profileNameInput.value = userProfileData.name;
@@ -957,7 +1535,17 @@
           if (count > 0) {
             hasAnything = true;
             let div = document.createElement('div');
-            div.innerHTML = '🏪 ' + store.name + ': <strong style="color: #60a5fa;">' + count + ' owned</strong>';
+            div.innerHTML = store.icon + ' ' + store.name + ': <strong style="color: #fbbf24;">' + count.toLocaleString() + ' owned (Gold Ring Badge Active)</strong>';
+            profileInventoryList.appendChild(div);
+          }
+        });
+
+        characterCatalog.forEach(char => {
+          let count = userOwnedCharacters[char.id] || 0;
+          if (count > 0) {
+            hasAnything = true;
+            let div = document.createElement('div');
+            div.innerHTML = char.icon + ' ' + char.name + ': <strong style="color: #4ade80;">Unlocked & Companion Active</strong>';
             profileInventoryList.appendChild(div);
           }
         });
@@ -969,14 +1557,14 @@
             if (total > 0) {
               hasAnything = true;
               let div = document.createElement('div');
-              div.innerHTML = '🎬 ' + movie.name + ' (VHS: ' + (inv.vhs || 0) + ', DVD: ' + (inv.dvd || 0) + ', Blu-ray: ' + (inv.bluray || 0) + ')';
+              div.innerHTML = '🎬 ' + movie.name + ' (VHS: ' + (inv.vhs || 0).toLocaleString() + ', DVD: ' + (inv.dvd || 0).toLocaleString() + ', Blu-ray: ' + (inv.bluray || 0).toLocaleString() + ')';
               profileInventoryList.appendChild(div);
             }
           }
         });
 
         if (!hasAnything) {
-          profileInventoryList.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No stores or movies purchased yet. Visit the Store in the app to start buying!</div>';
+          profileInventoryList.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No stores, characters or movies purchased yet. Visit the Store in the app to start buying!</div>';
         }
       }
     }
@@ -1074,10 +1662,59 @@
         if (urlVal !== '') {
           userProfileData.avatarUrl = urlVal;
         }
-        saveProfileToStorage();
+        saveEverything();
         updateTopProfileBanner();
         updateProfileModalUI();
         if (profileModal) profileModal.style.display = 'none';
+      });
+    }
+
+    // Export / Import Backup Handlers
+    const exportSaveBtn = document.getElementById('hbr-export-save-btn');
+    const importSaveBtn = document.getElementById('hbr-import-save-btn');
+    const importFileInput = document.getElementById('hbr-import-file-input');
+
+    if (exportSaveBtn) {
+      exportSaveBtn.addEventListener('click', function() {
+        saveEverything();
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem('hbr_persistent_save_v1'));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", "HonestBlueRadio_SaveBackup.json");
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+      });
+    }
+
+    if (importSaveBtn && importFileInput) {
+      importSaveBtn.addEventListener('click', () => importFileInput.click());
+      importFileInput.addEventListener('change', function(e) {
+        let file = e.target.files[0];
+        if (file) {
+          let reader = new FileReader();
+          reader.onload = function(evt) {
+            try {
+              let parsed = JSON.parse(evt.target.result);
+              if (parsed && typeof parsed === 'object') {
+                localStorage.setItem('hbr_persistent_save_v1', JSON.stringify(parsed));
+                loadEverything();
+                updateTopProfileBanner();
+                updateProfileModalUI();
+                renderStoreList();
+                const bankedCountDisplay = document.getElementById('hbr-banked-count');
+                if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+                updateCashUI();
+                alert('🎉 Save backup imported successfully! Your cash, notes, and profile have been restored.');
+              } else {
+                alert('Invalid save file.');
+              }
+            } catch(err) {
+              alert('Error reading save file.');
+            }
+          };
+          reader.readAsText(file);
+        }
       });
     }
 
@@ -1094,6 +1731,21 @@
     const thiefTimerSpan = document.getElementById('hbr-thief-timer');
     const tabStoresBtn = document.getElementById('hbr-tab-stores-btn');
     const tabMoviesBtn = document.getElementById('hbr-tab-movies-btn');
+    const tabCharsBtn = document.getElementById('hbr-tab-chars-btn');
+    const storeClearNotesBtn = document.getElementById('hbr-store-clear-notes-btn');
+
+    if (storeClearNotesBtn) {
+      storeClearNotesBtn.addEventListener('click', function() {
+        if (confirm("Are you sure you want to clear all banked notes to 0?")) {
+          bankedNotesTotal = 0;
+          saveEverything();
+          renderStoreList();
+          const bankedCountDisplay = document.getElementById('hbr-banked-count');
+          if (bankedCountDisplay) bankedCountDisplay.textContent = '0';
+          alert('Banked notes cleared to 0!');
+        }
+      });
+    }
 
     let shoplifterPending = null;
     let shoplifterTimerInterval = null;
@@ -1109,12 +1761,14 @@
     }
 
     function updateCashUI() {
-      let formatted = '$' + storeCashTotal.toFixed(2);
+      let formatted = '$' + storeCashTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
       if (cashCountBadge) cashCountBadge.textContent = formatted;
       if (storeCashCountSpan) storeCashCountSpan.textContent = formatted;
     }
 
     updateCashUI();
+    const initialBankedDisplay = document.getElementById('hbr-banked-count');
+    if (initialBankedDisplay) initialBankedDisplay.textContent = bankedNotesTotal.toLocaleString();
 
     setInterval(function() {
       let bCount = userOwnedStores.blockbuster;
@@ -1144,7 +1798,7 @@
         }
 
         storeCashTotal = Math.max(0, storeCashTotal + netPerSec);
-        saveCashToStorage();
+        saveEverything();
         updateCashUI();
 
         if (totalMovies > 0 && !shoplifterPending && Math.random() < 0.06) {
@@ -1192,7 +1846,7 @@
                   let stolenInv = userOwnedMovies[shoplifterPending.movieId];
                   if (stolenInv && stolenInv[shoplifterPending.format] > 0) {
                     stolenInv[shoplifterPending.format]--;
-                    saveOwnedMoviesToStorage();
+                    saveEverything();
                     triggerStoreAlert('🚨 <strong>SHOPLIFTER ESCAPED!</strong> They stole a <strong>' + shoplifterPending.format.toUpperCase() + '</strong> copy of ' + shoplifterPending.movieName + '!');
                   }
                   shoplifterPending = null;
@@ -1204,9 +1858,14 @@
           }
         }
 
-        if (totalMovies > 0 && Math.random() < 0.08) {
+        let hasVhsCopies = false;
+        Object.keys(userOwnedMovies).forEach(mId => {
+          if (userOwnedMovies[mId] && userOwnedMovies[mId].vhs > 0) hasVhsCopies = true;
+        });
+
+        if (hasVhsCopies && Math.random() < 0.08) {
           unrewoundTapesCount++;
-          saveOwnedMoviesToStorage();
+          saveEverything();
           triggerStoreAlert('📼 <strong>BE KIND, REWIND!</strong> A customer returned an unrewound VHS tape! It drains $0.10/sec until rewound.');
           renderStoreList();
         }
@@ -1225,7 +1884,7 @@
           
           let rewardCash = 2.50;
           storeCashTotal += rewardCash;
-          saveCashToStorage();
+          saveEverything();
           updateCashUI();
 
           triggerStoreAlert('🛑 <strong>SHOPLIFTER CAUGHT!</strong> You tackled the thief, saved your <strong>' + caughtFmt + '</strong> copy of ' + caughtMovie + ', and received a <strong>$' + rewardCash.toFixed(2) + '</strong> reward!');
@@ -1267,7 +1926,7 @@
           ownedLine.style.fontSize = '9px';
           ownedLine.style.color = '#9ca3af';
           ownedLine.style.marginTop = '2px';
-          ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount + '</strong> ($0.00 Base Payout)';
+          ownedLine.innerHTML = 'Owned: <strong style="color: #60a5fa;">' + ownedCount.toLocaleString() + '</strong> (Grants Gold Ring Badge up top!)';
 
           infoDiv.appendChild(titleLine);
           infoDiv.appendChild(ownedLine);
@@ -1281,9 +1940,9 @@
           priceLine.style.color = '#fbbf24';
           
           if (priceData.isOnSale) {
-            priceLine.innerHTML = '<span style="text-decoration: line-through; color: #6b7280; font-size: 8px; margin-right: 3px;">' + priceData.originalPrice + '</span> ' + priceData.price + ' Notes';
+            priceLine.innerHTML = '<span style="text-decoration: line-through; color: #6b7280; font-size: 8px; margin-right: 3px;">' + priceData.originalPrice.toLocaleString() + '</span> ' + priceData.price.toLocaleString() + ' Notes';
           } else {
-            priceLine.textContent = priceData.price + ' Notes';
+            priceLine.textContent = priceData.price.toLocaleString() + ' Notes';
           }
 
           let buyBtn = document.createElement('button');
@@ -1305,13 +1964,89 @@
               bankedNotesTotal -= priceData.price;
               userOwnedStores[store.id] = (userOwnedStores[store.id] || 0) + 1;
               
-              saveBankedNotesToStorage();
-              saveOwnedStoresToStorage();
+              saveEverything();
+              updateTopProfileBanner();
+              updateProfileModalUI();
 
               const bankedCountDisplay = document.getElementById('hbr-banked-count');
               if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
 
               randomizeStorePrices();
+              renderStoreList();
+            });
+          }
+
+          buyDiv.appendChild(priceLine);
+          buyDiv.appendChild(buyBtn);
+
+          itemBox.appendChild(infoDiv);
+          itemBox.appendChild(buyDiv);
+          storeItemsList.appendChild(itemBox);
+        });
+      } else if (activeStoreTab === 'characters') {
+        characterCatalog.forEach(char => {
+          let ownedCount = userOwnedCharacters[char.id] || 0;
+
+          let itemBox = document.createElement('div');
+          itemBox.style.background = 'rgba(255, 255, 255, 0.04)';
+          itemBox.style.border = ownedCount > 0 ? '1px solid #22c55e' : '1px solid rgba(255, 255, 255, 0.12)';
+          itemBox.style.borderRadius = '8px';
+          itemBox.style.padding = '8px';
+          itemBox.style.display = 'flex';
+          itemBox.style.justifyContent = 'space-between';
+          itemBox.style.alignItems = 'center';
+
+          let infoDiv = document.createElement('div');
+          let titleLine = document.createElement('div');
+          titleLine.style.fontSize = '11px';
+          titleLine.style.fontWeight = '800';
+          titleLine.style.color = '#ffffff';
+          titleLine.innerHTML = char.icon + ' ' + char.name;
+
+          let descLine = document.createElement('div');
+          descLine.style.fontSize = '9px';
+          descLine.style.color = '#9ca3af';
+          descLine.style.marginTop = '2px';
+          descLine.innerHTML = char.desc + (ownedCount > 0 ? '<br><strong style="color: #4ade80;">STATUS: UNLOCKED & ACTIVE</strong>' : '');
+
+          infoDiv.appendChild(titleLine);
+          infoDiv.appendChild(descLine);
+
+          let buyDiv = document.createElement('div');
+          buyDiv.style.textAlign = 'right';
+
+          let priceLine = document.createElement('div');
+          priceLine.style.fontSize = '10px';
+          priceLine.style.fontWeight = '800';
+          priceLine.style.color = '#fbbf24';
+          priceLine.textContent = char.price.toLocaleString() + ' Notes';
+
+          let buyBtn = document.createElement('button');
+          let canAfford = bankedNotesTotal >= char.price;
+
+          buyBtn.style.marginTop = '3px';
+          buyBtn.style.background = ownedCount > 0 ? '#1f2937' : (canAfford ? 'linear-gradient(135deg, #22c55e 0%, #15803d 100%)' : '#374151');
+          buyBtn.style.border = 'none';
+          buyBtn.style.borderRadius = '5px';
+          buyBtn.style.color = ownedCount > 0 ? '#4ade80' : (canAfford ? '#ffffff' : '#9ca3af');
+          buyBtn.style.fontSize = '8px';
+          buyBtn.style.fontWeight = '800';
+          buyBtn.style.padding = '3px 8px';
+          buyBtn.style.cursor = (ownedCount > 0 || !canAfford) ? 'not-allowed' : 'pointer';
+          buyBtn.textContent = ownedCount > 0 ? 'UNLOCKED' : (canAfford ? 'BUY CHARACTER' : 'NEED NOTES');
+
+          if (ownedCount === 0 && canAfford) {
+            buyBtn.addEventListener('click', function() {
+              bankedNotesTotal -= char.price;
+              userOwnedCharacters[char.id] = 1;
+              
+              saveEverything();
+              updateDogUIState();
+              updateProfileModalUI();
+
+              const bankedCountDisplay = document.getElementById('hbr-banked-count');
+              if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+
               renderStoreList();
             });
           }
@@ -1351,7 +2086,7 @@
           let rText = document.createElement('div');
           rText.style.fontSize = '10px';
           rText.style.color = '#fdba74';
-          rText.innerHTML = '📼 <strong>' + unrewoundTapesCount + ' Unrewound Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Drains $0.10/sec until rewound.</span>';
+          rText.innerHTML = '📼 <strong>' + unrewoundTapesCount.toLocaleString() + ' Unrewound VHS Tape(s)!</strong><br><span style="font-size: 8px; color: #9ca3af;">Drains $0.10/sec until rewound.</span>';
 
           let rewindBtn = document.createElement('button');
           rewindBtn.style.background = 'linear-gradient(135deg, #f97316 0%, #c2410c 100%)';
@@ -1369,8 +2104,7 @@
             if (storeCashTotal >= cost) {
               storeCashTotal -= cost;
               unrewoundTapesCount = 0;
-              saveCashToStorage();
-              saveOwnedMoviesToStorage();
+              saveEverything();
               renderStoreList();
             } else {
               alert('Not enough cash to rewind tapes! Earn more cash or notes first.');
@@ -1393,7 +2127,7 @@
         statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
         statusBox.style.textAlign = 'center';
         statusBox.innerHTML = totalMovies > 0 
-          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies + '. Earns rental cash + occasional late fees!'
+          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString() + '. Higher formats = higher payouts (DVD & Blu-ray never need rewinding)!'
           : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash & late fees!';
         
         storeItemsList.appendChild(statusBox);
@@ -1422,11 +2156,16 @@
           titleDiv.style.fontWeight = '800';
           titleDiv.style.color = '#ffffff';
 
+          let rtLink = movie.rtUrl 
+            ? '<a href="' + movie.rtUrl + '" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">'
+            : '';
+          let rtClose = movie.rtUrl ? '↗</a>' : '';
+
           let rtBadge = isGoodMovie 
-            ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍅 ' + movie.rtScore + '% (PROFIT)</span>'
-            : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">🍿 ' + movie.rtScore + '% (DRAINS CASH)</span>';
+            ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + rtLink + '🍅 ' + movie.rtScore + '% (PROFIT)' + rtClose + '</span>'
+            : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + rtLink + '🍿 ' + movie.rtScore + '% (DRAINS CASH)' + rtClose + '</span>';
           
-          let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies + '</span>' : '';
+          let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies.toLocaleString() + '</span>' : '';
 
           titleDiv.innerHTML = '🎬 ' + movie.name + rtBadge + ownedBadge;
 
@@ -1438,9 +2177,9 @@
           formatsRow.style.gap = '4px';
 
           const formats = [
-            { key: 'vhs', label: 'VHS', costMult: 1 },
-            { key: 'dvd', label: 'DVD', costMult: 1.8 },
-            { key: 'bluray', label: 'Blu-ray', costMult: 2.8 }
+            { key: 'vhs', label: 'VHS 📼', costMult: 1, desc: 'Base Payout' },
+            { key: 'dvd', label: 'DVD 📀', costMult: 1.8, desc: 'Higher Payout' },
+            { key: 'bluray', label: 'Blu-ray 💿', costMult: 2.8, desc: 'Max Payout' }
           ];
 
           formats.forEach(fmt => {
@@ -1460,7 +2199,7 @@
             fmtBtn.style.cursor = canAfford ? 'pointer' : 'not-allowed';
             fmtBtn.style.textAlign = 'center';
 
-            fmtBtn.innerHTML = fmt.label + '<br><span style="color: #fbbf24; font-weight: 800;">' + cost + ' N</span><br><span style="color: #a7f3d0;">(' + count + ' owned)</span>';
+            fmtBtn.innerHTML = fmt.label + '<br><span style="color: #fbbf24; font-weight: 800;">' + cost.toLocaleString() + ' N</span><br><span style="color: #a7f3d0;">(' + count.toLocaleString() + ' owned)</span>';
 
             if (canAfford) {
               fmtBtn.addEventListener('click', function() {
@@ -1470,8 +2209,8 @@
                 }
                 userOwnedMovies[movie.id][fmt.key] = (userOwnedMovies[movie.id][fmt.key] || 0) + 1;
 
-                saveBankedNotesToStorage();
-                saveOwnedMoviesToStorage();
+                saveEverything();
+                updateProfileModalUI();
 
                 const bankedCountDisplay = document.getElementById('hbr-banked-count');
                 if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
@@ -1489,26 +2228,28 @@
       }
     }
 
-    if (tabStoresBtn && tabMoviesBtn) {
+    if (tabStoresBtn && tabMoviesBtn && tabCharsBtn) {
       tabStoresBtn.addEventListener('click', function() {
         activeStoreTab = 'stores';
-        tabStoresBtn.style.background = 'rgba(59, 130, 246, 0.25)';
-        tabStoresBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)';
-        tabStoresBtn.style.color = '#93c5fd';
-        tabMoviesBtn.style.background = 'rgba(255,255,255,0.06)';
-        tabMoviesBtn.style.border = '1px solid rgba(255,255,255,0.15)';
-        tabMoviesBtn.style.color = '#9ca3af';
+        tabStoresBtn.style.background = 'rgba(59, 130, 246, 0.25)'; tabStoresBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)'; tabStoresBtn.style.color = '#93c5fd';
+        tabMoviesBtn.style.background = 'rgba(255,255,255,0.06)'; tabMoviesBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabMoviesBtn.style.color = '#9ca3af';
+        tabCharsBtn.style.background = 'rgba(255,255,255,0.06)'; tabCharsBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabCharsBtn.style.color = '#9ca3af';
         renderStoreList();
       });
 
       tabMoviesBtn.addEventListener('click', function() {
         activeStoreTab = 'movies';
-        tabMoviesBtn.style.background = 'rgba(59, 130, 246, 0.25)';
-        tabMoviesBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)';
-        tabMoviesBtn.style.color = '#93c5fd';
-        tabStoresBtn.style.background = 'rgba(255,255,255,0.06)';
-        tabStoresBtn.style.border = '1px solid rgba(255,255,255,0.15)';
-        tabStoresBtn.style.color = '#9ca3af';
+        tabMoviesBtn.style.background = 'rgba(59, 130, 246, 0.25)'; tabMoviesBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)'; tabMoviesBtn.style.color = '#93c5fd';
+        tabStoresBtn.style.background = 'rgba(255,255,255,0.06)'; tabStoresBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabStoresBtn.style.color = '#9ca3af';
+        tabCharsBtn.style.background = 'rgba(255,255,255,0.06)'; tabCharsBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabCharsBtn.style.color = '#9ca3af';
+        renderStoreList();
+      });
+
+      tabCharsBtn.addEventListener('click', function() {
+        activeStoreTab = 'characters';
+        tabCharsBtn.style.background = 'rgba(59, 130, 246, 0.25)'; tabCharsBtn.style.border = '1px solid rgba(59, 130, 246, 0.5)'; tabCharsBtn.style.color = '#93c5fd';
+        tabStoresBtn.style.background = 'rgba(255,255,255,0.06)'; tabStoresBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabStoresBtn.style.color = '#9ca3af';
+        tabMoviesBtn.style.background = 'rgba(255,255,255,0.06)'; tabMoviesBtn.style.border = '1px solid rgba(255,255,255,0.15)'; tabMoviesBtn.style.color = '#9ca3af';
         renderStoreList();
       });
     }
@@ -1527,19 +2268,184 @@
       });
     }
 
-    // PWA Install Modal Toggle Logic
-    const installBtn = document.getElementById('hbr-install-btn');
-    const installModal = document.getElementById('hbr-install-modal');
-    const closeModalBtn = document.getElementById('hbr-close-modal');
+    // Cover Art Gallery Modal & Enlarge / Play Engine
+    const seeCoverBtn = document.getElementById('hbr-see-cover-btn');
+    const artModal = document.getElementById('hbr-art-modal');
+    const closeArtModalBtn = document.getElementById('hbr-close-art-modal');
+    const artModalDoneBtn = document.getElementById('hbr-art-modal-done-btn');
+    const artGalleryList = document.getElementById('hbr-art-gallery-list');
 
-    if (installBtn && installModal) {
-      installBtn.addEventListener('click', () => installModal.style.display = 'flex');
-    }
-    if (closeModalBtn && installModal) {
-      closeModalBtn.addEventListener('click', () => installModal.style.display = 'none');
+    const artLightboxModal = document.getElementById('hbr-art-lightbox-modal');
+    const lightboxTitle = document.getElementById('hbr-lightbox-title');
+    const lightboxImgBox = document.getElementById('hbr-lightbox-img-box');
+    const lightboxPlayBtn = document.getElementById('hbr-lightbox-play-btn');
+    const lightboxCloseBtn = document.getElementById('hbr-lightbox-close-btn');
+    const closeLightboxBtn = document.getElementById('hbr-close-lightbox-btn');
+    let lightboxSelectedTrackIdx = 0;
+
+    function renderArtGallery() {
+      if (!artGalleryList) return;
+      artGalleryList.innerHTML = '';
+
+      currentMasterTracks.forEach((track, idx) => {
+        let item = document.createElement('div');
+        item.style.display = 'flex';
+        item.style.alignItems = 'center';
+        item.style.gap = '8px';
+        item.style.background = 'rgba(255, 255, 255, 0.04)';
+        item.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+        item.style.borderRadius = '8px';
+        item.style.padding = '6px 8px';
+
+        let thumb = document.createElement('div');
+        thumb.style.width = '36px';
+        thumb.style.height = '36px';
+        thumb.style.borderRadius = '6px';
+        thumb.style.backgroundImage = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
+        thumb.style.backgroundSize = 'cover';
+        thumb.style.backgroundPosition = 'center';
+        thumb.style.flexShrink = '0';
+        thumb.style.border = '1px solid rgba(255,255,255,0.2)';
+        thumb.style.cursor = 'pointer';
+
+        thumb.addEventListener('click', function() {
+          openLightboxForTrack(idx);
+        });
+
+        let info = document.createElement('div');
+        info.style.flex = '1';
+        info.style.fontSize = '11px';
+        info.style.fontWeight = '700';
+        info.style.color = '#fff';
+        info.style.overflow = 'hidden';
+        info.style.textOverflow = 'ellipsis';
+        info.style.whiteSpace = 'nowrap';
+        info.textContent = (idx + 1) + '. ' + track.name;
+
+        let btnContainer = document.createElement('div');
+        btnContainer.style.display = 'flex';
+        btnContainer.style.gap = '4px';
+        btnContainer.style.flexShrink = '0';
+
+        // Enlarge Button
+        let enlargeBtn = document.createElement('button');
+        enlargeBtn.style.background = 'rgba(34, 197, 94, 0.2)';
+        enlargeBtn.style.border = '1px solid rgba(34, 197, 94, 0.5)';
+        enlargeBtn.style.borderRadius = '5px';
+        enlargeBtn.style.color = '#4ade80';
+        enlargeBtn.style.fontSize = '8px';
+        enlargeBtn.style.fontWeight = '800';
+        enlargeBtn.style.padding = '4px 8px';
+        enlargeBtn.style.cursor = 'pointer';
+        enlargeBtn.textContent = '🔍 ENLARGE';
+
+        enlargeBtn.addEventListener('click', function() {
+          openLightboxForTrack(idx);
+        });
+
+        // Play Button (Spin forward & play song)
+        let playBtn = document.createElement('button');
+        playBtn.style.background = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)';
+        playBtn.style.border = 'none';
+        playBtn.style.borderRadius = '5px';
+        playBtn.style.color = '#fff';
+        playBtn.style.fontSize = '8px';
+        playBtn.style.fontWeight = '800';
+        playBtn.style.padding = '4px 8px';
+        playBtn.style.cursor = 'pointer';
+        playBtn.textContent = '▶ PLAY';
+
+        playBtn.addEventListener('click', function() {
+          autoBankUnsavedNotes();
+          activeQueueSource = null;
+          activePlaylist = currentMasterTracks;
+          selectAndPlayTrack(idx);
+
+          if (artModal) artModal.style.display = 'none';
+          if (artLightboxModal) artLightboxModal.style.display = 'none';
+
+          if (recordArt) {
+            recordArt.classList.remove('hbr-cover-spin-forward');
+            void recordArt.offsetWidth; // Force reflow
+            recordArt.classList.add('hbr-cover-spin-forward');
+            setTimeout(() => {
+              recordArt.classList.remove('hbr-cover-spin-forward');
+            }, 550);
+          }
+        });
+
+        btnContainer.appendChild(enlargeBtn);
+        btnContainer.appendChild(playBtn);
+
+        item.appendChild(thumb);
+        item.appendChild(info);
+        item.appendChild(btnContainer);
+        artGalleryList.appendChild(item);
+      });
     }
 
-    // Automatic Eastern Time Fireworks & 100 Rockets Challenge Engine
+    function openLightboxForTrack(idx) {
+      lightboxSelectedTrackIdx = idx;
+      let track = currentMasterTracks[idx];
+      if (lightboxTitle) lightboxTitle.textContent = (idx + 1) + '. ' + track.name;
+      if (lightboxImgBox) {
+        lightboxImgBox.style.backgroundImage = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
+        lightboxImgBox.classList.remove('hbr-lightbox-zoom-anim');
+        void lightboxImgBox.offsetWidth;
+        lightboxImgBox.classList.add('hbr-lightbox-zoom-anim');
+      }
+      if (artLightboxModal) artLightboxModal.style.display = 'flex';
+    }
+
+    if (lightboxPlayBtn) {
+      lightboxPlayBtn.addEventListener('click', function() {
+        let idx = lightboxSelectedTrackIdx;
+        autoBankUnsavedNotes();
+        activeQueueSource = null;
+        activePlaylist = currentMasterTracks;
+        selectAndPlayTrack(idx);
+
+        if (artLightboxModal) artLightboxModal.style.display = 'none';
+        if (artModal) artModal.style.display = 'none';
+
+        if (recordArt) {
+          recordArt.classList.remove('hbr-cover-spin-forward');
+          void recordArt.offsetWidth;
+          recordArt.classList.add('hbr-cover-spin-forward');
+          setTimeout(() => {
+            recordArt.classList.remove('hbr-cover-spin-forward');
+          }, 550);
+        }
+      });
+    }
+
+    if (lightboxCloseBtn && artLightboxModal) {
+      lightboxCloseBtn.addEventListener('click', () => { artLightboxModal.style.display = 'none'; });
+    }
+    if (closeLightboxBtn && artLightboxModal) {
+      closeLightboxBtn.addEventListener('click', () => { artLightboxModal.style.display = 'none'; });
+    }
+
+    if (seeCoverBtn && artModal) {
+      seeCoverBtn.addEventListener('click', function() {
+        renderArtGallery();
+        artModal.style.display = 'flex';
+      });
+    }
+
+    if (closeArtModalBtn && artModal) {
+      closeArtModalBtn.addEventListener('click', function() {
+        artModal.style.display = 'none';
+      });
+    }
+
+    if (artModalDoneBtn && artModal) {
+      artModalDoneBtn.addEventListener('click', function() {
+        artModal.style.display = 'none';
+      });
+    }
+
+    // Automatic Eastern Time Fireworks & Interactive Heart Filling Challenge Engine
     const canvas = document.getElementById('hbr-fireworks-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
     let fireworksActive = false;
@@ -1548,14 +2454,17 @@
     let fireworksRockets = [];
     let isGrandFinale = false;
 
-    let rocketChallengeActive = false;
-    let rocketsLeft = 100;
-    let rocketStartTime = 0;
-    const rocketBadge = document.getElementById('hbr-rocket-challenge-badge');
-    const rocketLeftSpan = document.getElementById('hbr-rocket-left');
-    const rocketResults = document.getElementById('hbr-rocket-results');
-    const rocketTimeSpan = document.getElementById('hbr-rocket-time');
-    const rocketCloseBtn = document.getElementById('hbr-rocket-close-btn');
+    let heartChallengeActive = false;
+    let heartTapsLeft = 23;
+    let heartStartTime = 0;
+    const heartCard = document.getElementById('hbr-heart-challenge-card');
+    const heartTargetBtn = document.getElementById('hbr-heart-target-btn');
+    const heartFillPath = document.getElementById('hbr-heart-fill-path');
+    const heartTapsLeftSpan = document.getElementById('hbr-heart-taps-left');
+    const heartCta = document.getElementById('hbr-heart-cta');
+    const heartStatus = document.getElementById('hbr-heart-status');
+    const heartTitle = document.getElementById('hbr-heart-title');
+    const heartSub = document.getElementById('hbr-heart-sub');
 
     function resizeCanvas() {
       if (!canvas) return;
@@ -1628,31 +2537,32 @@
       canvas.addEventListener('touchstart', launchUserRocket);
     }
 
-    if (rocketBadge) {
-      rocketBadge.addEventListener('click', function(e) {
+    if (heartTargetBtn) {
+      heartTargetBtn.addEventListener('click', function(e) {
         e.stopPropagation();
-        if (!rocketChallengeActive) return;
+        if (!heartChallengeActive) return;
 
-        if (rocketsLeft === 100) rocketStartTime = Date.now();
-        rocketsLeft--;
-        if (rocketLeftSpan) rocketLeftSpan.textContent = rocketsLeft;
+        if (heartTapsLeft === 23) heartStartTime = Date.now();
+        heartTapsLeft--;
+        
+        let progress = (23 - heartTapsLeft) / 23;
+        if (heartFillPath) heartFillPath.style.transform = 'scale(' + progress + ')';
+
+        if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = heartTapsLeft;
 
         if (canvas) {
-          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, Math.random() * canvas.width, canvas.height * 0.7));
+          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, Math.random() * canvas.width, canvas.height * 0.6));
         }
 
-        if (rocketsLeft <= 0) {
-          rocketChallengeActive = false;
-          let elapsed = ((Date.now() - rocketStartTime) / 1000).toFixed(1);
-          if (rocketTimeSpan) rocketTimeSpan.textContent = elapsed + 's';
-          if (rocketResults) rocketResults.style.display = 'block';
-          if (rocketBadge) rocketBadge.style.display = 'none';
+        if (heartTapsLeft <= 0) {
+          heartChallengeActive = false;
+          let elapsed = ((Date.now() - heartStartTime) / 1000).toFixed(1);
+          if (heartTitle) heartTitle.textContent = '💖 CHALLENGE COMPLETE!';
+          if (heartStatus) heartStatus.innerHTML = '<strong style="color: #4ade80;">Completed in ' + elapsed + 's!</strong>';
+          if (heartSub) heartSub.innerHTML = '<strong style="font-size: 11px; color: #f472b6;">You Are Loved ❤️</strong>';
+          if (heartCta) heartCta.style.display = 'none';
         }
       });
-    }
-
-    if (rocketCloseBtn && rocketResults) {
-      rocketCloseBtn.addEventListener('click', () => rocketResults.style.display = 'none');
     }
 
     function runFireworksLoop() {
@@ -1693,10 +2603,17 @@
       if (canvas) canvas.style.display = 'block';
       runFireworksLoop();
 
-      rocketChallengeActive = true;
-      rocketsLeft = 100;
-      if (rocketLeftSpan) rocketLeftSpan.textContent = '100';
-      if (rocketBadge) rocketBadge.style.display = 'block';
+      heartChallengeActive = true;
+      heartTapsLeft = 23;
+      if (heartFillPath) heartFillPath.style.transform = 'scale(0)';
+      if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = '23';
+      if (heartTitle) heartTitle.textContent = '💖 EVENING HEART CHALLENGE';
+      if (heartStatus) {
+        heartStatus.innerHTML = '<span id="hbr-heart-taps-left">23</span> taps remaining';
+      }
+      if (heartSub) heartSub.textContent = 'Fill the heart to complete the challenge!';
+      if (heartCta) heartCta.style.display = 'block';
+      if (heartCard) heartCard.style.display = 'block';
 
       setTimeout(() => stopFireworks(), 300000);
     }
@@ -1704,10 +2621,9 @@
     function stopFireworks() {
       fireworksActive = false;
       isGrandFinale = false;
-      rocketChallengeActive = false;
+      heartChallengeActive = false;
       if (canvas) canvas.style.display = 'none';
-      if (rocketBadge) rocketBadge.style.display = 'none';
-      if (rocketResults) rocketResults.style.display = 'none';
+      if (heartCard) heartCard.style.display = 'none';
       if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
       particles = [];
       fireworksRockets = [];
@@ -1818,19 +2734,22 @@
 
     if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
 
+    function autoBankUnsavedNotes() {
+      if (poppedNotesTotal > 0) {
+        bankedNotesTotal += poppedNotesTotal;
+        poppedNotesTotal = 0;
+        if (popCountDisplay) popCountDisplay.textContent = '0';
+        if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
+        saveEverything();
+      }
+    }
+
     if (bankBtn) {
       bankBtn.addEventListener('click', function() {
-        if (poppedNotesTotal > 0) {
-          bankedNotesTotal += poppedNotesTotal;
-          poppedNotesTotal = 0;
-          if (popCountDisplay) popCountDisplay.textContent = '0';
-          if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-          saveBankedNotesToStorage();
-
-          if (bankedBadge) {
-            bankedBadge.style.transform = 'scale(1.2)';
-            setTimeout(() => bankedBadge.style.transform = 'scale(1)', 200);
-          }
+        autoBankUnsavedNotes();
+        if (bankedBadge) {
+          bankedBadge.style.transform = 'scale(1.2)';
+          setTimeout(() => bankedBadge.style.transform = 'scale(1)', 200);
         }
       });
     }
@@ -1932,7 +2851,7 @@
     function incrementPopCounter(x, y) {
       if (!canPopNotes) return;
       poppedNotesTotal++;
-      if (popCountDisplay) popCountDisplay.textContent = poppedNotesTotal;
+      if (popCountDisplay) popCountDisplay.textContent = poppedNotesTotal.toLocaleString();
       if (popBadge) {
         popBadge.style.transform = 'scale(1.15)';
         setTimeout(() => popBadge.style.transform = 'scale(1)', 150);
@@ -2049,8 +2968,9 @@
             clearInterval(countdownInterval);
             canPopNotes = false;
             stopNotesSystem();
+            autoBankUnsavedNotes();
             if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You popped <strong style="color: #60a5fa;">' + poppedNotesTotal + '</strong> notes!';
+            if (bannerMsg) bannerMsg.innerHTML = 'You popped <strong style="color: #60a5fa;">' + poppedNotesTotal.toLocaleString() + '</strong> notes (banked automatically)!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
@@ -2083,8 +3003,9 @@
             clearInterval(countdownInterval);
             canPopNotes = false;
             stopNotesSystem();
+            autoBankUnsavedNotes();
             if (bannerTitle) bannerTitle.textContent = "GAME OVER!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You reached <strong style="color: #4ade80;">Level ' + gameLevel + '</strong> and popped ' + poppedNotesTotal + ' total notes!';
+            if (bannerMsg) bannerMsg.innerHTML = 'You reached <strong style="color: #4ade80;">Level ' + gameLevel + '</strong> and banked notes!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
@@ -2135,8 +3056,9 @@
             clearInterval(countdownInterval);
             canPopNotes = false;
             stopNotesSystem();
+            autoBankUnsavedNotes();
             if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal + '</strong> fireworks!';
+            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal.toLocaleString() + '</strong> fireworks (banked automatically)!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
@@ -2169,6 +3091,7 @@
     const drawerList = document.getElementById('hbr-drawer-list');
     const page1Btn = document.getElementById('hbr-page1-btn');
     const page2Btn = document.getElementById('hbr-page2-btn');
+    const page3Btn = document.getElementById('hbr-page3-btn');
     const playQ1Btn = document.getElementById('hbr-play-q1-btn');
     const playQ2Btn = document.getElementById('hbr-play-q2-btn');
     const playT3Btn = document.getElementById('hbr-play-t3-btn');
@@ -2189,19 +3112,22 @@
       if (t3Circle3) { t3Circle3.style.background = count >= 3 ? '#22c55e' : '#4b5563'; t3Circle3.style.boxShadow = count >= 3 ? '0 0 6px #22c55e' : 'none'; }
     }
 
-    if (page1Btn && page2Btn) {
-      page1Btn.addEventListener('click', function() {
-        currentDrawerPage = 1;
-        page1Btn.style.background = 'rgba(59,130,246,0.25)'; page1Btn.style.border = '1px solid rgba(59,130,246,0.5)'; page1Btn.style.color = '#93c5fd';
-        page2Btn.style.background = 'rgba(255,255,255,0.06)'; page2Btn.style.border = '1px solid rgba(255,255,255,0.15)'; page2Btn.style.color = '#9ca3af';
-        renderDrawerList();
+    function setActivePage(pageNo) {
+      currentDrawerPage = pageNo;
+      [page1Btn, page2Btn, page3Btn].forEach((btn, idx) => {
+        if (!btn) return;
+        let isSelected = (idx + 1) === pageNo;
+        btn.style.background = isSelected ? 'rgba(59,130,246,0.25)' : 'rgba(255,255,255,0.06)';
+        btn.style.border = isSelected ? '1px solid rgba(59,130,246,0.5)' : '1px solid rgba(255,255,255,0.15)';
+        btn.style.color = isSelected ? '#93c5fd' : '#9ca3af';
       });
-      page2Btn.addEventListener('click', function() {
-        currentDrawerPage = 2;
-        page2Btn.style.background = 'rgba(59,130,246,0.25)'; page2Btn.style.border = '1px solid rgba(59,130,246,0.5)'; page2Btn.style.color = '#93c5fd';
-        page1Btn.style.background = 'rgba(255,255,255,0.06)'; page1Btn.style.border = '1px solid rgba(255,255,255,0.15)'; page1Btn.style.color = '#9ca3af';
-        renderDrawerList();
-      });
+      renderDrawerList();
+    }
+
+    if (page1Btn && page2Btn && page3Btn) {
+      page1Btn.addEventListener('click', () => setActivePage(1));
+      page2Btn.addEventListener('click', () => setActivePage(2));
+      page3Btn.addEventListener('click', () => setActivePage(3));
     }
 
     if (drawerToggle && drawer) {
@@ -2249,6 +3175,7 @@
         let explicitBadge = track.explicit ? ' <span style="background: #ef4444; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px; margin-left: 4px; vertical-align: middle;">E</span>' : '';
         titleSpan.innerHTML = (globalIdx + 1) + '. ' + track.name + explicitBadge + (isCurrentlyPlaying ? ' <span style="font-size: 9px; opacity: 0.7;">(PLAYING)</span>' : '');
         titleSpan.addEventListener('click', function() {
+          autoBankUnsavedNotes();
           activeQueueSource = null;
           activePlaylist = currentMasterTracks;
           selectAndPlayTrack(globalIdx);
@@ -2290,11 +3217,11 @@
         add1Btn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (!inQ1) {
-            if (customQueue1.length < 7) { customQueue1.push(track); savePlaylistsToStorage(); renderDrawerList(); }
+            if (customQueue1.length < 7) { customQueue1.push(track); saveEverything(); renderDrawerList(); }
             else alert('Playlist 1 is full (max 7 tracks)!');
           } else {
             customQueue1 = customQueue1.filter(t => t.id !== track.id);
-            savePlaylistsToStorage(); renderDrawerList();
+            saveEverything(); renderDrawerList();
           }
         });
 
@@ -2311,11 +3238,11 @@
         add2Btn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (!inQ2) {
-            if (customQueue2.length < 7) { customQueue2.push(track); savePlaylistsToStorage(); renderDrawerList(); }
+            if (customQueue2.length < 7) { customQueue2.push(track); saveEverything(); renderDrawerList(); }
             else alert('Playlist 2 is full (max 7 tracks)!');
           } else {
             customQueue2 = customQueue2.filter(t => t.id !== track.id);
-            savePlaylistsToStorage(); renderDrawerList();
+            saveEverything(); renderDrawerList();
           }
         });
 
@@ -2332,11 +3259,11 @@
         addT3Btn.addEventListener('click', function(e) {
           e.stopPropagation();
           if (!inT3) {
-            if (customTop3.length < 3) { customTop3.push(track); savePlaylistsToStorage(); renderDrawerList(); }
+            if (customTop3.length < 3) { customTop3.push(track); saveEverything(); renderDrawerList(); }
             else alert('Top 3 is full! Remove a song from Top 3 first.');
           } else {
             customTop3 = customTop3.filter(t => t.id !== track.id);
-            savePlaylistsToStorage(); renderDrawerList();
+            saveEverything(); renderDrawerList();
           }
         });
 
@@ -2359,10 +3286,10 @@
           let nameSpan = document.createElement('span');
           nameSpan.style.cursor = 'pointer';
           nameSpan.innerHTML = '★ ' + (cIdx + 1) + '. ' + track.name + (isCurrentQ1 ? ' <span style="font-size: 8px; color: #60a5fa;">(PLAYING)</span>' : '');
-          nameSpan.addEventListener('click', () => { activeQueueSource = 'q1'; activePlaylist = customQueue1; selectAndPlayTrack(cIdx); });
+          nameSpan.addEventListener('click', () => { autoBankUnsavedNotes(); activeQueueSource = 'q1'; activePlaylist = customQueue1; selectAndPlayTrack(cIdx); });
           let removeBtn = document.createElement('button');
           removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
-          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue1.splice(cIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
+          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue1.splice(cIdx, 1); saveEverything(); renderDrawerList(); });
           item.appendChild(nameSpan); item.appendChild(removeBtn);
           q1ItemsContainer.appendChild(item);
         });
@@ -2378,10 +3305,10 @@
           let nameSpan = document.createElement('span');
           nameSpan.style.cursor = 'pointer';
           nameSpan.innerHTML = '★ ' + (cIdx + 1) + '. ' + track.name + (isCurrentQ2 ? ' <span style="font-size: 8px; color: #c084fc;">(PLAYING)</span>' : '');
-          nameSpan.addEventListener('click', () => { activeQueueSource = 'q2'; activePlaylist = customQueue2; selectAndPlayTrack(cIdx); });
+          nameSpan.addEventListener('click', () => { autoBankUnsavedNotes(); activeQueueSource = 'q2'; activePlaylist = customQueue2; selectAndPlayTrack(cIdx); });
           let removeBtn = document.createElement('button');
           removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
-          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue2.splice(cIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
+          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customQueue2.splice(cIdx, 1); saveEverything(); renderDrawerList(); });
           item.appendChild(nameSpan); item.appendChild(removeBtn);
           q2ItemsContainer.appendChild(item);
         });
@@ -2397,10 +3324,10 @@
           let nameSpan = document.createElement('span');
           nameSpan.style.cursor = 'pointer';
           nameSpan.innerHTML = '🟢 ' + (tIdx + 1) + '. ' + track.name + (isCurrentT3 ? ' <span style="font-size: 8px; color: #4ade80;">(PLAYING)</span>' : '');
-          nameSpan.addEventListener('click', () => { activeQueueSource = 't3'; activePlaylist = customTop3; selectAndPlayTrack(tIdx); });
+          nameSpan.addEventListener('click', () => { autoBankUnsavedNotes(); activeQueueSource = 't3'; activePlaylist = customTop3; selectAndPlayTrack(tIdx); });
           let removeBtn = document.createElement('button');
           removeBtn.style.background = 'transparent'; removeBtn.style.border = 'none'; removeBtn.style.color = '#ef4444'; removeBtn.style.fontSize = '12px'; removeBtn.style.cursor = 'pointer'; removeBtn.textContent = '✕';
-          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customTop3.splice(tIdx, 1); savePlaylistsToStorage(); renderDrawerList(); });
+          removeBtn.addEventListener('click', (e) => { e.stopPropagation(); customTop3.splice(tIdx, 1); saveEverything(); renderDrawerList(); });
           item.appendChild(nameSpan); item.appendChild(removeBtn);
           t3ItemsContainer.appendChild(item);
         });
@@ -2410,6 +3337,7 @@
     if (playQ1Btn) {
       playQ1Btn.addEventListener('click', () => {
         if (customQueue1.length > 0) {
+          autoBankUnsavedNotes();
           activeQueueSource = 'q1'; activePlaylist = customQueue1; selectAndPlayTrack(0);
           if (drawer) { drawer.style.maxHeight = '0'; drawer.style.marginBottom = '0px'; drawer.style.borderWidth = '0px'; drawerOpen = false; if (drawerArrow) drawerArrow.textContent = '▼'; }
         } else alert('Playlist 1 is empty!');
@@ -2418,6 +3346,7 @@
     if (playQ2Btn) {
       playQ2Btn.addEventListener('click', () => {
         if (customQueue2.length > 0) {
+          autoBankUnsavedNotes();
           activeQueueSource = 'q2'; activePlaylist = customQueue2; selectAndPlayTrack(0);
           if (drawer) { drawer.style.maxHeight = '0'; drawer.style.marginBottom = '0px'; drawer.style.borderWidth = '0px'; drawerOpen = false; if (drawerArrow) drawerArrow.textContent = '▼'; }
         } else alert('Playlist 2 is empty!');
@@ -2426,13 +3355,14 @@
     if (playT3Btn) {
       playT3Btn.addEventListener('click', () => {
         if (customTop3.length > 0) {
+          autoBankUnsavedNotes();
           activeQueueSource = 't3'; activePlaylist = customTop3; selectAndPlayTrack(0);
           if (drawer) { drawer.style.maxHeight = '0'; drawer.style.marginBottom = '0px'; drawer.style.borderWidth = '0px'; drawerOpen = false; if (drawerArrow) drawerArrow.textContent = '▼'; }
         } else alert('Top 3 is empty!');
       });
     }
 
-    // Audio & Deck Controls
+    // Audio & Deck Controls with YouTube IFrame API
     const toggleBtn = document.getElementById('hbr-toggle');
     const prevBtn = document.getElementById('hbr-prev');
     const nextBtn = document.getElementById('hbr-next');
@@ -2447,7 +3377,7 @@
     const modeBtnText = document.getElementById('hbr-mode-btn-text');
     const christmasBtn = document.getElementById('hbr-christmas-btn');
     const disneyBtn = document.getElementById('hbr-disney-btn');
-    const iframe = document.getElementById('hbr-engine');
+    const chakrasBtn = document.getElementById('hbr-chakras-btn');
     const djContainer = document.getElementById('hbr-dj-container');
     const label = document.getElementById('hbr-label');
     const reflection = document.getElementById('hbr-reflection');
@@ -2456,7 +3386,8 @@
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
     let isPlaying = false;
-    let currentTrackIndex = 0;
+    let currentTrackIndex = 11; // Pocketful of Rain
+    let ytPlayer = null;
     let isDragging = false;
     let startAngle = 0;
     let baseRotation = 0;
@@ -2465,9 +3396,66 @@
     let lastTime = Date.now();
     let animFrameReq = null;
 
-    function sendCommand(func, args) {
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: args !== undefined ? args : [] }), '*');
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    window.onYouTubeIframeAPIReady = function() {
+      ytPlayer = new YT.Player('hbr-yt-player', {
+        height: '100',
+        width: '100',
+        videoId: activePlaylist[currentTrackIndex].id,
+        playerVars: {
+          'autoplay': 0,
+          'controls': 0,
+          'modestbranding': 1,
+          'rel': 0,
+          'iv_load_policy': 3
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    };
+
+    function onPlayerReady(event) {
+      let track = activePlaylist[currentTrackIndex];
+      if (trackTitleText) trackTitleText.textContent = track.name;
+      checkPurpleRainEffect(track);
+      let coverUrl = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
+      if (artBg) artBg.style.backgroundImage = coverUrl;
+      if (recordArt) recordArt.style.backgroundImage = coverUrl;
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        autoBankUnsavedNotes();
+        selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
+      }
+    }
+
+    function checkPurpleRainEffect(track) {
+      if (!purpleRainLayer) return;
+      if (track && track.id === 'lCrOsTj9QhY') {
+        purpleRainLayer.style.display = 'block';
+        if (purpleRainLayer.children.length === 0) {
+          for (let i = 0; i < 28; i++) {
+            let drop = document.createElement('div');
+            drop.className = 'hbr-purple-raindrop';
+            drop.style.left = (Math.random() * 100) + '%';
+            drop.style.top = (Math.random() * -50) + 'px';
+            drop.style.animationDuration = (Math.random() * 0.8 + 0.9).toFixed(1) + 's';
+            drop.style.animationDelay = (Math.random() * 1.5) + 's';
+            purpleRainLayer.appendChild(drop);
+          }
+        }
+      } else {
+        purpleRainLayer.style.display = 'none';
+        purpleRainLayer.innerHTML = '';
       }
     }
 
@@ -2476,18 +3464,27 @@
       let track = activePlaylist[index];
       if (trackTitleText) trackTitleText.textContent = track.name;
       
+      checkPurpleRainEffect(track);
+
       let coverUrl = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
       if (artBg) artBg.style.backgroundImage = coverUrl;
       if (recordArt) recordArt.style.backgroundImage = coverUrl;
 
       renderDrawerList();
-      sendCommand('loadVideoById', [track.id]);
-      triggerPlayState();
+      if (ytPlayer) {
+        if (typeof ytPlayer.loadVideoById === 'function') {
+          ytPlayer.loadVideoById(track.id);
+        } else if (typeof ytPlayer.cueVideoById === 'function') {
+          ytPlayer.cueVideoById(track.id);
+        }
+        triggerPlayState();
+      }
     }
 
     if (modeBtn) {
       modeBtn.addEventListener('click', function() {
         isInstrumentalMode = !isInstrumentalMode;
+        autoBankUnsavedNotes();
         activeQueueSource = null;
         if (isInstrumentalMode) {
           currentMasterTracks = masterInstrumentalTracks; activePlaylist = masterInstrumentalTracks;
@@ -2510,6 +3507,7 @@
 
     if (christmasBtn) {
       christmasBtn.addEventListener('click', () => {
+        autoBankUnsavedNotes();
         activeQueueSource = null; currentMasterTracks = masterChristmasTracks; activePlaylist = masterChristmasTracks;
         if (modeTitleText) modeTitleText.textContent = 'Honest Blue Christmas';
         if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Festive Soundscapes';
@@ -2520,10 +3518,22 @@
 
     if (disneyBtn) {
       disneyBtn.addEventListener('click', () => {
+        autoBankUnsavedNotes();
         activeQueueSource = null; currentMasterTracks = masterDisneyTracks; activePlaylist = masterDisneyTracks;
         if (modeTitleText) modeTitleText.textContent = 'Jay Draws Disney';
         if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Relaxing Disney Piano';
         if (labelSubText) labelSubText.textContent = 'DISNEY PIANO';
+        selectAndPlayTrack(0);
+      });
+    }
+
+    if (chakrasBtn) {
+      chakrasBtn.addEventListener('click', () => {
+        autoBankUnsavedNotes();
+        activeQueueSource = null; currentMasterTracks = masterChakrasTracks; activePlaylist = masterChakrasTracks;
+        if (modeTitleText) modeTitleText.textContent = 'Chakras Healing';
+        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Healing & Meditation Soundscape';
+        if (labelSubText) labelSubText.textContent = 'CHAKRAS';
         selectAndPlayTrack(0);
       });
     }
@@ -2551,36 +3561,32 @@
       if (toggleBtn) { toggleBtn.innerHTML = '❚❚'; toggleBtn.style.background = '#ef4444'; }
     }
 
-    window.addEventListener('message', (event) => {
-      try {
-        let data = JSON.parse(event.data);
-        if (data.event === 'infoDelivery' && data.info && data.info.playerState === 0) {
-          selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
-        }
-      } catch (e) {}
-    });
-
     if (toggleBtn) {
       toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
-          sendCommand('playVideo');
+          if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+            ytPlayer.playVideo();
+          } else {
+            selectAndPlayTrack(currentTrackIndex);
+          }
         } else {
           isPlaying = false;
           if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
           stopNativeSpin();
           stopNotesSystem();
+          autoBankUnsavedNotes();
           if (countdownInterval) clearInterval(countdownInterval);
           if (animFrameReq) cancelAnimationFrame(animFrameReq);
           toggleBtn.innerHTML = '▶';
           toggleBtn.style.background = '#3b82f6';
-          sendCommand('pauseVideo');
+          if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
         }
       });
     }
 
-    if (nextBtn) nextBtn.addEventListener('click', () => selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length));
-    if (prevBtn) prevBtn.addEventListener('click', () => selectAndPlayTrack((currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length));
+    if (nextBtn) nextBtn.addEventListener('click', () => { autoBankUnsavedNotes(); selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { autoBankUnsavedNotes(); selectAndPlayTrack((currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length); });
 
     renderDrawerList();
 
