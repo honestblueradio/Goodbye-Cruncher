@@ -553,11 +553,12 @@
     </div>
 
     <!-- Peel-Back Mode Switcher Buttons (Bottom Left & Right) -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 6px;">
       <div style="display: flex; gap: 4px; flex-wrap: wrap;">
         <button id="hbr-mode-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;"><span id="hbr-mode-btn-text">Instrumentals ⚙</span></button>
         <button id="hbr-christmas-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">⛄ Christmas</button>
         <button id="hbr-disney-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🎨 Jay Draws Disney</button>
+        <button id="hbr-chakras-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Chakras</button>
       </div>
       <a href="https://youtube.com/@honestblueradio?si=FBFJfkEI2OiVEJnD" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;" target="_blank">Catch Content ↗</a>
     </div>
@@ -1015,7 +1016,7 @@
       }, {passive: true});
     }
 
-    // Master Broadcast Tracks (With Track 13 "Flip The Boss Off" added as first song on Page 3)
+    // Master Broadcast Tracks
     const masterBroadcastTracks = [
       { id: 'WHzTume00O8', name: 'Track One' },
       { id: '4eU3OZFhuHs', name: 'Track Two' },
@@ -1043,6 +1044,10 @@
 
     const masterDisneyTracks = [
       { id: '5DiMoehAeOU', name: 'Jay Draws Disney • Relaxing Disney Piano Music' }
+    ];
+
+    const masterChakrasTracks = [
+      { id: 'UllduL1OqOc', name: 'Chakras Healing & Meditation Soundscape' }
     ];
 
     let currentMasterTracks = masterBroadcastTracks;
@@ -3338,6 +3343,7 @@
     const modeBtnText = document.getElementById('hbr-mode-btn-text');
     const christmasBtn = document.getElementById('hbr-christmas-btn');
     const disneyBtn = document.getElementById('hbr-disney-btn');
+    const chakrasBtn = document.getElementById('hbr-chakras-btn');
     const djContainer = document.getElementById('hbr-dj-container');
     const label = document.getElementById('hbr-label');
     const reflection = document.getElementById('hbr-reflection');
@@ -3483,6 +3489,17 @@
         if (modeTitleText) modeTitleText.textContent = 'Jay Draws Disney';
         if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Relaxing Disney Piano';
         if (labelSubText) labelSubText.textContent = 'DISNEY PIANO';
+        selectAndPlayTrack(0);
+      });
+    }
+
+    if (chakrasBtn) {
+      chakrasBtn.addEventListener('click', () => {
+        autoBankUnsavedNotes();
+        activeQueueSource = null; currentMasterTracks = masterChakrasTracks; activePlaylist = masterChakrasTracks;
+        if (modeTitleText) modeTitleText.textContent = 'Chakras Healing';
+        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Healing & Meditation Soundscape';
+        if (labelSubText) labelSubText.textContent = 'CHAKRAS';
         selectAndPlayTrack(0);
       });
     }
