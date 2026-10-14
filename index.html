@@ -3313,6 +3313,20 @@ function renderFeaturedArtists() {
 // 3. Initial call to populate the list on load
 renderFeaturedArtists();
 
+// 2. Render function for the Featured Artists list
+function renderFeaturedArtists() {
+  const container = document.getElementById('hbr-featured-artists-list');
+  if (!container) return;
+
+  container.innerHTML = featuredTracks.map(track => `
+    <div style="padding: 10px; background: rgba(255,255,255,0.04); border-radius: 6px; margin-top: 6px;">
+      <div style="color: #fff; font-size: 11px; font-weight: bold; margin-bottom: 4px;">${track.title} — ${track.artist}</div>
+      <iframe width="100%" height="120" src="https://www.youtube.com/embed/${track.youtubeId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 4px;"></iframe>
+    </div>
+  `).join('');
+}
+
+
     function renderDrawerList() {
       if (!drawerList) return;
       drawerList.innerHTML = '';
