@@ -352,14 +352,15 @@
     <!-- Collapsible Scrollable Playlist Drawer -->
     <div id="hbr-playlist-drawer" style="max-height: 0; overflow-y: auto; transition: max-height 0.4s ease, margin-bottom 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; margin-bottom: 0px;">
       <div style="padding: 12px; display: flex; flex-direction: column; gap: 12px;">
-        <!-- Standard Broadcast Track Section with Pagination -->
+        <!-- Standard Broadcast Track Section with Pagination & Scroll Mode -->
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #6b7280; letter-spacing: 1px;">Available Tracks</div>
-            <div id="hbr-page-controls" style="display: flex; gap: 4px;">
+            <div id="hbr-page-controls" style="display: flex; gap: 4px; align-items: center;">
               <button id="hbr-page1-btn" style="background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.5); border-radius: 4px; color: #93c5fd; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 1</button>
               <button id="hbr-page2-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 2</button>
               <button id="hbr-page3-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 3</button>
+              <button id="hbr-scroll-mode-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">📚 Scroll</button>
             </div>
           </div>
           <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
@@ -506,19 +507,13 @@
     <div id="hbr-heart-challenge-card" style="display: none; margin: 0 auto 16px auto; background: rgba(17,17,21,0.95); border: 2px solid #ef4444; border-radius: 14px; padding: 14px 16px; max-width: 290px; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center; user-select: none;">
       <div style="font-size: 10px; font-weight: 800; color: #fca5a5; text-transform: uppercase; margin-bottom: 8px;" id="hbr-heart-title">💖 EVENING HEART CHALLENGE</div>
       
-      <!-- Interactive SVG Heart Container -->
-      <div id="hbr-heart-target-btn" style="position: relative; width: 90px; height: 90px; margin: 0 auto 8px auto; cursor: pointer; transition: transform 0.1s ease;" title="Press in the middle of the heart!">
-        <svg viewBox="0 0 32 29.6" style="width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(239,68,68,0.7);">
-          <!-- Background Empty/Outline Path -->
-          <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="rgba(239,68,68,0.1)" stroke="#ef4444" stroke-width="2"/>
-          <!-- Filling Path Masked or Scaled by Progress -->
-          <path id="hbr-heart-fill-path" d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="#ef4444" transform="scale(0)" style="transform-origin: center; transition: transform 0.15s ease;" />
-        </svg>
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 9px; font-weight: 800; color: #ffffff; text-shadow: 0 1px 3px rgba(0,0,0,0.9); pointer-events: none;" id="hbr-heart-cta">PRESS HERE</div>
+      <!-- Interactive Inflating Heart Container -->
+      <div id="hbr-heart-target-btn" style="position: relative; width: 90px; height: 90px; margin: 0 auto 8px auto; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Tap to pump up the heart!">
+        <div id="hbr-inflating-heart" style="font-size: 42px; transition: transform 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: scale(1); filter: drop-shadow(0 0 12px rgba(239,68,68,0.8));">❤️</div>
       </div>
 
-      <div style="font-size: 11px; font-weight: 700; color: #fff;" id="hbr-heart-status"><span id="hbr-heart-taps-left">23</span> taps remaining</div>
-      <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;" id="hbr-heart-sub">Fill the heart to complete the challenge!</div>
+      <div style="font-size: 11px; font-weight: 700; color: #fff;" id="hbr-heart-status"><span id="hbr-heart-taps-left">23</span> pumps remaining</div>
+      <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;" id="hbr-heart-sub">Tap to inflate the heart until it bursts!</div>
     </div>
 
     <!-- Companion Dog Toggle Bar (Appears when character purchased) -->
@@ -2450,7 +2445,7 @@
       });
     }
 
-    // Automatic Eastern Time Fireworks & Interactive Heart Filling Challenge Engine
+    // Automatic Eastern Time Fireworks & Interactive Heart Inflation Challenge Engine
     const canvas = document.getElementById('hbr-fireworks-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
     let fireworksActive = false;
@@ -2464,9 +2459,8 @@
     let heartStartTime = 0;
     const heartCard = document.getElementById('hbr-heart-challenge-card');
     const heartTargetBtn = document.getElementById('hbr-heart-target-btn');
-    const heartFillPath = document.getElementById('hbr-heart-fill-path');
+    const inflatingHeart = document.getElementById('hbr-inflating-heart');
     const heartTapsLeftSpan = document.getElementById('hbr-heart-taps-left');
-    const heartCta = document.getElementById('hbr-heart-cta');
     const heartStatus = document.getElementById('hbr-heart-status');
     const heartTitle = document.getElementById('hbr-heart-title');
     const heartSub = document.getElementById('hbr-heart-sub');
@@ -2550,8 +2544,10 @@
         if (heartTapsLeft === 23) heartStartTime = Date.now();
         heartTapsLeft--;
         
-        let progress = (23 - heartTapsLeft) / 23;
-        if (heartFillPath) heartFillPath.style.transform = 'scale(' + progress + ')';
+        let currentScale = 1.0 + ((23 - heartTapsLeft) / 23) * 1.2;
+        if (inflatingHeart) {
+          inflatingHeart.style.transform = 'scale(' + currentScale + ')';
+        }
 
         if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = heartTapsLeft;
 
@@ -2562,10 +2558,16 @@
         if (heartTapsLeft <= 0) {
           heartChallengeActive = false;
           let elapsed = ((Date.now() - heartStartTime) / 1000).toFixed(1);
-          if (heartTitle) heartTitle.textContent = '💖 CHALLENGE COMPLETE!';
-          if (heartStatus) heartStatus.innerHTML = '<strong style="color: #4ade80;">Completed in ' + elapsed + 's!</strong>';
+          
+          if (inflatingHeart) {
+            inflatingHeart.textContent = '💖';
+            inflatingHeart.style.transform = 'scale(2.6)';
+            setTimeout(() => { inflatingHeart.style.transform = 'scale(1)'; }, 300);
+          }
+
+          if (heartTitle) heartTitle.textContent = '💖 HEART BURST COMPLETE!';
+          if (heartStatus) heartStatus.innerHTML = '<strong style="color: #4ade80;">Inflated in ' + elapsed + 's!</strong>';
           if (heartSub) heartSub.innerHTML = '<strong style="font-size: 11px; color: #f472b6;">You Are Loved ❤️</strong>';
-          if (heartCta) heartCta.style.display = 'none';
         }
       });
     }
@@ -2610,14 +2612,16 @@
 
       heartChallengeActive = true;
       heartTapsLeft = 23;
-      if (heartFillPath) heartFillPath.style.transform = 'scale(0)';
-      if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = '23';
-      if (heartTitle) heartTitle.textContent = '💖 EVENING HEART CHALLENGE';
-      if (heartStatus) {
-        heartStatus.innerHTML = '<span id="hbr-heart-taps-left">23</span> taps remaining';
+      if (inflatingHeart) {
+        inflatingHeart.textContent = '❤️';
+        inflatingHeart.style.transform = 'scale(1)';
       }
-      if (heartSub) heartSub.textContent = 'Fill the heart to complete the challenge!';
-      if (heartCta) heartCta.style.display = 'block';
+      if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = '23';
+      if (heartTitle) heartTitle.textContent = '💖 PUMP UP THE HEART';
+      if (heartStatus) {
+        heartStatus.innerHTML = '<span id="hbr-heart-taps-left">23</span> pumps remaining';
+      }
+      if (heartSub) heartSub.textContent = 'Tap to inflate the heart until it bursts!';
       if (heartCard) heartCard.style.display = 'block';
 
       setTimeout(() => stopFireworks(), 300000);
@@ -3097,6 +3101,7 @@
     const page1Btn = document.getElementById('hbr-page1-btn');
     const page2Btn = document.getElementById('hbr-page2-btn');
     const page3Btn = document.getElementById('hbr-page3-btn');
+    const scrollModeBtn = document.getElementById('hbr-scroll-mode-btn');
     const playQ1Btn = document.getElementById('hbr-play-q1-btn');
     const playQ2Btn = document.getElementById('hbr-play-q2-btn');
     const playT3Btn = document.getElementById('hbr-play-t3-btn');
@@ -3109,6 +3114,7 @@
     const t3Circle2 = document.getElementById('hbr-t3-circle-2');
     const t3Circle3 = document.getElementById('hbr-t3-circle-3');
     let drawerOpen = false;
+    let isScrollLibraryMode = false;
 
     function updateT3Circles() {
       const count = customTop3.length;
@@ -3117,8 +3123,31 @@
       if (t3Circle3) { t3Circle3.style.background = count >= 3 ? '#22c55e' : '#4b5563'; t3Circle3.style.boxShadow = count >= 3 ? '0 0 6px #22c55e' : 'none'; }
     }
 
+    if (scrollModeBtn) {
+      scrollModeBtn.addEventListener('click', function() {
+        isScrollLibraryMode = true;
+        [page1Btn, page2Btn, page3Btn].forEach(btn => {
+          if (btn) {
+            btn.style.background = 'rgba(255,255,255,0.06)';
+            btn.style.borderColor = 'rgba(255,255,255,0.15)';
+            btn.style.color = '#9ca3af';
+          }
+        });
+        scrollModeBtn.style.background = 'rgba(59,130,246,0.25)';
+        scrollModeBtn.style.borderColor = 'rgba(59,130,246,0.5)';
+        scrollModeBtn.style.color = '#93c5fd';
+        renderDrawerList();
+      });
+    }
+
     function setActivePage(pageNo) {
+      isScrollLibraryMode = false;
       currentDrawerPage = pageNo;
+      if (scrollModeBtn) {
+        scrollModeBtn.style.background = 'rgba(255,255,255,0.06)';
+        scrollModeBtn.style.borderColor = 'rgba(255,255,255,0.15)';
+        scrollModeBtn.style.color = '#9ca3af';
+      }
       [page1Btn, page2Btn, page3Btn].forEach((btn, idx) => {
         if (!btn) return;
         let isSelected = (idx + 1) === pageNo;
@@ -3149,11 +3178,24 @@
       if (!drawerList) return;
       drawerList.innerHTML = '';
 
-      let startIdx = (currentDrawerPage - 1) * tracksPerPage;
-      let pageTracks = currentMasterTracks.slice(startIdx, startIdx + tracksPerPage);
+      if (isScrollLibraryMode) {
+        drawerList.style.maxHeight = '240px';
+        drawerList.style.overflowY = 'auto';
+      } else {
+        drawerList.style.maxHeight = 'none';
+        drawerList.style.overflowY = 'visible';
+      }
 
-      pageTracks.forEach((track, pageRelativeIdx) => {
-        let globalIdx = startIdx + pageRelativeIdx;
+      let tracksToDisplay = [];
+      if (isScrollLibraryMode) {
+        tracksToDisplay = currentMasterTracks.map((track, idx) => ({ track, globalIdx: idx }));
+      } else {
+        let startIdx = (currentDrawerPage - 1) * tracksPerPage;
+        let pageTracks = currentMasterTracks.slice(startIdx, startIdx + tracksPerPage);
+        tracksToDisplay = pageTracks.map((track, pageRelativeIdx) => ({ track, globalIdx: startIdx + pageRelativeIdx }));
+      }
+
+      tracksToDisplay.forEach(({ track, globalIdx }) => {
         let row = document.createElement('div');
         row.style.display = 'flex';
         row.style.justifyContent = 'space-between';
@@ -3161,6 +3203,7 @@
         row.style.padding = '6px 10px';
         row.style.borderRadius = '6px';
         row.style.fontSize = '12px';
+        row.style.marginBottom = '4px';
 
         let isCurrentlyPlaying = (activeQueueSource === null) && (globalIdx === currentTrackIndex);
         if (isCurrentlyPlaying) {
