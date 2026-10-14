@@ -3274,6 +3274,15 @@
         drawerArrow.textContent = drawerOpen ? '▲' : '▼';
       });
     }
+const featuredArtistsBtn = document.getElementById('hbr-featured-artists-btn');
+const featuredArtistsSection = document.getElementById('hbr-featured-artists-section');
+
+if (featuredArtistsBtn && featuredArtistsSection) {
+  featuredArtistsBtn.addEventListener('click', () => {
+    const isHidden = featuredArtistsSection.style.display === 'none';
+    featuredArtistsSection.style.display = isHidden ? 'block' : 'none';
+  });
+}
 
     function renderDrawerList() {
       if (!drawerList) return;
