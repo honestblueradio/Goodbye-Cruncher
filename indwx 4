@@ -1048,7 +1048,7 @@
 
     // Master Broadcast Tracks
     const masterBroadcastTracks = [
-      { id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
+{ id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
       { id: '4eU3OZFhuHs', name: 'Dice On The Table' },
       { id: 'KE639OtYFT0', name: 'Created To Be Creative' },
       { id: 'LUeRO7sRCNs', name: 'One Mans Heart' },
@@ -1065,6 +1065,12 @@
       { id: 'RGP2AokFDsw', name: 'Facebook Ghosts' },
       { id: 'uKpMfAAz340', name: 'Happily Ever After' },
       { id: 'j6N_CdCYUTw', name: 'Smile Jay' },
+      { id: 'SThrbdo8Kuc', name: "I'll Never Turn My Back On God" },
+      { id: 'tf-raI0e6RE', name: 'EPCOT' },
+      { id: 'Q14EtVgLv0M', name: 'Go To The Top' },
+      { id: 'niyncouEjyc', name: 'Kindness and Forgetting' },
+      { id: '2ppL0slpReM', name: 'Bedrock Cough' },
+      { id: 'ff8t7KYNB70', name: "I'm a Disney LIVE Streamer" },
       { id: 'PPK-QMAYvcI', name: 'Flip The Boss Off', explicit: true }
     ];
 
