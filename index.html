@@ -3283,17 +3283,31 @@ if (featuredArtistsBtn && featuredArtistsSection) {
     featuredArtistsSection.style.display = isHidden ? 'block' : 'none';
   });
 
+// Featured Artists Toggle & Render Setup
+const featuredArtistsBtn = document.getElementById('hbr-featured-artists-btn');
+const featuredArtistsSection = document.getElementById('hbr-featured-artists-section');
+
+if (featuredArtistsBtn && featuredArtistsSection) {
+  featuredArtistsBtn.addEventListener('click', () => {
+    const isHidden = featuredArtistsSection.style.display === 'none';
+    featuredArtistsSection.style.display = isHidden ? 'block' : 'none';
+    if (isHidden) {
+      renderFeaturedArtists();
+    }
+  });
+}
+
 // 1. Featured Artists YouTube Track Collection
 const featuredTracks = [
   { 
     title: "Guest Track 1", 
     artist: "Featured Artist A", 
-    youtubeId: "YOUR_YOUTUBE_ID_HERE" 
+    youtubeId: "dQw4w9WgXcQ" // Replace with a real 11-character YouTube ID
   },
   { 
     title: "Guest Track 2", 
     artist: "Featured Artist B", 
-    youtubeId: "YOUR_YOUTUBE_ID_HERE" 
+    youtubeId: "dQw4w9WgXcQ" // Replace with a real 11-character YouTube ID
   }
 ];
 
@@ -3309,6 +3323,9 @@ function renderFeaturedArtists() {
     </div>
   `).join('');
 }
+
+// 3. Initial call to populate the list on load
+renderFeaturedArtists();
 
 // 3. Initial call to populate the list on load
 renderFeaturedArtists();
