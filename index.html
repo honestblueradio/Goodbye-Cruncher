@@ -243,11 +243,6 @@
   .hbr-drawer-row:hover { background: rgba(59,130,246,0.12); }
 </style>
 
-<!-- Search Bar Container inside Track Drawer -->
-<div style="margin-bottom: 8px;">
-  <input id="hbr-track-search-input" type="text" placeholder="🔍 Search tracks by title..." style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 8px; padding: 7px 10px; color: #fff; font-size: 11px; font-weight: 600; box-sizing: border-box; outline: none;" />
-</div>
-
 <div style="background: #111115; border-radius: 20px; padding: 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden; transition: all 0.3s ease;" id="hbr-main-app-card">
   
   <!-- BIRTHDAY BANNER (Displays automatically on October 13th every year, disappears at midnight) -->
@@ -747,76 +742,6 @@
 <!-- Player Behavior & Audio Script -->
 <script>
   (function() {
-    const searchInput = document.getElementById('hbr-track-search-input');
-
-    if (searchInput) {
-      searchInput.addEventListener('input', function(e) {
-        let query = e.target.value.toLowerCase().trim();
-        let drawerList = document.getElementById('hbr-drawer-list');
-        if (!drawerList) return;
-
-        // Determine which track array is currently active
-        let targetTracks = typeof currentMasterTracks !== 'undefined' ? currentMasterTracks : [];
-        
-        // Filter tracks matching the query
-        let filtered = targetTracks.filter(track => track.name.toLowerCase().includes(query));
-
-        drawerList.innerHTML = '';
-
-        if (filtered.length === 0) {
-          drawerList.innerHTML = '<div style="color: #9ca3af; font-size: 10px; text-align: center; padding: 8px;">No matching tracks found</div>';
-          return;
-        }
-
-        // Render filtered results
-        filtered.forEach((track) => {
-          // Find original index in master array so playback controls match correctly
-          let originalIdx = targetTracks.findIndex(t => t.id === track.id && t.name === track.name);
-
-          let row = document.createElement('div');
-          row.className = 'hbr-drawer-row';
-          row.style.display = 'flex';
-          row.style.alignItems = 'center';
-          row.style.justifyContent = 'space-between';
-          row.style.padding = '6px 10px';
-          row.style.borderRadius = '6px';
-          row.style.background = 'rgba(255,255,255,0.03)';
-          row.style.marginBottom = '4px';
-
-          let titleSpan = document.createElement('span');
-          titleSpan.style.fontSize = '10px';
-          titleSpan.style.fontWeight = '700';
-          titleSpan.style.color = '#e5e7eb';
-          titleSpan.style.overflow = 'hidden';
-          titleSpan.style.textOverflow = 'ellipsis';
-          titleSpan.style.whiteSpace = 'nowrap';
-          titleSpan.style.maxWidth = '210px';
-          titleSpan.textContent = track.name;
-
-          let playBtn = document.createElement('button');
-          playBtn.style.background = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)';
-          playBtn.style.border = 'none';
-          playBtn.style.borderRadius = '4px';
-          playBtn.style.color = '#fff';
-          playBtn.style.fontSize = '8px';
-          playBtn.style.fontWeight = '800';
-          playBtn.style.padding = '4px 8px';
-          playBtn.style.cursor = 'pointer';
-          playBtn.textContent = '▶ PLAY';
-
-          playBtn.addEventListener('click', function() {
-            if (typeof autoBankUnsavedNotes === 'function') autoBankUnsavedNotes();
-            if (typeof activeQueueSource !== 'undefined') activeQueueSource = null;
-            if (typeof selectAndPlayTrack === 'function') selectAndPlayTrack(originalIdx);
-          });
-
-          row.appendChild(titleSpan);
-          row.appendChild(playBtn);
-          drawerList.appendChild(row);
-        });
-      });
-    }
-
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
     const purpleRainLayer = document.getElementById('hbr-purple-rain-layer');
@@ -1123,7 +1048,7 @@
 
     // Master Broadcast Tracks
     const masterBroadcastTracks = [
-      { id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
+{ id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
       { id: '4eU3OZFhuHs', name: 'Dice On The Table' },
       { id: 'KE639OtYFT0', name: 'Created To Be Creative' },
       { id: 'LUeRO7sRCNs', name: 'One Mans Heart' },
