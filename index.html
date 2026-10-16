@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.4)       -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.5)       -->
 <!-- ====================================================================== -->
 
 <!-- Scrollbar & Advanced Animation Styles -->
@@ -180,63 +180,8 @@
     z-index: 13;
   }
 
-  .hbr-note-active {
-    position: absolute;
-    color: #60a5fa;
-    font-size: 20px;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.9);
-    cursor: pointer;
-    user-select: none;
-    pointer-events: auto !important;
-    animation: hbrFloatUp 4.2s linear forwards;
-    transition: color 0.2s ease;
-  }
-
-  .hbr-note-popped {
-    animation: hbrPopBurst 0.28s ease-out forwards !important;
-    pointer-events: none !important;
-  }
-
-  .hbr-bubble-active {
-    position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, rgba(34, 211, 238, 0.4) 40%, rgba(6, 182, 212, 0.2) 70%, rgba(255, 255, 255, 0.6) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 0 10px rgba(34, 211, 238, 0.5), inset 0 0 8px rgba(255, 255, 255, 0.6);
-    cursor: pointer;
-    user-select: none;
-    pointer-events: auto !important;
-    animation: hbrFloatUp 4.5s linear forwards;
-  }
-
-  .hbr-bubble-popped {
-    animation: hbrBubblePopBurst 0.2s ease-out forwards !important;
-    pointer-events: none !important;
-  }
-
-  .hbr-firework-unlit {
-    position: absolute;
-    font-size: 22px;
-    cursor: pointer;
-    user-select: none;
-    pointer-events: auto !important;
-    animation: hbrFloatUp 3.8s linear forwards;
-    filter: drop-shadow(0 0 6px #f97316);
-  }
-
-  @keyframes hbrBirthdayGlow {
-    0%, 100% { text-shadow: 0 0 10px #ec4899, 0 0 20px #f472b6, 0 0 30px #db2777; transform: scale(1); }
-    50% { text-shadow: 0 0 15px #f472b6, 0 0 25px #fb7185, 0 0 35px #f43f5e; transform: scale(1.02); }
-  }
-
-  .hbr-birthday-text {
-    animation: hbrBirthdayGlow 3s infinite ease-in-out;
-  }
-
   .hbr-theme-dark-obsidian { background: #0b0b0f !important; color: #f3f4f6 !important; }
   .hbr-flex-center { display: flex; align-items: center; justify-content: center; }
-  .hbr-particle-fx-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 12; overflow: hidden; }
   .hbr-storefront-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .hbr-drawer-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,0.03); transition: background 0.2s ease; }
   .hbr-drawer-row:hover { background: rgba(59,130,246,0.12); }
@@ -527,6 +472,15 @@
       </div>
     </div>
 
+    <!-- WELCOME ALL WELCOME DROP BUTTON -->
+    <div style="background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 14px; padding: 12px 16px; margin-bottom: 16px; text-align: center;">
+      <div style="font-size: 11px; font-weight: 800; color: #d8b4fe; text-transform: uppercase; margin-bottom: 4px;">🌴 ORLANDO &amp; WELCOME DROP 🌴</div>
+      <div style="font-size: 10px; color: #d1d5db; margin-bottom: 10px;">Click below to play the official station welcome drop &amp; fireworks guide:</div>
+      <button id="hbr-welcome-all-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 18px; border-radius: 10px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(168,85,247,0.4); transition: transform 0.15s ease;">
+        👋 Welcome All
+      </button>
+    </div>
+
     <!-- IOS ZENFOLIO DIRECT WRAPPER CARD -->
     <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; text-align: center;">
       <div style="font-size: 11px; font-weight: 800; color: #93c5fd; text-transform: uppercase; margin-bottom: 4px;">🎧 MOBILE / ANDROID STREAM LAUNCHER</div>
@@ -753,7 +707,7 @@
   </div>
 </div>
 
-<!-- Player Behavior & Audio Script (Version 5.4 with Android Audio Bypass) -->
+<!-- Player Behavior & Audio Script (Version 5.5 with Welcome All Drop) -->
 <script>
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
@@ -762,6 +716,7 @@
     const birthdayBanner = document.getElementById('hbr-birthday-banner');
     const fireworksShowBanner = document.getElementById('hbr-fireworks-show-banner');
     const audioFallback = document.getElementById('hbr-audio-fallback');
+    const welcomeAllBtn = document.getElementById('hbr-welcome-all-btn');
 
     function checkBirthdayBanner() {
       if (!birthdayBanner) return;
@@ -1052,6 +1007,7 @@
 
     // Master Broadcast Tracks
     const masterBroadcastTracks = [
+      { id: 'vYES_YX5w5I', name: 'Orlando Welcome Drop (Welcome All)' },
       { id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
       { id: '4eU3OZFhuHs', name: 'Dice On The Table' },
       { id: 'KE639OtYFT0', name: 'Created To Be Creative' },
@@ -3306,7 +3262,7 @@
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
     let isPlaying = false;
-    let currentTrackIndex = 11;
+    let currentTrackIndex = 0; // Starts right on the Orlando Welcome Drop!
     let ytPlayer = null;
     let isDragging = false;
     let startAngle = 0;
@@ -3352,6 +3308,23 @@
       }
     }
 
+    if (welcomeAllBtn) {
+      welcomeAllBtn.addEventListener('click', function() {
+        autoBankUnsavedNotes();
+        activeQueueSource = null;
+        activePlaylist = masterBroadcastTracks;
+        selectAndPlayTrack(0); // Index 0 is the Orlando Welcome Drop (vYES_YX5w5I)
+        triggerPlayState();
+
+        if (recordArt) {
+          recordArt.classList.remove('hbr-cover-spin-forward');
+          void recordArt.offsetWidth;
+          recordArt.classList.add('hbr-cover-spin-forward');
+          setTimeout(() => recordArt.classList.remove('hbr-cover-spin-forward'), 550);
+        }
+      });
+    }
+
     function checkPurpleRainEffect(track) {
       if (!purpleRainLayer) return;
       if (track && track.id === 'lCrOsTj9QhY') {
@@ -3385,7 +3358,7 @@
 
       renderDrawerList();
       if (audioFallback) {
-        audioFallback.src = "https://www.w3schools.com/html/horse.ogg"; // Dummy or silent loop to unlock audio context on Android
+        audioFallback.src = "https://www.w3schools.com/html/horse.ogg";
         audioFallback.play().catch(e => {});
       }
 
@@ -3478,7 +3451,6 @@
 
     if (toggleBtn) {
       toggleBtn.addEventListener('click', () => {
-        // Unlock AudioContext for Android / Motorola on user touch gesture
         if (audioFallback) {
           audioFallback.muted = false;
           audioFallback.play().catch(e => {});
