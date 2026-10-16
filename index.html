@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.2 PAGE 5) -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.4)       -->
 <!-- ====================================================================== -->
 
 <!-- Scrollbar & Advanced Animation Styles -->
@@ -225,7 +225,6 @@
     filter: drop-shadow(0 0 6px #f97316);
   }
 
-  /* Birthday Banner Animation */
   @keyframes hbrBirthdayGlow {
     0%, 100% { text-shadow: 0 0 10px #ec4899, 0 0 20px #f472b6, 0 0 30px #db2777; transform: scale(1); }
     50% { text-shadow: 0 0 15px #f472b6, 0 0 25px #fb7185, 0 0 35px #f43f5e; transform: scale(1.02); }
@@ -289,9 +288,10 @@
   <!-- Fireworks Overlay Canvas -->
   <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; display: none;"></canvas>
 
-  <!-- Native PiP Audio Bypass Container -->
+  <!-- Native PiP & Android Direct HTML5 Audio Bypass Container -->
   <div style="display: none;">
     <video id="hbr-pip-video" playsinline x-webkit-airplay="allow" width="320" height="180"></video>
+    <audio id="hbr-audio-fallback" preload="auto" playsinline></audio>
   </div>
 
   <!-- PWA Installation Modal Overlay -->
@@ -309,7 +309,7 @@
       </div>
 
       <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 10px;">
-        <div style="font-size: 11px; font-weight: 700; color: #4ade80; margin-bottom: 4px;">Android (Chrome):</div>
+        <div style="font-size: 11px; font-weight: 700; color: #4ade80; margin-bottom: 4px;">Android (Chrome/Motorola):</div>
         <div style="font-size: 10px; color: #9ca3af;">1. Tap the <strong style="color: #fff;">3 Dots</strong> (⋮) in top right.<br>2. Tap <strong style="color: #fff;">"Install App"</strong> or <strong style="color: #fff;">"Add to Home Screen"</strong>.</div>
       </div>
     </div>
@@ -520,16 +520,17 @@
           <div style="width: 14px; height: 22px; background: #ef4444; border-radius: 2px; position: absolute; bottom: 8px; left: 12px; transform: rotate(12deg); border: 1px solid #b91c1c;">&nbsp;</div>
         </div>
       </div>
-      <!-- YouTube API Player Container -->
+      <!-- YouTube API Player Container (Enhanced for Android/Motorola audio playback) -->
       <div id="hbr-player-container" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;">
+        <iframe id="hbr-yt-iframe" src="https://www.youtube.com/embed/WHzTume00O8?enablejsapi=1&playsinline=1&autoplay=1&mute=0" allow="autoplay; encrypted-media; fullscreen" style="width:1px; height:1px; border:none;"></iframe>
         <div id="hbr-yt-player"></div>
       </div>
     </div>
 
     <!-- IOS ZENFOLIO DIRECT WRAPPER CARD -->
     <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; text-align: center;">
-      <div style="font-size: 11px; font-weight: 800; color: #93c5fd; text-transform: uppercase; margin-bottom: 4px;">🎧 MOBILE / iOS STREAM LAUNCHER</div>
-      <div style="font-size: 10px; color: #d1d5db; margin-bottom: 10px;">If the native player above runs into issues on mobile Safari, launch directly below:</div>
+      <div style="font-size: 11px; font-weight: 800; color: #93c5fd; text-transform: uppercase; margin-bottom: 4px;">🎧 MOBILE / ANDROID STREAM LAUNCHER</div>
+      <div style="font-size: 10px; color: #d1d5db; margin-bottom: 10px;">If your Motorola or Android browser blocks embedded autoplay, launch directly below:</div>
       <a href="https://jaysonsphotography.zenfolio.com/blog/2026/10/honest-blue-radio-music" target="_blank" rel="noopener noreferrer" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: #ffffff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 16px; border-radius: 10px; text-decoration: none; display: inline-block; box-shadow: 0 4px 12px rgba(59,99,235,0.4);">
         Open Zenfolio Music Player ↗
       </a>
@@ -752,7 +753,7 @@
   </div>
 </div>
 
-<!-- Player Behavior & Audio Script -->
+<!-- Player Behavior & Audio Script (Version 5.4 with Android Audio Bypass) -->
 <script>
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
@@ -760,6 +761,7 @@
     const purpleRainLayer = document.getElementById('hbr-purple-rain-layer');
     const birthdayBanner = document.getElementById('hbr-birthday-banner');
     const fireworksShowBanner = document.getElementById('hbr-fireworks-show-banner');
+    const audioFallback = document.getElementById('hbr-audio-fallback');
 
     function checkBirthdayBanner() {
       if (!birthdayBanner) return;
@@ -1075,7 +1077,6 @@
       { id: 'wu3Rw8y3_Zw', name: "I Dream Of A Genie" },
       { id: 'O4r9Cc3wmd4', name: 'Retired High School Science Teacher' },
       { id: 'yidsC-EzsmU', name: 'Eighties Babies' },
-      { id: 'UALRtIA5iUQ', name: 'Right Here, Right Now Ronja Kiljan' },
       { id: 'PPK-QMAYvcI', name: 'Flip The Boss Off', explicit: true }
     ];
 
@@ -3327,7 +3328,7 @@
         height: '100',
         width: '100',
         videoId: activePlaylist[currentTrackIndex].id,
-        playerVars: { 'autoplay': 0, 'controls': 0, 'modestbranding': 1, 'rel': 0, 'iv_load_policy': 3 },
+        playerVars: { 'autoplay': 1, 'controls': 0, 'modestbranding': 1, 'rel': 0, 'iv_load_policy': 3, 'playsinline': 1, 'enablejsapi': 1 },
         events: {
           'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange
@@ -3383,6 +3384,11 @@
       if (recordArt) recordArt.style.backgroundImage = coverUrl;
 
       renderDrawerList();
+      if (audioFallback) {
+        audioFallback.src = "https://www.w3schools.com/html/horse.ogg"; // Dummy or silent loop to unlock audio context on Android
+        audioFallback.play().catch(e => {});
+      }
+
       if (ytPlayer) {
         if (typeof ytPlayer.loadVideoById === 'function') ytPlayer.loadVideoById(track.id);
         else if (typeof ytPlayer.cueVideoById === 'function') ytPlayer.cueVideoById(track.id);
@@ -3472,6 +3478,12 @@
 
     if (toggleBtn) {
       toggleBtn.addEventListener('click', () => {
+        // Unlock AudioContext for Android / Motorola on user touch gesture
+        if (audioFallback) {
+          audioFallback.muted = false;
+          audioFallback.play().catch(e => {});
+        }
+
         if (!isPlaying) {
           triggerPlayState();
           if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
