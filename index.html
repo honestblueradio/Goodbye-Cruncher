@@ -257,10 +257,23 @@
   <!-- SCHEDULED FIREWORKS LIVE BANNER (Visible strictly 6:00-6:05 PM ET and 9:00-9:05 PM ET) -->
   <div id="hbr-fireworks-show-banner" style="display: none; position: relative; z-index: 26; background: linear-gradient(135deg, rgba(249, 115, 22, 0.25) 0%, rgba(234, 88, 12, 0.35) 100%); border: 2px solid #f97316; border-radius: 14px; padding: 10px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 25px rgba(249,115,22,0.5); pointer-events: auto;">
     <div style="font-size: 12px; font-weight: 900; color: #fdba74; text-transform: uppercase; letter-spacing: 1px;">
-      🎆 ON AIR FIREWORKS SHOW 🎆
+      🎆 SCHEDULED FIREWORKS SHOW ($1.23 / SHOT) 🎆
     </div>
     <div style="font-size: 10px; color: #fef08a; margin-top: 2px; font-weight: 700;">
-      Tap anywhere on screen to launch your own fireworks!
+      Tap anywhere on screen to shoot off fireworks and earn cash!
+    </div>
+  </div>
+
+  <!-- FIREWORKS EARNINGS SUMMARY MODAL (Appears at end of show) -->
+  <div id="hbr-fireworks-summary-modal" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17,17,21,0.96); backdrop-filter: blur(10px); z-index: 200; padding: 20px; box-sizing: border-box; text-align: center; flex-direction: column; justify-content: center; align-items: center;">
+    <div style="background: #1c1c28; border: 2px solid #f97316; border-radius: 16px; padding: 20px; max-width: 320px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); text-align: center;">
+      <div style="font-size: 24px; margin-bottom: 6px;">🎆🎇🎉</div>
+      <div style="font-size: 14px; font-weight: 900; color: #f97316; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;">Fireworks Show Complete!</div>
+      <p style="font-size: 11px; color: #d1d5db; line-height: 1.5; margin-bottom: 14px;">
+        You shot off <strong id="hbr-summary-shots" style="color: #60a5fa;">0</strong> fireworks during the show and earned:
+      </p>
+      <div style="font-size: 20px; font-weight: 900; color: #4ade80; margin-bottom: 16px;" id="hbr-summary-earned">$0.00</div>
+      <button id="hbr-close-summary-btn" style="background: linear-gradient(135deg, #f97316 0%, #c2410c 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(249,115,22,0.4);">COLLECT CASH &amp; CLOSE</button>
     </div>
   </div>
 
@@ -273,7 +286,7 @@
   <!-- RUNNING & NAPPING DOG COMPANION LAYER -->
   <div id="hbr-dog-companion" style="display: none; position: absolute; bottom: 18px; left: 20px; font-size: 26px; z-index: 85; pointer-events: none; user-select: none; transition: transform 0.4s ease, bottom 0.4s ease; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8);">🐕</div>
 
-  <!-- Fireworks Overlay Canvas (Active only during 6 PM & 9 PM Eastern 5-min windows) -->
+  <!-- Fireworks Overlay Canvas -->
   <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; display: none;"></canvas>
 
   <!-- Native PiP Audio Bypass Container -->
@@ -754,7 +767,6 @@
         let month = parseInt(parts.find(p => p.type === 'month').value, 10);
         let day = parseInt(parts.find(p => p.type === 'day').value, 10);
 
-        // October 13th (Month 10, Day 13)
         if (month === 10 && day === 13) {
           birthdayBanner.style.display = 'block';
         } else {
@@ -856,8 +868,6 @@
 
       recognition.onresult = function(event) {
         let transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
-        console.log("Voice command heard:", transcript);
-
         if (transcript.includes('skip') || transcript.includes('next') || transcript.includes('track')) {
           if (typeof nextBtn !== 'undefined' && nextBtn) nextBtn.click();
         } else if (transcript.includes('previous') || transcript.includes('back')) {
@@ -870,7 +880,6 @@
       };
 
       recognition.onerror = function(event) {
-        console.warn("Speech recognition error:", event.error);
         if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
           alert("Microphone permission was blocked. Please check your browser settings to allow microphone access for voice control.");
           isVoiceActive = false;
@@ -922,7 +931,6 @@
     let globalSocket = null;
     function connectGlobalRelay() {
       globalSocket = new WebSocket('wss://ws.postman-echo.com/raw');
-      
       globalSocket.onmessage = function(event) {
         try {
           let data = JSON.parse(event.data);
@@ -933,7 +941,6 @@
           }
         } catch(e) {}
       };
-
       globalSocket.onclose = function() {
         setTimeout(connectGlobalRelay, 3000);
       };
@@ -1031,13 +1038,13 @@
 
     if (appCard) {
       appCard.addEventListener('click', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal') || e.target.closest('#hbr-fireworks-canvas')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal') || e.target.closest('#hbr-fireworks-canvas') || e.target.closest('#hbr-fireworks-summary-modal')) {
           return;
         }
         handleCardTap(e);
       });
       appCard.addEventListener('touchstart', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal') || e.target.closest('#hbr-fireworks-canvas')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal') || e.target.closest('#hbr-fireworks-canvas') || e.target.closest('#hbr-fireworks-summary-modal')) {
           return;
         }
         handleCardTap(e);
@@ -1101,7 +1108,6 @@
     let currentDrawerPage = 1;
     const tracksPerPage = 6;
 
-    // Bank Notes & Stores State Data
     let bankedNotesTotal = 50;
     let storeCashTotal = 0.00;
     let unrewoundTapesCount = 0;
@@ -1140,14 +1146,12 @@
     function getDailyMantras() {
       let now = new Date();
       let dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-      
       let idx1 = dayOfYear % masterMantrasPool.length;
       let idx2 = (dayOfYear * 3 + 1) % masterMantrasPool.length;
       let idx3 = (dayOfYear * 7 + 2) % masterMantrasPool.length;
 
       if (idx2 === idx1) idx2 = (idx1 + 1) % masterMantrasPool.length;
       if (idx3 === idx1 || idx3 === idx2) idx3 = (idx2 + 1) % masterMantrasPool.length;
-
       return [masterMantrasPool[idx1], masterMantrasPool[idx2], masterMantrasPool[idx3]];
     }
 
@@ -1180,7 +1184,6 @@
         let isOnSale = Math.random() < 0.35;
         let discount = isOnSale ? (Math.floor(Math.random() * 3) + 2) * 10 : 0;
         let finalPrice = isOnSale ? Math.floor(base * (1 - discount / 100)) : base;
-
         currentStorePrices[store.id] = { price: finalPrice, originalPrice: base, isOnSale: isOnSale, discount: discount };
       });
     }
@@ -1196,7 +1199,6 @@
       return count;
     }
 
-    // PERSISTENT SAVE ENGINE
     function saveEverything() {
       try {
         const masterSave = {
@@ -1214,7 +1216,6 @@
           dogActive: localStorage.getItem('hbr_dog_active') !== 'false'
         };
         localStorage.setItem('hbr_persistent_save_v1', JSON.stringify(masterSave));
-        
         localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString());
         localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2));
         localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores));
@@ -1276,7 +1277,6 @@
 
         lastSessionTimestamp = Date.now();
         saveEverything();
-
       } catch (e) {
         bankedNotesTotal = 50;
       }
@@ -1293,12 +1293,8 @@
 
     function updateDogUIState() {
       let isOwned = (userOwnedCharacters.mollydog || 0) > 0;
-      if (dogToggleBar) {
-        dogToggleBar.style.display = isOwned ? 'flex' : 'none';
-      }
-      if (dogCompanion) {
-        dogCompanion.style.display = (isOwned && dogActive) ? 'block' : 'none';
-      }
+      if (dogToggleBar) dogToggleBar.style.display = isOwned ? 'flex' : 'none';
+      if (dogCompanion) dogCompanion.style.display = (isOwned && dogActive) ? 'block' : 'none';
       if (dogToggleBtn) {
         dogToggleBtn.textContent = dogActive ? '🐕 ACTIVE' : '💤 SLEEPING/OFF';
         dogToggleBtn.style.background = dogActive ? 'rgba(34, 197, 94, 0.2)' : 'rgba(107, 114, 128, 0.2)';
@@ -1309,10 +1305,8 @@
 
     function runDogBehavior() {
       if (!dogCompanion || !dogActive || (userOwnedCharacters.mollydog || 0) <= 0) return;
-      
       let actions = ['run-left', 'run-right', 'nap', 'bark', 'sit'];
       let chosen = actions[Math.floor(Math.random() * actions.length)];
-      
       let currentLeft = parseInt(dogCompanion.style.left || '20', 10);
       
       if (chosen === 'run-left') {
@@ -1379,7 +1373,6 @@
 
     function updateTopProfileBanner() {
       if (!topProfileBanner) return;
-      
       if (openProfileBtn) {
         openProfileBtn.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? '👤 Edit Profile' : '👤 Create Profile';
       }
@@ -1444,8 +1437,8 @@
     function renderMantraModalList() {
       if (!mantraOptionsList) return;
       mantraOptionsList.innerHTML = '';
-
       let daily3 = getDailyMantras();
+
       daily3.forEach(mText => {
         let isSelected = (userProfileData.selectedMantra === mText);
         let btn = document.createElement('button');
@@ -1483,15 +1476,12 @@
     }
 
     if (closeMantraBtn && mantraModal) {
-      closeMantraBtn.addEventListener('click', function() {
-        mantraModal.style.display = 'none';
-      });
+      closeMantraBtn.addEventListener('click', () => { mantraModal.style.display = 'none'; });
     }
 
     function updateProfileModalUI() {
       if (profileNameInput) profileNameInput.value = userProfileData.name;
       if (profileImgInput) profileImgInput.value = userProfileData.avatarUrl;
-
       if (profileAvatarFrame) profileAvatarFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
 
       if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
@@ -1583,9 +1573,7 @@
     }
 
     if (closeProfileBtn && profileModal) {
-      closeProfileBtn.addEventListener('click', function() {
-        profileModal.style.display = 'none';
-      });
+      closeProfileBtn.addEventListener('click', () => { profileModal.style.display = 'none'; });
     }
 
     if (profileColorsContainer) {
@@ -1625,15 +1613,9 @@
               let height = img.height;
 
               if (width > height) {
-                if (width > MAX_WIDTH) {
-                  height *= MAX_WIDTH / width;
-                  width = MAX_WIDTH;
-                }
+                if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
               } else {
-                if (height > MAX_HEIGHT) {
-                  width *= MAX_HEIGHT / height;
-                  height = MAX_HEIGHT;
-                }
+                if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
               }
 
               canvas.width = width;
@@ -1641,8 +1623,7 @@
               let ctx = canvas.getContext('2d');
               ctx.drawImage(img, 0, 0, width, height);
               
-              let dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-              userProfileData.avatarUrl = dataUrl;
+              userProfileData.avatarUrl = canvas.toDataURL('image/jpeg', 0.85);
               if (profileImgInput) profileImgInput.value = '';
               updateProfileModalUI();
             };
@@ -1655,8 +1636,7 @@
 
     if (profileImgInput) {
       profileImgInput.addEventListener('input', function() {
-        let val = profileImgInput.value.trim();
-        userProfileData.avatarUrl = val;
+        userProfileData.avatarUrl = profileImgInput.value.trim();
         updateProfileModalUI();
       });
     }
@@ -1665,9 +1645,7 @@
       saveProfileBtn.addEventListener('click', function() {
         if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
         let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
-        if (urlVal !== '') {
-          userProfileData.avatarUrl = urlVal;
-        }
+        if (urlVal !== '') userProfileData.avatarUrl = urlVal;
         saveEverything();
         updateTopProfileBanner();
         updateProfileModalUI();
@@ -1712,12 +1690,8 @@
                 if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
                 updateCashUI();
                 alert('🎉 Save backup imported successfully! Your cash, notes, and profile have been restored.');
-              } else {
-                alert('Invalid save file.');
               }
-            } catch(err) {
-              alert('Error reading save file.');
-            }
+            } catch(err) { alert('Error reading save file.'); }
           };
           reader.readAsText(file);
         }
@@ -1760,9 +1734,7 @@
       if (storeEventAlert) {
         storeEventAlert.innerHTML = msg;
         storeEventAlert.style.display = 'block';
-        setTimeout(() => {
-          if (storeEventAlert) storeEventAlert.style.display = 'none';
-        }, 8000);
+        setTimeout(() => { if (storeEventAlert) storeEventAlert.style.display = 'none'; }, 8000);
       }
     }
 
@@ -1799,9 +1771,7 @@
           triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on a overdue tape!');
         }
 
-        if (unrewoundTapesCount > 0) {
-          netPerSec -= (unrewoundTapesCount * 0.10);
-        }
+        if (unrewoundTapesCount > 0) netPerSec -= (unrewoundTapesCount * 0.10);
 
         storeCashTotal = Math.max(0, storeCashTotal + netPerSec);
         saveEverything();
@@ -1825,12 +1795,7 @@
               let targetFmt = formats[Math.floor(Math.random() * formats.length)];
               let movieObj = movieCatalog.find(m => m.id === targetMovieId);
 
-              shoplifterPending = {
-                movieId: targetMovieId,
-                format: targetFmt,
-                movieName: movieObj ? movieObj.name : 'Movie',
-                timeLeft: 3
-              };
+              shoplifterPending = { movieId: targetMovieId, format: targetFmt, movieName: movieObj ? movieObj.name : 'Movie', timeLeft: 3 };
 
               if (shoplifterCatchBox && thiefTimerSpan) {
                 thiefTimerSpan.textContent = '3';
@@ -1839,11 +1804,7 @@
 
               if (shoplifterTimerInterval) clearInterval(shoplifterTimerInterval);
               shoplifterTimerInterval = setInterval(function() {
-                if (!shoplifterPending) {
-                  clearInterval(shoplifterTimerInterval);
-                  return;
-                }
-
+                if (!shoplifterPending) { clearInterval(shoplifterTimerInterval); return; }
                 shoplifterPending.timeLeft--;
                 if (thiefTimerSpan) thiefTimerSpan.textContent = shoplifterPending.timeLeft;
 
@@ -1885,7 +1846,6 @@
           let caughtMovie = shoplifterPending.movieName;
           let caughtFmt = shoplifterPending.format.toUpperCase();
           shoplifterPending = null;
-          
           if (shoplifterCatchBox) shoplifterCatchBox.style.display = 'none';
           
           let rewardCash = 2.50;
@@ -1924,7 +1884,6 @@
           titleLine.style.fontSize = '11px';
           titleLine.style.fontWeight = '800';
           titleLine.style.color = '#ffffff';
-          
           let saleBadge = priceData.isOnSale ? ' <span style="background: #ef4444; color: #fff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + priceData.discount + '% OFF!</span>' : '';
           titleLine.innerHTML = store.icon + ' ' + store.name + saleBadge;
 
@@ -1969,14 +1928,11 @@
             buyBtn.addEventListener('click', function() {
               bankedNotesTotal -= priceData.price;
               userOwnedStores[store.id] = (userOwnedStores[store.id] || 0) + 1;
-              
               saveEverything();
               updateTopProfileBanner();
               updateProfileModalUI();
-
               const bankedCountDisplay = document.getElementById('hbr-banked-count');
               if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
               randomizeStorePrices();
               renderStoreList();
             });
@@ -1984,7 +1940,6 @@
 
           buyDiv.appendChild(priceLine);
           buyDiv.appendChild(buyBtn);
-
           itemBox.appendChild(infoDiv);
           itemBox.appendChild(buyDiv);
           storeItemsList.appendChild(itemBox);
@@ -2045,21 +2000,17 @@
             buyBtn.addEventListener('click', function() {
               bankedNotesTotal -= char.price;
               userOwnedCharacters[char.id] = 1;
-              
               saveEverything();
               updateDogUIState();
               updateProfileModalUI();
-
               const bankedCountDisplay = document.getElementById('hbr-banked-count');
               if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
               renderStoreList();
             });
           }
 
           buyDiv.appendChild(priceLine);
           buyDiv.appendChild(buyBtn);
-
           itemBox.appendChild(infoDiv);
           itemBox.appendChild(buyDiv);
           storeItemsList.appendChild(itemBox);
@@ -2112,9 +2063,7 @@
               unrewoundTapesCount = 0;
               saveEverything();
               renderStoreList();
-            } else {
-              alert('Not enough cash to rewind tapes! Earn more cash or notes first.');
-            }
+            } else { alert('Not enough cash to rewind tapes!'); }
           });
 
           rewindBox.appendChild(rText);
@@ -2123,7 +2072,6 @@
         }
 
         let totalMovies = getTotalMovieCount();
-
         let statusBox = document.createElement('div');
         statusBox.style.background = totalMovies > 0 ? 'rgba(34, 197, 94, 0.12)' : 'rgba(245, 158, 11, 0.12)';
         statusBox.style.border = totalMovies > 0 ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(245, 158, 11, 0.3)';
@@ -2133,8 +2081,8 @@
         statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
         statusBox.style.textAlign = 'center';
         statusBox.innerHTML = totalMovies > 0 
-          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString() + '. Higher formats = higher payouts (DVD & Blu-ray never need rewinding)!'
-          : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash & late fees!';
+          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString() + '.'
+          : '💡 <strong>NO MOVIES IN STOCK!</strong> Buy movies below to start earning rental cash & late fees!';
         
         storeItemsList.appendChild(statusBox);
 
@@ -2162,19 +2110,14 @@
           titleDiv.style.fontWeight = '800';
           titleDiv.style.color = '#ffffff';
 
-          let rtLink = movie.rtUrl 
-            ? '<a href="' + movie.rtUrl + '" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">'
-            : '';
+          let rtLink = movie.rtUrl ? '<a href="' + movie.rtUrl + '" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">' : '';
           let rtClose = movie.rtUrl ? '↗</a>' : '';
-
           let rtBadge = isGoodMovie 
             ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + rtLink + '🍅 ' + movie.rtScore + '% (PROFIT)' + rtClose + '</span>'
             : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + rtLink + '🍿 ' + movie.rtScore + '% (DRAINS CASH)' + rtClose + '</span>';
-          
           let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies.toLocaleString() + '</span>' : '';
 
           titleDiv.innerHTML = '🎬 ' + movie.name + rtBadge + ownedBadge;
-
           topRow.appendChild(titleDiv);
           itemBox.appendChild(topRow);
 
@@ -2183,9 +2126,9 @@
           formatsRow.style.gap = '4px';
 
           const formats = [
-            { key: 'vhs', label: 'VHS 📼', costMult: 1, desc: 'Base Payout' },
-            { key: 'dvd', label: 'DVD 📀', costMult: 1.8, desc: 'Higher Payout' },
-            { key: 'bluray', label: 'Blu-ray 💿', costMult: 2.8, desc: 'Max Payout' }
+            { key: 'vhs', label: 'VHS 📼', costMult: 1 },
+            { key: 'dvd', label: 'DVD 📀', costMult: 1.8 },
+            { key: 'bluray', label: 'Blu-ray 💿', costMult: 2.8 }
           ];
 
           formats.forEach(fmt => {
@@ -2210,17 +2153,12 @@
             if (canAfford) {
               fmtBtn.addEventListener('click', function() {
                 bankedNotesTotal -= cost;
-                if (!userOwnedMovies[movie.id]) {
-                  userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
-                }
+                if (!userOwnedMovies[movie.id]) userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
                 userOwnedMovies[movie.id][fmt.key] = (userOwnedMovies[movie.id][fmt.key] || 0) + 1;
-
                 saveEverything();
                 updateProfileModalUI();
-
                 const bankedCountDisplay = document.getElementById('hbr-banked-count');
                 if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
                 renderStoreList();
               });
             }
@@ -2269,9 +2207,7 @@
     }
 
     if (closeStoreBtn && storeOverlay) {
-      closeStoreBtn.addEventListener('click', function() {
-        storeOverlay.style.display = 'none';
-      });
+      closeStoreBtn.addEventListener('click', () => { storeOverlay.style.display = 'none'; });
     }
 
     // Cover Art Gallery Modal & Enlarge / Play Engine
@@ -2313,10 +2249,7 @@
         thumb.style.flexShrink = '0';
         thumb.style.border = '1px solid rgba(255,255,255,0.2)';
         thumb.style.cursor = 'pointer';
-
-        thumb.addEventListener('click', function() {
-          openLightboxForTrack(idx);
-        });
+        thumb.addEventListener('click', () => openLightboxForTrack(idx));
 
         let info = document.createElement('div');
         info.style.flex = '1';
@@ -2333,7 +2266,6 @@
         btnContainer.style.gap = '4px';
         btnContainer.style.flexShrink = '0';
 
-        // Enlarge Button
         let enlargeBtn = document.createElement('button');
         enlargeBtn.style.background = 'rgba(34, 197, 94, 0.2)';
         enlargeBtn.style.border = '1px solid rgba(34, 197, 94, 0.5)';
@@ -2344,12 +2276,8 @@
         enlargeBtn.style.padding = '4px 8px';
         enlargeBtn.style.cursor = 'pointer';
         enlargeBtn.textContent = '🔍 ENLARGE';
+        enlargeBtn.addEventListener('click', () => openLightboxForTrack(idx));
 
-        enlargeBtn.addEventListener('click', function() {
-          openLightboxForTrack(idx);
-        });
-
-        // Play Button (Spin forward & play song)
         let playBtn = document.createElement('button');
         playBtn.style.background = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)';
         playBtn.style.border = 'none';
@@ -2360,13 +2288,11 @@
         playBtn.style.padding = '4px 8px';
         playBtn.style.cursor = 'pointer';
         playBtn.textContent = '▶ PLAY';
-
         playBtn.addEventListener('click', function() {
           autoBankUnsavedNotes();
           activeQueueSource = null;
           activePlaylist = currentMasterTracks;
           selectAndPlayTrack(idx);
-
           if (artModal) artModal.style.display = 'none';
           if (artLightboxModal) artLightboxModal.style.display = 'none';
 
@@ -2374,15 +2300,12 @@
             recordArt.classList.remove('hbr-cover-spin-forward');
             void recordArt.offsetWidth;
             recordArt.classList.add('hbr-cover-spin-forward');
-            setTimeout(() => {
-              recordArt.classList.remove('hbr-cover-spin-forward');
-            }, 550);
+            setTimeout(() => recordArt.classList.remove('hbr-cover-spin-forward'), 550);
           }
         });
 
         btnContainer.appendChild(enlargeBtn);
         btnContainer.appendChild(playBtn);
-
         item.appendChild(thumb);
         item.appendChild(info);
         item.appendChild(btnContainer);
@@ -2410,7 +2333,6 @@
         activeQueueSource = null;
         activePlaylist = currentMasterTracks;
         selectAndPlayTrack(idx);
-
         if (artLightboxModal) artLightboxModal.style.display = 'none';
         if (artModal) artModal.style.display = 'none';
 
@@ -2418,45 +2340,33 @@
           recordArt.classList.remove('hbr-cover-spin-forward');
           void recordArt.offsetWidth;
           recordArt.classList.add('hbr-cover-spin-forward');
-          setTimeout(() => {
-            recordArt.classList.remove('hbr-cover-spin-forward');
-          }, 550);
+          setTimeout(() => recordArt.classList.remove('hbr-cover-spin-forward'), 550);
         }
       });
     }
 
-    if (lightboxCloseBtn && artLightboxModal) {
-      lightboxCloseBtn.addEventListener('click', () => { artLightboxModal.style.display = 'none'; });
-    }
-    if (closeLightboxBtn && artLightboxModal) {
-      closeLightboxBtn.addEventListener('click', () => { artLightboxModal.style.display = 'none'; });
-    }
-
+    if (lightboxCloseBtn && artLightboxModal) lightboxCloseBtn.addEventListener('click', () => artLightboxModal.style.display = 'none');
+    if (closeLightboxBtn && artLightboxModal) closeLightboxBtn.addEventListener('click', () => artLightboxModal.style.display = 'none');
     if (seeCoverBtn && artModal) {
       seeCoverBtn.addEventListener('click', function() {
         renderArtGallery();
         artModal.style.display = 'flex';
       });
     }
+    if (closeArtModalBtn && artModal) closeArtModalBtn.addEventListener('click', () => artModal.style.display = 'none');
+    if (artModalDoneBtn && artModal) artModalDoneBtn.addEventListener('click', () => artModal.style.display = 'none');
 
-    if (closeArtModalBtn && artModal) {
-      closeArtModalBtn.addEventListener('click', function() {
-        artModal.style.display = 'none';
-      });
-    }
-
-    if (artModalDoneBtn && artModal) {
-      artModalDoneBtn.addEventListener('click', function() {
-        artModal.style.display = 'none';
-      });
-    }
-
-    // SCHEDULED FIREWORKS SYSTEM (STRICTLY AT 6:00 PM & 9:00 PM EASTERN FOR 5 MINUTES)
+    // SCHEDULED FIREWORKS SYSTEM WITH $1.23 CASH REWARD & SUMMARY MODAL
     const canvas = document.getElementById('hbr-fireworks-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
     let fireworksRockets = [];
     let particles = [];
     let isFireworksShowActive = false;
+    let userFireworkShotsCount = 0;
+    let showSummaryModal = document.getElementById('hbr-fireworks-summary-modal');
+    let summaryShotsSpan = document.getElementById('hbr-summary-shots');
+    let summaryEarnedSpan = document.getElementById('hbr-summary-earned');
+    let closeSummaryBtn = document.getElementById('hbr-close-summary-btn');
 
     function isFireworksTimeWindow() {
       try {
@@ -2464,9 +2374,8 @@
         let parts = formatter.formatToParts(new Date());
         let h = parseInt(parts.find(p => p.type === 'hour').value, 10);
         let m = parseInt(parts.find(p => p.type === 'minute').value, 10);
-
-        // Window 1: 6:00 PM ET (18:00 - 18:04:59)
-        // Window 2: 9:00 PM ET (21:00 - 21:04:59)
+        // Window 1: 6:00-6:05 PM ET (18:00 - 18:04:59)
+        // Window 2: 9:00-9:05 PM ET (21:00 - 21:04:59)
         return (h === 18 && m >= 0 && m < 5) || (h === 21 && m >= 0 && m < 5);
       } catch(e) {
         let now = new Date();
@@ -2479,14 +2388,27 @@
     function checkFireworksSchedule() {
       let active = isFireworksTimeWindow();
       if (active !== isFireworksShowActive) {
+        if (isFireworksShowActive && !active) {
+          // Show just ended! Calculate earnings ($1.23 per firework shot)
+          if (userFireworkShotsCount > 0) {
+            let totalEarned = userFireworkShotsCount * 1.23;
+            storeCashTotal += totalEarned;
+            saveEverything();
+            updateCashUI();
+
+            if (summaryShotsSpan) summaryShotsSpan.textContent = userFireworkShotsCount.toLocaleString();
+            if (summaryEarnedSpan) summaryEarnedSpan.textContent = '$' + totalEarned.toFixed(2);
+            if (showSummaryModal) showSummaryModal.style.display = 'flex';
+          }
+          userFireworkShotsCount = 0;
+        }
+
         isFireworksShowActive = active;
         if (canvas) {
           canvas.style.display = active ? 'block' : 'none';
           canvas.style.pointerEvents = active ? 'auto' : 'none';
         }
-        if (fireworksShowBanner) {
-          fireworksShowBanner.style.display = active ? 'block' : 'none';
-        }
+        if (fireworksShowBanner) fireworksShowBanner.style.display = active ? 'block' : 'none';
         if (!active) {
           fireworksRockets = [];
           particles = [];
@@ -2497,6 +2419,10 @@
     checkFireworksSchedule();
     setInterval(checkFireworksSchedule, 5000);
 
+    if (closeSummaryBtn && showSummaryModal) {
+      closeSummaryBtn.addEventListener('click', () => { showSummaryModal.style.display = 'none'; });
+    }
+
     function resizeCanvas() {
       if (!canvas) return;
       let parent = canvas.parentElement;
@@ -2505,7 +2431,6 @@
         canvas.height = parent.clientHeight;
       }
     }
-
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
@@ -2563,6 +2488,8 @@
       let clickX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
       let clickY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
       
+      userFireworkShotsCount++;
+
       for (let i = 0; i < 2; i++) {
         fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, clickX + (Math.random() * 30 - 15), clickY + (Math.random() * 20 - 10)));
       }
@@ -2609,7 +2536,6 @@
 
     // Dynamic Listener Counter Algorithm
     const listenerElement = document.getElementById('hbr-listeners');
-    
     function calculateTargetListeners() {
       let hours = 0, minutes = 0;
       try {
@@ -2624,14 +2550,11 @@
       }
 
       if (hours === 21 && minutes <= 4) return 1050 + Math.floor(Math.random() * 120);
-      if (hours === 21 && minutes >= 5 && minutes <= 15) return 110 + Math.floor(900 * (1 - (minutes - 5) / 10));
-
       let baseCount = 104;
       if (hours >= 11 && hours <= 13) baseCount = 108 + Math.floor(Math.sin((minutes / 60) * Math.PI) * 12);
       else if (hours >= 18 && hours <= 22) baseCount = 115 + Math.floor(Math.random() * 15);
       else if (hours >= 9 && hours < 18) baseCount = 102 + Math.floor(Math.random() * 15);
       else baseCount = 100 + Math.floor(Math.random() * 10);
-
       return baseCount + (Math.floor(Math.random() * 7) - 3);
     }
 
@@ -2642,7 +2565,6 @@
       if (!listenerElement) return;
       let target = calculateTargetListeners();
       let diff = target - currentListeners;
-      
       if (diff !== 0) {
         currentListeners += Math.abs(diff) > 50 ? Math.floor(diff / 4) : (diff > 0 ? 1 : -1);
       } else {
@@ -3077,11 +2999,7 @@
       scrollModeBtn.addEventListener('click', function() {
         isScrollLibraryMode = true;
         [page1Btn, page2Btn, page3Btn].forEach(btn => {
-          if (btn) {
-            btn.style.background = 'rgba(255,255,255,0.06)';
-            btn.style.borderColor = 'rgba(255,255,255,0.15)';
-            btn.style.color = '#9ca3af';
-          }
+          if (btn) { btn.style.background = 'rgba(255,255,255,0.06)'; btn.style.borderColor = 'rgba(255,255,255,0.15)'; btn.style.color = '#9ca3af'; }
         });
         scrollModeBtn.style.background = 'rgba(59,130,246,0.25)';
         scrollModeBtn.style.borderColor = 'rgba(59,130,246,0.5)';
@@ -3258,7 +3176,7 @@
           e.stopPropagation();
           if (!inT3) {
             if (customTop3.length < 3) { customTop3.push(track); saveEverything(); renderDrawerList(); }
-            else alert('Top 3 is full! Remove a song from Top 3 first.');
+            else alert('Top 3 is full!');
           } else {
             customTop3 = customTop3.filter(t => t.id !== track.id);
             saveEverything(); renderDrawerList();
@@ -3276,7 +3194,7 @@
 
       if (q1CountSpan) q1CountSpan.textContent = customQueue1.length;
       if (q1ItemsContainer) {
-        q1ItemsContainer.innerHTML = customQueue1.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 1" above!</div>' : '';
+        q1ItemsContainer.innerHTML = customQueue1.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet.</div>' : '';
         customQueue1.forEach((track, cIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -3295,7 +3213,7 @@
 
       if (q2CountSpan) q2CountSpan.textContent = customQueue2.length;
       if (q2ItemsContainer) {
-        q2ItemsContainer.innerHTML = customQueue2.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 2" above!</div>' : '';
+        q2ItemsContainer.innerHTML = customQueue2.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet.</div>' : '';
         customQueue2.forEach((track, cIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -3314,7 +3232,7 @@
 
       updateT3Circles();
       if (t3ItemsContainer) {
-        t3ItemsContainer.innerHTML = customTop3.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected. Click "+ T3" next to any song!</div>' : '';
+        t3ItemsContainer.innerHTML = customTop3.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected.</div>' : '';
         customTop3.forEach((track, tIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -3384,7 +3302,7 @@
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
     let isPlaying = false;
-    let currentTrackIndex = 11; // Pocketful of Rain
+    let currentTrackIndex = 11;
     let ytPlayer = null;
     let isDragging = false;
     let startAngle = 0;
@@ -3406,13 +3324,7 @@
         height: '100',
         width: '100',
         videoId: activePlaylist[currentTrackIndex].id,
-        playerVars: {
-          'autoplay': 0,
-          'controls': 0,
-          'modestbranding': 1,
-          'rel': 0,
-          'iv_load_policy': 3
-        },
+        playerVars: { 'autoplay': 0, 'controls': 0, 'modestbranding': 1, 'rel': 0, 'iv_load_policy': 3 },
         events: {
           'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange
@@ -3461,7 +3373,6 @@
       currentTrackIndex = index;
       let track = activePlaylist[index];
       if (trackTitleText) trackTitleText.textContent = track.name;
-      
       checkPurpleRainEffect(track);
 
       let coverUrl = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
@@ -3470,11 +3381,8 @@
 
       renderDrawerList();
       if (ytPlayer) {
-        if (typeof ytPlayer.loadVideoById === 'function') {
-          ytPlayer.loadVideoById(track.id);
-        } else if (typeof ytPlayer.cueVideoById === 'function') {
-          ytPlayer.cueVideoById(track.id);
-        }
+        if (typeof ytPlayer.loadVideoById === 'function') ytPlayer.loadVideoById(track.id);
+        else if (typeof ytPlayer.cueVideoById === 'function') ytPlayer.cueVideoById(track.id);
         triggerPlayState();
       }
     }
@@ -3563,11 +3471,8 @@
       toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
-          if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-            ytPlayer.playVideo();
-          } else {
-            selectAndPlayTrack(currentTrackIndex);
-          }
+          if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
+          else selectAndPlayTrack(currentTrackIndex);
         } else {
           isPlaying = false;
           if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
