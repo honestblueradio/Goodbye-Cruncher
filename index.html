@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.5)       -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.6)       -->
 <!-- ====================================================================== -->
 
 <!-- Scrollbar & Advanced Animation Styles -->
@@ -141,25 +141,6 @@
     letter-spacing: 0.5px;
     box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
     transition: transform 0.2s ease;
-  }
-
-  @keyframes hbrFloatUp {
-    0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.95; }
-    80% { opacity: 0.95; }
-    100% { transform: translateY(-220px) scale(1.2) rotate(25deg); opacity: 0; }
-  }
-
-  @keyframes hbrPopBurst {
-    0% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 12px #60a5fa) brightness(2); }
-    50% { transform: scale(2.2); opacity: 0.8; filter: drop-shadow(0 0 20px #93c5fd) brightness(3); }
-    100% { transform: scale(2.8); opacity: 0; }
-  }
-
-  @keyframes hbrBubblePopBurst {
-    0% { transform: scale(1); opacity: 0.9; }
-    50% { transform: scale(1.6); opacity: 0.5; }
-    100% { transform: scale(2.2); opacity: 0; }
   }
 
   @keyframes hbrPurpleRainFall {
@@ -451,7 +432,7 @@
       <!-- DJ INTERACTIVE RECORD CONTAINER -->
       <div id="hbr-dj-container" style="position: relative; width: 200px; height: 200px; margin: 0 auto; cursor: grab; user-select: none; -webkit-user-select: none; z-index: 5;">
         <!-- Dynamic Track Album Cover Art Behind Record -->
-        <div id="hbr-record-art" style="position: absolute; top: 12px; left: 12px; width: 176px; height: 176px; border-radius: 12px; background-image: url('https://img.youtube.com/vi/Sp8_ymmFVGY/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.35; filter: contrast(1.1) brightness(0.9); transition: background-image 0.5s ease; pointer-events: none; z-index: 1; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1);">&nbsp;</div>
+        <div id="hbr-record-art" style="position: absolute; top: 12px; left: 12px; width: 176px; height: 176px; border-radius: 12px; background-image: url('https://img.youtube.com/vi/WHzTume00O8/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.35; filter: contrast(1.1) brightness(0.9); transition: background-image 0.5s ease; pointer-events: none; z-index: 1; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1);">&nbsp;</div>
 
         <!-- Record Sleeve & Vinyl Disc -->
         <div id="hbr-record" style="width: 100%; height: 100%; border-radius: 50%; background: repeating-radial-gradient(#111116 0px, #111116 2px, #22222d 3px, #111116 4px); position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; transform-origin: center center; z-index: 2;">
@@ -470,15 +451,6 @@
         <iframe id="hbr-yt-iframe" src="https://www.youtube.com/embed/WHzTume00O8?enablejsapi=1&playsinline=1&autoplay=1&mute=0" allow="autoplay; encrypted-media; fullscreen" style="width:1px; height:1px; border:none;"></iframe>
         <div id="hbr-yt-player"></div>
       </div>
-    </div>
-
-    <!-- WELCOME ALL WELCOME DROP BUTTON -->
-    <div style="background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 14px; padding: 12px 16px; margin-bottom: 16px; text-align: center;">
-      <div style="font-size: 11px; font-weight: 800; color: #d8b4fe; text-transform: uppercase; margin-bottom: 4px;">🌴 ORLANDO &amp; WELCOME DROP 🌴</div>
-      <div style="font-size: 10px; color: #d1d5db; margin-bottom: 10px;">Click below to play the official station welcome drop &amp; fireworks guide:</div>
-      <button id="hbr-welcome-all-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 18px; border-radius: 10px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(168,85,247,0.4); transition: transform 0.15s ease;">
-        👋 Welcome All
-      </button>
     </div>
 
     <!-- IOS ZENFOLIO DIRECT WRAPPER CARD -->
@@ -511,7 +483,7 @@
 
     <!-- Track Meta Display -->
     <div style="text-align: center; margin-bottom: 20px;">
-      <div id="hbr-track-title" style="font-size: 16px; font-weight: 700; color: #f3f4f6; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pocketful of Rain</div>
+      <div id="hbr-track-title" style="font-size: 16px; font-weight: 700; color: #f3f4f6; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Goodbye Cruncher</div>
       <div id="hbr-subtitle" style="font-size: 12px; color: #6b7280;">Honest Blue Radio &bull; Continuous Play Enabled</div>
     </div>
 
@@ -536,6 +508,13 @@
         <button id="hbr-chakras-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Chakras</button>
       </div>
       <a href="https://youtube.com/@honestblueradio?si=FBFJfkEI2OiVEJnD" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;" target="_blank">Catch Content ↗</a>
+    </div>
+
+    <!-- WELCOME ALL WELCOME DROP BUTTON (PLACED NEAR CATCH CONTENT SECTION) -->
+    <div style="text-align: center; margin-bottom: 16px;">
+      <button id="hbr-welcome-all-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 24px; border-radius: 12px; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(168,85,247,0.4); transition: transform 0.15s ease;">
+        Welcome All
+      </button>
     </div>
 
     <!-- Very Bottom "More Honest Blue" Dropdown Section -->
@@ -707,7 +686,7 @@
   </div>
 </div>
 
-<!-- Player Behavior & Audio Script (Version 5.5 with Welcome All Drop) -->
+<!-- Player Behavior & Audio Script (Version 5.6) -->
 <script>
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
@@ -1005,9 +984,8 @@
       }, {passive: true});
     }
 
-    // Master Broadcast Tracks
+    // Master Broadcast Tracks (Welcome Drop excluded from standard list)
     const masterBroadcastTracks = [
-      { id: 'vYES_YX5w5I', name: 'Orlando Welcome Drop (Welcome All)' },
       { id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
       { id: '4eU3OZFhuHs', name: 'Dice On The Table' },
       { id: 'KE639OtYFT0', name: 'Created To Be Creative' },
@@ -3262,7 +3240,7 @@
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
     let isPlaying = false;
-    let currentTrackIndex = 0; // Starts right on the Orlando Welcome Drop!
+    let currentTrackIndex = 0; // Starts at Goodbye Cruncher
     let ytPlayer = null;
     let isDragging = false;
     let startAngle = 0;
@@ -3311,9 +3289,10 @@
     if (welcomeAllBtn) {
       welcomeAllBtn.addEventListener('click', function() {
         autoBankUnsavedNotes();
-        activeQueueSource = null;
-        activePlaylist = masterBroadcastTracks;
-        selectAndPlayTrack(0); // Index 0 is the Orlando Welcome Drop (vYES_YX5w5I)
+        let welcomeTrack = { id: 'vYES_YX5w5I', name: 'Welcome All' };
+        activeQueueSource = 'welcome_drop';
+        activePlaylist = [welcomeTrack];
+        selectAndPlayTrack(0);
         triggerPlayState();
 
         if (recordArt) {
