@@ -1376,11 +1376,15 @@
     const closeMantraBtn = document.getElementById('hbr-close-mantra-btn');
     const mantraOptionsList = document.getElementById('hbr-mantra-options-list');
 
-    function updateTopProfileBanner() {
-      if (!topProfileBanner) return;
+        function updateTopProfileBanner() {
+      const openProfileBtn = document.getElementById('hbr-open-profile-btn');
+      
+      // Toggle bottom button label based on whether a profile exists
       if (openProfileBtn) {
         openProfileBtn.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? '👤 Edit Profile' : '👤 Create Profile';
       }
+
+      if (!topProfileBanner) return;
 
       if (userProfileData.name && userProfileData.name.trim() !== '') {
         topProfileBanner.style.display = 'flex';
@@ -1388,13 +1392,16 @@
         topProfileBanner.style.borderColor = (userProfileData.themeColor || '#3b82f6') + '55';
 
         if (topBannerName) topBannerName.textContent = userProfileData.name;
+        
         if (topBannerBadge) {
           topBannerBadge.textContent = userProfileData.badge;
           topBannerBadge.style.background = userProfileData.themeBadgeBg || 'rgba(59,130,246,0.25)';
           topBannerBadge.style.color = userProfileData.themeColor || '#60a5fa';
         }
+        
         if (topBannerFrame) topBannerFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
 
+        // Update top banner mantra button display
         if (topMantraText) {
           if (userProfileData.selectedMantra && userProfileData.selectedMantra.trim() !== '') {
             topMantraText.textContent = '"' + userProfileData.selectedMantra + '" ✏️';
@@ -1402,6 +1409,25 @@
             topMantraText.textContent = '+ Select Today\'s Mantra';
           }
         }
+
+        // Render Avatar Image or Fallback Icon
+        if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
+          if (topBannerImg) {
+            topBannerImg.src = userProfileData.avatarUrl;
+            topBannerImg.style.display = 'block';
+          }
+          if (topBannerFallback) topBannerFallback.style.display = 'none';
+        } else {
+          if (topBannerImg) {
+            topBannerImg.style.display = 'none';
+            topBannerImg.src = '';
+          }
+          if (topBannerFallback) topBannerFallback.style.display = 'block';
+        }
+      } else {
+        topProfileBanner.style.display = 'none';
+      }
+    }
 
         if (topBannerGoldRings) {
           topBannerGoldRings.innerHTML = '';
@@ -1473,11 +1499,13 @@
       });
     }
 
-    if (topMantraBtn && mantraModal) {
+        if (topMantraBtn && mantraModal) {
       topMantraBtn.addEventListener('click', function() {
         renderMantraModalList();
         mantraModal.style.display = 'flex';
       });
+    }
+
     }
 
     if (closeMantraBtn && mantraModal) {
@@ -1646,7 +1674,7 @@
       });
     }
 
-        if (saveProfileBtn) {
+            if (saveProfileBtn) {
       saveProfileBtn.addEventListener('click', function(e) {
         if (e) e.preventDefault();
 
@@ -1669,6 +1697,7 @@
         alert('✅ Profile saved successfully!');
       });
     }
+
 
 
     // Export / Import Backup Handlers
