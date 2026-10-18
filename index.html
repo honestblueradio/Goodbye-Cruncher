@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.1 PAGE 4) -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.2 SEARCH & SCROLL) -->
 <!-- ====================================================================== -->
 
 <!-- Scrollbar & Advanced Animation Styles -->
@@ -225,7 +225,6 @@
     filter: drop-shadow(0 0 6px #f97316);
   }
 
-  /* Birthday Banner Animation */
   @keyframes hbrBirthdayGlow {
     0%, 100% { text-shadow: 0 0 10px #ec4899, 0 0 20px #f472b6, 0 0 30px #db2777; transform: scale(1); }
     50% { text-shadow: 0 0 15px #f472b6, 0 0 25px #fb7185, 0 0 35px #f43f5e; transform: scale(1.02); }
@@ -245,7 +244,7 @@
 
 <div style="background: #111115; border-radius: 20px; padding: 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden; transition: all 0.3s ease;" id="hbr-main-app-card">
   
-  <!-- BIRTHDAY BANNER (Displays automatically on October 13th every year, disappears at midnight) -->
+  <!-- BIRTHDAY BANNER -->
   <div id="hbr-birthday-banner" style="display: none; position: relative; z-index: 25; background: linear-gradient(135deg, rgba(236, 72, 153, 0.18) 0%, rgba(190, 24, 93, 0.28) 100%); border: 2px solid #ec4899; border-radius: 14px; padding: 12px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 25px rgba(236,72,153,0.4); pointer-events: none;">
     <div style="font-size: 16px; margin-bottom: 2px; pointer-events: auto;">🌸🌺🌷🌼🌻</div>
     <div class="hbr-birthday-text" style="font-size: 16px; font-weight: 900; color: #f472b6; text-transform: uppercase; letter-spacing: 1px; pointer-events: auto;">
@@ -305,7 +304,6 @@
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
           <span id="hbr-mode-title" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #3b82f6; font-weight: 700; display: block;">Honest Blue Radio</span>
           
-          <!-- Pulsing On Air Indicator Badge Linking to Most Recent Video -->
           <a id="hbr-live-indicator" href="https://youtube.com/@honestblueradio/videos" target="_blank" rel="noopener noreferrer" title="Watch most recent video on YouTube" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 12px; padding: 2px 7px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; user-select: none;">
             <span id="hbr-live-dot" class="hbr-live-active-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
             <span id="hbr-live-text" style="font-size: 9px; font-weight: 800; color: #ef4444; letter-spacing: 0.5px;">ON AIR</span>
@@ -313,9 +311,9 @@
         </div>
 
         <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <!-- RESTORED SCROLL BUTTON / TRACKS DRAWER TOGGLE -->
           <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS</button>
           
-          <!-- RADIO BUTTON -->
           <a id="hbr-radio-btn" href="https://youtube.com/@honestblueradio/live" target="_blank" rel="noopener noreferrer" style="background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); border-radius: 6px; color: #fca5a5; font-size: 10px; font-weight: 700; padding: 3px 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;" title="Tune into Honest Blue Radio Station Live">📻 STATION</a>
 
           <button id="hbr-fullscreen-toggle" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">⛶ POP OUT</button>
@@ -324,7 +322,7 @@
           <button id="hbr-install-btn" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); border-radius: 6px; color: #4ade80; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL</button>
         </div>
       </div>
-      <!-- Animated Live Listener Badge with Green Person Icon -->
+      
       <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;"><span style="color: #4ade80; font-size: 12px;">👤</span><span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span></div>
     </div>
 
@@ -337,15 +335,13 @@
       <div style="flex: 1; overflow: hidden;">
         <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
           <div id="hbr-top-banner-name" style="font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Listener</div>
-          <!-- Dynamic Gold Ring Store Badges Container -->
+          
           <div id="hbr-top-banner-gold-rings" style="display: flex; gap: 4px; flex-wrap: wrap;">&nbsp;</div>
         </div>
         
-        <!-- Badge Title & Daily Mantra Button Side-by-Side -->
         <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 3px;">
           <div id="hbr-top-banner-badge" style="font-size: 9px; font-weight: 700; color: #93c5fd; background: rgba(59,130,246,0.25); padding: 2px 6px; border-radius: 4px; display: inline-block;">Guitar Shredder</div>
           
-          <!-- TODAY'S MANTRA BUTTON -->
           <button id="hbr-top-mantra-btn" style="background: rgba(236, 72, 153, 0.2); border: 1px solid rgba(236, 72, 153, 0.5); color: #f472b6; border-radius: 4px; font-size: 9px; font-weight: 800; padding: 2px 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;" title="Click to choose or change today's positive mantra!">
             <span>✨</span> <span id="hbr-top-mantra-text">+ Select Today's Mantra</span>
           </button>
@@ -353,13 +349,23 @@
       </div>
     </div>
 
-    <!-- Collapsible Scrollable Playlist Drawer -->
+    <!-- Collapsible Scrollable Playlist Drawer with Search Bar Included -->
     <div id="hbr-playlist-drawer" style="max-height: 0; overflow-y: auto; transition: max-height 0.4s ease, margin-bottom 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; margin-bottom: 0px;">
       <div style="padding: 12px; display: flex; flex-direction: column; gap: 12px;">
+        
+        <!-- NEW: TRACK SEARCH BAR INTEGRATED INTO DRAWER -->
+        <div>
+          <div style="position: relative; display: flex; align-items: center;">
+            <span style="position: absolute; left: 10px; font-size: 12px; color: #9ca3af; pointer-events: none;">🔍</span>
+            <input id="hbr-track-search-input" type="text" placeholder="Search tracks by name..." style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 8px; padding: 7px 10px 7px 30px; color: #fff; font-size: 11px; font-weight: 600; box-sizing: border-box; outline: none; transition: border-color 0.2s ease;">
+            <button id="hbr-search-clear-btn" style="display: none; position: absolute; right: 8px; background: transparent; border: none; color: #9ca3af; font-size: 12px; cursor: pointer; font-weight: bold;">✕</button>
+          </div>
+        </div>
+
         <!-- Standard Broadcast Track Section with Pagination -->
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #6b7280; letter-spacing: 1px;">Available Tracks</div>
+            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #6b7280; letter-spacing: 1px;" id="hbr-drawer-header-title">Available Tracks</div>
             <div id="hbr-page-controls" style="display: flex; gap: 4px;">
               <button id="hbr-page1-btn" style="background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.5); border-radius: 4px; color: #93c5fd; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 1</button>
               <button id="hbr-page2-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 2</button>
@@ -368,19 +374,23 @@
           </div>
           <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
         </div>
+
         <!-- Dedicated Dual Playlists & Top 3 Launch Center -->
         <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; display: flex; flex-direction: column; gap: 8px;">
           <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #3b82f6; letter-spacing: 1px;">Your Playlists</div>
+          
           <!-- PLAYLIST 1 BOX -->
           <div style="background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.4); border-radius: 8px; padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 700; color: #93c5fd;">PLAYLIST 1 (<span id="hbr-q1-count">0</span>/7)</span><button id="hbr-play-q1-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(37,99,235,0.4); transition: transform 0.15s ease;">▶ PLAY PLAYLIST 1</button></div>
             <div id="hbr-q1-items" style="display: flex; flex-direction: column; gap: 3px;">&nbsp;</div>
           </div>
+          
           <!-- PLAYLIST 2 BOX -->
           <div style="background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.4); border-radius: 8px; padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 700; color: #d8b4fe;">PLAYLIST 2 (<span id="hbr-q2-count">0</span>/7)</span><button id="hbr-play-q2-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(168,85,247,0.4); transition: transform 0.15s ease;">▶ PLAY PLAYLIST 2</button></div>
             <div id="hbr-q2-items" style="display: flex; flex-direction: column; gap: 3px;">&nbsp;</div>
           </div>
+          
           <!-- TOP 3 BOX -->
           <div style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.4); border-radius: 8px; padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -417,10 +427,8 @@
       <button id="hbr-bank-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4); transition: transform 0.15s ease, background 0.2s ease;">🏦 BANK NOTES</button>
       <span id="hbr-banked-badge" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #fbbf24; letter-spacing: 0.5px; display: inline-block; transition: transform 0.15s ease;">BANKED: <span id="hbr-banked-count" style="color: #fef08a;">0</span></span>
       
-      <!-- REAL STORE CASH COUNTER -->
       <span id="hbr-cash-badge" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.5px; display: inline-block;">💵 CASH: <span id="hbr-cash-count" style="color: #86efac;">$0.00</span></span>
 
-      <!-- STORE BUTTON -->
       <button id="hbr-store-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); transition: transform 0.15s ease;">🛍️ STORE</button>
     </div>
 
@@ -449,37 +457,30 @@
           </div>
         </div>
 
-        <!-- MANUAL CLEAR BANKED NOTES BUTTON -->
         <div style="margin-bottom: 8px;">
           <button id="hbr-store-clear-notes-btn" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; border-radius: 6px; font-size: 9px; font-weight: 800; padding: 5px 10px; cursor: pointer; width: 100%;">🗑️ RESET / CLEAR BANKED NOTES TO 0</button>
         </div>
 
-        <!-- Store Event Alert Box & Shoplifter Catch Button -->
         <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
 
-        <!-- Interactive Quick-Action Shoplifter Catch Banner -->
         <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; user-select: none; box-shadow: 0 4px 12px rgba(239,68,68,0.5);">
           <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase;">🚨 SHOPLIFTER ESCAPING!</div>
           <div style="font-size: 9px; color: #fee2e2; margin-top: 2px;">TAP HERE FAST TO TACKLE THE THIEF! (<span id="hbr-thief-timer">3</span>s)</div>
         </div>
 
-        <!-- Store Navigation Tabs -->
         <div style="display: flex; gap: 4px; margin-bottom: 8px;">
           <button id="hbr-tab-stores-btn" style="flex: 1; background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 6px; color: #93c5fd; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🏪 STORES</button>
           <button id="hbr-tab-movies-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🍿 MOVIES</button>
           <button id="hbr-tab-chars-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🐶 CHARACTERS</button>
         </div>
 
-        <!-- Store Items Container -->
         <div id="hbr-store-items-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
       </div>
 
       <!-- DJ INTERACTIVE RECORD CONTAINER -->
       <div id="hbr-dj-container" style="position: relative; width: 200px; height: 200px; margin: 0 auto; cursor: grab; user-select: none; -webkit-user-select: none; z-index: 5;">
-        <!-- Dynamic Track Album Cover Art Behind Record -->
         <div id="hbr-record-art" style="position: absolute; top: 12px; left: 12px; width: 176px; height: 176px; border-radius: 12px; background-image: url('https://img.youtube.com/vi/Sp8_ymmFVGY/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.35; filter: contrast(1.1) brightness(0.9); transition: background-image 0.5s ease; pointer-events: none; z-index: 1; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1);">&nbsp;</div>
 
-        <!-- Record Sleeve & Vinyl Disc -->
         <div id="hbr-record" style="width: 100%; height: 100%; border-radius: 50%; background: repeating-radial-gradient(#111116 0px, #111116 2px, #22222d 3px, #111116 4px); position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; transform-origin: center center; z-index: 2;">
           <div id="hbr-reflection" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(255,255,255,0) 40%, rgba(59,130,246,0.12) 100%); pointer-events: none; transition: background 0.3s ease;">&nbsp;</div>
           <div id="hbr-label" style="width: 76px; height: 76px; background: radial-gradient(circle, #3b82f6 0%, #1d4ed8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid #000; color: #fff; font-size: 9px; font-weight: bold; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.6); position: relative; z-index: 2; box-shadow: 0 0 8px rgba(0,0,0,0.5); pointer-events: none; transition: background 0.3s ease;">HONEST<br />BLUE<br /><span id="hbr-label-sub" style="font-size: 7px; opacity: 0.8;">FULL DECK</span></div>
@@ -491,7 +492,7 @@
           <div style="width: 14px; height: 22px; background: #ef4444; border-radius: 2px; position: absolute; bottom: 8px; left: 12px; transform: rotate(12deg); border: 1px solid #b91c1c;">&nbsp;</div>
         </div>
       </div>
-      <!-- YouTube API Player Container -->
+      
       <div id="hbr-player-container" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;">
         <div id="hbr-yt-player"></div>
       </div>
@@ -510,7 +511,6 @@
     <div id="hbr-heart-challenge-card" style="display: none; margin: 0 auto 16px auto; background: rgba(17,17,21,0.95); border: 2px solid #ef4444; border-radius: 14px; padding: 14px 16px; max-width: 290px; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center; user-select: none;">
       <div style="font-size: 10px; font-weight: 800; color: #fca5a5; text-transform: uppercase; margin-bottom: 8px;" id="hbr-heart-title">💖 EVENING HEART CHALLENGE</div>
       
-      <!-- Interactive SVG Heart Container -->
       <div id="hbr-heart-target-btn" style="position: relative; width: 90px; height: 90px; margin: 0 auto 8px auto; cursor: pointer; transition: transform 0.1s ease;" title="Press in the middle of the heart!">
         <svg viewBox="0 0 32 29.6" style="width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(239,68,68,0.7);">
           <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="rgba(239,68,68,0.1)" stroke="#ef4444" stroke-width="2"/>
@@ -538,7 +538,6 @@
       <button class="hbr-color-btn" data-color="#f97316" data-dark="#c2410c" style="background: #f97316; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Sunset Orange"></button>
       <button class="hbr-color-btn" data-color="#ec4899" data-dark="#be185d" style="background: #ec4899; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Hot Pink"></button>
       
-      <!-- SEE COVER ART BUTTON -->
       <button id="hbr-see-cover-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease; margin-left: 4px;">🖼️ SEE COVER ART</button>
     </div>
 
@@ -586,7 +585,6 @@
             <a href="https://music.apple.com/us/artist/honest-blue/1868033077" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(168,85,247,0.4); transition: transform 0.2s ease;" target="_blank">Apple Music ↗</a>
           </div>
 
-          <!-- CREATE / EDIT PROFILE BUTTON AT THE VERY BOTTOM -->
           <div style="padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
             <button id="hbr-open-profile-btn" style="width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease;">👤 Create Profile</button>
           </div>
@@ -610,7 +608,6 @@
       Select <strong style="color: #4ade80;">ENLARGE</strong> to zoom in and view cover art up close, or <strong style="color: #60a5fa;">PLAY</strong> to spin the art forward onto your turntable!
     </p>
 
-    <!-- Interactive Cover Art List -->
     <div id="hbr-art-gallery-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; text-align: left;"></div>
 
     <div style="text-align: right;">
@@ -629,7 +626,6 @@
       <button id="hbr-close-lightbox-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
     </div>
 
-    <!-- Enlarged Zoomed Cover Art Image Container -->
     <div id="hbr-lightbox-img-box" style="width: 260px; height: 260px; margin: 0 auto 14px auto; border-radius: 12px; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 8px 30px rgba(0,0,0,0.8);">&nbsp;</div>
 
     <div style="display: flex; gap: 8px;">
@@ -649,7 +645,6 @@
       <button id="hbr-close-profile-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
     </div>
 
-    <!-- Avatar & Name Section -->
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; background: rgba(255,255,255,0.03); border-radius: 10px; padding: 10px; border: 1px solid rgba(255,255,255,0.08);">
       <div id="hbr-profile-modal-avatar-frame" style="position: relative; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
         <img id="hbr-profile-avatar-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
@@ -661,14 +656,12 @@
       </div>
     </div>
 
-    <!-- Profile Image Upload -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Profile Image (Upload PNG/JPEG or Paste URL)</label>
       <input id="hbr-profile-file-input" type="file" accept="image/*" style="font-size: 10px; color: #d1d5db; margin-bottom: 6px; width: 100%;">
       <input id="hbr-profile-img-input" type="text" placeholder="Or paste image URL (https://...)" style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 6px; color: #fff; font-size: 10px; box-sizing: border-box;">
     </div>
 
-    <!-- Profile Color Theme Selector -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Select Profile Color Theme</label>
       <div id="hbr-profile-colors-container" style="display: flex; gap: 8px; align-items: center;">
@@ -680,7 +673,6 @@
       </div>
     </div>
 
-    <!-- Music Badges / Titles Picker -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Select Music Badge &amp; Title</label>
       <div id="hbr-badges-container" style="display: flex; flex-wrap: wrap; gap: 4px;">
@@ -693,13 +685,11 @@
       </div>
     </div>
 
-    <!-- Inventory & Purchases Showcase -->
     <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; margin-bottom: 14px;">
       <div style="font-size: 10px; font-weight: 800; color: #10b981; text-transform: uppercase; margin-bottom: 6px;">🛍️ Tracked Inventory &amp; Purchases</div>
       <div id="hbr-profile-inventory-list" style="font-size: 10px; color: #d1d5db; display: flex; flex-direction: column; gap: 4px;"></div>
     </div>
 
-    <!-- BULLETPROOF BACKUP TOOLS (EXPORT / IMPORT) -->
     <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; padding: 10px; margin-bottom: 14px;">
       <div style="font-size: 10px; font-weight: 800; color: #60a5fa; text-transform: uppercase; margin-bottom: 4px;">💾 Bulletproof Save Backup</div>
       <div style="font-size: 9px; color: #9ca3af; margin-bottom: 8px;">Export your save data as a backup file so you never lose your cash or progress!</div>
@@ -730,7 +720,6 @@
       Choose a positive mantra for today! Your mantra displays next to your profile title and switches every day to keep your mindset bright.
     </p>
 
-    <!-- Daily 3 Options Container -->
     <div id="hbr-mantra-options-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
 
     <div style="font-size: 9px; color: #9ca3af; font-style: italic;">
@@ -3063,9 +3052,13 @@
     const drawer = document.getElementById('hbr-playlist-drawer');
     const drawerArrow = document.getElementById('hbr-drawer-arrow');
     const drawerList = document.getElementById('hbr-drawer-list');
+    const drawerHeaderTitle = document.getElementById('hbr-drawer-header-title');
+    const pageControls = document.getElementById('hbr-page-controls');
     const page1Btn = document.getElementById('hbr-page1-btn');
     const page2Btn = document.getElementById('hbr-page2-btn');
     const page3Btn = document.getElementById('hbr-page3-btn');
+    const trackSearchInput = document.getElementById('hbr-track-search-input');
+    const searchClearBtn = document.getElementById('hbr-search-clear-btn');
     const playQ1Btn = document.getElementById('hbr-play-q1-btn');
     const playQ2Btn = document.getElementById('hbr-play-q2-btn');
     const playT3Btn = document.getElementById('hbr-play-t3-btn');
@@ -3114,15 +3107,62 @@
       });
     }
 
+    let searchQuery = '';
+    if (trackSearchInput) {
+      trackSearchInput.addEventListener('input', function() {
+        searchQuery = trackSearchInput.value.trim().toLowerCase();
+        if (searchClearBtn) {
+          searchClearBtn.style.display = searchQuery.length > 0 ? 'block' : 'none';
+        }
+        renderDrawerList();
+      });
+    }
+
+    if (searchClearBtn && trackSearchInput) {
+      searchClearBtn.addEventListener('click', function() {
+        trackSearchInput.value = '';
+        searchQuery = '';
+        searchClearBtn.style.display = 'none';
+        renderDrawerList();
+      });
+    }
+
     function renderDrawerList() {
       if (!drawerList) return;
       drawerList.innerHTML = '';
 
-      let startIdx = (currentDrawerPage - 1) * tracksPerPage;
-      let pageTracks = currentMasterTracks.slice(startIdx, startIdx + tracksPerPage);
+      let tracksToDisplay = currentMasterTracks;
+      let isSearching = (searchQuery.length > 0);
 
-      pageTracks.forEach((track, pageRelativeIdx) => {
-        let globalIdx = startIdx + pageRelativeIdx;
+      if (isSearching) {
+        tracksToDisplay = currentMasterTracks.map((t, idx) => ({ ...t, originalIndex: idx })).filter(t => t.name.toLowerCase().includes(searchQuery));
+        if (drawerHeaderTitle) drawerHeaderTitle.textContent = 'Search Results (' + tracksToDisplay.length + ')';
+        if (pageControls) pageControls.style.display = 'none';
+      } else {
+        if (drawerHeaderTitle) drawerHeaderTitle.textContent = 'Available Tracks';
+        if (pageControls) pageControls.style.display = 'flex';
+      }
+
+      let pagedTracks = tracksToDisplay;
+      if (!isSearching) {
+        let startIdx = (currentDrawerPage - 1) * tracksPerPage;
+        pagedTracks = currentMasterTracks.slice(startIdx, startIdx + tracksPerPage).map((t, idx) => ({ ...t, originalIndex: startIdx + idx }));
+      }
+
+      if (pagedTracks.length === 0) {
+        let emptyDiv = document.createElement('div');
+        emptyDiv.style.fontSize = '11px';
+        emptyDiv.style.color = '#9ca3af';
+        emptyDiv.style.textAlign = 'center';
+        emptyDiv.style.padding = '12px';
+        emptyDiv.style.fontStyle = 'italic';
+        emptyDiv.textContent = 'No matching tracks found.';
+        drawerList.appendChild(emptyDiv);
+        return;
+      }
+
+      pagedTracks.forEach((track) => {
+        let globalIdx = track.originalIndex;
         let row = document.createElement('div');
         row.style.display = 'flex';
         row.style.justifyContent = 'space-between';
