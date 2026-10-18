@@ -375,6 +375,9 @@
     <!-- Collapsible Scrollable Playlist Drawer -->
     <div id="hbr-playlist-drawer" style="max-height: 0; overflow-y: auto; transition: max-height 0.4s ease, margin-bottom 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; margin-bottom: 0px;">
       <div style="padding: 12px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="padding: 12px 16px; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.08);">
+    <input type="text" id="hbr-playlist-search" placeholder="🔍 Search tracks, artists, genres..." style="width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #ffffff; font-size: 13px; outline: none;" />
+  </div>
         <!-- Standard Broadcast Track Section with Pagination & Scroll Mode -->
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -570,6 +573,7 @@
         <button id="hbr-christmas-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">⛄ Christmas</button>
         <button id="hbr-disney-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🎨 Jay Draws Disney</button>
         <button id="hbr-chakras-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Chakras</button>
+        <button id="hbr-calm-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Calm</button>
       </div>
       <a href="https://youtube.com/@honestblueradio?si=FBFJfkEI2OiVEJnD" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;" target="_blank">Catch Content ↗</a>
     </div>
@@ -1081,6 +1085,9 @@
       { id: 'UALRtIA5iUQ', name: 'Right Here, Right Now Ronja Kiljan' },
       { id: 'XE9dzihAHJo', name: 'I Signed Those Papers' },
       { id: 'v7q46zKX-t0', name: 'Wrapped Up In A Christmas Movie' },
+      { id: 'DceTYEr2TtY', name: 'Pour Some Sugar On Me' },
+      { id: 'LlzOvlhZ0Jo', name: 'Gordy That Guy' },
+      { id: 'K8UqZGQBH3A', name: 'Mac And Cheese Anthem' },
       { id: 'PPK-QMAYvcI', name: 'Flip The Boss Off', explicit: true }
     ];
 
@@ -3446,6 +3453,48 @@
         selectAndPlayTrack(0);
       });
     }
+
+    const calmTrack = { id: 'OMPaU5L3zy0', name: 'Calm (Root Chakra Session)', startSecs: 3710 };
+    const calmBtn = document.getElementById('hbr-calm-btn');
+
+    if (calmBtn) {
+      calmBtn.addEventListener('click', function() {
+        autoBankUnsavedNotes();
+        activeQueueSource = null;
+        activePlaylist = [calmTrack];
+        if (modeTitleText) modeTitleText.textContent = 'Calm';
+        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Root Chakra Session';
+        if (labelSubText) labelSubText.textContent = 'CALM';
+        selectAndPlayTrack(0);
+      });
+    }
+
+        document.addEventListener('input', function(e) {
+  if (e.target && e.target.id === 'hbr-playlist-search') {
+    const query = e.target.value.toLowerCase().trim();
+    
+    // Fallback: If not in scroll mode, temporarily render all tracks into the drawer list so search can hit everything
+    if (typeof isScrollLibraryMode !== 'undefined' && !isScrollLibraryMode) {
+      isScrollLibraryMode = true;
+      if (typeof renderDrawerList === 'function') {
+        renderDrawerList();
+      }
+    }
+
+    const trackElements = document.querySelectorAll('#hbr-drawer-list > div');
+
+    trackElements.forEach(el => {
+      if (el.id !== 'hbr-playlist-search' && !el.querySelector('#hbr-playlist-search')) {
+        const text = el.textContent.toLowerCase();
+        if (text.includes(query) || query === '') {
+          el.style.display = 'flex';
+        } else {
+          el.style.display = 'none';
+        }
+      }
+    });
+  }
+});
 
     colorButtons.forEach(btn => {
       btn.addEventListener('click', function() {
