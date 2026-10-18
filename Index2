@@ -1,5 +1,5 @@
-<!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.1 PAGE 4) -->
+Give me a scroll bar next to page 3 button in this code Add a scroll bar to this so they can scroll more songs <!-- ====================================================================== -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.2 SEARCH & SCROLL) -->
 <!-- ====================================================================== -->
 
 <!-- Scrollbar & Advanced Animation Styles -->
@@ -225,7 +225,6 @@
     filter: drop-shadow(0 0 6px #f97316);
   }
 
-  /* Birthday Banner Animation */
   @keyframes hbrBirthdayGlow {
     0%, 100% { text-shadow: 0 0 10px #ec4899, 0 0 20px #f472b6, 0 0 30px #db2777; transform: scale(1); }
     50% { text-shadow: 0 0 15px #f472b6, 0 0 25px #fb7185, 0 0 35px #f43f5e; transform: scale(1.02); }
@@ -245,7 +244,7 @@
 
 <div style="background: #111115; border-radius: 20px; padding: 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden; transition: all 0.3s ease;" id="hbr-main-app-card">
   
-  <!-- BIRTHDAY BANNER (Displays automatically on October 13th every year, disappears at midnight) -->
+  <!-- BIRTHDAY BANNER -->
   <div id="hbr-birthday-banner" style="display: none; position: relative; z-index: 25; background: linear-gradient(135deg, rgba(236, 72, 153, 0.18) 0%, rgba(190, 24, 93, 0.28) 100%); border: 2px solid #ec4899; border-radius: 14px; padding: 12px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 25px rgba(236,72,153,0.4); pointer-events: none;">
     <div style="font-size: 16px; margin-bottom: 2px; pointer-events: auto;">🌸🌺🌷🌼🌻</div>
     <div class="hbr-birthday-text" style="font-size: 16px; font-weight: 900; color: #f472b6; text-transform: uppercase; letter-spacing: 1px; pointer-events: auto;">
@@ -305,7 +304,6 @@
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
           <span id="hbr-mode-title" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #3b82f6; font-weight: 700; display: block;">Honest Blue Radio</span>
           
-          <!-- Pulsing On Air Indicator Badge Linking to Most Recent Video -->
           <a id="hbr-live-indicator" href="https://youtube.com/@honestblueradio/videos" target="_blank" rel="noopener noreferrer" title="Watch most recent video on YouTube" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 12px; padding: 2px 7px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; user-select: none;">
             <span id="hbr-live-dot" class="hbr-live-active-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
             <span id="hbr-live-text" style="font-size: 9px; font-weight: 800; color: #ef4444; letter-spacing: 0.5px;">ON AIR</span>
@@ -313,14 +311,18 @@
         </div>
 
         <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          <!-- RESTORED SCROLL BUTTON / TRACKS DRAWER TOGGLE -->
           <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS</button>
+          
+          <a id="hbr-radio-btn" href="https://youtube.com/@honestblueradio/live" target="_blank" rel="noopener noreferrer" style="background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); border-radius: 6px; color: #fca5a5; font-size: 10px; font-weight: 700; padding: 3px 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;" title="Tune into Honest Blue Radio Station Live">📻 STATION</a>
+
           <button id="hbr-fullscreen-toggle" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">⛶ POP OUT</button>
           <button id="hbr-pip-toggle" style="background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.4); border-radius: 6px; color: #c084fc; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Pop out into floating window for background lock-screen audio">📺 PIP AUDIO</button>
           <button id="hbr-voice-toggle" style="background: rgba(236,72,153,0.15); border: 1px solid rgba(236,72,153,0.4); border-radius: 6px; color: #f472b6; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Enable Voice Control">🎙️ VOICE OFF</button>
           <button id="hbr-install-btn" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); border-radius: 6px; color: #4ade80; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL</button>
         </div>
       </div>
-      <!-- Animated Live Listener Badge with Green Person Icon -->
+      
       <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;"><span style="color: #4ade80; font-size: 12px;">👤</span><span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span></div>
     </div>
 
@@ -333,15 +335,13 @@
       <div style="flex: 1; overflow: hidden;">
         <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
           <div id="hbr-top-banner-name" style="font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Listener</div>
-          <!-- Dynamic Gold Ring Store Badges Container -->
+          
           <div id="hbr-top-banner-gold-rings" style="display: flex; gap: 4px; flex-wrap: wrap;">&nbsp;</div>
         </div>
         
-        <!-- Badge Title & Daily Mantra Button Side-by-Side -->
         <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 3px;">
           <div id="hbr-top-banner-badge" style="font-size: 9px; font-weight: 700; color: #93c5fd; background: rgba(59,130,246,0.25); padding: 2px 6px; border-radius: 4px; display: inline-block;">Guitar Shredder</div>
           
-          <!-- TODAY'S MANTRA BUTTON NEXT TO SELECTED BADGE -->
           <button id="hbr-top-mantra-btn" style="background: rgba(236, 72, 153, 0.2); border: 1px solid rgba(236, 72, 153, 0.5); color: #f472b6; border-radius: 4px; font-size: 9px; font-weight: 800; padding: 2px 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;" title="Click to choose or change today's positive mantra!">
             <span>✨</span> <span id="hbr-top-mantra-text">+ Select Today's Mantra</span>
           </button>
@@ -349,35 +349,49 @@
       </div>
     </div>
 
-    <!-- Collapsible Scrollable Playlist Drawer -->
+    <!-- Collapsible Scrollable Playlist Drawer with Search Bar Included -->
     <div id="hbr-playlist-drawer" style="max-height: 0; overflow-y: auto; transition: max-height 0.4s ease, margin-bottom 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; margin-bottom: 0px;">
       <div style="padding: 12px; display: flex; flex-direction: column; gap: 12px;">
-        <!-- Standard Broadcast Track Section with Pagination & Scroll Mode -->
+        
+        <!-- NEW: TRACK SEARCH BAR INTEGRATED INTO DRAWER -->
+        <div>
+          <div style="position: relative; display: flex; align-items: center;">
+            <span style="position: absolute; left: 10px; font-size: 12px; color: #9ca3af; pointer-events: none;">🔍</span>
+            <input id="hbr-track-search-input" type="text" placeholder="Search tracks by name..." style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 8px; padding: 7px 10px 7px 30px; color: #fff; font-size: 11px; font-weight: 600; box-sizing: border-box; outline: none; transition: border-color 0.2s ease;">
+            <button id="hbr-search-clear-btn" style="display: none; position: absolute; right: 8px; background: transparent; border: none; color: #9ca3af; font-size: 12px; cursor: pointer; font-weight: bold;">✕</button>
+          </div>
+        </div>
+
+        <!-- Standard Broadcast Track Section with Pagination -->
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #6b7280; letter-spacing: 1px;">Available Tracks</div>
-            <div id="hbr-page-controls" style="display: flex; gap: 4px; align-items: center;">
-              <button id="hbr-page1-btn" style="background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.5); border-radius: 4px; color: #93c5fd; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 1</button>
-              <button id="hbr-page2-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 2</button>
-              <button id="hbr-page3-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 3</button>
-              <button id="hbr-scroll-mode-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">📚 Scroll</button>
-            </div>
-          </div>
-          <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
+            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #6b7280; letter-spacing: 1px;" id="hbr-drawer-header-title">Available Tracks</div>
+        <div id="hbr-page-controls" style="display: flex; gap: 4px;">
+             <button id="hbr-page1-btn" style="background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.5); border-radius: 4px; color: #93c5fd; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 1</button>
+             <button id="hbr-page2-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 2</button>
+             <button id="hbr-page3-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 3</button>
+             <button id="hbr-scroll-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">📜 Scroll</button>
         </div>
+          </div>
+    <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
+        </div>
+
         <!-- Dedicated Dual Playlists & Top 3 Launch Center -->
         <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; display: flex; flex-direction: column; gap: 8px;">
           <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #3b82f6; letter-spacing: 1px;">Your Playlists</div>
+          
           <!-- PLAYLIST 1 BOX -->
           <div style="background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.4); border-radius: 8px; padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 700; color: #93c5fd;">PLAYLIST 1 (<span id="hbr-q1-count">0</span>/7)</span><button id="hbr-play-q1-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(37,99,235,0.4); transition: transform 0.15s ease;">▶ PLAY PLAYLIST 1</button></div>
             <div id="hbr-q1-items" style="display: flex; flex-direction: column; gap: 3px;">&nbsp;</div>
           </div>
+          
           <!-- PLAYLIST 2 BOX -->
           <div style="background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.4); border-radius: 8px; padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 700; color: #d8b4fe;">PLAYLIST 2 (<span id="hbr-q2-count">0</span>/7)</span><button id="hbr-play-q2-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(168,85,247,0.4); transition: transform 0.15s ease;">▶ PLAY PLAYLIST 2</button></div>
             <div id="hbr-q2-items" style="display: flex; flex-direction: column; gap: 3px;">&nbsp;</div>
           </div>
+          
           <!-- TOP 3 BOX -->
           <div style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.4); border-radius: 8px; padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -414,10 +428,8 @@
       <button id="hbr-bank-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4); transition: transform 0.15s ease, background 0.2s ease;">🏦 BANK NOTES</button>
       <span id="hbr-banked-badge" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #fbbf24; letter-spacing: 0.5px; display: inline-block; transition: transform 0.15s ease;">BANKED: <span id="hbr-banked-count" style="color: #fef08a;">0</span></span>
       
-      <!-- REAL STORE CASH COUNTER -->
       <span id="hbr-cash-badge" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.5px; display: inline-block;">💵 CASH: <span id="hbr-cash-count" style="color: #86efac;">$0.00</span></span>
 
-      <!-- STORE BUTTON NEXT TO BANKED -->
       <button id="hbr-store-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); transition: transform 0.15s ease;">🛍️ STORE</button>
     </div>
 
@@ -427,7 +439,7 @@
       <div id="hbr-notes-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15; overflow: hidden;">&nbsp;</div>
       <div id="hbr-times-up" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.92); border: 2px solid #ef4444; border-radius: 12px; padding: 12px 20px; z-index: 25; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center;"><span id="hbr-banner-title" style="font-size: 14px; font-weight: 800; color: #ef4444; display: block; margin-bottom: 2px;">TIME&#39;S UP!</span> <span style="font-size: 11px; color: #d1d5db;"><span id="hbr-banner-msg">You popped <strong id="hbr-final-count" style="color: #60a5fa;">0</strong> notes!</span></span></div>
 
-      <!-- STORE MODAL OVERLAY (Covers the vinyl record deck) -->
+      <!-- STORE MODAL OVERLAY -->
       <div id="hbr-store-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 17, 25, 0.96); backdrop-filter: blur(8px); z-index: 30; padding: 14px; box-sizing: border-box; text-align: left; flex-direction: column; overflow-y: auto;">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px;">
           <div>
@@ -446,37 +458,30 @@
           </div>
         </div>
 
-        <!-- MANUAL CLEAR BANKED NOTES BUTTON -->
         <div style="margin-bottom: 8px;">
           <button id="hbr-store-clear-notes-btn" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; border-radius: 6px; font-size: 9px; font-weight: 800; padding: 5px 10px; cursor: pointer; width: 100%;">🗑️ RESET / CLEAR BANKED NOTES TO 0</button>
         </div>
 
-        <!-- Store Event Alert Box & Interactive Shoplifter Catch Button -->
         <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
 
-        <!-- Interactive Quick-Action Shoplifter Catch Banner -->
         <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; user-select: none; box-shadow: 0 4px 12px rgba(239,68,68,0.5);">
           <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase;">🚨 SHOPLIFTER ESCAPING!</div>
           <div style="font-size: 9px; color: #fee2e2; margin-top: 2px;">TAP HERE FAST TO TACKLE THE THIEF! (<span id="hbr-thief-timer">3</span>s)</div>
         </div>
 
-        <!-- Store Navigation Tabs (Stores vs Movies vs Characters) -->
         <div style="display: flex; gap: 4px; margin-bottom: 8px;">
           <button id="hbr-tab-stores-btn" style="flex: 1; background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 6px; color: #93c5fd; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🏪 STORES</button>
           <button id="hbr-tab-movies-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🍿 MOVIES</button>
           <button id="hbr-tab-chars-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🐶 CHARACTERS</button>
         </div>
 
-        <!-- Store Items Container -->
         <div id="hbr-store-items-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
       </div>
 
       <!-- DJ INTERACTIVE RECORD CONTAINER -->
       <div id="hbr-dj-container" style="position: relative; width: 200px; height: 200px; margin: 0 auto; cursor: grab; user-select: none; -webkit-user-select: none; z-index: 5;">
-        <!-- Dynamic Track Album Cover Art Behind Record -->
         <div id="hbr-record-art" style="position: absolute; top: 12px; left: 12px; width: 176px; height: 176px; border-radius: 12px; background-image: url('https://img.youtube.com/vi/Sp8_ymmFVGY/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.35; filter: contrast(1.1) brightness(0.9); transition: background-image 0.5s ease; pointer-events: none; z-index: 1; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1);">&nbsp;</div>
 
-        <!-- Record Sleeve & Vinyl Disc -->
         <div id="hbr-record" style="width: 100%; height: 100%; border-radius: 50%; background: repeating-radial-gradient(#111116 0px, #111116 2px, #22222d 3px, #111116 4px); position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; transform-origin: center center; z-index: 2;">
           <div id="hbr-reflection" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(255,255,255,0) 40%, rgba(59,130,246,0.12) 100%); pointer-events: none; transition: background 0.3s ease;">&nbsp;</div>
           <div id="hbr-label" style="width: 76px; height: 76px; background: radial-gradient(circle, #3b82f6 0%, #1d4ed8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid #000; color: #fff; font-size: 9px; font-weight: bold; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.6); position: relative; z-index: 2; box-shadow: 0 0 8px rgba(0,0,0,0.5); pointer-events: none; transition: background 0.3s ease;">HONEST<br />BLUE<br /><span id="hbr-label-sub" style="font-size: 7px; opacity: 0.8;">FULL DECK</span></div>
@@ -488,13 +493,13 @@
           <div style="width: 14px; height: 22px; background: #ef4444; border-radius: 2px; position: absolute; bottom: 8px; left: 12px; transform: rotate(12deg); border: 1px solid #b91c1c;">&nbsp;</div>
         </div>
       </div>
-      <!-- YouTube API Player Container (Interactive JavaScript API Mount with enablejsapi=1) -->
+      
       <div id="hbr-player-container" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;">
         <div id="hbr-yt-player"></div>
       </div>
     </div>
 
-    <!-- IOS ZENFOLIO DIRECT WRAPPER CARD (Bypasses iOS Iframe Black Screen Bug) -->
+    <!-- IOS ZENFOLIO DIRECT WRAPPER CARD -->
     <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; text-align: center;">
       <div style="font-size: 11px; font-weight: 800; color: #93c5fd; text-transform: uppercase; margin-bottom: 4px;">🎧 MOBILE / iOS STREAM LAUNCHER</div>
       <div style="font-size: 10px; color: #d1d5db; margin-bottom: 10px;">If the native player above runs into issues on mobile Safari, launch directly below:</div>
@@ -503,20 +508,23 @@
       </a>
     </div>
 
-    <!-- Interactive Heart Filling Challenge Overlay Card (Right Under Record Deck) -->
+    <!-- Interactive Heart Filling Challenge Overlay Card -->
     <div id="hbr-heart-challenge-card" style="display: none; margin: 0 auto 16px auto; background: rgba(17,17,21,0.95); border: 2px solid #ef4444; border-radius: 14px; padding: 14px 16px; max-width: 290px; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center; user-select: none;">
       <div style="font-size: 10px; font-weight: 800; color: #fca5a5; text-transform: uppercase; margin-bottom: 8px;" id="hbr-heart-title">💖 EVENING HEART CHALLENGE</div>
       
-      <!-- Interactive Inflating Heart Container -->
-      <div id="hbr-heart-target-btn" style="position: relative; width: 90px; height: 90px; margin: 0 auto 8px auto; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Tap to pump up the heart!">
-        <div id="hbr-inflating-heart" style="font-size: 42px; transition: transform 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: scale(1); filter: drop-shadow(0 0 12px rgba(239,68,68,0.8));">❤️</div>
+      <div id="hbr-heart-target-btn" style="position: relative; width: 90px; height: 90px; margin: 0 auto 8px auto; cursor: pointer; transition: transform 0.1s ease;" title="Press in the middle of the heart!">
+        <svg viewBox="0 0 32 29.6" style="width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(239,68,68,0.7);">
+          <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="rgba(239,68,68,0.1)" stroke="#ef4444" stroke-width="2"/>
+          <path id="hbr-heart-fill-path" d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="#ef4444" transform="scale(0)" style="transform-origin: center; transition: transform 0.15s ease;" />
+        </svg>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 9px; font-weight: 800; color: #ffffff; text-shadow: 0 1px 3px rgba(0,0,0,0.9); pointer-events: none;" id="hbr-heart-cta">PRESS HERE</div>
       </div>
 
-      <div style="font-size: 11px; font-weight: 700; color: #fff;" id="hbr-heart-status"><span id="hbr-heart-taps-left">23</span> pumps remaining</div>
-      <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;" id="hbr-heart-sub">Tap to inflate the heart until it bursts!</div>
+      <div style="font-size: 11px; font-weight: 700; color: #fff;" id="hbr-heart-status"><span id="hbr-heart-taps-left">23</span> taps remaining</div>
+      <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;" id="hbr-heart-sub">Fill the heart to complete the challenge!</div>
     </div>
 
-    <!-- Companion Dog Toggle Bar (Appears when character purchased) -->
+    <!-- Companion Dog Toggle Bar -->
     <div id="hbr-dog-toggle-bar" style="display: none; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px;">
       <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700;">Molly Companion:</span>
       <button id="hbr-dog-toggle-btn" style="background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.5); border-radius: 12px; padding: 4px 12px; font-size: 10px; font-weight: 800; color: #4ade80; cursor: pointer; transition: all 0.2s ease;">🐕 ACTIVE</button>
@@ -531,7 +539,6 @@
       <button class="hbr-color-btn" data-color="#f97316" data-dark="#c2410c" style="background: #f97316; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Sunset Orange"></button>
       <button class="hbr-color-btn" data-color="#ec4899" data-dark="#be185d" style="background: #ec4899; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Hot Pink"></button>
       
-      <!-- SEE COVER ART BUTTON -->
       <button id="hbr-see-cover-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease; margin-left: 4px;">🖼️ SEE COVER ART</button>
     </div>
 
@@ -553,7 +560,7 @@
       <a href="https://jaysonsphotography.zenfolio.com/blog/2026/5/Rewind-and-Grind-The-Blockbuster-Late-Fee-Game" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 18px; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 12px rgba(37,99,235,0.4); transition: transform 0.2s ease, background 0.2s ease; display: inline-block;" target="_blank">☕ Play Coffee Game ↗</a>
     </div>
 
-    <!-- Peel-Back Mode Switcher Buttons (Bottom Left & Right) -->
+    <!-- Peel-Back Mode Switcher Buttons -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 6px;">
       <div style="display: flex; gap: 4px; flex-wrap: wrap;">
         <button id="hbr-mode-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;"><span id="hbr-mode-btn-text">Instrumentals ⚙</span></button>
@@ -579,7 +586,6 @@
             <a href="https://music.apple.com/us/artist/honest-blue/1868033077" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(168,85,247,0.4); transition: transform 0.2s ease;" target="_blank">Apple Music ↗</a>
           </div>
 
-          <!-- CREATE / EDIT PROFILE BUTTON AT THE VERY BOTTOM -->
           <div style="padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
             <button id="hbr-open-profile-btn" style="width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease;">👤 Create Profile</button>
           </div>
@@ -603,10 +609,7 @@
       Select <strong style="color: #4ade80;">ENLARGE</strong> to zoom in and view cover art up close, or <strong style="color: #60a5fa;">PLAY</strong> to spin the art forward onto your turntable!
     </p>
 
-    <!-- Interactive Cover Art List -->
-    <div id="hbr-art-gallery-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; text-align: left;">
-      <!-- Populated dynamically via JS -->
-    </div>
+    <div id="hbr-art-gallery-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; text-align: left;"></div>
 
     <div style="text-align: right;">
       <button id="hbr-art-modal-done-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">DONE</button>
@@ -615,7 +618,7 @@
   </div>
 </div>
 
-<!-- COVER ART LIGHTBOX ZOOM-IN MODAL (FOR VIEWING) -->
+<!-- COVER ART LIGHTBOX ZOOM-IN MODAL -->
 <div id="hbr-art-lightbox-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.96); backdrop-filter: blur(14px); z-index: 400; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center; flex-direction: column;">
   <div style="background: #171720; border: 2px solid #3b82f6; border-radius: 16px; padding: 16px; width: 100%; max-width: 340px; box-shadow: 0 16px 50px rgba(0,0,0,0.9); box-sizing: border-box; text-align: center; position: relative;">
     
@@ -624,7 +627,6 @@
       <button id="hbr-close-lightbox-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
     </div>
 
-    <!-- Enlarged Zoomed Cover Art Image Container -->
     <div id="hbr-lightbox-img-box" style="width: 260px; height: 260px; margin: 0 auto 14px auto; border-radius: 12px; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 8px 30px rgba(0,0,0,0.8);">&nbsp;</div>
 
     <div style="display: flex; gap: 8px;">
@@ -644,7 +646,6 @@
       <button id="hbr-close-profile-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
     </div>
 
-    <!-- Avatar & Name Section -->
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; background: rgba(255,255,255,0.03); border-radius: 10px; padding: 10px; border: 1px solid rgba(255,255,255,0.08);">
       <div id="hbr-profile-modal-avatar-frame" style="position: relative; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
         <img id="hbr-profile-avatar-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
@@ -656,14 +657,12 @@
       </div>
     </div>
 
-    <!-- Profile Image Upload from Phone or URL -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Profile Image (Upload PNG/JPEG or Paste URL)</label>
       <input id="hbr-profile-file-input" type="file" accept="image/*" style="font-size: 10px; color: #d1d5db; margin-bottom: 6px; width: 100%;">
       <input id="hbr-profile-img-input" type="text" placeholder="Or paste image URL (https://...)" style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 6px; color: #fff; font-size: 10px; box-sizing: border-box;">
     </div>
 
-    <!-- Profile Color Theme Selector -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Select Profile Color Theme</label>
       <div id="hbr-profile-colors-container" style="display: flex; gap: 8px; align-items: center;">
@@ -675,7 +674,6 @@
       </div>
     </div>
 
-    <!-- Music Badges / Titles Picker -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Select Music Badge &amp; Title</label>
       <div id="hbr-badges-container" style="display: flex; flex-wrap: wrap; gap: 4px;">
@@ -688,15 +686,11 @@
       </div>
     </div>
 
-    <!-- Inventory & Purchases Tracked Showcase -->
     <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; margin-bottom: 14px;">
       <div style="font-size: 10px; font-weight: 800; color: #10b981; text-transform: uppercase; margin-bottom: 6px;">🛍️ Tracked Inventory &amp; Purchases</div>
-      <div id="hbr-profile-inventory-list" style="font-size: 10px; color: #d1d5db; display: flex; flex-direction: column; gap: 4px;">
-        <!-- Filled dynamically -->
-      </div>
+      <div id="hbr-profile-inventory-list" style="font-size: 10px; color: #d1d5db; display: flex; flex-direction: column; gap: 4px;"></div>
     </div>
 
-    <!-- BULLETPROOF BACKUP TOOLS (EXPORT / IMPORT) -->
     <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; padding: 10px; margin-bottom: 14px;">
       <div style="font-size: 10px; font-weight: 800; color: #60a5fa; text-transform: uppercase; margin-bottom: 4px;">💾 Bulletproof Save Backup</div>
       <div style="font-size: 9px; color: #9ca3af; margin-bottom: 8px;">Export your save data as a backup file so you never lose your cash or progress!</div>
@@ -727,10 +721,7 @@
       Choose a positive mantra for today! Your mantra displays next to your profile title and switches every day to keep your mindset bright.
     </p>
 
-    <!-- Daily 3 Options Container -->
-    <div id="hbr-mantra-options-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
-      <!-- Populated dynamically via JS -->
-    </div>
+    <div id="hbr-mantra-options-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
 
     <div style="font-size: 9px; color: #9ca3af; font-style: italic;">
       🔄 Fresh mantras rotate every single day at midnight!
@@ -747,7 +738,6 @@
     const purpleRainLayer = document.getElementById('hbr-purple-rain-layer');
     const birthdayBanner = document.getElementById('hbr-birthday-banner');
 
-    // Automatic Birthday Banner Check (October 13th every year, displays all day until midnight Eastern Time)
     function checkBirthdayBanner() {
       if (!birthdayBanner) return;
       try {
@@ -756,7 +746,6 @@
         let month = parseInt(parts.find(p => p.type === 'month').value, 10);
         let day = parseInt(parts.find(p => p.type === 'day').value, 10);
 
-        // October 13th (Month 10, Day 13)
         if (month === 10 && day === 13) {
           birthdayBanner.style.display = 'block';
         } else {
@@ -775,7 +764,6 @@
     checkBirthdayBanner();
     setInterval(checkBirthdayBanner, 30000);
 
-    // Fullscreen Toggle Logic
     const fullscreenToggleBtn = document.getElementById('hbr-fullscreen-toggle');
     let isFullscreenMode = false;
 
@@ -800,7 +788,6 @@
       });
     }
 
-    // Picture-in-Picture (PiP) Background Audio Bypass Logic
     const pipToggleBtn = document.getElementById('hbr-pip-toggle');
     const pipVideo = document.getElementById('hbr-pip-video');
 
@@ -843,7 +830,6 @@
       });
     }
 
-    // Robust Voice Control Implementation (Fixed for mic capture conflicts)
     const voiceToggleBtn = document.getElementById('hbr-voice-toggle');
     let recognition = null;
     let isVoiceActive = false;
@@ -858,8 +844,6 @@
 
       recognition.onresult = function(event) {
         let transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
-        console.log("Voice command heard:", transcript);
-
         if (transcript.includes('skip') || transcript.includes('next') || transcript.includes('track')) {
           if (typeof nextBtn !== 'undefined' && nextBtn) nextBtn.click();
         } else if (transcript.includes('previous') || transcript.includes('back')) {
@@ -872,9 +856,8 @@
       };
 
       recognition.onerror = function(event) {
-        console.warn("Speech recognition error:", event.error);
         if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-          alert("Microphone permission was blocked. Please check your browser settings to allow microphone access for voice control.");
+          alert("Microphone permission was blocked. Please check browser settings.");
           isVoiceActive = false;
           if (voiceToggleBtn) {
             voiceToggleBtn.textContent = '🎙️ VOICE OFF';
@@ -907,7 +890,7 @@
               voiceToggleBtn.style.color = '#fca5a5';
             } catch(e) {
               isVoiceActive = false;
-              alert("Could not start microphone. Please ensure microphone permissions are granted.");
+              alert("Could not start microphone.");
             }
           } else {
             try { recognition.stop(); } catch(e) {}
@@ -920,11 +903,9 @@
       }
     }
 
-    // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync & Automated Broadcasts
     let globalSocket = null;
     function connectGlobalRelay() {
       globalSocket = new WebSocket('wss://ws.postman-echo.com/raw');
-      
       globalSocket.onmessage = function(event) {
         try {
           let data = JSON.parse(event.data);
@@ -935,7 +916,6 @@
           }
         } catch(e) {}
       };
-
       globalSocket.onclose = function() {
         setTimeout(connectGlobalRelay, 3000);
       };
@@ -1046,7 +1026,6 @@
       }, {passive: true});
     }
 
-    // Master Broadcast Tracks
     const masterBroadcastTracks = [
       { id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
       { id: '4eU3OZFhuHs', name: 'Dice On The Table' },
@@ -1073,6 +1052,9 @@
       { id: 'wu3Rw8y3_Zw', name: "I Dream Of A Genie" },
       { id: 'O4r9Cc3wmd4', name: 'Retired High School Science Teacher' },
       { id: 'yidsC-EzsmU', name: 'Eighties Babies' },
+      { id: 'UALRtIA5iUQ', name: 'Right Here, Right Now Ronja Kiljan' },
+      { id: 'XE9dzihAHJo', name: 'I Signed Those Papers' },
+      { id: 'v7q46zKX-t0', name: 'Wrapped Up In A Christmas Movie' },
       { id: 'PPK-QMAYvcI', name: 'Flip The Boss Off', explicit: true }
     ];
 
@@ -1103,7 +1085,6 @@
     let currentDrawerPage = 1;
     const tracksPerPage = 6;
 
-    // Bank Notes & Stores State Data
     let bankedNotesTotal = 50;
     let storeCashTotal = 0.00;
     let unrewoundTapesCount = 0;
@@ -1198,7 +1179,6 @@
       return count;
     }
 
-    // BULLETPROOF PERSISTENT SAVE ENGINE
     function saveEverything() {
       try {
         const masterSave = {
@@ -1278,7 +1258,6 @@
 
         lastSessionTimestamp = Date.now();
         saveEverything();
-
       } catch (e) {
         bankedNotesTotal = 50;
       }
@@ -1286,7 +1265,6 @@
 
     loadEverything();
 
-    // Dog Companion Animation & Toggle Engine
     const dogCompanion = document.getElementById('hbr-dog-companion');
     const dogToggleBar = document.getElementById('hbr-dog-toggle-bar');
     const dogToggleBtn = document.getElementById('hbr-dog-toggle-btn');
@@ -1314,7 +1292,6 @@
       
       let actions = ['run-left', 'run-right', 'nap', 'bark', 'sit'];
       let chosen = actions[Math.floor(Math.random() * actions.length)];
-      
       let currentLeft = parseInt(dogCompanion.style.left || '20', 10);
       
       if (chosen === 'run-left') {
@@ -1350,7 +1327,6 @@
       dogInterval = setInterval(runDogBehavior, 4500);
     }, 500);
 
-    // Profile & Mantra Modal Mechanics
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
     const closeProfileBtn = document.getElementById('hbr-close-profile-btn');
     const profileModal = document.getElementById('hbr-profile-modal');
@@ -1572,7 +1548,7 @@
         });
 
         if (!hasAnything) {
-          profileInventoryList.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No stores, characters or movies purchased yet. Visit the Store in the app to start buying!</div>';
+          profileInventoryList.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No stores, characters or movies purchased yet.</div>';
         }
       }
     }
@@ -1677,7 +1653,6 @@
       });
     }
 
-    // Export / Import Backup Handlers
     const exportSaveBtn = document.getElementById('hbr-export-save-btn');
     const importSaveBtn = document.getElementById('hbr-import-save-btn');
     const importFileInput = document.getElementById('hbr-import-file-input');
@@ -1713,7 +1688,7 @@
                 const bankedCountDisplay = document.getElementById('hbr-banked-count');
                 if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
                 updateCashUI();
-                alert('🎉 Save backup imported successfully! Your cash, notes, and profile have been restored.');
+                alert('🎉 Save backup imported successfully!');
               } else {
                 alert('Invalid save file.');
               }
@@ -1726,7 +1701,6 @@
       });
     }
 
-    // Store UI & Purchase Engine
     const storeBtn = document.getElementById('hbr-store-btn');
     const storeOverlay = document.getElementById('hbr-store-overlay');
     const closeStoreBtn = document.getElementById('hbr-close-store-btn');
@@ -1798,7 +1772,7 @@
         if (totalMovies > 0 && Math.random() < 0.12) {
           let lateFeeBonus = parseFloat((Math.random() * 1.00 + 0.25).toFixed(2));
           netPerSec += lateFeeBonus;
-          triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on a overdue tape!');
+          triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on an overdue tape!');
         }
 
         if (unrewoundTapesCount > 0) {
@@ -2115,7 +2089,7 @@
               saveEverything();
               renderStoreList();
             } else {
-              alert('Not enough cash to rewind tapes! Earn more cash or notes first.');
+              alert('Not enough cash to rewind tapes!');
             }
           });
 
@@ -2135,8 +2109,8 @@
         statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
         statusBox.style.textAlign = 'center';
         statusBox.innerHTML = totalMovies > 0 
-          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString() + '. Higher formats = higher payouts (DVD & Blu-ray never need rewinding)!'
-          : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash & late fees!';
+          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString()
+          : '💡 <strong>NO MOVIES IN STOCK!</strong> Buy movies below to start earning rental cash & late fees!';
         
         storeItemsList.appendChild(statusBox);
 
@@ -2164,9 +2138,7 @@
           titleDiv.style.fontWeight = '800';
           titleDiv.style.color = '#ffffff';
 
-          let rtLink = movie.rtUrl 
-            ? '<a href="' + movie.rtUrl + '" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">'
-            : '';
+          let rtLink = movie.rtUrl ? '<a href="' + movie.rtUrl + '" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">' : '';
           let rtClose = movie.rtUrl ? '↗</a>' : '';
 
           let rtBadge = isGoodMovie 
@@ -2185,9 +2157,9 @@
           formatsRow.style.gap = '4px';
 
           const formats = [
-            { key: 'vhs', label: 'VHS 📼', costMult: 1, desc: 'Base Payout' },
-            { key: 'dvd', label: 'DVD 📀', costMult: 1.8, desc: 'Higher Payout' },
-            { key: 'bluray', label: 'Blu-ray 💿', costMult: 2.8, desc: 'Max Payout' }
+            { key: 'vhs', label: 'VHS 📼', costMult: 1 },
+            { key: 'dvd', label: 'DVD 📀', costMult: 1.8 },
+            { key: 'bluray', label: 'Blu-ray 💿', costMult: 2.8 }
           ];
 
           formats.forEach(fmt => {
@@ -2276,7 +2248,6 @@
       });
     }
 
-    // Cover Art Gallery Modal & Enlarge / Play Engine
     const seeCoverBtn = document.getElementById('hbr-see-cover-btn');
     const artModal = document.getElementById('hbr-art-modal');
     const closeArtModalBtn = document.getElementById('hbr-close-art-modal');
@@ -2335,7 +2306,6 @@
         btnContainer.style.gap = '4px';
         btnContainer.style.flexShrink = '0';
 
-        // Enlarge Button
         let enlargeBtn = document.createElement('button');
         enlargeBtn.style.background = 'rgba(34, 197, 94, 0.2)';
         enlargeBtn.style.border = '1px solid rgba(34, 197, 94, 0.5)';
@@ -2351,7 +2321,6 @@
           openLightboxForTrack(idx);
         });
 
-        // Play Button (Spin forward & play song)
         let playBtn = document.createElement('button');
         playBtn.style.background = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)';
         playBtn.style.border = 'none';
@@ -2374,7 +2343,7 @@
 
           if (recordArt) {
             recordArt.classList.remove('hbr-cover-spin-forward');
-            void recordArt.offsetWidth; // Force reflow
+            void recordArt.offsetWidth;
             recordArt.classList.add('hbr-cover-spin-forward');
             setTimeout(() => {
               recordArt.classList.remove('hbr-cover-spin-forward');
@@ -2453,7 +2422,6 @@
       });
     }
 
-    // Automatic Eastern Time Fireworks & Interactive Heart Inflation Challenge Engine
     const canvas = document.getElementById('hbr-fireworks-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
     let fireworksActive = false;
@@ -2467,8 +2435,9 @@
     let heartStartTime = 0;
     const heartCard = document.getElementById('hbr-heart-challenge-card');
     const heartTargetBtn = document.getElementById('hbr-heart-target-btn');
-    const inflatingHeart = document.getElementById('hbr-inflating-heart');
+    const heartFillPath = document.getElementById('hbr-heart-fill-path');
     const heartTapsLeftSpan = document.getElementById('hbr-heart-taps-left');
+    const heartCta = document.getElementById('hbr-heart-cta');
     const heartStatus = document.getElementById('hbr-heart-status');
     const heartTitle = document.getElementById('hbr-heart-title');
     const heartSub = document.getElementById('hbr-heart-sub');
@@ -2552,10 +2521,8 @@
         if (heartTapsLeft === 23) heartStartTime = Date.now();
         heartTapsLeft--;
         
-        let currentScale = 1.0 + ((23 - heartTapsLeft) / 23) * 1.2;
-        if (inflatingHeart) {
-          inflatingHeart.style.transform = 'scale(' + currentScale + ')';
-        }
+        let progress = (23 - heartTapsLeft) / 23;
+        if (heartFillPath) heartFillPath.style.transform = 'scale(' + progress + ')';
 
         if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = heartTapsLeft;
 
@@ -2566,16 +2533,10 @@
         if (heartTapsLeft <= 0) {
           heartChallengeActive = false;
           let elapsed = ((Date.now() - heartStartTime) / 1000).toFixed(1);
-          
-          if (inflatingHeart) {
-            inflatingHeart.textContent = '💖';
-            inflatingHeart.style.transform = 'scale(2.6)';
-            setTimeout(() => { inflatingHeart.style.transform = 'scale(1)'; }, 300);
-          }
-
-          if (heartTitle) heartTitle.textContent = '💖 HEART BURST COMPLETE!';
-          if (heartStatus) heartStatus.innerHTML = '<strong style="color: #4ade80;">Inflated in ' + elapsed + 's!</strong>';
+          if (heartTitle) heartTitle.textContent = '💖 CHALLENGE COMPLETE!';
+          if (heartStatus) heartStatus.innerHTML = '<strong style="color: #4ade80;">Completed in ' + elapsed + 's!</strong>';
           if (heartSub) heartSub.innerHTML = '<strong style="font-size: 11px; color: #f472b6;">You Are Loved ❤️</strong>';
+          if (heartCta) heartCta.style.display = 'none';
         }
       });
     }
@@ -2620,16 +2581,14 @@
 
       heartChallengeActive = true;
       heartTapsLeft = 23;
-      if (inflatingHeart) {
-        inflatingHeart.textContent = '❤️';
-        inflatingHeart.style.transform = 'scale(1)';
-      }
+      if (heartFillPath) heartFillPath.style.transform = 'scale(0)';
       if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = '23';
-      if (heartTitle) heartTitle.textContent = '💖 PUMP UP THE HEART';
+      if (heartTitle) heartTitle.textContent = '💖 EVENING HEART CHALLENGE';
       if (heartStatus) {
-        heartStatus.innerHTML = '<span id="hbr-heart-taps-left">23</span> pumps remaining';
+        heartStatus.innerHTML = '<span id="hbr-heart-taps-left">23</span> taps remaining';
       }
-      if (heartSub) heartSub.textContent = 'Tap to inflate the heart until it bursts!';
+      if (heartSub) heartSub.textContent = 'Fill the heart to complete the challenge!';
+      if (heartCta) heartCta.style.display = 'block';
       if (heartCard) heartCard.style.display = 'block';
 
       setTimeout(() => stopFireworks(), 300000);
@@ -2654,9 +2613,12 @@
         let minutes = parseInt(parts.find(p => p.type === 'minute').value, 10);
         let seconds = parseInt(parts.find(p => p.type === 'second').value, 10);
 
-        if ((hours === 18 || hours === 21) && minutes >= 0 && minutes <= 4) {
+        let is530Window = (hours === 17 && minutes >= 30 && minutes <= 34);
+        let is900Window = (hours === 21 && minutes >= 0 && minutes <= 4);
+
+        if (is530Window || is900Window) {
           if (!fireworksActive) startFireworks();
-          isGrandFinale = (minutes === 4 && seconds >= 30);
+          isGrandFinale = ((is530Window && minutes === 34 && seconds >= 30) || (is900Window && minutes === 4 && seconds >= 30));
         } else {
           if (fireworksActive) stopFireworks();
         }
@@ -2665,7 +2627,6 @@
 
     setInterval(checkEasternTimeFireworks, 1000);
 
-    // Dynamic Listener Counter Algorithm
     const listenerElement = document.getElementById('hbr-listeners');
     
     function calculateTargetListeners() {
@@ -2711,7 +2672,6 @@
     }
     setTimeout(updateListenerCount, 5000);
 
-    // Bio Toggle
     const bioToggle = document.getElementById('hbr-bio-toggle');
     const bioPanel = document.getElementById('hbr-bio-panel');
     const bioArrow = document.getElementById('hbr-bio-arrow');
@@ -2727,7 +2687,6 @@
       });
     }
 
-    // Interactive Notes Game Engine
     const notesContainer = document.getElementById('hbr-notes-container');
     const popCountDisplay = document.getElementById('hbr-pop-count');
     const popLabelDisplay = document.getElementById('hbr-pop-label');
@@ -3073,9 +3032,14 @@
             clearInterval(countdownInterval);
             canPopNotes = false;
             stopNotesSystem();
-            autoBankUnsavedNotes();
-            if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal.toLocaleString() + '</strong> fireworks (banked automatically)!';
+            
+            let earnedCash = poppedNotesTotal * 1.00;
+            storeCashTotal += earnedCash;
+            saveEverything();
+            updateCashUI();
+
+            if (bannerTitle) bannerTitle.textContent = "FIREWORKS COMPLETE!";
+            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal.toLocaleString() + '</strong> fireworks and permanently secured <strong style="color: #4ade80;">$' + earnedCash.toFixed(2) + '</strong> in cash!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
@@ -3101,15 +3065,17 @@
       });
     }
 
-    // Playlist Drawer & Scrollable Dual Playlists
     const drawerToggle = document.getElementById('hbr-drawer-toggle');
     const drawer = document.getElementById('hbr-playlist-drawer');
     const drawerArrow = document.getElementById('hbr-drawer-arrow');
     const drawerList = document.getElementById('hbr-drawer-list');
+    const drawerHeaderTitle = document.getElementById('hbr-drawer-header-title');
+    const pageControls = document.getElementById('hbr-page-controls');
     const page1Btn = document.getElementById('hbr-page1-btn');
     const page2Btn = document.getElementById('hbr-page2-btn');
     const page3Btn = document.getElementById('hbr-page3-btn');
-    const scrollModeBtn = document.getElementById('hbr-scroll-mode-btn');
+    const trackSearchInput = document.getElementById('hbr-track-search-input');
+    const searchClearBtn = document.getElementById('hbr-search-clear-btn');
     const playQ1Btn = document.getElementById('hbr-play-q1-btn');
     const playQ2Btn = document.getElementById('hbr-play-q2-btn');
     const playT3Btn = document.getElementById('hbr-play-t3-btn');
@@ -3122,7 +3088,6 @@
     const t3Circle2 = document.getElementById('hbr-t3-circle-2');
     const t3Circle3 = document.getElementById('hbr-t3-circle-3');
     let drawerOpen = false;
-    let isScrollLibraryMode = false;
 
     function updateT3Circles() {
       const count = customTop3.length;
@@ -3131,31 +3096,8 @@
       if (t3Circle3) { t3Circle3.style.background = count >= 3 ? '#22c55e' : '#4b5563'; t3Circle3.style.boxShadow = count >= 3 ? '0 0 6px #22c55e' : 'none'; }
     }
 
-    if (scrollModeBtn) {
-      scrollModeBtn.addEventListener('click', function() {
-        isScrollLibraryMode = true;
-        [page1Btn, page2Btn, page3Btn].forEach(btn => {
-          if (btn) {
-            btn.style.background = 'rgba(255,255,255,0.06)';
-            btn.style.borderColor = 'rgba(255,255,255,0.15)';
-            btn.style.color = '#9ca3af';
-          }
-        });
-        scrollModeBtn.style.background = 'rgba(59,130,246,0.25)';
-        scrollModeBtn.style.borderColor = 'rgba(59,130,246,0.5)';
-        scrollModeBtn.style.color = '#93c5fd';
-        renderDrawerList();
-      });
-    }
-
     function setActivePage(pageNo) {
-      isScrollLibraryMode = false;
       currentDrawerPage = pageNo;
-      if (scrollModeBtn) {
-        scrollModeBtn.style.background = 'rgba(255,255,255,0.06)';
-        scrollModeBtn.style.borderColor = 'rgba(255,255,255,0.15)';
-        scrollModeBtn.style.color = '#9ca3af';
-      }
       [page1Btn, page2Btn, page3Btn].forEach((btn, idx) => {
         if (!btn) return;
         let isSelected = (idx + 1) === pageNo;
@@ -3182,28 +3124,62 @@
       });
     }
 
+    let searchQuery = '';
+    if (trackSearchInput) {
+      trackSearchInput.addEventListener('input', function() {
+        searchQuery = trackSearchInput.value.trim().toLowerCase();
+        if (searchClearBtn) {
+          searchClearBtn.style.display = searchQuery.length > 0 ? 'block' : 'none';
+        }
+        renderDrawerList();
+      });
+    }
+
+    if (searchClearBtn && trackSearchInput) {
+      searchClearBtn.addEventListener('click', function() {
+        trackSearchInput.value = '';
+        searchQuery = '';
+        searchClearBtn.style.display = 'none';
+        renderDrawerList();
+      });
+    }
+
     function renderDrawerList() {
       if (!drawerList) return;
       drawerList.innerHTML = '';
 
-      if (isScrollLibraryMode) {
-        drawerList.style.maxHeight = '240px';
-        drawerList.style.overflowY = 'auto';
+      let tracksToDisplay = currentMasterTracks;
+      let isSearching = (searchQuery.length > 0);
+
+      if (isSearching) {
+        tracksToDisplay = currentMasterTracks.map((t, idx) => ({ ...t, originalIndex: idx })).filter(t => t.name.toLowerCase().includes(searchQuery));
+        if (drawerHeaderTitle) drawerHeaderTitle.textContent = 'Search Results (' + tracksToDisplay.length + ')';
+        if (pageControls) pageControls.style.display = 'none';
       } else {
-        drawerList.style.maxHeight = 'none';
-        drawerList.style.overflowY = 'visible';
+        if (drawerHeaderTitle) drawerHeaderTitle.textContent = 'Available Tracks';
+        if (pageControls) pageControls.style.display = 'flex';
       }
 
-      let tracksToDisplay = [];
-      if (isScrollLibraryMode) {
-        tracksToDisplay = currentMasterTracks.map((track, idx) => ({ track, globalIdx: idx }));
-      } else {
+      let pagedTracks = tracksToDisplay;
+      if (!isSearching) {
         let startIdx = (currentDrawerPage - 1) * tracksPerPage;
-        let pageTracks = currentMasterTracks.slice(startIdx, startIdx + tracksPerPage);
-        tracksToDisplay = pageTracks.map((track, pageRelativeIdx) => ({ track, globalIdx: startIdx + pageRelativeIdx }));
+        pagedTracks = currentMasterTracks.slice(startIdx, startIdx + tracksPerPage).map((t, idx) => ({ ...t, originalIndex: startIdx + idx }));
       }
 
-      tracksToDisplay.forEach(({ track, globalIdx }) => {
+      if (pagedTracks.length === 0) {
+        let emptyDiv = document.createElement('div');
+        emptyDiv.style.fontSize = '11px';
+        emptyDiv.style.color = '#9ca3af';
+        emptyDiv.style.textAlign = 'center';
+        emptyDiv.style.padding = '12px';
+        emptyDiv.style.fontStyle = 'italic';
+        emptyDiv.textContent = 'No matching tracks found.';
+        drawerList.appendChild(emptyDiv);
+        return;
+      }
+
+      pagedTracks.forEach((track) => {
+        let globalIdx = track.originalIndex;
         let row = document.createElement('div');
         row.style.display = 'flex';
         row.style.justifyContent = 'space-between';
@@ -3211,7 +3187,6 @@
         row.style.padding = '6px 10px';
         row.style.borderRadius = '6px';
         row.style.fontSize = '12px';
-        row.style.marginBottom = '4px';
 
         let isCurrentlyPlaying = (activeQueueSource === null) && (globalIdx === currentTrackIndex);
         if (isCurrentlyPlaying) {
@@ -3316,7 +3291,7 @@
           e.stopPropagation();
           if (!inT3) {
             if (customTop3.length < 3) { customTop3.push(track); saveEverything(); renderDrawerList(); }
-            else alert('Top 3 is full! Remove a song from Top 3 first.');
+            else alert('Top 3 is full!');
           } else {
             customTop3 = customTop3.filter(t => t.id !== track.id);
             saveEverything(); renderDrawerList();
@@ -3334,7 +3309,7 @@
 
       if (q1CountSpan) q1CountSpan.textContent = customQueue1.length;
       if (q1ItemsContainer) {
-        q1ItemsContainer.innerHTML = customQueue1.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 1" above!</div>' : '';
+        q1ItemsContainer.innerHTML = customQueue1.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet.</div>' : '';
         customQueue1.forEach((track, cIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -3353,7 +3328,7 @@
 
       if (q2CountSpan) q2CountSpan.textContent = customQueue2.length;
       if (q2ItemsContainer) {
-        q2ItemsContainer.innerHTML = customQueue2.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 2" above!</div>' : '';
+        q2ItemsContainer.innerHTML = customQueue2.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet.</div>' : '';
         customQueue2.forEach((track, cIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -3372,7 +3347,7 @@
 
       updateT3Circles();
       if (t3ItemsContainer) {
-        t3ItemsContainer.innerHTML = customTop3.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected. Click "+ T3" next to any song!</div>' : '';
+        t3ItemsContainer.innerHTML = customTop3.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected.</div>' : '';
         customTop3.forEach((track, tIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -3418,7 +3393,6 @@
       });
     }
 
-    // Audio & Deck Controls with YouTube IFrame API
     const toggleBtn = document.getElementById('hbr-toggle');
     const prevBtn = document.getElementById('hbr-prev');
     const nextBtn = document.getElementById('hbr-next');
@@ -3442,7 +3416,7 @@
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
     let isPlaying = false;
-    let currentTrackIndex = 11; // Pocketful of Rain
+    let currentTrackIndex = 11;
     let ytPlayer = null;
     let isDragging = false;
     let startAngle = 0;
@@ -3588,7 +3562,7 @@
         autoBankUnsavedNotes();
         activeQueueSource = null; currentMasterTracks = masterChakrasTracks; activePlaylist = masterChakrasTracks;
         if (modeTitleText) modeTitleText.textContent = 'Chakras Healing';
-        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Healing & Meditation Soundscape';
+        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Meditation Soundscape';
         if (labelSubText) labelSubText.textContent = 'CHAKRAS';
         selectAndPlayTrack(0);
       });
