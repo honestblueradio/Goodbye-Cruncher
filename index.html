@@ -1,5 +1,5 @@
-Give me a scroll bar next to page 3 button in this code Add a scroll bar to this so they can scroll more songs <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.2 SEARCH & SCROLL) -->
+<!-- ====================================================================== -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.2 PAGE 4) -->
 <!-- ====================================================================== -->
 
 <!-- Scrollbar & Advanced Animation Styles -->
@@ -225,6 +225,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     filter: drop-shadow(0 0 6px #f97316);
   }
 
+  /* Birthday Banner Animation */
   @keyframes hbrBirthdayGlow {
     0%, 100% { text-shadow: 0 0 10px #ec4899, 0 0 20px #f472b6, 0 0 30px #db2777; transform: scale(1); }
     50% { text-shadow: 0 0 15px #f472b6, 0 0 25px #fb7185, 0 0 35px #f43f5e; transform: scale(1.02); }
@@ -244,13 +245,36 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
 <div style="background: #111115; border-radius: 20px; padding: 24px; max-width: 420px; margin: 0 auto; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 16px 36px rgba(0,0,0,0.7); border: 1px solid #252532; position: relative; overflow: hidden; transition: all 0.3s ease;" id="hbr-main-app-card">
   
-  <!-- BIRTHDAY BANNER -->
+  <!-- BIRTHDAY BANNER (Displays automatically on October 13th every year, disappears at midnight) -->
   <div id="hbr-birthday-banner" style="display: none; position: relative; z-index: 25; background: linear-gradient(135deg, rgba(236, 72, 153, 0.18) 0%, rgba(190, 24, 93, 0.28) 100%); border: 2px solid #ec4899; border-radius: 14px; padding: 12px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 25px rgba(236,72,153,0.4); pointer-events: none;">
     <div style="font-size: 16px; margin-bottom: 2px; pointer-events: auto;">🌸🌺🌷🌼🌻</div>
     <div class="hbr-birthday-text" style="font-size: 16px; font-weight: 900; color: #f472b6; text-transform: uppercase; letter-spacing: 1px; pointer-events: auto;">
       Happy Birthday Becca
     </div>
     <div style="font-size: 16px; margin-top: 2px; pointer-events: auto;">🌼🌻🌸🌺🌷</div>
+  </div>
+
+  <!-- SCHEDULED FIREWORKS LIVE BANNER (Visible strictly 6:00-6:05 PM ET and 9:00-9:05 PM ET) -->
+  <div id="hbr-fireworks-show-banner" style="display: none; position: relative; z-index: 26; background: linear-gradient(135deg, rgba(249, 115, 22, 0.25) 0%, rgba(234, 88, 12, 0.35) 100%); border: 2px solid #f97316; border-radius: 14px; padding: 10px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 25px rgba(249,115,22,0.5); pointer-events: auto;">
+    <div style="font-size: 12px; font-weight: 900; color: #fdba74; text-transform: uppercase; letter-spacing: 1px;">
+      🎆 SCHEDULED FIREWORKS SHOW ($1.23 / SHOT) 🎆
+    </div>
+    <div style="font-size: 10px; color: #fef08a; margin-top: 2px; font-weight: 700;">
+      Tap anywhere on screen to shoot off fireworks and earn cash!
+    </div>
+  </div>
+
+  <!-- FIREWORKS EARNINGS SUMMARY MODAL (Appears at end of show) -->
+  <div id="hbr-fireworks-summary-modal" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17,17,21,0.96); backdrop-filter: blur(10px); z-index: 200; padding: 20px; box-sizing: border-box; text-align: center; flex-direction: column; justify-content: center; align-items: center;">
+    <div style="background: #1c1c28; border: 2px solid #f97316; border-radius: 16px; padding: 20px; max-width: 320px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); text-align: center;">
+      <div style="font-size: 24px; margin-bottom: 6px;">🎆🎇🎉</div>
+      <div style="font-size: 14px; font-weight: 900; color: #f97316; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;">Fireworks Show Complete!</div>
+      <p style="font-size: 11px; color: #d1d5db; line-height: 1.5; margin-bottom: 14px;">
+        You shot off <strong id="hbr-summary-shots" style="color: #60a5fa;">0</strong> fireworks during the show and earned:
+      </p>
+      <div style="font-size: 20px; font-weight: 900; color: #4ade80; margin-bottom: 16px;" id="hbr-summary-earned">$0.00</div>
+      <button id="hbr-close-summary-btn" style="background: linear-gradient(135deg, #f97316 0%, #c2410c 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(249,115,22,0.4);">COLLECT CASH &amp; CLOSE</button>
+    </div>
   </div>
 
   <!-- FLOATING HEART STREAM LAYER -->
@@ -263,7 +287,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
   <div id="hbr-dog-companion" style="display: none; position: absolute; bottom: 18px; left: 20px; font-size: 26px; z-index: 85; pointer-events: none; user-select: none; transition: transform 0.4s ease, bottom 0.4s ease; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8);">🐕</div>
 
   <!-- Fireworks Overlay Canvas -->
-  <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; z-index: 100; display: none;"></canvas>
+  <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; display: none;"></canvas>
 
   <!-- Native PiP Audio Bypass Container -->
   <div style="display: none;">
@@ -304,6 +328,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
           <span id="hbr-mode-title" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #3b82f6; font-weight: 700; display: block;">Honest Blue Radio</span>
           
+          <!-- Pulsing On Air Indicator Badge Linking to Most Recent Video -->
           <a id="hbr-live-indicator" href="https://youtube.com/@honestblueradio/videos" target="_blank" rel="noopener noreferrer" title="Watch most recent video on YouTube" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 12px; padding: 2px 7px; text-decoration: none; transition: all 0.3s ease; cursor: pointer; user-select: none;">
             <span id="hbr-live-dot" class="hbr-live-active-dot" style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
             <span id="hbr-live-text" style="font-size: 9px; font-weight: 800; color: #ef4444; letter-spacing: 0.5px;">ON AIR</span>
@@ -311,18 +336,14 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         </div>
 
         <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-          <!-- RESTORED SCROLL BUTTON / TRACKS DRAWER TOGGLE -->
           <button id="hbr-drawer-toggle" style="background: rgba(255,255,255,0.06); border: 1px solid #2e2e3e; border-radius: 6px; color: #9ca3af; font-size: 11px; font-weight: 600; padding: 3px 8px; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s ease;"><span id="hbr-drawer-arrow">▼</span> TRACKS</button>
-          
-          <a id="hbr-radio-btn" href="https://youtube.com/@honestblueradio/live" target="_blank" rel="noopener noreferrer" style="background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.4); border-radius: 6px; color: #fca5a5; font-size: 10px; font-weight: 700; padding: 3px 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;" title="Tune into Honest Blue Radio Station Live">📻 STATION</a>
-
           <button id="hbr-fullscreen-toggle" style="background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); border-radius: 6px; color: #60a5fa; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">⛶ POP OUT</button>
           <button id="hbr-pip-toggle" style="background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.4); border-radius: 6px; color: #c084fc; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Pop out into floating window for background lock-screen audio">📺 PIP AUDIO</button>
           <button id="hbr-voice-toggle" style="background: rgba(236,72,153,0.15); border: 1px solid rgba(236,72,153,0.4); border-radius: 6px; color: #f472b6; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;" title="Enable Voice Control">🎙️ VOICE OFF</button>
           <button id="hbr-install-btn" style="background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.4); border-radius: 6px; color: #4ade80; font-size: 10px; font-weight: 700; padding: 3px 8px; cursor: pointer; transition: all 0.2s ease;">📱 INSTALL</button>
         </div>
       </div>
-      
+      <!-- Animated Live Listener Badge with Green Person Icon -->
       <div style="background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 5px 12px; display: flex; align-items: center; gap: 6px;"><span style="color: #4ade80; font-size: 12px;">👤</span><span style="font-size: 12px; font-weight: 600; color: #e5e7eb;"><span id="hbr-listeners">104</span> TUNED IN</span></div>
     </div>
 
@@ -335,13 +356,15 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       <div style="flex: 1; overflow: hidden;">
         <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
           <div id="hbr-top-banner-name" style="font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Listener</div>
-          
+          <!-- Dynamic Gold Ring Store Badges Container -->
           <div id="hbr-top-banner-gold-rings" style="display: flex; gap: 4px; flex-wrap: wrap;">&nbsp;</div>
         </div>
         
+        <!-- Badge Title & Daily Mantra Button Side-by-Side -->
         <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 3px;">
           <div id="hbr-top-banner-badge" style="font-size: 9px; font-weight: 700; color: #93c5fd; background: rgba(59,130,246,0.25); padding: 2px 6px; border-radius: 4px; display: inline-block;">Guitar Shredder</div>
           
+          <!-- TODAY'S MANTRA BUTTON NEXT TO SELECTED BADGE -->
           <button id="hbr-top-mantra-btn" style="background: rgba(236, 72, 153, 0.2); border: 1px solid rgba(236, 72, 153, 0.5); color: #f472b6; border-radius: 4px; font-size: 9px; font-weight: 800; padding: 2px 8px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: all 0.2s ease;" title="Click to choose or change today's positive mantra!">
             <span>✨</span> <span id="hbr-top-mantra-text">+ Select Today's Mantra</span>
           </button>
@@ -349,49 +372,35 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       </div>
     </div>
 
-    <!-- Collapsible Scrollable Playlist Drawer with Search Bar Included -->
+    <!-- Collapsible Scrollable Playlist Drawer -->
     <div id="hbr-playlist-drawer" style="max-height: 0; overflow-y: auto; transition: max-height 0.4s ease, margin-bottom 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; margin-bottom: 0px;">
       <div style="padding: 12px; display: flex; flex-direction: column; gap: 12px;">
-        
-        <!-- NEW: TRACK SEARCH BAR INTEGRATED INTO DRAWER -->
-        <div>
-          <div style="position: relative; display: flex; align-items: center;">
-            <span style="position: absolute; left: 10px; font-size: 12px; color: #9ca3af; pointer-events: none;">🔍</span>
-            <input id="hbr-track-search-input" type="text" placeholder="Search tracks by name..." style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 8px; padding: 7px 10px 7px 30px; color: #fff; font-size: 11px; font-weight: 600; box-sizing: border-box; outline: none; transition: border-color 0.2s ease;">
-            <button id="hbr-search-clear-btn" style="display: none; position: absolute; right: 8px; background: transparent; border: none; color: #9ca3af; font-size: 12px; cursor: pointer; font-weight: bold;">✕</button>
-          </div>
-        </div>
-
-        <!-- Standard Broadcast Track Section with Pagination -->
+        <!-- Standard Broadcast Track Section with Pagination & Scroll Mode -->
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #6b7280; letter-spacing: 1px;" id="hbr-drawer-header-title">Available Tracks</div>
-        <div id="hbr-page-controls" style="display: flex; gap: 4px;">
-             <button id="hbr-page1-btn" style="background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.5); border-radius: 4px; color: #93c5fd; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 1</button>
-             <button id="hbr-page2-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 2</button>
-             <button id="hbr-page3-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 3</button>
-             <button id="hbr-scroll-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">📜 Scroll</button>
-        </div>
+            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #6b7280; letter-spacing: 1px;">Available Tracks</div>
+            <div id="hbr-page-controls" style="display: flex; gap: 4px; align-items: center;">
+              <button id="hbr-page1-btn" style="background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.5); border-radius: 4px; color: #93c5fd; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 1</button>
+              <button id="hbr-page2-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 2</button>
+              <button id="hbr-page3-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">Page 3</button>
+              <button id="hbr-scroll-mode-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">📚 Scroll</button>
+            </div>
           </div>
-    <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
+          <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
         </div>
-
         <!-- Dedicated Dual Playlists & Top 3 Launch Center -->
         <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; display: flex; flex-direction: column; gap: 8px;">
           <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; color: #3b82f6; letter-spacing: 1px;">Your Playlists</div>
-          
           <!-- PLAYLIST 1 BOX -->
           <div style="background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.4); border-radius: 8px; padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 700; color: #93c5fd;">PLAYLIST 1 (<span id="hbr-q1-count">0</span>/7)</span><button id="hbr-play-q1-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(37,99,235,0.4); transition: transform 0.15s ease;">▶ PLAY PLAYLIST 1</button></div>
             <div id="hbr-q1-items" style="display: flex; flex-direction: column; gap: 3px;">&nbsp;</div>
           </div>
-          
           <!-- PLAYLIST 2 BOX -->
           <div style="background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.4); border-radius: 8px; padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 700; color: #d8b4fe;">PLAYLIST 2 (<span id="hbr-q2-count">0</span>/7)</span><button id="hbr-play-q2-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(168,85,247,0.4); transition: transform 0.15s ease;">▶ PLAY PLAYLIST 2</button></div>
             <div id="hbr-q2-items" style="display: flex; flex-direction: column; gap: 3px;">&nbsp;</div>
           </div>
-          
           <!-- TOP 3 BOX -->
           <div style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.4); border-radius: 8px; padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -428,8 +437,10 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       <button id="hbr-bank-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4); transition: transform 0.15s ease, background 0.2s ease;">🏦 BANK NOTES</button>
       <span id="hbr-banked-badge" style="background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #fbbf24; letter-spacing: 0.5px; display: inline-block; transition: transform 0.15s ease;">BANKED: <span id="hbr-banked-count" style="color: #fef08a;">0</span></span>
       
+      <!-- REAL STORE CASH COUNTER -->
       <span id="hbr-cash-badge" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.5px; display: inline-block;">💵 CASH: <span id="hbr-cash-count" style="color: #86efac;">$0.00</span></span>
 
+      <!-- STORE BUTTON NEXT TO BANKED -->
       <button id="hbr-store-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); transition: transform 0.15s ease;">🛍️ STORE</button>
     </div>
 
@@ -439,7 +450,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       <div id="hbr-notes-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15; overflow: hidden;">&nbsp;</div>
       <div id="hbr-times-up" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(17,17,21,0.92); border: 2px solid #ef4444; border-radius: 12px; padding: 12px 20px; z-index: 25; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center;"><span id="hbr-banner-title" style="font-size: 14px; font-weight: 800; color: #ef4444; display: block; margin-bottom: 2px;">TIME&#39;S UP!</span> <span style="font-size: 11px; color: #d1d5db;"><span id="hbr-banner-msg">You popped <strong id="hbr-final-count" style="color: #60a5fa;">0</strong> notes!</span></span></div>
 
-      <!-- STORE MODAL OVERLAY -->
+      <!-- STORE MODAL OVERLAY (Covers the vinyl record deck) -->
       <div id="hbr-store-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 17, 25, 0.96); backdrop-filter: blur(8px); z-index: 30; padding: 14px; box-sizing: border-box; text-align: left; flex-direction: column; overflow-y: auto;">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 8px;">
           <div>
@@ -458,30 +469,37 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
           </div>
         </div>
 
+        <!-- MANUAL CLEAR BANKED NOTES BUTTON -->
         <div style="margin-bottom: 8px;">
           <button id="hbr-store-clear-notes-btn" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; border-radius: 6px; font-size: 9px; font-weight: 800; padding: 5px 10px; cursor: pointer; width: 100%;">🗑️ RESET / CLEAR BANKED NOTES TO 0</button>
         </div>
 
+        <!-- Store Event Alert Box & Interactive Shoplifter Catch Button -->
         <div id="hbr-store-event-alert" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 6px; font-size: 9px; color: #fca5a5; margin-bottom: 8px; text-align: center;"></div>
 
+        <!-- Interactive Quick-Action Shoplifter Catch Banner -->
         <div id="hbr-shoplifter-catch-box" style="display: none; background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); border-radius: 8px; padding: 8px; margin-bottom: 8px; text-align: center; cursor: pointer; user-select: none; box-shadow: 0 4px 12px rgba(239,68,68,0.5);">
           <div style="font-size: 11px; font-weight: 800; color: #fff; text-transform: uppercase;">🚨 SHOPLIFTER ESCAPING!</div>
           <div style="font-size: 9px; color: #fee2e2; margin-top: 2px;">TAP HERE FAST TO TACKLE THE THIEF! (<span id="hbr-thief-timer">3</span>s)</div>
         </div>
 
+        <!-- Store Navigation Tabs (Stores vs Movies vs Characters) -->
         <div style="display: flex; gap: 4px; margin-bottom: 8px;">
           <button id="hbr-tab-stores-btn" style="flex: 1; background: rgba(59, 130, 246, 0.25); border: 1px solid rgba(59, 130, 246, 0.5); border-radius: 6px; color: #93c5fd; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🏪 STORES</button>
           <button id="hbr-tab-movies-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🍿 MOVIES</button>
           <button id="hbr-tab-chars-btn" style="flex: 1; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #9ca3af; font-size: 9px; font-weight: 800; padding: 4px; cursor: pointer;">🐶 CHARACTERS</button>
         </div>
 
+        <!-- Store Items Container -->
         <div id="hbr-store-items-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
       </div>
 
       <!-- DJ INTERACTIVE RECORD CONTAINER -->
       <div id="hbr-dj-container" style="position: relative; width: 200px; height: 200px; margin: 0 auto; cursor: grab; user-select: none; -webkit-user-select: none; z-index: 5;">
+        <!-- Dynamic Track Album Cover Art Behind Record -->
         <div id="hbr-record-art" style="position: absolute; top: 12px; left: 12px; width: 176px; height: 176px; border-radius: 12px; background-image: url('https://img.youtube.com/vi/Sp8_ymmFVGY/hqdefault.jpg'); background-size: cover; background-position: center; opacity: 0.35; filter: contrast(1.1) brightness(0.9); transition: background-image 0.5s ease; pointer-events: none; z-index: 1; box-shadow: inset 0 0 15px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1);">&nbsp;</div>
 
+        <!-- Record Sleeve & Vinyl Disc -->
         <div id="hbr-record" style="width: 100%; height: 100%; border-radius: 50%; background: repeating-radial-gradient(#111116 0px, #111116 2px, #22222d 3px, #111116 4px); position: relative; box-shadow: 0 8px 25px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; transform-origin: center center; z-index: 2;">
           <div id="hbr-reflection" style="position: absolute; width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(255,255,255,0) 40%, rgba(59,130,246,0.12) 100%); pointer-events: none; transition: background 0.3s ease;">&nbsp;</div>
           <div id="hbr-label" style="width: 76px; height: 76px; background: radial-gradient(circle, #3b82f6 0%, #1d4ed8 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid #000; color: #fff; font-size: 9px; font-weight: bold; text-align: center; text-shadow: 0 1px 2px rgba(0,0,0,0.6); position: relative; z-index: 2; box-shadow: 0 0 8px rgba(0,0,0,0.5); pointer-events: none; transition: background 0.3s ease;">HONEST<br />BLUE<br /><span id="hbr-label-sub" style="font-size: 7px; opacity: 0.8;">FULL DECK</span></div>
@@ -493,13 +511,13 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
           <div style="width: 14px; height: 22px; background: #ef4444; border-radius: 2px; position: absolute; bottom: 8px; left: 12px; transform: rotate(12deg); border: 1px solid #b91c1c;">&nbsp;</div>
         </div>
       </div>
-      
+      <!-- YouTube API Player Container (Interactive JavaScript API Mount with enablejsapi=1) -->
       <div id="hbr-player-container" style="position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none;">
         <div id="hbr-yt-player"></div>
       </div>
     </div>
 
-    <!-- IOS ZENFOLIO DIRECT WRAPPER CARD -->
+    <!-- IOS ZENFOLIO DIRECT WRAPPER CARD (Bypasses iOS Iframe Black Screen Bug) -->
     <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; text-align: center;">
       <div style="font-size: 11px; font-weight: 800; color: #93c5fd; text-transform: uppercase; margin-bottom: 4px;">🎧 MOBILE / iOS STREAM LAUNCHER</div>
       <div style="font-size: 10px; color: #d1d5db; margin-bottom: 10px;">If the native player above runs into issues on mobile Safari, launch directly below:</div>
@@ -508,23 +526,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       </a>
     </div>
 
-    <!-- Interactive Heart Filling Challenge Overlay Card -->
-    <div id="hbr-heart-challenge-card" style="display: none; margin: 0 auto 16px auto; background: rgba(17,17,21,0.95); border: 2px solid #ef4444; border-radius: 14px; padding: 14px 16px; max-width: 290px; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center; user-select: none;">
-      <div style="font-size: 10px; font-weight: 800; color: #fca5a5; text-transform: uppercase; margin-bottom: 8px;" id="hbr-heart-title">💖 EVENING HEART CHALLENGE</div>
-      
-      <div id="hbr-heart-target-btn" style="position: relative; width: 90px; height: 90px; margin: 0 auto 8px auto; cursor: pointer; transition: transform 0.1s ease;" title="Press in the middle of the heart!">
-        <svg viewBox="0 0 32 29.6" style="width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(239,68,68,0.7);">
-          <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="rgba(239,68,68,0.1)" stroke="#ef4444" stroke-width="2"/>
-          <path id="hbr-heart-fill-path" d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.5-9.3,16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z" fill="#ef4444" transform="scale(0)" style="transform-origin: center; transition: transform 0.15s ease;" />
-        </svg>
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 9px; font-weight: 800; color: #ffffff; text-shadow: 0 1px 3px rgba(0,0,0,0.9); pointer-events: none;" id="hbr-heart-cta">PRESS HERE</div>
-      </div>
-
-      <div style="font-size: 11px; font-weight: 700; color: #fff;" id="hbr-heart-status"><span id="hbr-heart-taps-left">23</span> taps remaining</div>
-      <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;" id="hbr-heart-sub">Fill the heart to complete the challenge!</div>
-    </div>
-
-    <!-- Companion Dog Toggle Bar -->
+    <!-- Companion Dog Toggle Bar (Appears when character purchased) -->
     <div id="hbr-dog-toggle-bar" style="display: none; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px;">
       <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700;">Molly Companion:</span>
       <button id="hbr-dog-toggle-btn" style="background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.5); border-radius: 12px; padding: 4px 12px; font-size: 10px; font-weight: 800; color: #4ade80; cursor: pointer; transition: all 0.2s ease;">🐕 ACTIVE</button>
@@ -539,6 +541,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       <button class="hbr-color-btn" data-color="#f97316" data-dark="#c2410c" style="background: #f97316; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Sunset Orange"></button>
       <button class="hbr-color-btn" data-color="#ec4899" data-dark="#be185d" style="background: #ec4899; width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: transform 0.2s ease;" title="Hot Pink"></button>
       
+      <!-- SEE COVER ART BUTTON -->
       <button id="hbr-see-cover-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease; margin-left: 4px;">🖼️ SEE COVER ART</button>
     </div>
 
@@ -560,7 +563,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       <a href="https://jaysonsphotography.zenfolio.com/blog/2026/5/Rewind-and-Grind-The-Blockbuster-Late-Fee-Game" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 8px 18px; border-radius: 20px; text-decoration: none; box-shadow: 0 4px 12px rgba(37,99,235,0.4); transition: transform 0.2s ease, background 0.2s ease; display: inline-block;" target="_blank">☕ Play Coffee Game ↗</a>
     </div>
 
-    <!-- Peel-Back Mode Switcher Buttons -->
+    <!-- Peel-Back Mode Switcher Buttons (Bottom Left & Right) -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 6px;">
       <div style="display: flex; gap: 4px; flex-wrap: wrap;">
         <button id="hbr-mode-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;"><span id="hbr-mode-btn-text">Instrumentals ⚙</span></button>
@@ -586,6 +589,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
             <a href="https://music.apple.com/us/artist/honest-blue/1868033077" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.03)';" rel="noopener noreferrer" style="color: #ffffff; background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); font-size: 10px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 6px; box-shadow: 0 2px 8px rgba(168,85,247,0.4); transition: transform 0.2s ease;" target="_blank">Apple Music ↗</a>
           </div>
 
+          <!-- CREATE / EDIT PROFILE BUTTON AT THE VERY BOTTOM -->
           <div style="padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
             <button id="hbr-open-profile-btn" style="width: 100%; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 8px rgba(59,130,246,0.4); transition: transform 0.15s ease;">👤 Create Profile</button>
           </div>
@@ -609,7 +613,10 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       Select <strong style="color: #4ade80;">ENLARGE</strong> to zoom in and view cover art up close, or <strong style="color: #60a5fa;">PLAY</strong> to spin the art forward onto your turntable!
     </p>
 
-    <div id="hbr-art-gallery-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; text-align: left;"></div>
+    <!-- Interactive Cover Art List -->
+    <div id="hbr-art-gallery-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; text-align: left;">
+      <!-- Populated dynamically via JS -->
+    </div>
 
     <div style="text-align: right;">
       <button id="hbr-art-modal-done-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border: none; border-radius: 6px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 14px; cursor: pointer;">DONE</button>
@@ -618,7 +625,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
   </div>
 </div>
 
-<!-- COVER ART LIGHTBOX ZOOM-IN MODAL -->
+<!-- COVER ART LIGHTBOX ZOOM-IN MODAL (FOR VIEWING) -->
 <div id="hbr-art-lightbox-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 11, 15, 0.96); backdrop-filter: blur(14px); z-index: 400; padding: 20px; box-sizing: border-box; justify-content: center; align-items: center; flex-direction: column;">
   <div style="background: #171720; border: 2px solid #3b82f6; border-radius: 16px; padding: 16px; width: 100%; max-width: 340px; box-shadow: 0 16px 50px rgba(0,0,0,0.9); box-sizing: border-box; text-align: center; position: relative;">
     
@@ -627,6 +634,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       <button id="hbr-close-lightbox-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
     </div>
 
+    <!-- Enlarged Zoomed Cover Art Image Container -->
     <div id="hbr-lightbox-img-box" style="width: 260px; height: 260px; margin: 0 auto 14px auto; border-radius: 12px; background-size: cover; background-position: center; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 8px 30px rgba(0,0,0,0.8);">&nbsp;</div>
 
     <div style="display: flex; gap: 8px;">
@@ -646,6 +654,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       <button id="hbr-close-profile-btn" style="background: transparent; border: none; color: #ef4444; font-size: 16px; cursor: pointer; font-weight: bold;">✕</button>
     </div>
 
+    <!-- Avatar & Name Section -->
     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px; background: rgba(255,255,255,0.03); border-radius: 10px; padding: 10px; border: 1px solid rgba(255,255,255,0.08);">
       <div id="hbr-profile-modal-avatar-frame" style="position: relative; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: #252532; border: 2px solid #3b82f6; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
         <img id="hbr-profile-avatar-img" src="" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; display: none;">
@@ -657,12 +666,14 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       </div>
     </div>
 
+    <!-- Profile Image Upload from Phone or URL -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Profile Image (Upload PNG/JPEG or Paste URL)</label>
       <input id="hbr-profile-file-input" type="file" accept="image/*" style="font-size: 10px; color: #d1d5db; margin-bottom: 6px; width: 100%;">
       <input id="hbr-profile-img-input" type="text" placeholder="Or paste image URL (https://...)" style="width: 100%; background: #111115; border: 1px solid #374151; border-radius: 6px; padding: 6px; color: #fff; font-size: 10px; box-sizing: border-box;">
     </div>
 
+    <!-- Profile Color Theme Selector -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Select Profile Color Theme</label>
       <div id="hbr-profile-colors-container" style="display: flex; gap: 8px; align-items: center;">
@@ -674,6 +685,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       </div>
     </div>
 
+    <!-- Music Badges / Titles Picker -->
     <div style="margin-bottom: 14px;">
       <label style="font-size: 9px; font-weight: 700; color: #9ca3af; text-transform: uppercase; display: block; margin-bottom: 4px;">Select Music Badge &amp; Title</label>
       <div id="hbr-badges-container" style="display: flex; flex-wrap: wrap; gap: 4px;">
@@ -686,11 +698,15 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       </div>
     </div>
 
+    <!-- Inventory & Purchases Tracked Showcase -->
     <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 10px; margin-bottom: 14px;">
       <div style="font-size: 10px; font-weight: 800; color: #10b981; text-transform: uppercase; margin-bottom: 6px;">🛍️ Tracked Inventory &amp; Purchases</div>
-      <div id="hbr-profile-inventory-list" style="font-size: 10px; color: #d1d5db; display: flex; flex-direction: column; gap: 4px;"></div>
+      <div id="hbr-profile-inventory-list" style="font-size: 10px; color: #d1d5db; display: flex; flex-direction: column; gap: 4px;">
+        <!-- Filled dynamically -->
+      </div>
     </div>
 
+    <!-- BULLETPROOF BACKUP TOOLS (EXPORT / IMPORT) -->
     <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; padding: 10px; margin-bottom: 14px;">
       <div style="font-size: 10px; font-weight: 800; color: #60a5fa; text-transform: uppercase; margin-bottom: 4px;">💾 Bulletproof Save Backup</div>
       <div style="font-size: 9px; color: #9ca3af; margin-bottom: 8px;">Export your save data as a backup file so you never lose your cash or progress!</div>
@@ -721,7 +737,10 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       Choose a positive mantra for today! Your mantra displays next to your profile title and switches every day to keep your mindset bright.
     </p>
 
-    <div id="hbr-mantra-options-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;"></div>
+    <!-- Daily 3 Options Container -->
+    <div id="hbr-mantra-options-list" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+      <!-- Populated dynamically via JS -->
+    </div>
 
     <div style="font-size: 9px; color: #9ca3af; font-style: italic;">
       🔄 Fresh mantras rotate every single day at midnight!
@@ -737,11 +756,13 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
     const purpleRainLayer = document.getElementById('hbr-purple-rain-layer');
     const birthdayBanner = document.getElementById('hbr-birthday-banner');
+    const fireworksShowBanner = document.getElementById('hbr-fireworks-show-banner');
 
+    // Automatic Birthday Banner Check (October 13th every year, displays all day until midnight Eastern Time)
     function checkBirthdayBanner() {
       if (!birthdayBanner) return;
       try {
-        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', month: 'numeric', day: 'numeric', hour: 'numeric', hour12: false });
+        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', month: 'numeric', day: 'numeric' });
         let parts = formatter.formatToParts(new Date());
         let month = parseInt(parts.find(p => p.type === 'month').value, 10);
         let day = parseInt(parts.find(p => p.type === 'day').value, 10);
@@ -764,6 +785,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     checkBirthdayBanner();
     setInterval(checkBirthdayBanner, 30000);
 
+    // Fullscreen Toggle Logic
     const fullscreenToggleBtn = document.getElementById('hbr-fullscreen-toggle');
     let isFullscreenMode = false;
 
@@ -788,6 +810,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       });
     }
 
+    // Picture-in-Picture (PiP) Background Audio Bypass Logic
     const pipToggleBtn = document.getElementById('hbr-pip-toggle');
     const pipVideo = document.getElementById('hbr-pip-video');
 
@@ -830,6 +853,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       });
     }
 
+    // Voice Control Implementation
     const voiceToggleBtn = document.getElementById('hbr-voice-toggle');
     let recognition = null;
     let isVoiceActive = false;
@@ -857,7 +881,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
       recognition.onerror = function(event) {
         if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-          alert("Microphone permission was blocked. Please check browser settings.");
+          alert("Microphone permission was blocked. Please check your browser settings to allow microphone access for voice control.");
           isVoiceActive = false;
           if (voiceToggleBtn) {
             voiceToggleBtn.textContent = '🎙️ VOICE OFF';
@@ -890,7 +914,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
               voiceToggleBtn.style.color = '#fca5a5';
             } catch(e) {
               isVoiceActive = false;
-              alert("Could not start microphone.");
+              alert("Could not start microphone. Please ensure microphone permissions are granted.");
             }
           } else {
             try { recognition.stop(); } catch(e) {}
@@ -903,6 +927,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       }
     }
 
+    // WebSocket Relay for Heart Sync
     let globalSocket = null;
     function connectGlobalRelay() {
       globalSocket = new WebSocket('wss://ws.postman-echo.com/raw');
@@ -1013,19 +1038,20 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
     if (appCard) {
       appCard.addEventListener('click', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal') || e.target.closest('#hbr-fireworks-canvas') || e.target.closest('#hbr-fireworks-summary-modal')) {
           return;
         }
         handleCardTap(e);
       });
       appCard.addEventListener('touchstart', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal') || e.target.closest('#hbr-fireworks-canvas') || e.target.closest('#hbr-fireworks-summary-modal')) {
           return;
         }
         handleCardTap(e);
       }, {passive: true});
     }
 
+    // Master Broadcast Tracks
     const masterBroadcastTracks = [
       { id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
       { id: '4eU3OZFhuHs', name: 'Dice On The Table' },
@@ -1123,14 +1149,12 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     function getDailyMantras() {
       let now = new Date();
       let dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-      
       let idx1 = dayOfYear % masterMantrasPool.length;
       let idx2 = (dayOfYear * 3 + 1) % masterMantrasPool.length;
       let idx3 = (dayOfYear * 7 + 2) % masterMantrasPool.length;
 
       if (idx2 === idx1) idx2 = (idx1 + 1) % masterMantrasPool.length;
       if (idx3 === idx1 || idx3 === idx2) idx3 = (idx2 + 1) % masterMantrasPool.length;
-
       return [masterMantrasPool[idx1], masterMantrasPool[idx2], masterMantrasPool[idx3]];
     }
 
@@ -1163,7 +1187,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         let isOnSale = Math.random() < 0.35;
         let discount = isOnSale ? (Math.floor(Math.random() * 3) + 2) * 10 : 0;
         let finalPrice = isOnSale ? Math.floor(base * (1 - discount / 100)) : base;
-
         currentStorePrices[store.id] = { price: finalPrice, originalPrice: base, isOnSale: isOnSale, discount: discount };
       });
     }
@@ -1196,7 +1219,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
           dogActive: localStorage.getItem('hbr_dog_active') !== 'false'
         };
         localStorage.setItem('hbr_persistent_save_v1', JSON.stringify(masterSave));
-        
         localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString());
         localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2));
         localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores));
@@ -1265,6 +1287,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
     loadEverything();
 
+    // Dog Companion Animation & Toggle Engine
     const dogCompanion = document.getElementById('hbr-dog-companion');
     const dogToggleBar = document.getElementById('hbr-dog-toggle-bar');
     const dogToggleBtn = document.getElementById('hbr-dog-toggle-btn');
@@ -1273,12 +1296,8 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
     function updateDogUIState() {
       let isOwned = (userOwnedCharacters.mollydog || 0) > 0;
-      if (dogToggleBar) {
-        dogToggleBar.style.display = isOwned ? 'flex' : 'none';
-      }
-      if (dogCompanion) {
-        dogCompanion.style.display = (isOwned && dogActive) ? 'block' : 'none';
-      }
+      if (dogToggleBar) dogToggleBar.style.display = isOwned ? 'flex' : 'none';
+      if (dogCompanion) dogCompanion.style.display = (isOwned && dogActive) ? 'block' : 'none';
       if (dogToggleBtn) {
         dogToggleBtn.textContent = dogActive ? '🐕 ACTIVE' : '💤 SLEEPING/OFF';
         dogToggleBtn.style.background = dogActive ? 'rgba(34, 197, 94, 0.2)' : 'rgba(107, 114, 128, 0.2)';
@@ -1289,7 +1308,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
     function runDogBehavior() {
       if (!dogCompanion || !dogActive || (userOwnedCharacters.mollydog || 0) <= 0) return;
-      
       let actions = ['run-left', 'run-right', 'nap', 'bark', 'sit'];
       let chosen = actions[Math.floor(Math.random() * actions.length)];
       let currentLeft = parseInt(dogCompanion.style.left || '20', 10);
@@ -1327,6 +1345,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       dogInterval = setInterval(runDogBehavior, 4500);
     }, 500);
 
+    // Profile & Mantra Modal Mechanics
     const openProfileBtn = document.getElementById('hbr-open-profile-btn');
     const closeProfileBtn = document.getElementById('hbr-close-profile-btn');
     const profileModal = document.getElementById('hbr-profile-modal');
@@ -1357,7 +1376,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
     function updateTopProfileBanner() {
       if (!topProfileBanner) return;
-      
       if (openProfileBtn) {
         openProfileBtn.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? '👤 Edit Profile' : '👤 Create Profile';
       }
@@ -1422,8 +1440,8 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     function renderMantraModalList() {
       if (!mantraOptionsList) return;
       mantraOptionsList.innerHTML = '';
-
       let daily3 = getDailyMantras();
+
       daily3.forEach(mText => {
         let isSelected = (userProfileData.selectedMantra === mText);
         let btn = document.createElement('button');
@@ -1461,15 +1479,12 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     }
 
     if (closeMantraBtn && mantraModal) {
-      closeMantraBtn.addEventListener('click', function() {
-        mantraModal.style.display = 'none';
-      });
+      closeMantraBtn.addEventListener('click', () => { mantraModal.style.display = 'none'; });
     }
 
     function updateProfileModalUI() {
       if (profileNameInput) profileNameInput.value = userProfileData.name;
       if (profileImgInput) profileImgInput.value = userProfileData.avatarUrl;
-
       if (profileAvatarFrame) profileAvatarFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
 
       if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
@@ -1548,7 +1563,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         });
 
         if (!hasAnything) {
-          profileInventoryList.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No stores, characters or movies purchased yet.</div>';
+          profileInventoryList.innerHTML = '<div style="color: #9ca3af; font-style: italic;">No stores, characters or movies purchased yet. Visit the Store in the app to start buying!</div>';
         }
       }
     }
@@ -1561,9 +1576,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     }
 
     if (closeProfileBtn && profileModal) {
-      closeProfileBtn.addEventListener('click', function() {
-        profileModal.style.display = 'none';
-      });
+      closeProfileBtn.addEventListener('click', () => { profileModal.style.display = 'none'; });
     }
 
     if (profileColorsContainer) {
@@ -1603,15 +1616,9 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
               let height = img.height;
 
               if (width > height) {
-                if (width > MAX_WIDTH) {
-                  height *= MAX_WIDTH / width;
-                  width = MAX_WIDTH;
-                }
+                if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
               } else {
-                if (height > MAX_HEIGHT) {
-                  width *= MAX_HEIGHT / height;
-                  height = MAX_HEIGHT;
-                }
+                if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
               }
 
               canvas.width = width;
@@ -1619,8 +1626,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
               let ctx = canvas.getContext('2d');
               ctx.drawImage(img, 0, 0, width, height);
               
-              let dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-              userProfileData.avatarUrl = dataUrl;
+              userProfileData.avatarUrl = canvas.toDataURL('image/jpeg', 0.85);
               if (profileImgInput) profileImgInput.value = '';
               updateProfileModalUI();
             };
@@ -1633,8 +1639,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
     if (profileImgInput) {
       profileImgInput.addEventListener('input', function() {
-        let val = profileImgInput.value.trim();
-        userProfileData.avatarUrl = val;
+        userProfileData.avatarUrl = profileImgInput.value.trim();
         updateProfileModalUI();
       });
     }
@@ -1643,9 +1648,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       saveProfileBtn.addEventListener('click', function() {
         if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
         let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
-        if (urlVal !== '') {
-          userProfileData.avatarUrl = urlVal;
-        }
+        if (urlVal !== '') userProfileData.avatarUrl = urlVal;
         saveEverything();
         updateTopProfileBanner();
         updateProfileModalUI();
@@ -1653,6 +1656,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       });
     }
 
+    // Export / Import Backup Handlers
     const exportSaveBtn = document.getElementById('hbr-export-save-btn');
     const importSaveBtn = document.getElementById('hbr-import-save-btn');
     const importFileInput = document.getElementById('hbr-import-file-input');
@@ -1688,19 +1692,16 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
                 const bankedCountDisplay = document.getElementById('hbr-banked-count');
                 if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
                 updateCashUI();
-                alert('🎉 Save backup imported successfully!');
-              } else {
-                alert('Invalid save file.');
+                alert('🎉 Save backup imported successfully! Your cash, notes, and profile have been restored.');
               }
-            } catch(err) {
-              alert('Error reading save file.');
-            }
+            } catch(err) { alert('Error reading save file.'); }
           };
           reader.readAsText(file);
         }
       });
     }
 
+    // Store UI & Purchase Engine
     const storeBtn = document.getElementById('hbr-store-btn');
     const storeOverlay = document.getElementById('hbr-store-overlay');
     const closeStoreBtn = document.getElementById('hbr-close-store-btn');
@@ -1736,9 +1737,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       if (storeEventAlert) {
         storeEventAlert.innerHTML = msg;
         storeEventAlert.style.display = 'block';
-        setTimeout(() => {
-          if (storeEventAlert) storeEventAlert.style.display = 'none';
-        }, 8000);
+        setTimeout(() => { if (storeEventAlert) storeEventAlert.style.display = 'none'; }, 8000);
       }
     }
 
@@ -1772,12 +1771,10 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         if (totalMovies > 0 && Math.random() < 0.12) {
           let lateFeeBonus = parseFloat((Math.random() * 1.00 + 0.25).toFixed(2));
           netPerSec += lateFeeBonus;
-          triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on an overdue tape!');
+          triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on a overdue tape!');
         }
 
-        if (unrewoundTapesCount > 0) {
-          netPerSec -= (unrewoundTapesCount * 0.10);
-        }
+        if (unrewoundTapesCount > 0) netPerSec -= (unrewoundTapesCount * 0.10);
 
         storeCashTotal = Math.max(0, storeCashTotal + netPerSec);
         saveEverything();
@@ -1801,12 +1798,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
               let targetFmt = formats[Math.floor(Math.random() * formats.length)];
               let movieObj = movieCatalog.find(m => m.id === targetMovieId);
 
-              shoplifterPending = {
-                movieId: targetMovieId,
-                format: targetFmt,
-                movieName: movieObj ? movieObj.name : 'Movie',
-                timeLeft: 3
-              };
+              shoplifterPending = { movieId: targetMovieId, format: targetFmt, movieName: movieObj ? movieObj.name : 'Movie', timeLeft: 3 };
 
               if (shoplifterCatchBox && thiefTimerSpan) {
                 thiefTimerSpan.textContent = '3';
@@ -1815,11 +1807,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
               if (shoplifterTimerInterval) clearInterval(shoplifterTimerInterval);
               shoplifterTimerInterval = setInterval(function() {
-                if (!shoplifterPending) {
-                  clearInterval(shoplifterTimerInterval);
-                  return;
-                }
-
+                if (!shoplifterPending) { clearInterval(shoplifterTimerInterval); return; }
                 shoplifterPending.timeLeft--;
                 if (thiefTimerSpan) thiefTimerSpan.textContent = shoplifterPending.timeLeft;
 
@@ -1861,7 +1849,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
           let caughtMovie = shoplifterPending.movieName;
           let caughtFmt = shoplifterPending.format.toUpperCase();
           shoplifterPending = null;
-          
           if (shoplifterCatchBox) shoplifterCatchBox.style.display = 'none';
           
           let rewardCash = 2.50;
@@ -1900,7 +1887,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
           titleLine.style.fontSize = '11px';
           titleLine.style.fontWeight = '800';
           titleLine.style.color = '#ffffff';
-          
           let saleBadge = priceData.isOnSale ? ' <span style="background: #ef4444; color: #fff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + priceData.discount + '% OFF!</span>' : '';
           titleLine.innerHTML = store.icon + ' ' + store.name + saleBadge;
 
@@ -1945,14 +1931,11 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
             buyBtn.addEventListener('click', function() {
               bankedNotesTotal -= priceData.price;
               userOwnedStores[store.id] = (userOwnedStores[store.id] || 0) + 1;
-              
               saveEverything();
               updateTopProfileBanner();
               updateProfileModalUI();
-
               const bankedCountDisplay = document.getElementById('hbr-banked-count');
               if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
               randomizeStorePrices();
               renderStoreList();
             });
@@ -1960,7 +1943,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
           buyDiv.appendChild(priceLine);
           buyDiv.appendChild(buyBtn);
-
           itemBox.appendChild(infoDiv);
           itemBox.appendChild(buyDiv);
           storeItemsList.appendChild(itemBox);
@@ -2021,21 +2003,17 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
             buyBtn.addEventListener('click', function() {
               bankedNotesTotal -= char.price;
               userOwnedCharacters[char.id] = 1;
-              
               saveEverything();
               updateDogUIState();
               updateProfileModalUI();
-
               const bankedCountDisplay = document.getElementById('hbr-banked-count');
               if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
               renderStoreList();
             });
           }
 
           buyDiv.appendChild(priceLine);
           buyDiv.appendChild(buyBtn);
-
           itemBox.appendChild(infoDiv);
           itemBox.appendChild(buyDiv);
           storeItemsList.appendChild(itemBox);
@@ -2088,9 +2066,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
               unrewoundTapesCount = 0;
               saveEverything();
               renderStoreList();
-            } else {
-              alert('Not enough cash to rewind tapes!');
-            }
+            } else { alert('Not enough cash to rewind tapes!'); }
           });
 
           rewindBox.appendChild(rText);
@@ -2099,7 +2075,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         }
 
         let totalMovies = getTotalMovieCount();
-
         let statusBox = document.createElement('div');
         statusBox.style.background = totalMovies > 0 ? 'rgba(34, 197, 94, 0.12)' : 'rgba(245, 158, 11, 0.12)';
         statusBox.style.border = totalMovies > 0 ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(245, 158, 11, 0.3)';
@@ -2109,7 +2084,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
         statusBox.style.textAlign = 'center';
         statusBox.innerHTML = totalMovies > 0 
-          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString()
+          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString() + '.'
           : '💡 <strong>NO MOVIES IN STOCK!</strong> Buy movies below to start earning rental cash & late fees!';
         
         storeItemsList.appendChild(statusBox);
@@ -2140,15 +2115,12 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
           let rtLink = movie.rtUrl ? '<a href="' + movie.rtUrl + '" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">' : '';
           let rtClose = movie.rtUrl ? '↗</a>' : '';
-
           let rtBadge = isGoodMovie 
             ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + rtLink + '🍅 ' + movie.rtScore + '% (PROFIT)' + rtClose + '</span>'
             : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + rtLink + '🍿 ' + movie.rtScore + '% (DRAINS CASH)' + rtClose + '</span>';
-          
           let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies.toLocaleString() + '</span>' : '';
 
           titleDiv.innerHTML = '🎬 ' + movie.name + rtBadge + ownedBadge;
-
           topRow.appendChild(titleDiv);
           itemBox.appendChild(topRow);
 
@@ -2184,17 +2156,12 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
             if (canAfford) {
               fmtBtn.addEventListener('click', function() {
                 bankedNotesTotal -= cost;
-                if (!userOwnedMovies[movie.id]) {
-                  userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
-                }
+                if (!userOwnedMovies[movie.id]) userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
                 userOwnedMovies[movie.id][fmt.key] = (userOwnedMovies[movie.id][fmt.key] || 0) + 1;
-
                 saveEverything();
                 updateProfileModalUI();
-
                 const bankedCountDisplay = document.getElementById('hbr-banked-count');
                 if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
                 renderStoreList();
               });
             }
@@ -2243,11 +2210,10 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     }
 
     if (closeStoreBtn && storeOverlay) {
-      closeStoreBtn.addEventListener('click', function() {
-        storeOverlay.style.display = 'none';
-      });
+      closeStoreBtn.addEventListener('click', () => { storeOverlay.style.display = 'none'; });
     }
 
+    // Cover Art Gallery Modal & Enlarge / Play Engine
     const seeCoverBtn = document.getElementById('hbr-see-cover-btn');
     const artModal = document.getElementById('hbr-art-modal');
     const closeArtModalBtn = document.getElementById('hbr-close-art-modal');
@@ -2286,10 +2252,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         thumb.style.flexShrink = '0';
         thumb.style.border = '1px solid rgba(255,255,255,0.2)';
         thumb.style.cursor = 'pointer';
-
-        thumb.addEventListener('click', function() {
-          openLightboxForTrack(idx);
-        });
+        thumb.addEventListener('click', () => openLightboxForTrack(idx));
 
         let info = document.createElement('div');
         info.style.flex = '1';
@@ -2316,10 +2279,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         enlargeBtn.style.padding = '4px 8px';
         enlargeBtn.style.cursor = 'pointer';
         enlargeBtn.textContent = '🔍 ENLARGE';
-
-        enlargeBtn.addEventListener('click', function() {
-          openLightboxForTrack(idx);
-        });
+        enlargeBtn.addEventListener('click', () => openLightboxForTrack(idx));
 
         let playBtn = document.createElement('button');
         playBtn.style.background = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)';
@@ -2331,13 +2291,11 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         playBtn.style.padding = '4px 8px';
         playBtn.style.cursor = 'pointer';
         playBtn.textContent = '▶ PLAY';
-
         playBtn.addEventListener('click', function() {
           autoBankUnsavedNotes();
           activeQueueSource = null;
           activePlaylist = currentMasterTracks;
           selectAndPlayTrack(idx);
-
           if (artModal) artModal.style.display = 'none';
           if (artLightboxModal) artLightboxModal.style.display = 'none';
 
@@ -2345,15 +2303,12 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
             recordArt.classList.remove('hbr-cover-spin-forward');
             void recordArt.offsetWidth;
             recordArt.classList.add('hbr-cover-spin-forward');
-            setTimeout(() => {
-              recordArt.classList.remove('hbr-cover-spin-forward');
-            }, 550);
+            setTimeout(() => recordArt.classList.remove('hbr-cover-spin-forward'), 550);
           }
         });
 
         btnContainer.appendChild(enlargeBtn);
         btnContainer.appendChild(playBtn);
-
         item.appendChild(thumb);
         item.appendChild(info);
         item.appendChild(btnContainer);
@@ -2381,7 +2336,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         activeQueueSource = null;
         activePlaylist = currentMasterTracks;
         selectAndPlayTrack(idx);
-
         if (artLightboxModal) artLightboxModal.style.display = 'none';
         if (artModal) artModal.style.display = 'none';
 
@@ -2389,58 +2343,88 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
           recordArt.classList.remove('hbr-cover-spin-forward');
           void recordArt.offsetWidth;
           recordArt.classList.add('hbr-cover-spin-forward');
-          setTimeout(() => {
-            recordArt.classList.remove('hbr-cover-spin-forward');
-          }, 550);
+          setTimeout(() => recordArt.classList.remove('hbr-cover-spin-forward'), 550);
         }
       });
     }
 
-    if (lightboxCloseBtn && artLightboxModal) {
-      lightboxCloseBtn.addEventListener('click', () => { artLightboxModal.style.display = 'none'; });
-    }
-    if (closeLightboxBtn && artLightboxModal) {
-      closeLightboxBtn.addEventListener('click', () => { artLightboxModal.style.display = 'none'; });
-    }
-
+    if (lightboxCloseBtn && artLightboxModal) lightboxCloseBtn.addEventListener('click', () => artLightboxModal.style.display = 'none');
+    if (closeLightboxBtn && artLightboxModal) closeLightboxBtn.addEventListener('click', () => artLightboxModal.style.display = 'none');
     if (seeCoverBtn && artModal) {
       seeCoverBtn.addEventListener('click', function() {
         renderArtGallery();
         artModal.style.display = 'flex';
       });
     }
+    if (closeArtModalBtn && artModal) closeArtModalBtn.addEventListener('click', () => artModal.style.display = 'none');
+    if (artModalDoneBtn && artModal) artModalDoneBtn.addEventListener('click', () => artModal.style.display = 'none');
 
-    if (closeArtModalBtn && artModal) {
-      closeArtModalBtn.addEventListener('click', function() {
-        artModal.style.display = 'none';
-      });
-    }
-
-    if (artModalDoneBtn && artModal) {
-      artModalDoneBtn.addEventListener('click', function() {
-        artModal.style.display = 'none';
-      });
-    }
-
+    // SCHEDULED FIREWORKS SYSTEM WITH $1.23 CASH REWARD & SUMMARY MODAL
     const canvas = document.getElementById('hbr-fireworks-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
-    let fireworksActive = false;
-    let fireworksAnimId = null;
-    let particles = [];
     let fireworksRockets = [];
-    let isGrandFinale = false;
+    let particles = [];
+    let isFireworksShowActive = false;
+    let userFireworkShotsCount = 0;
+    let showSummaryModal = document.getElementById('hbr-fireworks-summary-modal');
+    let summaryShotsSpan = document.getElementById('hbr-summary-shots');
+    let summaryEarnedSpan = document.getElementById('hbr-summary-earned');
+    let closeSummaryBtn = document.getElementById('hbr-close-summary-btn');
 
-    let heartChallengeActive = false;
-    let heartTapsLeft = 23;
-    let heartStartTime = 0;
-    const heartCard = document.getElementById('hbr-heart-challenge-card');
-    const heartTargetBtn = document.getElementById('hbr-heart-target-btn');
-    const heartFillPath = document.getElementById('hbr-heart-fill-path');
-    const heartTapsLeftSpan = document.getElementById('hbr-heart-taps-left');
-    const heartCta = document.getElementById('hbr-heart-cta');
-    const heartStatus = document.getElementById('hbr-heart-status');
-    const heartTitle = document.getElementById('hbr-heart-title');
-    const heartSub = document.getElementById('hbr-heart-sub');
+    function isFireworksTimeWindow() {
+      try {
+        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', hour12: false });
+        let parts = formatter.formatToParts(new Date());
+        let h = parseInt(parts.find(p => p.type === 'hour').value, 10);
+        let m = parseInt(parts.find(p => p.type === 'minute').value, 10);
+        // Window 1: 6:00-6:05 PM ET (18:00 - 18:04:59)
+        // Window 2: 9:00-9:05 PM ET (21:00 - 21:04:59)
+        return (h === 18 && m >= 0 && m < 5) || (h === 21 && m >= 0 && m < 5);
+      } catch(e) {
+        let now = new Date();
+        let h = now.getHours();
+        let m = now.getMinutes();
+        return (h === 18 && m >= 0 && m < 5) || (h === 21 && m >= 0 && m < 5);
+      }
+    }
+
+    function checkFireworksSchedule() {
+      let active = isFireworksTimeWindow();
+      if (active !== isFireworksShowActive) {
+        if (isFireworksShowActive && !active) {
+          // Show just ended! Calculate earnings ($1.23 per firework shot)
+          if (userFireworkShotsCount > 0) {
+            let totalEarned = userFireworkShotsCount * 1.23;
+            storeCashTotal += totalEarned;
+            saveEverything();
+            updateCashUI();
+
+            if (summaryShotsSpan) summaryShotsSpan.textContent = userFireworkShotsCount.toLocaleString();
+            if (summaryEarnedSpan) summaryEarnedSpan.textContent = '$' + totalEarned.toFixed(2);
+            if (showSummaryModal) showSummaryModal.style.display = 'flex';
+          }
+          userFireworkShotsCount = 0;
+        }
+
+        isFireworksShowActive = active;
+        if (canvas) {
+          canvas.style.display = active ? 'block' : 'none';
+          canvas.style.pointerEvents = active ? 'auto' : 'none';
+        }
+        if (fireworksShowBanner) fireworksShowBanner.style.display = active ? 'block' : 'none';
+        if (!active) {
+          fireworksRockets = [];
+          particles = [];
+        }
+      }
+    }
+
+    checkFireworksSchedule();
+    setInterval(checkFireworksSchedule, 5000);
+
+    if (closeSummaryBtn && showSummaryModal) {
+      closeSummaryBtn.addEventListener('click', () => { showSummaryModal.style.display = 'none'; });
+    }
 
     function resizeCanvas() {
       if (!canvas) return;
@@ -2450,14 +2434,16 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         canvas.height = parent.clientHeight;
       }
     }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
     class FireworkRocket {
       constructor(w, h, targetX, targetY) {
-        this.x = targetX !== undefined ? (Math.random() * 40 - 20 + targetX) : (Math.random() * w);
+        this.x = targetX !== undefined ? targetX : (Math.random() * w);
         this.y = h;
         this.targetY = targetY !== undefined ? targetY : (Math.random() * (h * 0.5) + (h * 0.1));
         this.targetX = targetX !== undefined ? targetX : this.x;
-        this.speed = Math.random() * 3 + (isGrandFinale ? 6 : 4);
+        this.speed = Math.random() * 3 + 5;
         this.color = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#9b59b6', '#00d2d3', '#ff6b81', '#facc15', '#ec4899'][Math.floor(Math.random() * 9)];
       }
       update() {
@@ -2476,11 +2462,11 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         this.y = y;
         this.color = color;
         let angle = Math.random() * Math.PI * 2;
-        let speed = Math.random() * (isGrandFinale ? 7 : 5) + 1;
+        let speed = Math.random() * 6 + 2;
         this.vx = Math.cos(angle) * speed;
         this.vy = Math.sin(angle) * speed;
         this.alpha = 1;
-        this.decay = Math.random() * 0.015 + 0.012;
+        this.decay = Math.random() * 0.018 + 0.012;
       }
       update() {
         this.x += this.vx;
@@ -2500,135 +2486,59 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     }
 
     function launchUserRocket(e) {
-      if (!fireworksActive || !canvas) return;
+      if (!canvas || !isFireworksShowActive) return;
       let rect = canvas.getBoundingClientRect();
       let clickX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
       let clickY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
       
-      fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, clickX, clickY));
+      userFireworkShotsCount++;
+
+      for (let i = 0; i < 2; i++) {
+        fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, clickX + (Math.random() * 30 - 15), clickY + (Math.random() * 20 - 10)));
+      }
     }
 
     if (canvas) {
       canvas.addEventListener('click', launchUserRocket);
-      canvas.addEventListener('touchstart', launchUserRocket);
-    }
-
-    if (heartTargetBtn) {
-      heartTargetBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (!heartChallengeActive) return;
-
-        if (heartTapsLeft === 23) heartStartTime = Date.now();
-        heartTapsLeft--;
-        
-        let progress = (23 - heartTapsLeft) / 23;
-        if (heartFillPath) heartFillPath.style.transform = 'scale(' + progress + ')';
-
-        if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = heartTapsLeft;
-
-        if (canvas) {
-          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, Math.random() * canvas.width, canvas.height * 0.6));
-        }
-
-        if (heartTapsLeft <= 0) {
-          heartChallengeActive = false;
-          let elapsed = ((Date.now() - heartStartTime) / 1000).toFixed(1);
-          if (heartTitle) heartTitle.textContent = '💖 CHALLENGE COMPLETE!';
-          if (heartStatus) heartStatus.innerHTML = '<strong style="color: #4ade80;">Completed in ' + elapsed + 's!</strong>';
-          if (heartSub) heartSub.innerHTML = '<strong style="font-size: 11px; color: #f472b6;">You Are Loved ❤️</strong>';
-          if (heartCta) heartCta.style.display = 'none';
-        }
-      });
+      canvas.addEventListener('touchstart', launchUserRocket, { passive: true });
     }
 
     function runFireworksLoop() {
-      if (!ctx || !canvas || !fireworksActive) return;
+      if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (Math.random() < (isGrandFinale ? 0.35 : 0.08) && fireworksRockets.length < (isGrandFinale ? 18 : 5)) {
-        fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height));
-      }
+      if (isFireworksShowActive) {
+        if (Math.random() < 0.05 && fireworksRockets.length < 8) {
+          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height));
+        }
 
-      for (let i = fireworksRockets.length - 1; i >= 0; i--) {
-        let r = fireworksRockets[i];
-        r.update();
-        r.draw(ctx);
-        if (r.y <= r.targetY) {
-          for (let p = 0; p < (isGrandFinale ? 60 : 45); p++) {
-            particles.push(new FireworkParticle(r.x, r.y, r.color));
+        for (let i = fireworksRockets.length - 1; i >= 0; i--) {
+          let r = fireworksRockets[i];
+          r.update();
+          r.draw(ctx);
+          if (r.y <= r.targetY) {
+            for (let p = 0; p < 50; p++) {
+              particles.push(new FireworkParticle(r.x, r.y, r.color));
+            }
+            fireworksRockets.splice(i, 1);
           }
-          fireworksRockets.splice(i, 1);
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          let pt = particles[i];
+          pt.update();
+          pt.draw(ctx);
+          if (pt.alpha <= 0) particles.splice(i, 1);
         }
       }
 
-      for (let i = particles.length - 1; i >= 0; i--) {
-        let pt = particles[i];
-        pt.update();
-        pt.draw(ctx);
-        if (pt.alpha <= 0) particles.splice(i, 1);
-      }
-
-      fireworksAnimId = requestAnimationFrame(runFireworksLoop);
+      requestAnimationFrame(runFireworksLoop);
     }
 
-    function startFireworks() {
-      if (fireworksActive) return;
-      fireworksActive = true;
-      isGrandFinale = false;
-      resizeCanvas();
-      if (canvas) canvas.style.display = 'block';
-      runFireworksLoop();
+    runFireworksLoop();
 
-      heartChallengeActive = true;
-      heartTapsLeft = 23;
-      if (heartFillPath) heartFillPath.style.transform = 'scale(0)';
-      if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = '23';
-      if (heartTitle) heartTitle.textContent = '💖 EVENING HEART CHALLENGE';
-      if (heartStatus) {
-        heartStatus.innerHTML = '<span id="hbr-heart-taps-left">23</span> taps remaining';
-      }
-      if (heartSub) heartSub.textContent = 'Fill the heart to complete the challenge!';
-      if (heartCta) heartCta.style.display = 'block';
-      if (heartCard) heartCard.style.display = 'block';
-
-      setTimeout(() => stopFireworks(), 300000);
-    }
-
-    function stopFireworks() {
-      fireworksActive = false;
-      isGrandFinale = false;
-      heartChallengeActive = false;
-      if (canvas) canvas.style.display = 'none';
-      if (heartCard) heartCard.style.display = 'none';
-      if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
-      particles = [];
-      fireworksRockets = [];
-    }
-
-    function checkEasternTimeFireworks() {
-      try {
-        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false });
-        let parts = formatter.formatToParts(new Date());
-        let hours = parseInt(parts.find(p => p.type === 'hour').value, 10);
-        let minutes = parseInt(parts.find(p => p.type === 'minute').value, 10);
-        let seconds = parseInt(parts.find(p => p.type === 'second').value, 10);
-
-        let is530Window = (hours === 17 && minutes >= 30 && minutes <= 34);
-        let is900Window = (hours === 21 && minutes >= 0 && minutes <= 4);
-
-        if (is530Window || is900Window) {
-          if (!fireworksActive) startFireworks();
-          isGrandFinale = ((is530Window && minutes === 34 && seconds >= 30) || (is900Window && minutes === 4 && seconds >= 30));
-        } else {
-          if (fireworksActive) stopFireworks();
-        }
-      } catch (e) {}
-    }
-
-    setInterval(checkEasternTimeFireworks, 1000);
-
+    // Dynamic Listener Counter Algorithm
     const listenerElement = document.getElementById('hbr-listeners');
-    
     function calculateTargetListeners() {
       let hours = 0, minutes = 0;
       try {
@@ -2643,14 +2553,11 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       }
 
       if (hours === 21 && minutes <= 4) return 1050 + Math.floor(Math.random() * 120);
-      if (hours === 21 && minutes >= 5 && minutes <= 15) return 110 + Math.floor(900 * (1 - (minutes - 5) / 10));
-
       let baseCount = 104;
       if (hours >= 11 && hours <= 13) baseCount = 108 + Math.floor(Math.sin((minutes / 60) * Math.PI) * 12);
       else if (hours >= 18 && hours <= 22) baseCount = 115 + Math.floor(Math.random() * 15);
       else if (hours >= 9 && hours < 18) baseCount = 102 + Math.floor(Math.random() * 15);
       else baseCount = 100 + Math.floor(Math.random() * 10);
-
       return baseCount + (Math.floor(Math.random() * 7) - 3);
     }
 
@@ -2661,7 +2568,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       if (!listenerElement) return;
       let target = calculateTargetListeners();
       let diff = target - currentListeners;
-      
       if (diff !== 0) {
         currentListeners += Math.abs(diff) > 50 ? Math.floor(diff / 4) : (diff > 0 ? 1 : -1);
       } else {
@@ -2672,6 +2578,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     }
     setTimeout(updateListenerCount, 5000);
 
+    // Bio Toggle
     const bioToggle = document.getElementById('hbr-bio-toggle');
     const bioPanel = document.getElementById('hbr-bio-panel');
     const bioArrow = document.getElementById('hbr-bio-arrow');
@@ -2687,6 +2594,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       });
     }
 
+    // Interactive Notes Game Engine
     const notesContainer = document.getElementById('hbr-notes-container');
     const popCountDisplay = document.getElementById('hbr-pop-count');
     const popLabelDisplay = document.getElementById('hbr-pop-label');
@@ -3032,14 +2940,9 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
             clearInterval(countdownInterval);
             canPopNotes = false;
             stopNotesSystem();
-            
-            let earnedCash = poppedNotesTotal * 1.00;
-            storeCashTotal += earnedCash;
-            saveEverything();
-            updateCashUI();
-
-            if (bannerTitle) bannerTitle.textContent = "FIREWORKS COMPLETE!";
-            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal.toLocaleString() + '</strong> fireworks and permanently secured <strong style="color: #4ade80;">$' + earnedCash.toFixed(2) + '</strong> in cash!';
+            autoBankUnsavedNotes();
+            if (bannerTitle) bannerTitle.textContent = "TIME'S UP!";
+            if (bannerMsg) bannerMsg.innerHTML = 'You lit <strong style="color: #fb923c;">' + poppedNotesTotal.toLocaleString() + '</strong> fireworks (banked automatically)!';
             if (timesUpOverlay) timesUpOverlay.style.display = 'block';
           }
         }, 1000);
@@ -3065,17 +2968,15 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       });
     }
 
+    // Playlist Drawer & Scrollable Dual Playlists
     const drawerToggle = document.getElementById('hbr-drawer-toggle');
     const drawer = document.getElementById('hbr-playlist-drawer');
     const drawerArrow = document.getElementById('hbr-drawer-arrow');
     const drawerList = document.getElementById('hbr-drawer-list');
-    const drawerHeaderTitle = document.getElementById('hbr-drawer-header-title');
-    const pageControls = document.getElementById('hbr-page-controls');
     const page1Btn = document.getElementById('hbr-page1-btn');
     const page2Btn = document.getElementById('hbr-page2-btn');
     const page3Btn = document.getElementById('hbr-page3-btn');
-    const trackSearchInput = document.getElementById('hbr-track-search-input');
-    const searchClearBtn = document.getElementById('hbr-search-clear-btn');
+    const scrollModeBtn = document.getElementById('hbr-scroll-mode-btn');
     const playQ1Btn = document.getElementById('hbr-play-q1-btn');
     const playQ2Btn = document.getElementById('hbr-play-q2-btn');
     const playT3Btn = document.getElementById('hbr-play-t3-btn');
@@ -3088,6 +2989,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
     const t3Circle2 = document.getElementById('hbr-t3-circle-2');
     const t3Circle3 = document.getElementById('hbr-t3-circle-3');
     let drawerOpen = false;
+    let isScrollLibraryMode = false;
 
     function updateT3Circles() {
       const count = customTop3.length;
@@ -3096,8 +2998,27 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       if (t3Circle3) { t3Circle3.style.background = count >= 3 ? '#22c55e' : '#4b5563'; t3Circle3.style.boxShadow = count >= 3 ? '0 0 6px #22c55e' : 'none'; }
     }
 
+    if (scrollModeBtn) {
+      scrollModeBtn.addEventListener('click', function() {
+        isScrollLibraryMode = true;
+        [page1Btn, page2Btn, page3Btn].forEach(btn => {
+          if (btn) { btn.style.background = 'rgba(255,255,255,0.06)'; btn.style.borderColor = 'rgba(255,255,255,0.15)'; btn.style.color = '#9ca3af'; }
+        });
+        scrollModeBtn.style.background = 'rgba(59,130,246,0.25)';
+        scrollModeBtn.style.borderColor = 'rgba(59,130,246,0.5)';
+        scrollModeBtn.style.color = '#93c5fd';
+        renderDrawerList();
+      });
+    }
+
     function setActivePage(pageNo) {
+      isScrollLibraryMode = false;
       currentDrawerPage = pageNo;
+      if (scrollModeBtn) {
+        scrollModeBtn.style.background = 'rgba(255,255,255,0.06)';
+        scrollModeBtn.style.borderColor = 'rgba(255,255,255,0.15)';
+        scrollModeBtn.style.color = '#9ca3af';
+      }
       [page1Btn, page2Btn, page3Btn].forEach((btn, idx) => {
         if (!btn) return;
         let isSelected = (idx + 1) === pageNo;
@@ -3124,62 +3045,28 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       });
     }
 
-    let searchQuery = '';
-    if (trackSearchInput) {
-      trackSearchInput.addEventListener('input', function() {
-        searchQuery = trackSearchInput.value.trim().toLowerCase();
-        if (searchClearBtn) {
-          searchClearBtn.style.display = searchQuery.length > 0 ? 'block' : 'none';
-        }
-        renderDrawerList();
-      });
-    }
-
-    if (searchClearBtn && trackSearchInput) {
-      searchClearBtn.addEventListener('click', function() {
-        trackSearchInput.value = '';
-        searchQuery = '';
-        searchClearBtn.style.display = 'none';
-        renderDrawerList();
-      });
-    }
-
     function renderDrawerList() {
       if (!drawerList) return;
       drawerList.innerHTML = '';
 
-      let tracksToDisplay = currentMasterTracks;
-      let isSearching = (searchQuery.length > 0);
-
-      if (isSearching) {
-        tracksToDisplay = currentMasterTracks.map((t, idx) => ({ ...t, originalIndex: idx })).filter(t => t.name.toLowerCase().includes(searchQuery));
-        if (drawerHeaderTitle) drawerHeaderTitle.textContent = 'Search Results (' + tracksToDisplay.length + ')';
-        if (pageControls) pageControls.style.display = 'none';
+      if (isScrollLibraryMode) {
+        drawerList.style.maxHeight = '240px';
+        drawerList.style.overflowY = 'auto';
       } else {
-        if (drawerHeaderTitle) drawerHeaderTitle.textContent = 'Available Tracks';
-        if (pageControls) pageControls.style.display = 'flex';
+        drawerList.style.maxHeight = 'none';
+        drawerList.style.overflowY = 'visible';
       }
 
-      let pagedTracks = tracksToDisplay;
-      if (!isSearching) {
+      let tracksToDisplay = [];
+      if (isScrollLibraryMode) {
+        tracksToDisplay = currentMasterTracks.map((track, idx) => ({ track, globalIdx: idx }));
+      } else {
         let startIdx = (currentDrawerPage - 1) * tracksPerPage;
-        pagedTracks = currentMasterTracks.slice(startIdx, startIdx + tracksPerPage).map((t, idx) => ({ ...t, originalIndex: startIdx + idx }));
+        let pageTracks = currentMasterTracks.slice(startIdx, startIdx + tracksPerPage);
+        tracksToDisplay = pageTracks.map((track, pageRelativeIdx) => ({ track, globalIdx: startIdx + pageRelativeIdx }));
       }
 
-      if (pagedTracks.length === 0) {
-        let emptyDiv = document.createElement('div');
-        emptyDiv.style.fontSize = '11px';
-        emptyDiv.style.color = '#9ca3af';
-        emptyDiv.style.textAlign = 'center';
-        emptyDiv.style.padding = '12px';
-        emptyDiv.style.fontStyle = 'italic';
-        emptyDiv.textContent = 'No matching tracks found.';
-        drawerList.appendChild(emptyDiv);
-        return;
-      }
-
-      pagedTracks.forEach((track) => {
-        let globalIdx = track.originalIndex;
+      tracksToDisplay.forEach(({ track, globalIdx }) => {
         let row = document.createElement('div');
         row.style.display = 'flex';
         row.style.justifyContent = 'space-between';
@@ -3187,6 +3074,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         row.style.padding = '6px 10px';
         row.style.borderRadius = '6px';
         row.style.fontSize = '12px';
+        row.style.marginBottom = '4px';
 
         let isCurrentlyPlaying = (activeQueueSource === null) && (globalIdx === currentTrackIndex);
         if (isCurrentlyPlaying) {
@@ -3393,6 +3281,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       });
     }
 
+    // Audio & Deck Controls with YouTube IFrame API
     const toggleBtn = document.getElementById('hbr-toggle');
     const prevBtn = document.getElementById('hbr-prev');
     const nextBtn = document.getElementById('hbr-next');
@@ -3438,13 +3327,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         height: '100',
         width: '100',
         videoId: activePlaylist[currentTrackIndex].id,
-        playerVars: {
-          'autoplay': 0,
-          'controls': 0,
-          'modestbranding': 1,
-          'rel': 0,
-          'iv_load_policy': 3
-        },
+        playerVars: { 'autoplay': 0, 'controls': 0, 'modestbranding': 1, 'rel': 0, 'iv_load_policy': 3 },
         events: {
           'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange
@@ -3493,7 +3376,6 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       currentTrackIndex = index;
       let track = activePlaylist[index];
       if (trackTitleText) trackTitleText.textContent = track.name;
-      
       checkPurpleRainEffect(track);
 
       let coverUrl = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
@@ -3502,11 +3384,8 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
 
       renderDrawerList();
       if (ytPlayer) {
-        if (typeof ytPlayer.loadVideoById === 'function') {
-          ytPlayer.loadVideoById(track.id);
-        } else if (typeof ytPlayer.cueVideoById === 'function') {
-          ytPlayer.cueVideoById(track.id);
-        }
+        if (typeof ytPlayer.loadVideoById === 'function') ytPlayer.loadVideoById(track.id);
+        else if (typeof ytPlayer.cueVideoById === 'function') ytPlayer.cueVideoById(track.id);
         triggerPlayState();
       }
     }
@@ -3562,7 +3441,7 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
         autoBankUnsavedNotes();
         activeQueueSource = null; currentMasterTracks = masterChakrasTracks; activePlaylist = masterChakrasTracks;
         if (modeTitleText) modeTitleText.textContent = 'Chakras Healing';
-        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Meditation Soundscape';
+        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Healing & Meditation Soundscape';
         if (labelSubText) labelSubText.textContent = 'CHAKRAS';
         selectAndPlayTrack(0);
       });
@@ -3595,11 +3474,8 @@ Give me a scroll bar next to page 3 button in this code Add a scroll bar to this
       toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
-          if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-            ytPlayer.playVideo();
-          } else {
-            selectAndPlayTrack(currentTrackIndex);
-          }
+          if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
+          else selectAndPlayTrack(currentTrackIndex);
         } else {
           isPlaying = false;
           if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
