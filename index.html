@@ -2388,14 +2388,16 @@
       }
     }
 
-    function checkFireworksSchedule() {
+        function checkFireworksSchedule() {
       let active = isFireworksTimeWindow();
       if (active !== isFireworksShowActive) {
         if (isFireworksShowActive && !active) {
-          // Show just ended! Calculate earnings ($1.23 per firework shot)
+          // Show ended! Calculate earnings ($1.23 per shot)
           if (userFireworkShotsCount > 0) {
             let totalEarned = userFireworkShotsCount * 1.23;
-            storeCashTotal += totalEarned;
+            
+            // Immediately add to total, update UI, and persist to storage
+            storeCashTotal = parseFloat((storeCashTotal + totalEarned).toFixed(2));
             saveEverything();
             updateCashUI();
 
@@ -2415,16 +2417,23 @@
         if (!active) {
           fireworksRockets = [];
           particles = [];
+          if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
       }
     }
 
+
     checkFireworksSchedule();
     setInterval(checkFireworksSchedule, 5000);
 
-    if (closeSummaryBtn && showSummaryModal) {
-      closeSummaryBtn.addEventListener('click', () => { showSummaryModal.style.display = 'none'; });
+        if (closeSummaryBtn && showSummaryModal) {
+      closeSummaryBtn.addEventListener('click', () => { 
+        showSummaryModal.style.display = 'none';
+        saveEverything();
+        updateCashUI();
+      });
     }
+
 
     function resizeCanvas() {
       if (!canvas) return;
