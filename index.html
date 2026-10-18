@@ -1651,15 +1651,21 @@
       });
     }
 
-    if (saveProfileBtn) {
+        if (saveProfileBtn) {
       saveProfileBtn.addEventListener('click', function() {
-        if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
+        if (profileNameInput) {
+          userProfileData.name = profileNameInput.value.trim();
+        }
         let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
-        if (urlVal !== '') userProfileData.avatarUrl = urlVal;
+        if (urlVal !== '') {
+          userProfileData.avatarUrl = urlVal;
+        }
         saveEverything();
         updateTopProfileBanner();
         updateProfileModalUI();
-        if (profileModal) profileModal.style.display = 'none';
+        if (profileModal) {
+          profileModal.style.display = 'none';
+        }
       });
     }
 
