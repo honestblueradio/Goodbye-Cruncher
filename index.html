@@ -3473,21 +3473,23 @@
         const query = e.target.value.toLowerCase().trim();
         const trackElements = document.querySelectorAll('#hbr-playlist-drawer div, #hbr-playlist-drawer li, .playlist-track-item, .hbr-track-row');
 
-        trackElements.forEach(el => {
-          // Do not hide the search input or its direct wrapper
-          if (el.id !== 'hbr-playlist-search' && !el.querySelector('#hbr-playlist-search')) {
-            if (el.textContent && el.children.length === 0 || el.classList.contains('playlist-track-item') || el.classList.contains('hbr-track-row')) {
-              const text = el.textContent.toLowerCase();
-              if (text.includes(query) || query === '') {
-                el.style.display = '';
-              } else {
-                el.style.display = 'none';
-              }
-            }
-          }
-        });
+        document.addEventListener('input', function(e) {
+  if (e.target && e.target.id === 'hbr-playlist-search') {
+    const query = e.target.value.toLowerCase().trim();
+    const trackElements = document.querySelectorAll('#hbr-playlist-drawer div, #hbr-playlist-drawer li, .playlist-track-item, .hbr-track-row');
+
+    trackElements.forEach(el => {
+      if (el.id !== 'hbr-playlist-search' && !el.querySelector('#hbr-playlist-search')) {
+        const text = el.textContent.toLowerCase();
+        if (text.includes(query) || query === '') {
+          el.style.display = '';
+        } else {
+          el.style.display = 'none';
+        }
       }
     });
+  }
+});
 
     colorButtons.forEach(btn => {
       btn.addEventListener('click', function() {
