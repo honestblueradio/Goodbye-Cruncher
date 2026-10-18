@@ -570,6 +570,7 @@
         <button id="hbr-christmas-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">⛄ Christmas</button>
         <button id="hbr-disney-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🎨 Jay Draws Disney</button>
         <button id="hbr-chakras-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Chakras</button>
+        <button id="hbr-calm-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Calm</button>
       </div>
       <a href="https://youtube.com/@honestblueradio?si=FBFJfkEI2OiVEJnD" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;" target="_blank">Catch Content ↗</a>
     </div>
@@ -3444,6 +3445,21 @@
         if (modeTitleText) modeTitleText.textContent = 'Chakras Healing';
         if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Healing & Meditation Soundscape';
         if (labelSubText) labelSubText.textContent = 'CHAKRAS';
+        selectAndPlayTrack(0);
+      });
+    }
+
+    const calmTrack = { id: 'OMPaU5L3zy0', name: 'Calm (Root Chakra Session)', startSecs: 3710 };
+    const calmBtn = document.getElementById('hbr-calm-btn');
+
+    if (calmBtn) {
+      calmBtn.addEventListener('click', function() {
+        autoBankUnsavedNotes();
+        activeQueueSource = null;
+        activePlaylist = [calmTrack];
+        if (modeTitleText) modeTitleText.textContent = 'Calm';
+        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Root Chakra Session';
+        if (labelSubText) labelSubText.textContent = 'CALM';
         selectAndPlayTrack(0);
       });
     }
