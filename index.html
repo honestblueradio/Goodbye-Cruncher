@@ -3467,19 +3467,14 @@
         selectAndPlayTrack(0);
       });
     }
-    const playlistSearchInput = document.getElementById('hbr-playlist-search');
-
-        const playlistSearchInput = document.getElementById('hbr-playlist-search');
-
-    if (playlistSearchInput) {
-      playlistSearchInput.addEventListener('input', function(e) {
+    
+        document.addEventListener('input', function(e) {
+      if (e.target && e.target.id === 'hbr-playlist-search') {
         const query = e.target.value.toLowerCase().trim();
-        // Target individual track rows or items inside the playlist container
         const trackElements = document.querySelectorAll('#hbr-playlist-drawer div, #hbr-playlist-drawer li, .playlist-track-item, .hbr-track-row');
 
         trackElements.forEach(el => {
-          // Only filter elements that actually contain text/track info
-          if (el.textContent && el.children.length === 0 || el.classList.contains('playlist-track-item') || el.classList.contains('hbr-track-row')) {
+          if (el !== e.target && el.parentElement !== e.target) {
             const text = el.textContent.toLowerCase();
             if (text.includes(query) || query === '') {
               el.style.display = '';
@@ -3488,7 +3483,9 @@
             }
           }
         });
-      });
+      }
+    });
+
 
     colorButtons.forEach(btn => {
       btn.addEventListener('click', function() {
