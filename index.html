@@ -3467,11 +3467,6 @@
         selectAndPlayTrack(0);
       });
     }
-    
-            document.addEventListener('input', function(e) {
-      if (e.target && e.target.id === 'hbr-playlist-search') {
-        const query = e.target.value.toLowerCase().trim();
-        const trackElements = document.querySelectorAll('#hbr-playlist-drawer div, #hbr-playlist-drawer li, .playlist-track-item, .hbr-track-row');
 
         document.addEventListener('input', function(e) {
   if (e.target && e.target.id === 'hbr-playlist-search') {
