@@ -1645,17 +1645,30 @@
       });
     }
 
-    if (saveProfileBtn) {
-      saveProfileBtn.addEventListener('click', function() {
-        if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
-        let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
-        if (urlVal !== '') userProfileData.avatarUrl = urlVal;
+        if (saveProfileBtn) {
+      saveProfileBtn.addEventListener('click', function(e) {
+        if (e) e.preventDefault();
+
+        if (profileNameInput) {
+          userProfileData.name = profileNameInput.value.trim();
+        }
+        
+        if (profileImgInput && profileImgInput.value.trim() !== '') {
+          userProfileData.avatarUrl = profileImgInput.value.trim();
+        }
+
         saveEverything();
         updateTopProfileBanner();
         updateProfileModalUI();
-        if (profileModal) profileModal.style.display = 'none';
+
+        if (profileModal) {
+          profileModal.style.display = 'none';
+        }
+
+        alert('✅ Profile saved successfully!');
       });
     }
+
 
     // Export / Import Backup Handlers
     const exportSaveBtn = document.getElementById('hbr-export-save-btn');
