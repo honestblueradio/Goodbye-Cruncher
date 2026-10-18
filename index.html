@@ -3471,13 +3471,22 @@
         document.addEventListener('input', function(e) {
   if (e.target && e.target.id === 'hbr-playlist-search') {
     const query = e.target.value.toLowerCase().trim();
-    const trackElements = document.querySelectorAll('#hbr-playlist-drawer div, #hbr-playlist-drawer li, .playlist-track-item, .hbr-track-row');
+    
+    // Fallback: If not in scroll mode, temporarily render all tracks into the drawer list so search can hit everything
+    if (typeof isScrollLibraryMode !== 'undefined' && !isScrollLibraryMode) {
+      isScrollLibraryMode = true;
+      if (typeof renderDrawerList === 'function') {
+        renderDrawerList();
+      }
+    }
+
+    const trackElements = document.querySelectorAll('#hbr-drawer-list > div');
 
     trackElements.forEach(el => {
       if (el.id !== 'hbr-playlist-search' && !el.querySelector('#hbr-playlist-search')) {
         const text = el.textContent.toLowerCase();
         if (text.includes(query) || query === '') {
-          el.style.display = '';
+          el.style.display = 'flex';
         } else {
           el.style.display = 'none';
         }
