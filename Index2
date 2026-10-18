@@ -570,7 +570,7 @@
         <button id="hbr-christmas-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">⛄ Christmas</button>
         <button id="hbr-disney-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🎨 Jay Draws Disney</button>
         <button id="hbr-chakras-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Chakras</button>
-        <button id="hbr-no-worries-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 No Worries</button>
+        <button id="hbr-calm-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Calm</button>
       </div>
       <a href="https://youtube.com/@honestblueradio?si=FBFJfkEI2OiVEJnD" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;" target="_blank">Catch Content ↗</a>
     </div>
@@ -1376,15 +1376,11 @@
     const closeMantraBtn = document.getElementById('hbr-close-mantra-btn');
     const mantraOptionsList = document.getElementById('hbr-mantra-options-list');
 
-        function updateTopProfileBanner() {
-      const openProfileBtn = document.getElementById('hbr-open-profile-btn');
-      
-      // Toggle bottom button label based on whether a profile exists
+    function updateTopProfileBanner() {
+      if (!topProfileBanner) return;
       if (openProfileBtn) {
         openProfileBtn.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? '👤 Edit Profile' : '👤 Create Profile';
       }
-
-      if (!topProfileBanner) return;
 
       if (userProfileData.name && userProfileData.name.trim() !== '') {
         topProfileBanner.style.display = 'flex';
@@ -1392,16 +1388,13 @@
         topProfileBanner.style.borderColor = (userProfileData.themeColor || '#3b82f6') + '55';
 
         if (topBannerName) topBannerName.textContent = userProfileData.name;
-        
         if (topBannerBadge) {
           topBannerBadge.textContent = userProfileData.badge;
           topBannerBadge.style.background = userProfileData.themeBadgeBg || 'rgba(59,130,246,0.25)';
           topBannerBadge.style.color = userProfileData.themeColor || '#60a5fa';
         }
-        
         if (topBannerFrame) topBannerFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
 
-        // Update top banner mantra button display
         if (topMantraText) {
           if (userProfileData.selectedMantra && userProfileData.selectedMantra.trim() !== '') {
             topMantraText.textContent = '"' + userProfileData.selectedMantra + '" ✏️';
@@ -1409,25 +1402,6 @@
             topMantraText.textContent = '+ Select Today\'s Mantra';
           }
         }
-
-        // Render Avatar Image or Fallback Icon
-        if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
-          if (topBannerImg) {
-            topBannerImg.src = userProfileData.avatarUrl;
-            topBannerImg.style.display = 'block';
-          }
-          if (topBannerFallback) topBannerFallback.style.display = 'none';
-        } else {
-          if (topBannerImg) {
-            topBannerImg.style.display = 'none';
-            topBannerImg.src = '';
-          }
-          if (topBannerFallback) topBannerFallback.style.display = 'block';
-        }
-      } else {
-        topProfileBanner.style.display = 'none';
-      }
-    }
 
         if (topBannerGoldRings) {
           topBannerGoldRings.innerHTML = '';
@@ -1499,13 +1473,11 @@
       });
     }
 
-        if (topMantraBtn && mantraModal) {
+    if (topMantraBtn && mantraModal) {
       topMantraBtn.addEventListener('click', function() {
         renderMantraModalList();
         mantraModal.style.display = 'flex';
       });
-    }
-
     }
 
     if (closeMantraBtn && mantraModal) {
@@ -1674,31 +1646,17 @@
       });
     }
 
-            if (saveProfileBtn) {
-      saveProfileBtn.addEventListener('click', function(e) {
-        if (e) e.preventDefault();
-
-        if (profileNameInput) {
-          userProfileData.name = profileNameInput.value.trim();
-        }
-        
-        if (profileImgInput && profileImgInput.value.trim() !== '') {
-          userProfileData.avatarUrl = profileImgInput.value.trim();
-        }
-
+    if (saveProfileBtn) {
+      saveProfileBtn.addEventListener('click', function() {
+        if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
+        let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
+        if (urlVal !== '') userProfileData.avatarUrl = urlVal;
         saveEverything();
         updateTopProfileBanner();
         updateProfileModalUI();
-
-        if (profileModal) {
-          profileModal.style.display = 'none';
-        }
-
-        alert('✅ Profile saved successfully!');
+        if (profileModal) profileModal.style.display = 'none';
       });
     }
-
-
 
     // Export / Import Backup Handlers
     const exportSaveBtn = document.getElementById('hbr-export-save-btn');
@@ -2432,16 +2390,14 @@
       }
     }
 
-        function checkFireworksSchedule() {
+    function checkFireworksSchedule() {
       let active = isFireworksTimeWindow();
       if (active !== isFireworksShowActive) {
         if (isFireworksShowActive && !active) {
-          // Show ended! Calculate earnings ($1.23 per shot)
+          // Show just ended! Calculate earnings ($1.23 per firework shot)
           if (userFireworkShotsCount > 0) {
             let totalEarned = userFireworkShotsCount * 1.23;
-            
-            // Immediately add to total, update UI, and persist to storage
-            storeCashTotal = parseFloat((storeCashTotal + totalEarned).toFixed(2));
+            storeCashTotal += totalEarned;
             saveEverything();
             updateCashUI();
 
@@ -2461,23 +2417,16 @@
         if (!active) {
           fireworksRockets = [];
           particles = [];
-          if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
       }
     }
 
-
     checkFireworksSchedule();
     setInterval(checkFireworksSchedule, 5000);
 
-        if (closeSummaryBtn && showSummaryModal) {
-      closeSummaryBtn.addEventListener('click', () => { 
-        showSummaryModal.style.display = 'none';
-        saveEverything();
-        updateCashUI();
-      });
+    if (closeSummaryBtn && showSummaryModal) {
+      closeSummaryBtn.addEventListener('click', () => { showSummaryModal.style.display = 'none'; });
     }
-
 
     function resizeCanvas() {
       if (!canvas) return;
@@ -3499,17 +3448,18 @@
         selectAndPlayTrack(0);
       });
     }
-        const noWorriesTrack = { id: 'OMPaU5L3zy0', name: 'No Worries (Root Chakra)' };
-    const noWorriesBtn = document.getElementById('hbr-no-worries-btn');
 
-    if (noWorriesBtn) {
-      noWorriesBtn.addEventListener('click', function() {
+    const calmTrack = { id: 'OMPaU5L3zy0', name: 'Calm (Root Chakra Session)', startSecs: 3710 };
+    const calmBtn = document.getElementById('hbr-calm-btn');
+
+    if (calmBtn) {
+      calmBtn.addEventListener('click', function() {
         autoBankUnsavedNotes();
         activeQueueSource = null;
-        activePlaylist = [noWorriesTrack];
-        if (modeTitleText) modeTitleText.textContent = 'No Worries';
+        activePlaylist = [calmTrack];
+        if (modeTitleText) modeTitleText.textContent = 'Calm';
         if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Root Chakra Session';
-        if (labelSubText) labelSubText.textContent = 'NO WORRIES';
+        if (labelSubText) labelSubText.textContent = 'CALM';
         selectAndPlayTrack(0);
       });
     }
