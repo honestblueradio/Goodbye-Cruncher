@@ -443,6 +443,10 @@
       <!-- REAL STORE CASH COUNTER -->
       <span id="hbr-cash-badge" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.5px; display: inline-block;">💵 CASH: <span id="hbr-cash-count" style="color: #86efac;">$0.00</span></span>
 
+      <!-- FIREWORKS CASH & HIGH SCORE BADGES -->
+      <span id="hbr-fireworks-cash" style="color: #00ff66; font-weight: bold; margin-left: 10px;" title="Fireworks Cash Earnings">$0.00</span>
+      <span id="hbr-fireworks-highscore" style="color: #ffd700; font-weight: bold; margin-left: 10px;" title="All-Time High Score">$0.00</span>
+
       <!-- STORE BUTTON NEXT TO BANKED -->
       <button id="hbr-store-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); transition: transform 0.15s ease;">🛍️ STORE</button>
     </div>
@@ -1215,6 +1219,8 @@
         const masterSave = {
           bankedNotes: bankedNotesTotal,
           storeCash: storeCashTotal,
+          fireworksCash: fireworksCashTotal,
+          fireworksHighScore: fireworksHighScoreTotal,
           unrewoundTapes: unrewoundTapesCount,
           lastSessionTime: lastSessionTimestamp,
           ownedStores: userOwnedStores,
@@ -1244,6 +1250,8 @@
           const master = JSON.parse(masterJSON);
           if (master.bankedNotes !== undefined) bankedNotesTotal = master.bankedNotes;
           if (master.storeCash !== undefined) storeCashTotal = master.storeCash;
+          if (master.fireworksCash !== undefined) fireworksCashTotal = master.fireworksCash;
+          if (master.fireworksHighScore !== undefined) fireworksHighScoreTotal = master.fireworksHighScore;
           if (master.unrewoundTapes !== undefined) unrewoundTapesCount = master.unrewoundTapes;
           if (master.lastSessionTime !== undefined) lastSessionTimestamp = master.lastSessionTime;
           if (master.ownedStores) userOwnedStores = master.ownedStores;
@@ -1257,6 +1265,8 @@
         }
 
         const savedBanked = localStorage.getItem('hbr_banked_notes');
+        const savedFWCash = localStorage.getItem('hbr_fireworks_cash');
+        const savedFWHigh = localStorage.getItem('hbr_fireworks_highscore');
         const savedCash = localStorage.getItem('hbr_store_cash');
         const savedStores = localStorage.getItem('hbr_owned_stores');
         const savedMovies = localStorage.getItem('hbr_owned_movies');
@@ -1267,6 +1277,8 @@
         const savedT3 = localStorage.getItem('hbr_custom_top3');
 
         if (savedBanked !== null) bankedNotesTotal = parseInt(savedBanked, 10) || 0;
+        if (savedFWCash !== null) fireworksCashTotal = parseFloat(savedFWCash) || 0.00;
+        if (savedFWHigh !== null) fireworksHighScoreTotal = parseFloat(savedFWHigh) || 0.00;
         if (savedCash !== null) storeCashTotal = parseFloat(savedCash) || 0.00;
         if (savedStores) userOwnedStores = Object.assign(userOwnedStores, JSON.parse(savedStores));
         if (savedMovies) userOwnedMovies = Object.assign(userOwnedMovies, JSON.parse(savedMovies));
