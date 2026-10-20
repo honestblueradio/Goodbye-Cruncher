@@ -3602,7 +3602,7 @@
 
   })();
   
-    // Honest Blue Radio Search Engine Logic
+      // Honest Blue Radio Search Engine Logic
   (function() {
     const searchInput = document.getElementById('hbr-search-input');
     const searchBtn = document.getElementById('hbr-search-btn');
@@ -3619,15 +3619,12 @@
         return;
       }
 
-      let allTracks = [
-        ...(typeof masterBroadcastTracks !== 'undefined' ? masterBroadcastTracks : []),
-        ...(typeof masterInstrumentalTracks !== 'undefined' ? masterInstrumentalTracks : []),
-        ...(typeof masterChristmasTracks !== 'undefined' ? masterChristmasTracks : []),
-        ...(typeof masterDisneyTracks !== 'undefined' ? masterDisneyTracks : []),
-        ...(typeof masterChakrasTracks !== 'undefined' ? masterChakrasTracks : [])
-      ];
+      // Gather tracks from active playlist or master broadcast list
+      let pool = (typeof currentMasterTracks !== 'undefined' && currentMasterTracks.length > 0) 
+                 ? currentMasterTracks 
+                 : (typeof masterBroadcastTracks !== 'undefined' ? masterBroadcastTracks : []);
 
-      let matches = allTracks.filter(t => t.name.toLowerCase().includes(query));
+      let matches = pool.filter(t => t.name && t.name.toLowerCase().includes(query));
 
       if (matches.length === 0) {
         searchResults.innerHTML = '<div style="padding: 10px; font-size: 10px; color: #9ca3af; text-align: center;">No tracks found</div>';
@@ -3641,16 +3638,19 @@
           item.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
           item.textContent = track.name;
 
-          item.addEventListener('mouseover', () => item.style.background = 'rgba(59,130,246,0.15)');
+          item.addEventListener('mouseover', () => item.style.background = 'rgba(59,130,246,0.2)');
           item.addEventListener('mouseout', () => item.style.background = 'transparent');
           
           item.addEventListener('click', function() {
             searchInput.value = track.name;
             searchResults.style.display = 'none';
-            let idx = currentMasterTracks.findIndex(t => t.id === track.id);
+            
+            // Find track index and trigger play
+            let idx = pool.findIndex(t => t.id === track.id);
             if (idx !== -1 && typeof selectAndPlayTrack === 'function') {
+              if (typeof autoBankUnsavedNotes === 'function') autoBankUnsavedNotes();
               activeQueueSource = null;
-              activePlaylist = currentMasterTracks;
+              activePlaylist = pool;
               selectAndPlayTrack(idx);
             }
           });
@@ -3669,6 +3669,7 @@
         searchResults.style.display = 'none';
       }
     });
+  }
+    
   })();
-
 </script>
