@@ -432,14 +432,126 @@
       <button id="hbr-calm-mode-btn" style="display: none; background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 12px; padding: 4px 8px; font-size: 10px; font-weight: 700; color: #c084fc; cursor: pointer; transition: all 0.2s ease;">🍃 CALM</button>
     </div>
     
-      <!-- Honest Blue Radio Search Bar -->
+        <!-- Honest Blue Radio Smart Search Engine -->
   <div style="margin-bottom: 14px; position: relative;">
     <div style="display: flex; gap: 6px;">
-      <input id="hbr-search-input" type="text" placeholder="Search tracks..." style="flex: 1; background: rgba(255, 255, 255, 0.05); border: 1px solid #2e2e3e; border-radius: 8px; padding: 8px 12px; color: #ffffff; font-size: 11px; outline: none;" />
+      <input id="hbr-search-input" type="text" placeholder="Search any track, keyword, or genre..." style="flex: 1; background: rgba(255, 255, 255, 0.05); border: 1px solid #2e2e3e; border-radius: 8px; padding: 8px 12px; color: #ffffff; font-size: 11px; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);" />
       <button id="hbr-search-btn" style="background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 8px; color: #60a5fa; font-size: 11px; font-weight: 700; padding: 8px 12px; cursor: pointer;">🔍</button>
     </div>
-    <div id="hbr-search-results" style="display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #1c1c28; border: 1px solid #374151; border-radius: 8px; margin-top: 4px; max-height: 180px; overflow-y: auto; z-index: 50; box-shadow: 0 8px 24px rgba(0,0,0,0.8);"></div>
+    <div id="hbr-search-results" style="display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #1c1c28; border: 1px solid #374151; border-radius: 8px; margin-top: 4px; max-height: 200px; overflow-y: auto; z-index: 99; box-shadow: 0 8px 24px rgba(0,0,0,0.85);"></div>
   </div>
+
+  <script>
+    (function() {
+      function setupHbrSearch() {
+        const searchInput = document.getElementById('hbr-search-input');
+        const searchBtn = document.getElementById('hbr-search-btn');
+        const searchResults = document.getElementById('hbr-search-results');
+
+        if (!searchInput || !searchResults) return;
+
+        function runSearch() {
+          let query = searchInput.value.toLowerCase().trim();
+          searchResults.innerHTML = '';
+
+          if (query === '') {
+            searchResults.style.display = 'none';
+            return;
+          }
+
+          // Dynamically assemble all tracks from all available player lists
+          let trackMap = new Map();
+          let sources = [
+            typeof currentMasterTracks !== 'undefined' ? currentMasterTracks : [],
+            typeof masterBroadcastTracks !== 'undefined' ? masterBroadcastTracks : [],
+            typeof masterInstrumentalTracks !== 'undefined' ? masterInstrumentalTracks : [],
+            typeof masterChristmasTracks !== 'undefined' ? masterChristmasTracks : [],
+            typeof masterDisneyTracks !== 'undefined' ? masterDisneyTracks : [],
+            typeof masterChakrasTracks !== 'undefined' ? masterChakrasTracks : []
+          ];
+
+          sources.forEach(list => {
+            if (Array.isArray(list)) {
+              list.forEach(track => {
+                if (track && track.name && !trackMap.has(track.id || track.name)) {
+                  trackMap.set(track.id || track.name, track);
+                }
+              });
+            }
+          });
+
+          let searchTerms = query.split(/\s+/);
+          let matches = Array.from(trackMap.values()).filter(track => {
+            let trackName = track.name.toLowerCase();
+            return searchTerms.every(term => trackName.includes(term));
+          });
+
+          if (matches.length === 0) {
+            searchResults.innerHTML = '<div style="padding: 10px; font-size: 10px; color: #9ca3af; text-align: center;">No matching tracks found</div>';
+          } else {
+            matches.forEach(track => {
+              let item = document.createElement('div');
+              item.style.padding = '8px 12px';
+              item.style.fontSize = '11px';
+              item.style.color = '#e5e7eb';
+              item.style.cursor = 'pointer';
+              item.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+              item.style.display = 'flex';
+              item.style.justifyContent = 'space-between';
+              item.style.alignItems = 'center';
+
+              item.innerHTML = `<span>${track.name}</span><span style="font-size:9px; color:#60a5fa; background:rgba(59,130,246,0.15); padding:2px 6px; border-radius:4px;">Play</span>`;
+
+              item.addEventListener('mouseover', () => item.style.background = 'rgba(59,130,246,0.2)');
+              item.addEventListener('mouseout', () => item.style.background = 'transparent');
+
+              item.addEventListener('click', function() {
+                searchInput.value = track.name;
+                searchResults.style.display = 'none';
+
+                // Automatically switch playlist and trigger playback
+                if (typeof currentMasterTracks !== 'undefined') {
+                  let activeList = currentMasterTracks;
+                  let idx = activeList.findIndex(t => t.name === track.name || t.id === track.id);
+
+                  if (idx === -1 && typeof masterBroadcastTracks !== 'undefined') {
+                    activeList = masterBroadcastTracks;
+                    idx = activeList.findIndex(t => t.name === track.name || t.id === track.id);
+                  }
+
+                  if (idx !== -1 && typeof selectAndPlayTrack === 'function') {
+                    if (typeof autoBankUnsavedNotes === 'function') autoBankUnsavedNotes();
+                    if (typeof activeQueueSource !== 'undefined') activeQueueSource = null;
+                    if (typeof activePlaylist !== 'undefined') activePlaylist = activeList;
+                    selectAndPlayTrack(idx);
+                  }
+                }
+              });
+
+              searchResults.appendChild(item);
+            });
+          }
+          searchResults.style.display = 'block';
+        }
+
+        searchInput.addEventListener('input', runSearch);
+        if (searchBtn) searchBtn.addEventListener('click', runSearch);
+
+        document.addEventListener('click', function(e) {
+          if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.style.display = 'none';
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupHbrSearch);
+      } else {
+        setupHbrSearch();
+      }
+    })();
+  </script>
+
 
     <!-- Bank Notes & Real Cash & Store Section -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
