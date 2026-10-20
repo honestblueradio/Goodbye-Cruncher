@@ -272,6 +272,14 @@
       <p style="font-size: 11px; color: #d1d5db; line-height: 1.5; margin-bottom: 14px;">
         You shot off <strong id="hbr-summary-shots" style="color: #60a5fa;">0</strong> fireworks during the show and earned:
       </p>
+            <!-- HIGH SCORE DISPLAY -->
+      <div style="font-size: 10px; font-weight: 700; color: #fbbf24; margin-bottom: 8px;">
+        🏆 Personal Best High Score: <strong id="hbr-high-score-display" style="color: #fff;">0</strong> fireworks
+      </div>
+      <div id="hbr-new-highscore-banner" style="display: none; background: rgba(34,197,94,0.2); border: 1px solid #4ade80; border-radius: 6px; padding: 4px; font-size: 9px; font-weight: 800; color: #4ade80; margin-bottom: 12px; text-transform: uppercase;">
+        🎉 New High Score Record! 🎉
+      </div>
+
       <div style="font-size: 20px; font-weight: 900; color: #4ade80; margin-bottom: 16px;" id="hbr-summary-earned">$0.00</div>
       <button id="hbr-close-summary-btn" style="background: linear-gradient(135deg, #f97316 0%, #c2410c 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(249,115,22,0.4);">COLLECT CASH &amp; CLOSE</button>
     </div>
@@ -443,10 +451,6 @@
       <!-- REAL STORE CASH COUNTER -->
       <span id="hbr-cash-badge" style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 12px; padding: 4px 10px; font-size: 10px; font-weight: 700; color: #4ade80; letter-spacing: 0.5px; display: inline-block;">💵 CASH: <span id="hbr-cash-count" style="color: #86efac;">$0.00</span></span>
 
-      <!-- FIREWORKS CASH & HIGH SCORE BADGES -->
-      <span id="hbr-fireworks-cash" style="color: #00ff66; font-weight: bold; margin-left: 10px;" title="Fireworks Cash Earnings">$0.00</span>
-      <span id="hbr-fireworks-highscore" style="color: #ffd700; font-weight: bold; margin-left: 10px;" title="All-Time High Score">$0.00</span>
-
       <!-- STORE BUTTON NEXT TO BANKED -->
       <button id="hbr-store-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.04)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 12px; padding: 5px 12px; font-size: 10px; font-weight: 800; color: #ffffff; cursor: pointer; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4); transition: transform 0.15s ease;">🛍️ STORE</button>
     </div>
@@ -516,7 +520,6 @@
           <div style="width: 16px; height: 16px; background: #4b5563; border-radius: 50%; position: absolute; top: 0; right: 0; border: 2px solid #1f2937;">&nbsp;</div>
           <div style="width: 5px; height: 70px; background: linear-gradient(to right, #d1d5db, #9ca3af); margin-left: auto; margin-right: 5px; border-radius: 3px; transform: rotate(12deg); box-shadow: 2px 3px 6px rgba(0,0,0,0.6);">&nbsp;</div>
           <div style="width: 14px; height: 22px; background: #ef4444; border-radius: 2px; position: absolute; bottom: 8px; left: 12px; transform: rotate(12deg); border: 1px solid #b91c1c;">&nbsp;</div>
-          <div id="hbr-stylus-trail" style="position: absolute; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;"></div>
         </div>
       </div>
       <!-- YouTube API Player Container (Interactive JavaScript API Mount with enablejsapi=1) -->
@@ -1221,8 +1224,6 @@
         const masterSave = {
           bankedNotes: bankedNotesTotal,
           storeCash: storeCashTotal,
-          fireworksCash: fireworksCashTotal,
-          fireworksHighScore: fireworksHighScoreTotal,
           unrewoundTapes: unrewoundTapesCount,
           lastSessionTime: lastSessionTimestamp,
           ownedStores: userOwnedStores,
@@ -1243,6 +1244,7 @@
         localStorage.setItem('hbr_user_profile', JSON.stringify(userProfileData));
       } catch(e) {}
     }
+    let fireworksHighScore = parseInt(localStorage.getItem('hbr_fireworks_high_score'), 10) || 0;
 
     function loadEverything() {
       try {
@@ -1252,8 +1254,6 @@
           const master = JSON.parse(masterJSON);
           if (master.bankedNotes !== undefined) bankedNotesTotal = master.bankedNotes;
           if (master.storeCash !== undefined) storeCashTotal = master.storeCash;
-          if (master.fireworksCash !== undefined) fireworksCashTotal = master.fireworksCash;
-          if (master.fireworksHighScore !== undefined) fireworksHighScoreTotal = master.fireworksHighScore;
           if (master.unrewoundTapes !== undefined) unrewoundTapesCount = master.unrewoundTapes;
           if (master.lastSessionTime !== undefined) lastSessionTimestamp = master.lastSessionTime;
           if (master.ownedStores) userOwnedStores = master.ownedStores;
@@ -1263,16 +1263,10 @@
           if (master.queue1) customQueue1 = master.queue1;
           if (master.queue2) customQueue2 = master.queue2;
           if (master.top3) customTop3 = master.top3;
-              loaded = true;
-    // updateTopProfileBanner();
-    // updateProfileModalUI();
-}
-
+          loaded = true;
         }
 
         const savedBanked = localStorage.getItem('hbr_banked_notes');
-        const savedFWCash = localStorage.getItem('hbr_fireworks_cash');
-        const savedFWHigh = localStorage.getItem('hbr_fireworks_highscore');
         const savedCash = localStorage.getItem('hbr_store_cash');
         const savedStores = localStorage.getItem('hbr_owned_stores');
         const savedMovies = localStorage.getItem('hbr_owned_movies');
@@ -1283,8 +1277,6 @@
         const savedT3 = localStorage.getItem('hbr_custom_top3');
 
         if (savedBanked !== null) bankedNotesTotal = parseInt(savedBanked, 10) || 0;
-        if (savedFWCash !== null) fireworksCashTotal = parseFloat(savedFWCash) || 0.00;
-        if (savedFWHigh !== null) fireworksHighScoreTotal = parseFloat(savedFWHigh) || 0.00;
         if (savedCash !== null) storeCashTotal = parseFloat(savedCash) || 0.00;
         if (savedStores) userOwnedStores = Object.assign(userOwnedStores, JSON.parse(savedStores));
         if (savedMovies) userOwnedMovies = Object.assign(userOwnedMovies, JSON.parse(savedMovies));
@@ -1309,6 +1301,13 @@
       } catch (e) {
         bankedNotesTotal = 50;
       }
+          if (master.fireworksHighScore !== undefined) {
+      fireworksHighScore = master.fireworksHighScore;
+    }
+    const highScoreDisplay = document.getElementById('hbr-high-score-display');
+    if (highScoreDisplay) {
+      highScoreDisplay.textContent = fireworksHighScore.toLocaleString();
+    }
     }
 
     loadEverything();
@@ -1401,24 +1400,14 @@
     const mantraOptionsList = document.getElementById('hbr-mantra-options-list');
 
     function updateTopProfileBanner() {
-    if (!topProfileBanner) return;
+      if (!topProfileBanner) return;
+      if (openProfileBtn) {
+        openProfileBtn.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? '👤 Edit Profile' : '👤 Create Profile';
+      }
 
-    if (openProfileBtn) {
-        if (userProfileData && userProfileData.name && userProfileData.name.trim() !== '') {
-            openProfileBtn.textContent = 'Edit Profile';
-        } else {
-            openProfileBtn.textContent = 'Create Profile';
-        }
-    }
-
-    if (userProfileData && userProfileData.name) {
+      if (userProfileData.name && userProfileData.name.trim() !== '') {
         topProfileBanner.style.display = 'flex';
-        if (topBannerName) topBannerName.textContent = userProfileData.name;
-    } else {
-        topProfileBanner.style.display = 'none';
-    }
-}
-
+        topProfileBanner.style.background = userProfileData.themeBg || 'rgba(59, 130, 246, 0.12)';
         topProfileBanner.style.borderColor = (userProfileData.themeColor || '#3b82f6') + '55';
 
         if (topBannerName) topBannerName.textContent = userProfileData.name;
@@ -1674,29 +1663,23 @@
     }
 
     if (profileImgInput) {
-    profileImgInput.addEventListener('change', () => {
-        userProfileData.avatarUrl = profileImgInput.value;
-        saveEverything(); // Save immediately when image changes
+      profileImgInput.addEventListener('input', function() {
+        userProfileData.avatarUrl = profileImgInput.value.trim();
         updateProfileModalUI();
-    });
-}
+      });
+    }
 
-if (saveProfileBtn) {
-    saveProfileBtn.addEventListener('click', () => {
-        if (profileNameInput) {
-            userProfileData.name = profileNameInput.value;
-        }
-        if (profileImgInput) {
-            userProfileData.avatarUrl = profileImgInput.value;
-        }
-        saveEverything(); // Lock in everything on click
+    if (saveProfileBtn) {
+      saveProfileBtn.addEventListener('click', function() {
+        if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
+        let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
+        if (urlVal !== '') userProfileData.avatarUrl = urlVal;
+        saveEverything();
         updateTopProfileBanner();
         updateProfileModalUI();
-        if (profileModal) {
-            profileModal.style.display = 'none';
-        }
-    });
-}
+        if (profileModal) profileModal.style.display = 'none';
+      });
+    }
 
     // Export / Import Backup Handlers
     const exportSaveBtn = document.getElementById('hbr-export-save-btn');
@@ -2337,9 +2320,7 @@ if (saveProfileBtn) {
           autoBankUnsavedNotes();
           activeQueueSource = null;
           activePlaylist = currentMasterTracks;
-            selectAndPlayTrack(idx);
-      const trail = document.getElementById('hbr-stylus-trail');
-      if (trail) trail.style.opacity = '1';
+          selectAndPlayTrack(idx);
           if (artModal) artModal.style.display = 'none';
           if (artLightboxModal) artLightboxModal.style.display = 'none';
 
@@ -2440,6 +2421,22 @@ if (saveProfileBtn) {
           if (userFireworkShotsCount > 0) {
             let totalEarned = userFireworkShotsCount * 1.23;
             storeCashTotal += totalEarned;
+                        // Load saved high score from storage
+            let savedHighScore = parseInt(localStorage.getItem('hbr_fireworks_high_score'), 10) || 0;
+            let highScoreDisplay = document.getElementById('hbr-high-score-display');
+            let newHighscoreBanner = document.getElementById('hbr-new-highscore-banner');
+
+            // Check if current run beat the personal best
+            if (userFireworkShotsCount > savedHighScore) {
+              savedHighScore = userFireworkShotsCount;
+              localStorage.setItem('hbr_fireworks_high_score', savedHighScore.toString());
+              if (newHighscoreBanner) newHighscoreBanner.style.display = 'block';
+            } else {
+              if (newHighscoreBanner) newHighscoreBanner.style.display = 'none';
+            }
+
+            if (highScoreDisplay) highScoreDisplay.textContent = savedHighScore.toLocaleString();
+
             saveEverything();
             updateCashUI();
 
@@ -3349,8 +3346,6 @@ if (saveProfileBtn) {
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
     let isPlaying = false;
-const trail = document.getElementById('hbr-stylus-trail');
-if (trail) trail.style.opacity = isPlaying ? '1' : '0';
     let currentTrackIndex = 11;
     let ytPlayer = null;
     let isDragging = false;
