@@ -3602,7 +3602,7 @@
 
   })();
   
-        // Honest Blue Radio Smart Search Engine Logic
+          // Honest Blue Radio Live DOM Search Engine
   (function() {
     const searchInput = document.getElementById('hbr-search-input');
     const searchBtn = document.getElementById('hbr-search-btn');
@@ -3619,36 +3619,31 @@
         return;
       }
 
-      let trackMap = new Map();
-      let sources = [
-        typeof currentMasterTracks !== 'undefined' ? currentMasterTracks : [],
-        typeof masterBroadcastTracks !== 'undefined' ? masterBroadcastTracks : [],
-        typeof masterInstrumentalTracks !== 'undefined' ? masterInstrumentalTracks : [],
-        typeof masterChristmasTracks !== 'undefined' ? masterChristmasTracks : [],
-        typeof masterDisneyTracks !== 'undefined' ? masterDisneyTracks : [],
-        typeof masterChakrasTracks !== 'undefined' ? masterChakrasTracks : []
-      ];
-
-      sources.forEach(list => {
-        if (Array.isArray(list)) {
-          list.forEach(track => {
-            if (track && track.name && !trackMap.has(track.id || track.name)) {
-              trackMap.set(track.id || track.name, track);
-            }
-          });
+      // Grab all track items currently loaded in your player drawer or playlist
+      let trackButtons = document.querySelectorAll('#hbr-drawer-list span, .hbr-track-item, [data-track-name]');
+      
+      let uniqueTracks = new Map();
+      trackButtons.forEach(btn => {
+        let name = btn.textContent.trim();
+        if (name && !uniqueTracks.has(name)) {
+          uniqueTracks.set(name, btn);
         }
       });
 
       let searchTerms = query.split(/\s+/);
-      let matches = Array.from(trackMap.values()).filter(track => {
-        let trackName = track.name.toLowerCase();
-        return searchTerms.every(term => trackName.includes(term));
+      let matches = [];
+      
+      uniqueTracks.forEach((btn, name) => {
+        let lowerName = name.toLowerCase();
+        if (searchTerms.every(term => lowerName.includes(term))) {
+          matches.push({ name: name, element: btn });
+        }
       });
 
       if (matches.length === 0) {
         searchResults.innerHTML = '<div style="padding: 10px; font-size: 10px; color: #9ca3af; text-align: center;">No matching tracks found</div>';
       } else {
-        matches.forEach(track => {
+        matches.forEach(match => {
           let item = document.createElement('div');
           item.style.padding = '8px 12px';
           item.style.fontSize = '11px';
@@ -3659,31 +3654,16 @@
           item.style.justifyContent = 'space-between';
           item.style.alignItems = 'center';
 
-          item.innerHTML = `<span>${track.name}</span><span style="font-size:9px; color:#60a5fa; background:rgba(59,130,246,0.15); padding:2px 6px; border-radius:4px;">Play</span>`;
+          item.innerHTML = `<span>${match.name}</span><span style="font-size:9px; color:#60a5fa; background:rgba(59,130,246,0.15); padding:2px 6px; border-radius:4px;">Play</span>`;
 
           item.addEventListener('mouseover', () => item.style.background = 'rgba(59,130,246,0.2)');
           item.addEventListener('mouseout', () => item.style.background = 'transparent');
 
           item.addEventListener('click', function() {
-            searchInput.value = track.name;
+            searchInput.value = match.name;
             searchResults.style.display = 'none';
-
-            if (typeof currentMasterTracks !== 'undefined') {
-              let activeList = currentMasterTracks;
-              let idx = activeList.findIndex(t => t.name === track.name || t.id === track.id);
-
-              if (idx === -1 && typeof masterBroadcastTracks !== 'undefined') {
-                activeList = masterBroadcastTracks;
-                idx = activeList.findIndex(t => t.name === track.name || t.id === track.id);
-              }
-
-              if (idx !== -1 && typeof selectAndPlayTrack === 'function') {
-                if (typeof autoBankUnsavedNotes === 'function') autoBankUnsavedNotes();
-                if (typeof activeQueueSource !== 'undefined') activeQueueSource = null;
-                if (typeof activePlaylist !== 'undefined') activePlaylist = activeList;
-                selectAndPlayTrack(idx);
-              }
-            }
+            // Simulate clicking the actual track button in your player
+            match.element.click();
           });
 
           searchResults.appendChild(item);
