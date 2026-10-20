@@ -272,14 +272,6 @@
       <p style="font-size: 11px; color: #d1d5db; line-height: 1.5; margin-bottom: 14px;">
         You shot off <strong id="hbr-summary-shots" style="color: #60a5fa;">0</strong> fireworks during the show and earned:
       </p>
-            <!-- HIGH SCORE DISPLAY -->
-      <div style="font-size: 10px; font-weight: 700; color: #fbbf24; margin-bottom: 8px;">
-        🏆 Personal Best High Score: <strong id="hbr-high-score-display" style="color: #fff;">0</strong> fireworks
-      </div>
-      <div id="hbr-new-highscore-banner" style="display: none; background: rgba(34,197,94,0.2); border: 1px solid #4ade80; border-radius: 6px; padding: 4px; font-size: 9px; font-weight: 800; color: #4ade80; margin-bottom: 12px; text-transform: uppercase;">
-        🎉 New High Score Record! 🎉
-      </div>
-
       <div style="font-size: 20px; font-weight: 900; color: #4ade80; margin-bottom: 16px;" id="hbr-summary-earned">$0.00</div>
       <button id="hbr-close-summary-btn" style="background: linear-gradient(135deg, #f97316 0%, #c2410c 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(249,115,22,0.4);">COLLECT CASH &amp; CLOSE</button>
     </div>
@@ -383,9 +375,6 @@
     <!-- Collapsible Scrollable Playlist Drawer -->
     <div id="hbr-playlist-drawer" style="max-height: 0; overflow-y: auto; transition: max-height 0.4s ease, margin-bottom 0.4s ease; background: #171720; border-radius: 12px; border: 0px solid #2a2a3a; margin-bottom: 0px;">
       <div style="padding: 12px; display: flex; flex-direction: column; gap: 12px;">
-          <div style="padding: 12px 16px; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.08);">
-    <input type="text" id="hbr-playlist-search" placeholder="🔍 Search tracks, artists, genres..." style="width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: #ffffff; font-size: 13px; outline: none;" />
-  </div>
         <!-- Standard Broadcast Track Section with Pagination & Scroll Mode -->
         <div>
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -1244,7 +1233,6 @@
         localStorage.setItem('hbr_user_profile', JSON.stringify(userProfileData));
       } catch(e) {}
     }
-    let fireworksHighScore = parseInt(localStorage.getItem('hbr_fireworks_high_score'), 10) || 0;
 
     function loadEverything() {
       try {
@@ -1301,13 +1289,6 @@
       } catch (e) {
         bankedNotesTotal = 50;
       }
-          if (master.fireworksHighScore !== undefined) {
-      fireworksHighScore = master.fireworksHighScore;
-    }
-    const highScoreDisplay = document.getElementById('hbr-high-score-display');
-    if (highScoreDisplay) {
-      highScoreDisplay.textContent = fireworksHighScore.toLocaleString();
-    }
     }
 
     loadEverything();
@@ -2421,22 +2402,6 @@
           if (userFireworkShotsCount > 0) {
             let totalEarned = userFireworkShotsCount * 1.23;
             storeCashTotal += totalEarned;
-                        // Load saved high score from storage
-            let savedHighScore = parseInt(localStorage.getItem('hbr_fireworks_high_score'), 10) || 0;
-            let highScoreDisplay = document.getElementById('hbr-high-score-display');
-            let newHighscoreBanner = document.getElementById('hbr-new-highscore-banner');
-
-            // Check if current run beat the personal best
-            if (userFireworkShotsCount > savedHighScore) {
-              savedHighScore = userFireworkShotsCount;
-              localStorage.setItem('hbr_fireworks_high_score', savedHighScore.toString());
-              if (newHighscoreBanner) newHighscoreBanner.style.display = 'block';
-            } else {
-              if (newHighscoreBanner) newHighscoreBanner.style.display = 'none';
-            }
-
-            if (highScoreDisplay) highScoreDisplay.textContent = savedHighScore.toLocaleString();
-
             saveEverything();
             updateCashUI();
 
@@ -3502,33 +3467,6 @@
         selectAndPlayTrack(0);
       });
     }
-
-        document.addEventListener('input', function(e) {
-  if (e.target && e.target.id === 'hbr-playlist-search') {
-    const query = e.target.value.toLowerCase().trim();
-    
-    // Fallback: If not in scroll mode, temporarily render all tracks into the drawer list so search can hit everything
-    if (typeof isScrollLibraryMode !== 'undefined' && !isScrollLibraryMode) {
-      isScrollLibraryMode = true;
-      if (typeof renderDrawerList === 'function') {
-        renderDrawerList();
-      }
-    }
-
-    const trackElements = document.querySelectorAll('#hbr-drawer-list > div');
-
-    trackElements.forEach(el => {
-      if (el.id !== 'hbr-playlist-search' && !el.querySelector('#hbr-playlist-search')) {
-        const text = el.textContent.toLowerCase();
-        if (text.includes(query) || query === '') {
-          el.style.display = 'flex';
-        } else {
-          el.style.display = 'none';
-        }
-      }
-    });
-  }
-});
 
     colorButtons.forEach(btn => {
       btn.addEventListener('click', function() {
