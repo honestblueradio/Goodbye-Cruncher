@@ -3602,7 +3602,7 @@
 
   })();
   
-  // Honest Blue Radio Universal Auto-Sync Search Engine
+    // Honest Blue Radio Pre-Cached DOM Search Engine
   (function() {
     const searchInput = document.getElementById('hbr-search-input');
     const searchBtn = document.getElementById('hbr-search-btn');
@@ -3610,7 +3610,28 @@
 
     if (!searchInput || !searchResults) return;
 
+    // Background harvester to cache all track elements across pagination/pages
+    let cachedTracks = new Map();
+
+    function harvestTracks() {
+      // Look everywhere in the document for track buttons or list items
+      document.querySelectorAll('#hbr-drawer-list span, .hbr-track-item, [data-track-name], button, span').forEach(el => {
+        let text = el.textContent ? el.textContent.trim() : '';
+        // Filter for valid track name lengths that look like songs
+        if (text.length > 2 && text.length < 60 && (el.onclick || el.style.cursor === 'pointer' || el.closest('#hbr-drawer-list'))) {
+          if (!cachedTracks.has(text)) {
+            cachedTracks.set(text, el);
+          }
+        }
+      });
+    }
+
+    // Run harvest on load and periodically in case lists update
+    setTimeout(harvestTracks, 1000);
+    setTimeout(harvestTracks, 3000);
+
     function runSearch() {
+      harvestTracks(); // Ensure cache is fresh
       let query = searchInput.value.toLowerCase().trim();
       searchResults.innerHTML = '';
 
@@ -3619,43 +3640,20 @@
         return;
       }
 
-      let allTracks = new Map();
-
-      // 1. Harvest from all possible global track arrays in memory
-      ['currentMasterTracks', 'masterBroadcastTracks', 'masterInstrumentalTracks', 'masterChristmasTracks', 'masterDisneyTracks', 'masterChakrasTracks'].forEach(arrName => {
-        if (window[arrName] && Array.isArray(window[arrName])) {
-          window[arrName].forEach(t => {
-            if (t && t.name) {
-              allTracks.set(t.name, t);
-            }
-          });
-        }
-      });
-
-      // 2. Also harvest any currently rendered DOM elements just in case
-      document.querySelectorAll('span, div, button').forEach(el => {
-        let text = el.textContent ? el.textContent.trim() : '';
-        if (text.length > 2 && text.length < 60 && (el.onclick || el.style.cursor === 'pointer')) {
-          if (!allTracks.has(text)) {
-            allTracks.set(text, { name: text, element: el });
-          }
-        }
-      });
-
       let searchTerms = query.split(/\s+/);
       let matches = [];
 
-      allTracks.forEach((trackObj, name) => {
+      cachedTracks.forEach((element, name) => {
         let lowerName = name.toLowerCase();
         if (searchTerms.every(term => lowerName.includes(term))) {
-          matches.push(trackObj);
+          matches.push({ name: name, element: element });
         }
       });
 
       if (matches.length === 0) {
         searchResults.innerHTML = '<div style="padding: 10px; font-size: 10px; color: #9ca3af; text-align: center;">No matching tracks found</div>';
       } else {
-        matches.slice(0, 15).forEach(track => {
+        matches.slice(0, 15).forEach(match => {
           let item = document.createElement('div');
           item.style.padding = '8px 12px';
           item.style.fontSize = '11px';
@@ -3666,38 +3664,16 @@
           item.style.justifyContent = 'space-between';
           item.style.alignItems = 'center';
 
-          item.innerHTML = `<span>${track.name}</span><span style="font-size:9px; color:#60a5fa; background:rgba(59,130,246,0.15); padding:2px 6px; border-radius:4px;">Play</span>`;
+          item.innerHTML = `<span>${match.name}</span><span style="font-size:9px; color:#60a5fa; background:rgba(59,130,246,0.15); padding:2px 6px; border-radius:4px;">Play</span>`;
 
           item.addEventListener('mouseover', () => item.style.background = 'rgba(59,130,246,0.2)');
           item.addEventListener('mouseout', () => item.style.background = 'transparent');
 
           item.addEventListener('click', function() {
-            searchInput.value = track.name;
+            searchInput.value = match.name;
             searchResults.style.display = 'none';
-
-            // If it has a direct DOM element, click it
-            if (track.element) {
-              track.element.click();
-              return;
-            }
-
-            // Otherwise, find and click it in the drawer list, or trigger play via index
-            let found = false;
-            document.querySelectorAll('#hbr-drawer-list span, .hbr-track-item').forEach(el => {
-              if (el.textContent.includes(track.name)) {
-                el.click();
-                found = true;
-              }
-            });
-
-            if (!found && typeof currentMasterTracks !== 'undefined' && typeof selectAndPlayTrack === 'function') {
-              let idx = currentMasterTracks.findIndex(t => t.name === track.name);
-              if (idx !== -1) {
-                if (typeof autoBankUnsavedNotes === 'function') autoBankUnsavedNotes();
-                activeQueueSource = null;
-                activePlaylist = currentMasterTracks;
-                selectAndPlayTrack(idx);
-              }
+            if (match.element) {
+              match.element.click();
             }
           });
 
