@@ -1083,6 +1083,10 @@
       { id: 'XE9dzihAHJo', name: 'I Signed Those Papers' },
       { id: 'v7q46zKX-t0', name: 'Wrapped Up In A Christmas Movie' },
       { id: 'DceTYEr2TtY', name: 'Pour Some Sugar On Me' },
+      { id: 'LlzOvlhZ0Jo', name: 'Gordy That Guy' },
+      { id: 'K8UqZGQBH3A', name: 'Mac And Cheese Anthem' },
+      { id: 'YM670O1ub-U', name: 'Boston' },
+      { id: 'i6sWs0mrJrY', name: "Guess Who's Hear?" },
       { id: 'PPK-QMAYvcI', name: 'Flip The Boss Off', explicit: true }
     ];
 
