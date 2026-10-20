@@ -1660,29 +1660,30 @@
     }
 
     if (profileImgInput) {
-      profileImgInput.addEventListener('input', function() {
-        userProfileData.avatarUrl = profileImgInput.value.trim();
+    profileImgInput.addEventListener('change', () => {
+        userProfileData.avatarUrl = profileImgInput.value;
+        saveEverything(); // Save immediately when image changes
         updateProfileModalUI();
-      });
-    }
+    });
+}
 
-        if (saveProfileBtn) {
-      saveProfileBtn.addEventListener('click', function() {
+if (saveProfileBtn) {
+    saveProfileBtn.addEventListener('click', () => {
         if (profileNameInput) {
-          userProfileData.name = profileNameInput.value.trim();
+            userProfileData.name = profileNameInput.value;
         }
-        let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
-        if (urlVal !== '') {
-          userProfileData.avatarUrl = urlVal;
+        if (profileImgInput) {
+            userProfileData.avatarUrl = profileImgInput.value;
         }
-        saveEverything();
+        saveEverything(); // Lock in everything on click
         updateTopProfileBanner();
         updateProfileModalUI();
         if (profileModal) {
-          profileModal.style.display = 'none';
+            profileModal.style.display = 'none';
         }
-      });
-    }
+    });
+}
+
 
     // Export / Import Backup Handlers
     const exportSaveBtn = document.getElementById('hbr-export-save-btn');
