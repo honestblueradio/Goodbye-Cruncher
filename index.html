@@ -1399,14 +1399,24 @@
     const mantraOptionsList = document.getElementById('hbr-mantra-options-list');
 
     function updateTopProfileBanner() {
-      if (!topProfileBanner) return;
-      if (openProfileBtn) {
-        openProfileBtn.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? '👤 Edit Profile' : '👤 Create Profile';
-      }
+    if (!topProfileBanner) return;
 
-      if (userProfileData.name && userProfileData.name.trim() !== '') {
+    if (openProfileBtn) {
+        if (userProfileData && userProfileData.name && userProfileData.name.trim() !== '') {
+            openProfileBtn.textContent = 'Edit Profile';
+        } else {
+            openProfileBtn.textContent = 'Create Profile';
+        }
+    }
+
+    if (userProfileData && userProfileData.name) {
         topProfileBanner.style.display = 'flex';
-        topProfileBanner.style.background = userProfileData.themeBg || 'rgba(59, 130, 246, 0.12)';
+        if (topBannerName) topBannerName.textContent = userProfileData.name;
+    } else {
+        topProfileBanner.style.display = 'none';
+    }
+}
+
         topProfileBanner.style.borderColor = (userProfileData.themeColor || '#3b82f6') + '55';
 
         if (topBannerName) topBannerName.textContent = userProfileData.name;
