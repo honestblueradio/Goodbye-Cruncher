@@ -3681,97 +3681,86 @@
     setInterval(saveFireworksAndCash, 3000);
   })();
 
-      // --- CONTINUOUS LISTENING MULTIPLIER & PAYOUT CONTROLLER ---
-  let sessionSongsCount = 0;
-  let sessionPendingCash = 0.00;
-  let currentMultiplier = 1;
-  let maxMultiplierReached = 1;
-  let streakTicker = null;
+        (function() {
+    let sessionSongsCount = 0;
+    let sessionPendingCash = 0.00;
+    let currentMultiplier = 1;
+    let maxMultiplierReached = 1;
+    let streakTicker = null;
 
-  const streakCountElem = document.getElementById('hbr-streak-song-count');
-  const streakMultElem = document.getElementById('hbr-streak-multiplier');
-  const streakCashElem = document.getElementById('hbr-streak-pending-cash');
+    const streakCountElem = document.getElementById('hbr-streak-song-count');
+    const streakMultElem = document.getElementById('hbr-streak-multiplier');
+    const streakCashElem = document.getElementById('hbr-streak-pending-cash');
 
-  const payoutModal = document.getElementById('hbr-payout-summary-modal');
-  const summarySongsElem = document.getElementById('hbr-summary-songs-played');
-  const summaryMultElem = document.getElementById('hbr-summary-max-mult');
-  const summaryCashElem = document.getElementById('hbr-summary-cash-total');
-  const collectBtn = document.getElementById('hbr-collect-payout-btn');
+    const payoutModal = document.getElementById('hbr-payout-summary-modal');
+    const summarySongsElem = document.getElementById('hbr-summary-songs-played');
+    const summaryMultElem = document.getElementById('hbr-summary-max-mult');
+    const summaryCashElem = document.getElementById('hbr-summary-cash-total');
+    const collectBtn = document.getElementById('hbr-collect-payout-btn');
 
-  function updateMultiplier() {
-    if (sessionSongsCount >= 6) currentMultiplier = 5;
-    else if (sessionSongsCount >= 4) currentMultiplier = 3;
-    else if (sessionSongsCount >= 2) currentMultiplier = 2;
-    else currentMultiplier = 1;
+    function updateMultiplier() {
+      if (sessionSongsCount >= 6) currentMultiplier = 5;
+      else if (sessionSongsCount >= 4) currentMultiplier = 3;
+      else if (sessionSongsCount >= 2) currentMultiplier = 2;
+      else currentMultiplier = 1;
 
-    if (currentMultiplier > maxMultiplierReached) {
-      maxMultiplierReached = currentMultiplier;
+      if (currentMultiplier > maxMultiplierReached) maxMultiplierReached = currentMultiplier;
+
+      if (streakMultElem) {
+        streakMultElem.textContent = currentMultiplier + 'x MULTIPLIER' + (currentMultiplier === 5 ? ' 🔥' : '');
+        streakMultElem.style.color = currentMultiplier === 5 ? '#f59e0b' : (currentMultiplier >= 3 ? '#a855f7' : '#4ade80');
+      }
     }
 
-    if (streakMultElem) {
-      streakMultElem.textContent = currentMultiplier + 'x MULTIPLIER' + (currentMultiplier === 5 ? ' 🔥' : '');
-      streakMultElem.style.color = currentMultiplier === 5 ? '#f59e0b' : (currentMultiplier >= 3 ? '#a855f7' : '#4ade80');
-    }
-  }
-
-  function startListeningStreakTicker() {
-    if (streakTicker) clearInterval(streakTicker);
-    streakTicker = setInterval(function() {
-      if (typeof isPlaying !== 'undefined' && isPlaying) {
+    window.startListeningStreakTicker = function() {
+      if (streakTicker) clearInterval(streakTicker);
+      streakTicker = setInterval(function() {
         const baseTick = 0.05;
         sessionPendingCash += (baseTick * currentMultiplier);
+        if (streakCashElem) streakCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
+      }, 3000);
+    };
 
-        if (streakCashElem) {
-          streakCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
-        }
-      }
-    }, 3000);
-  }
+    window.stopListeningStreakTicker = function() {
+      if (streakTicker) clearInterval(streakTicker);
+    };
 
-  function stopListeningStreakTicker() {
-    if (streakTicker) clearInterval(streakTicker);
-  }
+    window.handleTrackCompletedForStreak = function() {
+      sessionSongsCount++;
+      if (streakCountElem) streakCountElem.textContent = sessionSongsCount;
+      updateMultiplier();
+    };
 
-  function handleTrackCompletedForStreak() {
-    sessionSongsCount++;
-    if (streakCountElem) streakCountElem.textContent = sessionSongsCount;
-    updateMultiplier();
-  }
-
-  function triggerSessionPayoutSummary() {
-    stopListeningStreakTicker();
-
-    if (sessionPendingCash > 0) {
-      if (summarySongsElem) summarySongsElem.textContent = sessionSongsCount.toLocaleString();
-      if (summaryMultElem) summaryMultElem.textContent = maxMultiplierReached + 'x';
-      if (summaryCashElem) summaryCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
-      if (payoutModal) payoutModal.style.display = 'flex';
-    }
-  }
-
-  if (collectBtn) {
-    collectBtn.addEventListener('click', function() {
+    window.triggerSessionPayoutSummary = function() {
+      window.stopListeningStreakTicker();
       if (sessionPendingCash > 0) {
-        if (typeof storeCashTotal !== 'undefined') {
-          storeCashTotal += sessionPendingCash;
-        }
-
-        if (typeof saveEverything === 'function') saveEverything();
-        if (typeof updateCashUI === 'function') updateCashUI();
-
-        sessionPendingCash = 0.00;
-        sessionSongsCount = 0;
-        currentMultiplier = 1;
-        maxMultiplierReached = 1;
-
-        if (streakCountElem) streakCountElem.textContent = '0';
-        if (streakCashElem) streakCashElem.textContent = '$0.00';
-        updateMultiplier();
+        if (summarySongsElem) summarySongsElem.textContent = sessionSongsCount.toLocaleString();
+        if (summaryMultElem) summaryMultElem.textContent = maxMultiplierReached + 'x';
+        if (summaryCashElem) summaryCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
+        if (payoutModal) payoutModal.style.display = 'flex';
       }
+    };
 
-      if (payoutModal) payoutModal.style.display = 'none';
-    });
-  }
+    if (collectBtn) {
+      collectBtn.addEventListener('click', function() {
+        if (sessionPendingCash > 0) {
+          if (typeof storeCashTotal !== 'undefined') storeCashTotal += sessionPendingCash;
+          if (typeof saveEverything === 'function') saveEverything();
+          if (typeof updateCashUI === 'function') updateCashUI();
+
+          sessionPendingCash = 0.00;
+          sessionSongsCount = 0;
+          currentMultiplier = 1;
+          maxMultiplierReached = 1;
+
+          if (streakCountElem) streakCountElem.textContent = '0';
+          if (streakCashElem) streakCashElem.textContent = '$0.00';
+          updateMultiplier();
+        }
+        if (payoutModal) payoutModal.style.display = 'none';
+      });
+    }
+  })();
 
 
 </script>
