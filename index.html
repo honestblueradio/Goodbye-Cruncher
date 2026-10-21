@@ -425,27 +425,6 @@
         </div>
       </div>
     </div>
-    
-  <!-- HOURLY SONG BOUNTY BANNER -->
-  <div id="hbr-hourly-bounty-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(4, 120, 87, 0.28) 100%); border: 2px solid #10b981; border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 20px rgba(16,185,129,0.3);">
-    <div style="font-size: 11px; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">
-      🎁 HOURLY SONG BOUNTY
-    </div>
-    <div id="hbr-bounty-text" style="font-size: 12px; font-weight: 700; color: #ffffff; margin-bottom: 8px;">
-      Listen to <strong id="hbr-bounty-song-title" style="color: #a7f3d0;">...</strong> to claim a cash bonus!
-    </div>
-    <div style="display: flex; justify-content: center; gap: 8px; align-items: center;">
-      <button id="hbr-play-bounty-btn" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 8px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(16,185,129,0.4);">
-        ▶ PLAY BOUNTY SONG
-      </button>
-      <button id="hbr-claim-bounty-btn" style="background: #374151; border: none; border-radius: 8px; color: #9ca3af; font-size: 10px; font-weight: 800; padding: 6px 12px; cursor: not-allowed;" disabled>
-        🔒 LISTEN TO CLAIM
-      </button>
-    </div>
-    <div id="hbr-bounty-timer" style="font-size: 9px; color: #9ca3af; margin-top: 6px;">
-      New song bounty unlocks in <span id="hbr-bounty-time-left">60:00</span>
-    </div>
-  </div>
 
     <!-- Interactive Popped Counter & Mode Toggle Bar -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap;">
@@ -1080,7 +1059,7 @@
     }
 
     // Master Broadcast Tracks
-    window.currentMasterTracks = [
+    const masterBroadcastTracks = [
       { id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
       { id: '4eU3OZFhuHs', name: 'Dice On The Table' },
       { id: 'KE639OtYFT0', name: 'Created To Be Creative' },
@@ -3513,6 +3492,7 @@
 
     function startNativeSpin() { if (record && isPlaying && !isDragging) record.classList.add('hbr-spinning-native'); }
     function stopNativeSpin() { if (record) record.classList.remove('hbr-spinning-native'); }
+
     function triggerPlayState() {
       isPlaying = true;
       if (tonearm) tonearm.style.transform = 'rotate(0deg)';
@@ -3666,78 +3646,5 @@
     // Continuous background sync every 3 seconds so earnings are never lost on iOS
     setInterval(saveFireworksAndCash, 3000);
   })();
-  
-  // --- HOURLY SONG BOUNTY CONTROLLER ---
-let bountySongIndex = -1;
-let bountyClaimed = false;
-let bountyListeningTime = 0;
-let bountyTimer = null;
-
-function getHourlySeed() {
-  const now = new Date();
-  return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '-' + now.getHours();
-}
-
-function initHourlyBounty() {
-  const tracks = window.currentMasterTracks || masterBroadcastTracks;
-  if (!tracks || tracks.length === 0) return;
-
-  const currentSeed = getHourlySeed();
-  const lastClaimedSeed = localStorage.getItem('hbr_bounty_claimed_seed');
-  bountyClaimed = (lastClaimedSeed === currentSeed);
-
-  let seedNum = 0;
-  for (let i = 0; i < currentSeed.length; i++) {
-    seedNum += currentSeed.charCodeAt(i);
-  }
-  bountySongIndex = seedNum % tracks.length;
-
-  const bountySong = tracks[bountySongIndex];
-  const titleElem = document.getElementById('hbr-bounty-song-title');
-  const claimBtn = document.getElementById('hbr-claim-bounty-btn');
-
-  if (titleElem && bountySong) {
-    titleElem.textContent = bountySong.name;
-  }
-
-  if (claimBtn) {
-    if (bountyClaimed) {
-      claimBtn.textContent = '✅ CLAIMED THIS HOUR';
-      claimBtn.style.background = '#1f2937';
-      claimBtn.style.color = '#4ade80';
-      claimBtn.disabled = true;
-    } else {
-      claimBtn.textContent = '🔒 LISTEN 15s TO CLAIM';
-      claimBtn.style.background = '#374151';
-      claimBtn.style.color = '#9ca3af';
-      claimBtn.disabled = true;
-    }
-  }
-}
-
-// Hook up event listeners once DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(initHourlyBounty, 1000);
-
-    // Play Bounty Song Button
-  const playBountyBtn = document.getElementById('hbr-play-bounty-btn');
-  if (playBountyBtn) {
-    playBountyBtn.addEventListener('click', function() {
-      const tracks = window.currentMasterTracks || [];
-      if (bountySongIndex >= 0 && tracks[bountySongIndex]) {
-        // Ensure activePlaylist points to the master tracks array
-        activePlaylist = tracks;
-        activeQueueSource = null;
-        
-        // Trigger core track selection and playback
-        if (typeof selectAndPlayTrack === 'function') {
-          selectAndPlayTrack(bountySongIndex);
-        }
-        
-        startBountyTracker();
-      }
-    });
-  }
-
 
 </script>
