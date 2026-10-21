@@ -1162,6 +1162,13 @@
     let userOwnedStores = { blockbuster: 0, toysrus: 0, kbtoys: 0 };
     let userOwnedMovies = {};
     let userOwnedCharacters = { mollydog: 0 };
+  
+  // --- CONTINUOUS LISTENING STREAK VARIABLES ---
+  let sessionSongsCount = 0;
+  let sessionPendingCash = 0.00;
+  let currentMultiplier = 1;
+  let maxMultiplierReached = 1;
+  let streakTicker = null;
 
     let userProfileData = {
       name: '',
@@ -3692,7 +3699,6 @@
     const summaryCashElem = document.getElementById('hbr-summary-cash-total');
     const collectBtn = document.getElementById('hbr-collect-payout-btn');
 
-    // Update Streak Multiplier based on songs completed
     function updateMultiplier() {
       if (sessionSongsCount >= 6) currentMultiplier = 5;
       else if (sessionSongsCount >= 4) currentMultiplier = 3;
@@ -3709,12 +3715,11 @@
       }
     }
 
-    // Passive ticker: earn small tick of cash every 3 seconds while audio plays
     function startListeningStreakTicker() {
       if (streakTicker) clearInterval(streakTicker);
       streakTicker = setInterval(function() {
         if (typeof isPlaying !== 'undefined' && isPlaying) {
-          const baseTick = 0.05; // Base cash tick per interval
+          const baseTick = 0.05;
           sessionPendingCash += (baseTick * currentMultiplier);
 
           if (streakCashElem) {
@@ -3728,15 +3733,13 @@
       if (streakTicker) clearInterval(streakTicker);
     }
 
-    // Trigger on song completion to increment streak song counter
     window.handleTrackCompletedForStreak = function() {
       sessionSongsCount++;
       if (streakCountElem) streakCountElem.textContent = sessionSongsCount;
       updateMultiplier();
     };
 
-    // Show payout popup when player pauses or stops
-    window.triggerSessionPayoutSummary = function() {
+    function triggerSessionPayoutSummary() {
       stopListeningStreakTicker();
 
       if (sessionPendingCash > 0) {
@@ -3745,9 +3748,8 @@
         if (summaryCashElem) summaryCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
         if (payoutModal) payoutModal.style.display = 'flex';
       }
-    };
+    }
 
-    // Hook up Collect Cash Button
     if (collectBtn) {
       collectBtn.addEventListener('click', function() {
         if (sessionPendingCash > 0) {
@@ -3758,7 +3760,6 @@
           if (typeof saveEverything === 'function') saveEverything();
           if (typeof updateCashUI === 'function') updateCashUI();
 
-          // Reset streak session state
           sessionPendingCash = 0.00;
           sessionSongsCount = 0;
           currentMultiplier = 1;
@@ -3773,10 +3774,9 @@
       });
     }
 
-    // Connect into main play/pause toggle button
-    const toggleBtn = document.getElementById('hbr-toggle');
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', function() {
+    const toggleBtnElem = document.getElementById('hbr-toggle');
+    if (toggleBtnElem) {
+      toggleBtnElem.addEventListener('click', function() {
         setTimeout(function() {
           if (typeof isPlaying !== 'undefined' && isPlaying) {
             startListeningStreakTicker();
@@ -3786,17 +3786,7 @@
         }, 100);
       });
     }
-
-    // Track state change listener for YouTube player
-    if (typeof onPlayerStateChange === 'function') {
-      const origStateChange = onPlayerStateChange;
-      window.onPlayerStateChange = function(event) {
-        origStateChange(event);
-        if (event.data === YT.PlayerState.ENDED) {
-          window.handleTrackCompletedForStreak();
-        }
-      };
-    }
   })();
+
 
 </script>
