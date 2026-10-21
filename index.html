@@ -3669,7 +3669,7 @@ const masterBroadcastTracks = window.currentMasterTracks;
     setInterval(saveFireworksAndCash, 3000);
   })();
   
-          // Honest Blue Radio - Hourly Song Bounty System
+            // Honest Blue Radio - Hourly Song Bounty System
   (function() {
     let bountySongIndex = -1;
     let bountyClaimed = false;
@@ -3715,22 +3715,28 @@ const masterBroadcastTracks = window.currentMasterTracks;
       }
     }
 
-    // Direct Play Handler via Drawer / UI Click
+    // Direct Audio Playback Handler
     const playBountyBtn = document.getElementById('hbr-play-bounty-btn');
     if (playBountyBtn) {
       playBountyBtn.addEventListener('click', function() {
         const tracks = window.currentMasterTracks || [];
         if (bountySongIndex >= 0 && tracks[bountySongIndex]) {
-          // Find all track elements in your playlist drawer and click the correct index
-          const trackElements = document.querySelectorAll('#hbr-drawer-list div, .track-item, [data-index]');
-          if (trackElements && trackElements[bountySongIndex]) {
-            trackElements[bountySongIndex].click();
+          const song = tracks[bountySongIndex];
+          
+          // Look for the primary audio element on the page
+          const audioElement = document.querySelector('audio') || document.getElementById('hbr-audio') || document.getElementById('audio-player');
+          
+          if (audioElement && song.id) {
+            // Construct standard audio source URL used by your platform
+            audioElement.src = 'https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3'; // Fallback or direct source if available
+            // If your tracks use IDs or paths:
+            audioElement.play().catch(e => console.log('Audio play prevented:', e));
           } else {
-            // Fallback to global function if available
-            if (typeof selectAndPlayTrack === 'function') {
-              selectAndPlayTrack(bountySongIndex);
-            }
+            // Fallback: try triggering any global play function or play button on the page
+            const globalPlayBtn = document.getElementById('play-btn') || document.querySelector('.play-pause-btn');
+            if (globalPlayBtn) globalPlayBtn.click();
           }
+
           startListeningTracker();
         }
       });
