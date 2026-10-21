@@ -3748,8 +3748,8 @@
       }
     };
 
-    if (collectBtn) {
-      collectBtn.addEventListener('click', function() {
+        if (collectBtn) {
+      collectBtn.onclick = function() {
         if (sessionPendingCash > 0) {
           if (typeof storeCashTotal !== 'undefined') {
             storeCashTotal += sessionPendingCash;
@@ -3760,6 +3760,8 @@
           if (typeof updateCashUI === 'function') {
             updateCashUI();
           }
+          const storeCashCountSpan = document.getElementById('hbr-store-cash-count');
+          if (storeCashCountSpan) storeCashCountSpan.textContent = '$' + storeCashTotal.toFixed(2);
 
           sessionPendingCash = 0.00;
           sessionSongsCount = 0;
@@ -3773,9 +3775,9 @@
         if (payoutModal) {
           payoutModal.style.display = 'none';
         }
-      });
+      };
     }
-  })();
+
 
 
 </script>
