@@ -3748,8 +3748,8 @@
       }
     };
 
-        if (collectBtn) {
-      collectBtn.onclick = function() {
+            if (collectBtn) {
+      collectBtn.addEventListener('click', function() {
         if (sessionPendingCash > 0) {
           if (typeof storeCashTotal !== 'undefined') {
             storeCashTotal += sessionPendingCash;
@@ -3775,9 +3775,8 @@
         if (payoutModal) {
           payoutModal.style.display = 'none';
         }
-      };
+      });
     }
-
 
 
 </script>
