@@ -3658,39 +3658,68 @@
 
   })();
 
-  // Honest Blue Radio Drawer Search & iPhone Auto-Save Shield
+    // --- CONTINUOUS LISTENING STREAK & PAYOUT CONTROLLER ---
   (function() {
-    const searchInput = document.getElementById('hbr-drawer-search');
-    if (searchInput) {
-      searchInput.addEventListener('input', function() {
-        let query = searchInput.value.toLowerCase().trim();
-        let trackItems = document.querySelectorAll('#hbr-drawer-list span, .hbr-track-item, [data-track-item]');
+    let sessionSongsCount = 0;
+    let sessionPendingCash = 0.00;
+    let currentMultiplier = 1;
+    let maxMultiplierReached = 1;
+    let streakTicker = null;
 
-        trackItems.forEach(item => {
-          let text = item.textContent ? item.textContent.toLowerCase() : '';
-          let row = item.closest('div, li, tr') || item;
-          if (query === '' || text.includes(query)) {
-            row.style.display = '';
-          } else {
-            row.style.display = 'none';
-          }
-        });
-      });
+    const streakCountElem = document.getElementById('hbr-streak-song-count');
+    const streakMultElem = document.getElementById('hbr-streak-multiplier');
+    const streakCashElem = document.getElementById('hbr-streak-pending-cash');
+
+    const payoutModal = document.getElementById('hbr-payout-summary-modal');
+    const summarySongsElem = document.getElementById('hbr-summary-songs-played');
+    const summaryMultElem = document.getElementById('hbr-summary-max-mult');
+    const summaryCashElem = document.getElementById('hbr-summary-cash-total');
+    const collectBtn = document.getElementById('hbr-collect-payout-btn');
+
+    function updateMultiplier() {
+      if (sessionSongsCount >= 6) currentMultiplier = 5;
+      else if (sessionSongsCount >= 4) currentMultiplier = 3;
+      else if (sessionSongsCount >= 2) currentMultiplier = 2;
+      else currentMultiplier = 1;
+
+      if (currentMultiplier > maxMultiplierReached) maxMultiplierReached = currentMultiplier;
+
+      if (streakMultElem) {
+        streakMultElem.textContent = currentMultiplier + 'x MULTIPLIER' + (currentMultiplier === 5 ? ' 🔥' : '');
+        streakMultElem.style.color = currentMultiplier === 5 ? '#f59e0b' : (currentMultiplier >= 3 ? '#a855f7' : '#4ade80');
+      }
     }
 
-    function saveFireworksAndCash() {
-      if (typeof autoBankUnsavedNotes === 'function') autoBankUnsavedNotes();
-      if (typeof saveEverything === 'function') saveEverything();
-    }
+    window.startListeningStreakTicker = function() {
+      if (streakTicker) clearInterval(streakTicker);
+      streakTicker = setInterval(function() {
+        const baseTick = 0.05; 
+        sessionPendingCash += (baseTick * currentMultiplier);
+        if (streakCashElem) streakCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
+      }, 3000);
+    };
 
-    window.addEventListener('pagehide', saveFireworksAndCash);
-    window.addEventListener('beforeunload', saveFireworksAndCash);
-    document.addEventListener('visibilitychange', function() {
-      if (document.visibilityState === 'hidden') saveFireworksAndCash();
-    });
-  })();
+    window.stopListeningStreakTicker = function() {
+      if (streakTicker) clearInterval(streakTicker);
+    };
 
-          if (collectBtn) {
+    window.handleTrackCompletedForStreak = function() {
+      sessionSongsCount++;
+      if (streakCountElem) streakCountElem.textContent = sessionSongsCount;
+      updateMultiplier();
+    };
+
+    window.triggerSessionPayoutSummary = function() {
+      window.stopListeningStreakTicker();
+      if (sessionPendingCash > 0) {
+        if (summarySongsElem) summarySongsElem.textContent = sessionSongsCount.toLocaleString();
+        if (summaryMultElem) summaryMultElem.textContent = maxMultiplierReached + 'x';
+        if (summaryCashElem) summaryCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
+        if (payoutModal) payoutModal.style.display = 'flex';
+      }
+    };
+
+    if (collectBtn) {
       collectBtn.addEventListener('click', function() {
         if (sessionPendingCash > 0) {
           storeCashTotal += sessionPendingCash;
@@ -3719,5 +3748,6 @@
         }
       });
     }
+  })();
 
 </script>
