@@ -1080,7 +1080,8 @@
     }
 
     // Master Broadcast Tracks
-    const masterBroadcastTracks = [
+    window.currentMasterTracks = [
+const masterBroadcastTracks = window.currentMasterTracks;
       { id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
       { id: '4eU3OZFhuHs', name: 'Dice On The Table' },
       { id: 'KE639OtYFT0', name: 'Created To Be Creative' },
@@ -3668,7 +3669,7 @@
     setInterval(saveFireworksAndCash, 3000);
   })();
   
-    // Honest Blue Radio - Hourly Song Bounty System
+      // Honest Blue Radio - Hourly Song Bounty System
   (function() {
     let bountySongIndex = -1;
     let bountyClaimed = false;
@@ -3677,26 +3678,29 @@
 
     function getHourlySeed() {
       const now = new Date();
-      return now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + '-' + now.getHours();
+      return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '-' + now.getHours();
     }
 
     function initHourlyBounty() {
-      if (typeof currentMasterTracks === 'undefined' || currentMasterTracks.length === 0) return;
+      const tracks = window.currentMasterTracks || (typeof masterBroadcastTracks !== 'undefined' ? masterBroadcastTracks : []);
+      if (!tracks || tracks.length === 0) {
+        setTimeout(initHourlyBounty, 500);
+        return;
+      }
 
       const currentSeed = getHourlySeed();
       const lastClaimedSeed = localStorage.getItem('hbr_bounty_claimed_seed');
 
-      // Check if user already claimed for this specific hour
       bountyClaimed = (lastClaimedSeed === currentSeed);
 
-      // Generate a deterministic random index based on the current hour so all users get a fun song each hour
+      // Generate deterministic random index based on current seed
       let seedNum = 0;
       for (let i = 0; i < currentSeed.length; i++) {
         seedNum += currentSeed.charCodeAt(i);
       }
-      bountySongIndex = seedNum % currentMasterTracks.length;
+      bountySongIndex = seedNum % tracks.length;
 
-      const bountySong = currentMasterTracks[bountySongIndex];
+      const bountySong = tracks[bountySongIndex];
       const titleElem = document.getElementById('hbr-bounty-song-title');
       const claimBtn = document.getElementById('hbr-claim-bounty-btn');
 
@@ -3721,25 +3725,30 @@
       }
     }
 
-    // Handle play button click
+    // Play Bounty Song Button
     const playBountyBtn = document.getElementById('hbr-play-bounty-btn');
     if (playBountyBtn) {
       playBountyBtn.addEventListener('click', function() {
-        if (bountySongIndex >= 0 && typeof selectAndPlayTrack === 'function') {
-          selectAndPlayTrack(bountySongIndex);
+        const tracks = window.currentMasterTracks || (typeof masterBroadcastTracks !== 'undefined' ? masterBroadcastTracks : []);
+        if (bountySongIndex >= 0 && tracks && tracks[bountySongIndex]) {
+          // Play the song via the player
+          if (typeof selectAndPlayTrack === 'function') {
+            selectAndPlayTrack(bountySongIndex);
+          } else if (window.selectAndPlayTrack) {
+            window.selectAndPlayTrack(bountySongIndex);
+          }
           startListeningTracker();
         }
       });
     }
 
-    // Track 15 seconds of playback before enabling claim button
     function startListeningTracker() {
       if (bountyClaimed) return;
       bountyListeningTime = 0;
       if (bountyTimer) clearInterval(bountyTimer);
 
       bountyTimer = setInterval(function() {
-        if (typeof isPlaying !== 'undefined' && isPlaying && typeof currentTrackIndex !== 'undefined' && currentTrackIndex === bountySongIndex) {
+        if (typeof isPlaying !== 'undefined' && isPlaying) {
           bountyListeningTime++;
           const claimBtn = document.getElementById('hbr-claim-bounty-btn');
           
@@ -3757,13 +3766,12 @@
       }, 1000);
     }
 
-    // Handle cash claim
+    // Claim Cash Button
     const claimBountyBtn = document.getElementById('hbr-claim-bounty-btn');
     if (claimBountyBtn) {
       claimBountyBtn.addEventListener('click', function() {
         if (bountyClaimed || claimBountyBtn.disabled) return;
 
-        // Generate a random cash reward between $0.50 and $5.00
         const randomReward = parseFloat((Math.random() * 4.50 + 0.50).toFixed(2));
 
         if (typeof storeCashTotal !== 'undefined') {
@@ -3773,21 +3781,14 @@
         bountyClaimed = true;
         localStorage.setItem('hbr_bounty_claimed_seed', getHourlySeed());
 
-        // Trigger permanent save
-        if (typeof saveEverything === 'function') {
-          saveEverything();
-        }
-        if (typeof updateCashUI === 'function') {
-          updateCashUI();
-        }
+        if (typeof saveEverything === 'function') saveEverything();
+        if (typeof updateCashUI === 'function') updateCashUI();
 
         alert('🎉 HOURLY BOUNTY CLAIMED!\n\nYou earned $' + randomReward.toFixed(2) + ' cash!');
-
         initHourlyBounty();
       });
     }
 
-    // Update countdown timer to next hour
     function updateCountdown() {
       const now = new Date();
       const mins = 59 - now.getMinutes();
@@ -3796,15 +3797,13 @@
       if (timerElem) {
         timerElem.textContent = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
       }
-      
-      // Reset if top of the hour hits
       if (mins === 0 && secs === 0) {
         setTimeout(initHourlyBounty, 1500);
       }
     }
 
     setInterval(updateCountdown, 1000);
-    setTimeout(initHourlyBounty, 1000);
+    setTimeout(initHourlyBounty, 300);
   })();
 
 
