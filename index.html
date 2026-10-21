@@ -3669,7 +3669,7 @@ const masterBroadcastTracks = window.currentMasterTracks;
     setInterval(saveFireworksAndCash, 3000);
   })();
   
-        // Honest Blue Radio - Hourly Song Bounty System
+          // Honest Blue Radio - Hourly Song Bounty System
   (function() {
     let bountySongIndex = -1;
     let bountyClaimed = false;
@@ -3715,26 +3715,20 @@ const masterBroadcastTracks = window.currentMasterTracks;
       }
     }
 
-    // Direct Play Handler
+    // Direct Play Handler via Drawer / UI Click
     const playBountyBtn = document.getElementById('hbr-play-bounty-btn');
     if (playBountyBtn) {
       playBountyBtn.addEventListener('click', function() {
         const tracks = window.currentMasterTracks || [];
         if (bountySongIndex >= 0 && tracks[bountySongIndex]) {
-          // Try multiple common playback methods used in your player
-          if (typeof selectAndPlayTrack === 'function') {
-            selectAndPlayTrack(bountySongIndex);
-          } else if (typeof playTrack === 'function') {
-            playTrack(bountySongIndex);
+          // Find all track elements in your playlist drawer and click the correct index
+          const trackElements = document.querySelectorAll('#hbr-drawer-list div, .track-item, [data-index]');
+          if (trackElements && trackElements[bountySongIndex]) {
+            trackElements[bountySongIndex].click();
           } else {
-            // Fallback: simulate click on the track drawer item if available
-            const trackItems = document.querySelectorAll('.track-item, [data-track-index]');
-            if (trackItems[bountySongIndex]) {
-              trackItems[bountySongIndex].click();
-            } else {
-              // Ultimate fallback: trigger main play/pause if loaded
-              const mainPlay = document.getElementById('hbr-play-btn') || document.querySelector('button');
-              if (mainPlay) mainPlay.click();
+            // Fallback to global function if available
+            if (typeof selectAndPlayTrack === 'function') {
+              selectAndPlayTrack(bountySongIndex);
             }
           }
           startListeningTracker();
