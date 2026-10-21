@@ -3599,26 +3599,48 @@
 
   })();
   
-      // Honest Blue Radio Drawer Search Logic
+        // Honest Blue Radio Drawer Search & iPhone Auto-Save Shield
   (function() {
+    // 1. Drawer Search Logic
     const searchInput = document.getElementById('hbr-drawer-search');
-    if (!searchInput) return;
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        let query = searchInput.value.toLowerCase().trim();
+        let trackItems = document.querySelectorAll('#hbr-drawer-list span, .hbr-track-item, [data-track-item]');
 
-    searchInput.addEventListener('input', function() {
-      let query = searchInput.value.toLowerCase().trim();
-      let trackItems = document.querySelectorAll('#hbr-drawer-list span, .hbr-track-item, [data-track-item]');
-
-      trackItems.forEach(item => {
-        let text = item.textContent ? item.textContent.toLowerCase() : '';
-        let row = item.closest('div, li, tr') || item;
-        
-        if (query === '' || text.includes(query)) {
-          row.style.display = '';
-        } else {
-          row.style.display = 'none';
-        }
+        trackItems.forEach(item => {
+          let text = item.textContent ? item.textContent.toLowerCase() : '';
+          let row = item.closest('div, li, tr') || item;
+          
+          if (query === '' || text.includes(query)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
       });
+    }
+
+    // 2. iPhone Background Auto-Save Shield for Fireworks & Cash
+    function saveFireworksAndCash() {
+      if (typeof autoBankUnsavedNotes === 'function') {
+        autoBankUnsavedNotes();
+      }
+      if (typeof saveEverything === 'function') {
+        saveEverything();
+      }
+    }
+
+    window.addEventListener('pagehide', saveFireworksAndCash);
+    window.addEventListener('beforeunload', saveFireworksAndCash);
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        saveFireworksAndCash();
+      }
     });
+
+    // Continuous background sync every 3 seconds so earnings are never lost on iOS
+    setInterval(saveFireworksAndCash, 3000);
   })();
 
 </script>
