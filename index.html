@@ -3780,8 +3780,6 @@
           triggerPlayState();
           if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
           else selectAndPlayTrack(currentTrackIndex);
-          
-          // ADD THESE TWO LINES HERE:
           if (typeof startListeningStreakTicker === 'function') startListeningStreakTicker();
 
     } else {
@@ -3795,7 +3793,6 @@
       toggleBtn.innerHTML = '▶';
       toggleBtn.style.background = '#3b82f6';
       if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
-
       if (typeof triggerSessionPayoutSummary === 'function') triggerSessionPayoutSummary();
     }
 
