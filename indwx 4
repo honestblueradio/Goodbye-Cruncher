@@ -1,5 +1,5 @@
 <!-- ====================================================================== -->
-<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.1 PAGE 4) -->
+<!-- HONEST BLUE RADIO: MASTER COMPREHENSIVE COMPONENT (VERSION 5.2 PAGE 4) -->
 <!-- ====================================================================== -->
 
 <!-- Scrollbar & Advanced Animation Styles -->
@@ -254,6 +254,29 @@
     <div style="font-size: 16px; margin-top: 2px; pointer-events: auto;">🌼🌻🌸🌺🌷</div>
   </div>
 
+  <!-- SCHEDULED FIREWORKS LIVE BANNER (Visible strictly 6:00-6:05 PM ET and 9:00-9:05 PM ET) -->
+  <div id="hbr-fireworks-show-banner" style="display: none; position: relative; z-index: 26; background: linear-gradient(135deg, rgba(249, 115, 22, 0.25) 0%, rgba(234, 88, 12, 0.35) 100%); border: 2px solid #f97316; border-radius: 14px; padding: 10px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 25px rgba(249,115,22,0.5); pointer-events: auto;">
+    <div style="font-size: 12px; font-weight: 900; color: #fdba74; text-transform: uppercase; letter-spacing: 1px;">
+      🎆 SCHEDULED FIREWORKS SHOW ($1.23 / SHOT) 🎆
+    </div>
+    <div style="font-size: 10px; color: #fef08a; margin-top: 2px; font-weight: 700;">
+      Tap anywhere on screen to shoot off fireworks and earn cash!
+    </div>
+  </div>
+
+  <!-- FIREWORKS EARNINGS SUMMARY MODAL (Appears at end of show) -->
+  <div id="hbr-fireworks-summary-modal" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17,17,21,0.96); backdrop-filter: blur(10px); z-index: 200; padding: 20px; box-sizing: border-box; text-align: center; flex-direction: column; justify-content: center; align-items: center;">
+    <div style="background: #1c1c28; border: 2px solid #f97316; border-radius: 16px; padding: 20px; max-width: 320px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); text-align: center;">
+      <div style="font-size: 24px; margin-bottom: 6px;">🎆🎇🎉</div>
+      <div style="font-size: 14px; font-weight: 900; color: #f97316; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;">Fireworks Show Complete!</div>
+      <p style="font-size: 11px; color: #d1d5db; line-height: 1.5; margin-bottom: 14px;">
+        You shot off <strong id="hbr-summary-shots" style="color: #60a5fa;">0</strong> fireworks during the show and earned:
+      </p>
+      <div style="font-size: 20px; font-weight: 900; color: #4ade80; margin-bottom: 16px;" id="hbr-summary-earned">$0.00</div>
+      <button id="hbr-close-summary-btn" style="background: linear-gradient(135deg, #f97316 0%, #c2410c 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 8px 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(249,115,22,0.4);">COLLECT CASH &amp; CLOSE</button>
+    </div>
+  </div>
+
   <!-- FLOATING HEART STREAM LAYER -->
   <div id="hbr-reaction-stream-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 90; overflow: hidden;"></div>
 
@@ -264,7 +287,7 @@
   <div id="hbr-dog-companion" style="display: none; position: absolute; bottom: 18px; left: 20px; font-size: 26px; z-index: 85; pointer-events: none; user-select: none; transition: transform 0.4s ease, bottom 0.4s ease; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8);">🐕</div>
 
   <!-- Fireworks Overlay Canvas -->
-  <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: auto; z-index: 100; display: none;"></canvas>
+  <canvas id="hbr-fireworks-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; display: none;"></canvas>
 
   <!-- Native PiP Audio Bypass Container -->
   <div style="display: none;">
@@ -363,6 +386,12 @@
               <button id="hbr-scroll-mode-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">📚 Scroll</button>
             </div>
           </div>
+            <!-- Honest Blue Radio Drawer Sticky Search Bar -->
+  <div style="padding: 8px 12px; background: #161622; border-bottom: 1px solid #2e2e3e; position: sticky; top: 0; z-index: 10;">
+    <div style="display: flex; gap: 6px;">
+     <input id="hbr-drawer-search" type="text" placeholder="Search drawer tracks..." onfocus="if(typeof toggleScrollMode === 'function') toggleScrollMode();" style="flex: 1; background: rgba(255, 255, 255, 0.05); border: 1px solid #2e2e3e; border-radius: 6px; padding: 6px 10px; color: #ffffff; font-size: 11px; outline: none;" />
+    </div>
+  </div>
           <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
         </div>
         <!-- Dedicated Dual Playlists & Top 3 Launch Center -->
@@ -396,6 +425,27 @@
         </div>
       </div>
     </div>
+    
+  <!-- HOURLY SONG BOUNTY BANNER -->
+  <div id="hbr-hourly-bounty-card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(4, 120, 87, 0.28) 100%); border: 2px solid #10b981; border-radius: 14px; padding: 12px 14px; margin-bottom: 14px; text-align: center; box-shadow: 0 0 20px rgba(16,185,129,0.3);">
+    <div style="font-size: 11px; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">
+      🎁 HOURLY SONG BOUNTY
+    </div>
+    <div id="hbr-bounty-text" style="font-size: 12px; font-weight: 700; color: #ffffff; margin-bottom: 8px;">
+      Listen to <strong id="hbr-bounty-song-title" style="color: #a7f3d0;">...</strong> to claim a cash bonus!
+    </div>
+    <div style="display: flex; justify-content: center; gap: 8px; align-items: center;">
+      <button id="hbr-play-bounty-btn" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 8px; color: #fff; font-size: 10px; font-weight: 800; padding: 6px 12px; cursor: pointer; box-shadow: 0 2px 8px rgba(16,185,129,0.4);">
+        ▶ PLAY BOUNTY SONG
+      </button>
+      <button id="hbr-claim-bounty-btn" style="background: #374151; border: none; border-radius: 8px; color: #9ca3af; font-size: 10px; font-weight: 800; padding: 6px 12px; cursor: not-allowed;" disabled>
+        🔒 LISTEN TO CLAIM
+      </button>
+    </div>
+    <div id="hbr-bounty-timer" style="font-size: 9px; color: #9ca3af; margin-top: 6px;">
+      New song bounty unlocks in <span id="hbr-bounty-time-left">60:00</span>
+    </div>
+  </div>
 
     <!-- Interactive Popped Counter & Mode Toggle Bar -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 6px; margin-bottom: 8px; flex-wrap: wrap;">
@@ -503,19 +553,6 @@
       </a>
     </div>
 
-    <!-- Interactive Heart Filling Challenge Overlay Card (Right Under Record Deck) -->
-    <div id="hbr-heart-challenge-card" style="display: none; margin: 0 auto 16px auto; background: rgba(17,17,21,0.95); border: 2px solid #ef4444; border-radius: 14px; padding: 14px 16px; max-width: 290px; box-shadow: 0 8px 24px rgba(0,0,0,0.8); text-align: center; user-select: none;">
-      <div style="font-size: 10px; font-weight: 800; color: #fca5a5; text-transform: uppercase; margin-bottom: 8px;" id="hbr-heart-title">💖 EVENING HEART CHALLENGE</div>
-      
-      <!-- Interactive Inflating Heart Container -->
-      <div id="hbr-heart-target-btn" style="position: relative; width: 90px; height: 90px; margin: 0 auto 8px auto; cursor: pointer; display: flex; align-items: center; justify-content: center;" title="Tap to pump up the heart!">
-        <div id="hbr-inflating-heart" style="font-size: 42px; transition: transform 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: scale(1); filter: drop-shadow(0 0 12px rgba(239,68,68,0.8));">❤️</div>
-      </div>
-
-      <div style="font-size: 11px; font-weight: 700; color: #fff;" id="hbr-heart-status"><span id="hbr-heart-taps-left">23</span> pumps remaining</div>
-      <div style="font-size: 9px; color: #9ca3af; margin-top: 2px;" id="hbr-heart-sub">Tap to inflate the heart until it bursts!</div>
-    </div>
-
     <!-- Companion Dog Toggle Bar (Appears when character purchased) -->
     <div id="hbr-dog-toggle-bar" style="display: none; justify-content: center; align-items: center; gap: 8px; margin-bottom: 16px;">
       <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; font-weight: 700;">Molly Companion:</span>
@@ -560,6 +597,7 @@
         <button id="hbr-christmas-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">⛄ Christmas</button>
         <button id="hbr-disney-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🎨 Jay Draws Disney</button>
         <button id="hbr-chakras-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Chakras</button>
+        <button id="hbr-calm-btn" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;">🧘 Calm</button>
       </div>
       <a href="https://youtube.com/@honestblueradio?si=FBFJfkEI2OiVEJnD" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="noopener noreferrer" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-radius: 8px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: transform 0.2s ease;" target="_blank">Catch Content ↗</a>
     </div>
@@ -746,17 +784,17 @@
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
     const purpleRainLayer = document.getElementById('hbr-purple-rain-layer');
     const birthdayBanner = document.getElementById('hbr-birthday-banner');
+    const fireworksShowBanner = document.getElementById('hbr-fireworks-show-banner');
 
     // Automatic Birthday Banner Check (October 13th every year, displays all day until midnight Eastern Time)
     function checkBirthdayBanner() {
       if (!birthdayBanner) return;
       try {
-        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', month: 'numeric', day: 'numeric', hour: 'numeric', hour12: false });
+        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', month: 'numeric', day: 'numeric' });
         let parts = formatter.formatToParts(new Date());
         let month = parseInt(parts.find(p => p.type === 'month').value, 10);
         let day = parseInt(parts.find(p => p.type === 'day').value, 10);
 
-        // October 13th (Month 10, Day 13)
         if (month === 10 && day === 13) {
           birthdayBanner.style.display = 'block';
         } else {
@@ -843,7 +881,7 @@
       });
     }
 
-    // Robust Voice Control Implementation (Fixed for mic capture conflicts)
+    // Voice Control Implementation
     const voiceToggleBtn = document.getElementById('hbr-voice-toggle');
     let recognition = null;
     let isVoiceActive = false;
@@ -858,8 +896,6 @@
 
       recognition.onresult = function(event) {
         let transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
-        console.log("Voice command heard:", transcript);
-
         if (transcript.includes('skip') || transcript.includes('next') || transcript.includes('track')) {
           if (typeof nextBtn !== 'undefined' && nextBtn) nextBtn.click();
         } else if (transcript.includes('previous') || transcript.includes('back')) {
@@ -872,7 +908,6 @@
       };
 
       recognition.onerror = function(event) {
-        console.warn("Speech recognition error:", event.error);
         if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
           alert("Microphone permission was blocked. Please check your browser settings to allow microphone access for voice control.");
           isVoiceActive = false;
@@ -920,11 +955,10 @@
       }
     }
 
-    // Zero-Config Global WebSocket Relay for Universal Cross-Device Heart Sync & Automated Broadcasts
+    // WebSocket Relay for Heart Sync
     let globalSocket = null;
     function connectGlobalRelay() {
       globalSocket = new WebSocket('wss://ws.postman-echo.com/raw');
-      
       globalSocket.onmessage = function(event) {
         try {
           let data = JSON.parse(event.data);
@@ -935,7 +969,6 @@
           }
         } catch(e) {}
       };
-
       globalSocket.onclose = function() {
         setTimeout(connectGlobalRelay, 3000);
       };
@@ -1033,13 +1066,13 @@
 
     if (appCard) {
       appCard.addEventListener('click', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal') || e.target.closest('#hbr-fireworks-canvas') || e.target.closest('#hbr-fireworks-summary-modal')) {
           return;
         }
         handleCardTap(e);
       });
       appCard.addEventListener('touchstart', function(e) {
-        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal')) {
+        if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input') || e.target.closest('#hbr-dj-container') || e.target.closest('#hbr-store-overlay') || e.target.closest('#hbr-profile-modal') || e.target.closest('#hbr-mantra-modal') || e.target.closest('#hbr-art-modal') || e.target.closest('#hbr-art-lightbox-modal') || e.target.closest('#hbr-install-modal') || e.target.closest('#hbr-fireworks-canvas') || e.target.closest('#hbr-fireworks-summary-modal')) {
           return;
         }
         handleCardTap(e);
@@ -1047,7 +1080,7 @@
     }
 
     // Master Broadcast Tracks
-    const masterBroadcastTracks = [
+    window.currentMasterTracks = [
       { id: 'WHzTume00O8', name: 'Goodbye Cruncher' },
       { id: '4eU3OZFhuHs', name: 'Dice On The Table' },
       { id: 'KE639OtYFT0', name: 'Created To Be Creative' },
@@ -1070,8 +1103,21 @@
       { id: 'Q14EtVgLv0M', name: 'Go To The Top' },
       { id: 'niyncouEjyc', name: 'Kindness and Forgetting' },
       { id: '2ppL0slpReM', name: 'Bedrock Cough' },
-      { id: 'ff8t7KYNB70', name: "I'm a Disney LIVE Streamer" },
+      { id: 'wu3Rw8y3_Zw', name: "I Dream Of A Genie" },
       { id: 'O4r9Cc3wmd4', name: 'Retired High School Science Teacher' },
+      { id: 'yidsC-EzsmU', name: 'Eighties Babies' },
+      { id: 'UALRtIA5iUQ', name: 'Right Here, Right Now Ronja Kiljan' },
+      { id: 'XE9dzihAHJo', name: 'I Signed Those Papers' },
+      { id: 'v7q46zKX-t0', name: 'Wrapped Up In A Christmas Movie' },
+      { id: 'DceTYEr2TtY', name: 'Pour Some Sugar On Me' },
+      { id: 'LlzOvlhZ0Jo', name: 'Gordy That Guy' },
+      { id: 'K8UqZGQBH3A', name: 'Mac And Cheese Anthem' },
+      { id: 'YM670O1ub-U', name: 'Boston' },
+      { id: 'i6sWs0mrJrY', name: "Guess Who's Hear?" },
+      { id: 'OUA8P47SooY', name: 'Free Is Never Free' },
+      { id: 'YQSaruiu73Q', name: "Remember Splash Mountain?" },
+      { id: 'TCSHYf1qZ44', name: "I Fell In Love With The Sunshine" },
+      { id: 'uA-jR1QRTSE', name: "Finding Love In New York City" },
       { id: 'PPK-QMAYvcI', name: 'Flip The Boss Off', explicit: true }
     ];
 
@@ -1102,7 +1148,6 @@
     let currentDrawerPage = 1;
     const tracksPerPage = 6;
 
-    // Bank Notes & Stores State Data
     let bankedNotesTotal = 50;
     let storeCashTotal = 0.00;
     let unrewoundTapesCount = 0;
@@ -1141,14 +1186,12 @@
     function getDailyMantras() {
       let now = new Date();
       let dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-      
       let idx1 = dayOfYear % masterMantrasPool.length;
       let idx2 = (dayOfYear * 3 + 1) % masterMantrasPool.length;
       let idx3 = (dayOfYear * 7 + 2) % masterMantrasPool.length;
 
       if (idx2 === idx1) idx2 = (idx1 + 1) % masterMantrasPool.length;
       if (idx3 === idx1 || idx3 === idx2) idx3 = (idx2 + 1) % masterMantrasPool.length;
-
       return [masterMantrasPool[idx1], masterMantrasPool[idx2], masterMantrasPool[idx3]];
     }
 
@@ -1181,7 +1224,6 @@
         let isOnSale = Math.random() < 0.35;
         let discount = isOnSale ? (Math.floor(Math.random() * 3) + 2) * 10 : 0;
         let finalPrice = isOnSale ? Math.floor(base * (1 - discount / 100)) : base;
-
         currentStorePrices[store.id] = { price: finalPrice, originalPrice: base, isOnSale: isOnSale, discount: discount };
       });
     }
@@ -1197,7 +1239,6 @@
       return count;
     }
 
-    // BULLETPROOF PERSISTENT SAVE ENGINE
     function saveEverything() {
       try {
         const masterSave = {
@@ -1215,7 +1256,6 @@
           dogActive: localStorage.getItem('hbr_dog_active') !== 'false'
         };
         localStorage.setItem('hbr_persistent_save_v1', JSON.stringify(masterSave));
-        
         localStorage.setItem('hbr_banked_notes', bankedNotesTotal.toString());
         localStorage.setItem('hbr_store_cash', storeCashTotal.toFixed(2));
         localStorage.setItem('hbr_owned_stores', JSON.stringify(userOwnedStores));
@@ -1277,7 +1317,6 @@
 
         lastSessionTimestamp = Date.now();
         saveEverything();
-
       } catch (e) {
         bankedNotesTotal = 50;
       }
@@ -1294,12 +1333,8 @@
 
     function updateDogUIState() {
       let isOwned = (userOwnedCharacters.mollydog || 0) > 0;
-      if (dogToggleBar) {
-        dogToggleBar.style.display = isOwned ? 'flex' : 'none';
-      }
-      if (dogCompanion) {
-        dogCompanion.style.display = (isOwned && dogActive) ? 'block' : 'none';
-      }
+      if (dogToggleBar) dogToggleBar.style.display = isOwned ? 'flex' : 'none';
+      if (dogCompanion) dogCompanion.style.display = (isOwned && dogActive) ? 'block' : 'none';
       if (dogToggleBtn) {
         dogToggleBtn.textContent = dogActive ? '🐕 ACTIVE' : '💤 SLEEPING/OFF';
         dogToggleBtn.style.background = dogActive ? 'rgba(34, 197, 94, 0.2)' : 'rgba(107, 114, 128, 0.2)';
@@ -1310,10 +1345,8 @@
 
     function runDogBehavior() {
       if (!dogCompanion || !dogActive || (userOwnedCharacters.mollydog || 0) <= 0) return;
-      
       let actions = ['run-left', 'run-right', 'nap', 'bark', 'sit'];
       let chosen = actions[Math.floor(Math.random() * actions.length)];
-      
       let currentLeft = parseInt(dogCompanion.style.left || '20', 10);
       
       if (chosen === 'run-left') {
@@ -1380,7 +1413,6 @@
 
     function updateTopProfileBanner() {
       if (!topProfileBanner) return;
-      
       if (openProfileBtn) {
         openProfileBtn.textContent = (userProfileData.name && userProfileData.name.trim() !== '') ? '👤 Edit Profile' : '👤 Create Profile';
       }
@@ -1445,8 +1477,8 @@
     function renderMantraModalList() {
       if (!mantraOptionsList) return;
       mantraOptionsList.innerHTML = '';
-
       let daily3 = getDailyMantras();
+
       daily3.forEach(mText => {
         let isSelected = (userProfileData.selectedMantra === mText);
         let btn = document.createElement('button');
@@ -1484,15 +1516,12 @@
     }
 
     if (closeMantraBtn && mantraModal) {
-      closeMantraBtn.addEventListener('click', function() {
-        mantraModal.style.display = 'none';
-      });
+      closeMantraBtn.addEventListener('click', () => { mantraModal.style.display = 'none'; });
     }
 
     function updateProfileModalUI() {
       if (profileNameInput) profileNameInput.value = userProfileData.name;
       if (profileImgInput) profileImgInput.value = userProfileData.avatarUrl;
-
       if (profileAvatarFrame) profileAvatarFrame.style.borderColor = userProfileData.themeColor || '#3b82f6';
 
       if (userProfileData.avatarUrl && userProfileData.avatarUrl.trim() !== '') {
@@ -1584,9 +1613,7 @@
     }
 
     if (closeProfileBtn && profileModal) {
-      closeProfileBtn.addEventListener('click', function() {
-        profileModal.style.display = 'none';
-      });
+      closeProfileBtn.addEventListener('click', () => { profileModal.style.display = 'none'; });
     }
 
     if (profileColorsContainer) {
@@ -1626,15 +1653,9 @@
               let height = img.height;
 
               if (width > height) {
-                if (width > MAX_WIDTH) {
-                  height *= MAX_WIDTH / width;
-                  width = MAX_WIDTH;
-                }
+                if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
               } else {
-                if (height > MAX_HEIGHT) {
-                  width *= MAX_HEIGHT / height;
-                  height = MAX_HEIGHT;
-                }
+                if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
               }
 
               canvas.width = width;
@@ -1642,8 +1663,7 @@
               let ctx = canvas.getContext('2d');
               ctx.drawImage(img, 0, 0, width, height);
               
-              let dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-              userProfileData.avatarUrl = dataUrl;
+              userProfileData.avatarUrl = canvas.toDataURL('image/jpeg', 0.85);
               if (profileImgInput) profileImgInput.value = '';
               updateProfileModalUI();
             };
@@ -1656,8 +1676,7 @@
 
     if (profileImgInput) {
       profileImgInput.addEventListener('input', function() {
-        let val = profileImgInput.value.trim();
-        userProfileData.avatarUrl = val;
+        userProfileData.avatarUrl = profileImgInput.value.trim();
         updateProfileModalUI();
       });
     }
@@ -1666,9 +1685,7 @@
       saveProfileBtn.addEventListener('click', function() {
         if (profileNameInput) userProfileData.name = profileNameInput.value.trim();
         let urlVal = profileImgInput ? profileImgInput.value.trim() : '';
-        if (urlVal !== '') {
-          userProfileData.avatarUrl = urlVal;
-        }
+        if (urlVal !== '') userProfileData.avatarUrl = urlVal;
         saveEverything();
         updateTopProfileBanner();
         updateProfileModalUI();
@@ -1713,12 +1730,8 @@
                 if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
                 updateCashUI();
                 alert('🎉 Save backup imported successfully! Your cash, notes, and profile have been restored.');
-              } else {
-                alert('Invalid save file.');
               }
-            } catch(err) {
-              alert('Error reading save file.');
-            }
+            } catch(err) { alert('Error reading save file.'); }
           };
           reader.readAsText(file);
         }
@@ -1761,9 +1774,7 @@
       if (storeEventAlert) {
         storeEventAlert.innerHTML = msg;
         storeEventAlert.style.display = 'block';
-        setTimeout(() => {
-          if (storeEventAlert) storeEventAlert.style.display = 'none';
-        }, 8000);
+        setTimeout(() => { if (storeEventAlert) storeEventAlert.style.display = 'none'; }, 8000);
       }
     }
 
@@ -1800,9 +1811,7 @@
           triggerStoreAlert('💰 <strong>LATE FEE COLLECTED!</strong> Earned a <strong>$' + lateFeeBonus.toFixed(2) + '</strong> late fee on a overdue tape!');
         }
 
-        if (unrewoundTapesCount > 0) {
-          netPerSec -= (unrewoundTapesCount * 0.10);
-        }
+        if (unrewoundTapesCount > 0) netPerSec -= (unrewoundTapesCount * 0.10);
 
         storeCashTotal = Math.max(0, storeCashTotal + netPerSec);
         saveEverything();
@@ -1826,12 +1835,7 @@
               let targetFmt = formats[Math.floor(Math.random() * formats.length)];
               let movieObj = movieCatalog.find(m => m.id === targetMovieId);
 
-              shoplifterPending = {
-                movieId: targetMovieId,
-                format: targetFmt,
-                movieName: movieObj ? movieObj.name : 'Movie',
-                timeLeft: 3
-              };
+              shoplifterPending = { movieId: targetMovieId, format: targetFmt, movieName: movieObj ? movieObj.name : 'Movie', timeLeft: 3 };
 
               if (shoplifterCatchBox && thiefTimerSpan) {
                 thiefTimerSpan.textContent = '3';
@@ -1840,11 +1844,7 @@
 
               if (shoplifterTimerInterval) clearInterval(shoplifterTimerInterval);
               shoplifterTimerInterval = setInterval(function() {
-                if (!shoplifterPending) {
-                  clearInterval(shoplifterTimerInterval);
-                  return;
-                }
-
+                if (!shoplifterPending) { clearInterval(shoplifterTimerInterval); return; }
                 shoplifterPending.timeLeft--;
                 if (thiefTimerSpan) thiefTimerSpan.textContent = shoplifterPending.timeLeft;
 
@@ -1886,7 +1886,6 @@
           let caughtMovie = shoplifterPending.movieName;
           let caughtFmt = shoplifterPending.format.toUpperCase();
           shoplifterPending = null;
-          
           if (shoplifterCatchBox) shoplifterCatchBox.style.display = 'none';
           
           let rewardCash = 2.50;
@@ -1925,7 +1924,6 @@
           titleLine.style.fontSize = '11px';
           titleLine.style.fontWeight = '800';
           titleLine.style.color = '#ffffff';
-          
           let saleBadge = priceData.isOnSale ? ' <span style="background: #ef4444; color: #fff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + priceData.discount + '% OFF!</span>' : '';
           titleLine.innerHTML = store.icon + ' ' + store.name + saleBadge;
 
@@ -1970,14 +1968,11 @@
             buyBtn.addEventListener('click', function() {
               bankedNotesTotal -= priceData.price;
               userOwnedStores[store.id] = (userOwnedStores[store.id] || 0) + 1;
-              
               saveEverything();
               updateTopProfileBanner();
               updateProfileModalUI();
-
               const bankedCountDisplay = document.getElementById('hbr-banked-count');
               if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
               randomizeStorePrices();
               renderStoreList();
             });
@@ -1985,7 +1980,6 @@
 
           buyDiv.appendChild(priceLine);
           buyDiv.appendChild(buyBtn);
-
           itemBox.appendChild(infoDiv);
           itemBox.appendChild(buyDiv);
           storeItemsList.appendChild(itemBox);
@@ -2046,21 +2040,17 @@
             buyBtn.addEventListener('click', function() {
               bankedNotesTotal -= char.price;
               userOwnedCharacters[char.id] = 1;
-              
               saveEverything();
               updateDogUIState();
               updateProfileModalUI();
-
               const bankedCountDisplay = document.getElementById('hbr-banked-count');
               if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
               renderStoreList();
             });
           }
 
           buyDiv.appendChild(priceLine);
           buyDiv.appendChild(buyBtn);
-
           itemBox.appendChild(infoDiv);
           itemBox.appendChild(buyDiv);
           storeItemsList.appendChild(itemBox);
@@ -2113,9 +2103,7 @@
               unrewoundTapesCount = 0;
               saveEverything();
               renderStoreList();
-            } else {
-              alert('Not enough cash to rewind tapes! Earn more cash or notes first.');
-            }
+            } else { alert('Not enough cash to rewind tapes!'); }
           });
 
           rewindBox.appendChild(rText);
@@ -2124,7 +2112,6 @@
         }
 
         let totalMovies = getTotalMovieCount();
-
         let statusBox = document.createElement('div');
         statusBox.style.background = totalMovies > 0 ? 'rgba(34, 197, 94, 0.12)' : 'rgba(245, 158, 11, 0.12)';
         statusBox.style.border = totalMovies > 0 ? '1px solid rgba(34, 197, 94, 0.3)' : '1px solid rgba(245, 158, 11, 0.3)';
@@ -2134,8 +2121,8 @@
         statusBox.style.color = totalMovies > 0 ? '#4ade80' : '#fbbf24';
         statusBox.style.textAlign = 'center';
         statusBox.innerHTML = totalMovies > 0 
-          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString() + '. Higher formats = higher payouts (DVD & Blu-ray never need rewinding)!'
-          : '💡 <strong>NO MOVIES IN STOCK!</strong> You own a store ($0.00 payout). Buy movies below to start earning rental cash & late fees!';
+          ? '🍿 <strong>RENTAL INVENTORY ACTIVE!</strong> Total Movies in Stock: ' + totalMovies.toLocaleString() + '.'
+          : '💡 <strong>NO MOVIES IN STOCK!</strong> Buy movies below to start earning rental cash & late fees!';
         
         storeItemsList.appendChild(statusBox);
 
@@ -2163,19 +2150,14 @@
           titleDiv.style.fontWeight = '800';
           titleDiv.style.color = '#ffffff';
 
-          let rtLink = movie.rtUrl 
-            ? '<a href="' + movie.rtUrl + '" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">'
-            : '';
+          let rtLink = movie.rtUrl ? '<a href="' + movie.rtUrl + '" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">' : '';
           let rtClose = movie.rtUrl ? '↗</a>' : '';
-
           let rtBadge = isGoodMovie 
             ? ' <span style="background: rgba(34,197,94,0.2); color: #4ade80; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + rtLink + '🍅 ' + movie.rtScore + '% (PROFIT)' + rtClose + '</span>'
             : ' <span style="background: rgba(239,68,68,0.2); color: #ef4444; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">' + rtLink + '🍿 ' + movie.rtScore + '% (DRAINS CASH)' + rtClose + '</span>';
-          
           let ownedBadge = totalMovieCopies > 0 ? ' <span style="background: #2563eb; color: #ffffff; font-size: 8px; font-weight: 800; padding: 1px 4px; border-radius: 3px;">OWNED: ' + totalMovieCopies.toLocaleString() + '</span>' : '';
 
           titleDiv.innerHTML = '🎬 ' + movie.name + rtBadge + ownedBadge;
-
           topRow.appendChild(titleDiv);
           itemBox.appendChild(topRow);
 
@@ -2184,9 +2166,9 @@
           formatsRow.style.gap = '4px';
 
           const formats = [
-            { key: 'vhs', label: 'VHS 📼', costMult: 1, desc: 'Base Payout' },
-            { key: 'dvd', label: 'DVD 📀', costMult: 1.8, desc: 'Higher Payout' },
-            { key: 'bluray', label: 'Blu-ray 💿', costMult: 2.8, desc: 'Max Payout' }
+            { key: 'vhs', label: 'VHS 📼', costMult: 1 },
+            { key: 'dvd', label: 'DVD 📀', costMult: 1.8 },
+            { key: 'bluray', label: 'Blu-ray 💿', costMult: 2.8 }
           ];
 
           formats.forEach(fmt => {
@@ -2211,17 +2193,12 @@
             if (canAfford) {
               fmtBtn.addEventListener('click', function() {
                 bankedNotesTotal -= cost;
-                if (!userOwnedMovies[movie.id]) {
-                  userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
-                }
+                if (!userOwnedMovies[movie.id]) userOwnedMovies[movie.id] = { vhs: 0, dvd: 0, bluray: 0 };
                 userOwnedMovies[movie.id][fmt.key] = (userOwnedMovies[movie.id][fmt.key] || 0) + 1;
-
                 saveEverything();
                 updateProfileModalUI();
-
                 const bankedCountDisplay = document.getElementById('hbr-banked-count');
                 if (bankedCountDisplay) bankedCountDisplay.textContent = bankedNotesTotal.toLocaleString();
-
                 renderStoreList();
               });
             }
@@ -2270,9 +2247,7 @@
     }
 
     if (closeStoreBtn && storeOverlay) {
-      closeStoreBtn.addEventListener('click', function() {
-        storeOverlay.style.display = 'none';
-      });
+      closeStoreBtn.addEventListener('click', () => { storeOverlay.style.display = 'none'; });
     }
 
     // Cover Art Gallery Modal & Enlarge / Play Engine
@@ -2314,10 +2289,7 @@
         thumb.style.flexShrink = '0';
         thumb.style.border = '1px solid rgba(255,255,255,0.2)';
         thumb.style.cursor = 'pointer';
-
-        thumb.addEventListener('click', function() {
-          openLightboxForTrack(idx);
-        });
+        thumb.addEventListener('click', () => openLightboxForTrack(idx));
 
         let info = document.createElement('div');
         info.style.flex = '1';
@@ -2334,7 +2306,6 @@
         btnContainer.style.gap = '4px';
         btnContainer.style.flexShrink = '0';
 
-        // Enlarge Button
         let enlargeBtn = document.createElement('button');
         enlargeBtn.style.background = 'rgba(34, 197, 94, 0.2)';
         enlargeBtn.style.border = '1px solid rgba(34, 197, 94, 0.5)';
@@ -2345,12 +2316,8 @@
         enlargeBtn.style.padding = '4px 8px';
         enlargeBtn.style.cursor = 'pointer';
         enlargeBtn.textContent = '🔍 ENLARGE';
+        enlargeBtn.addEventListener('click', () => openLightboxForTrack(idx));
 
-        enlargeBtn.addEventListener('click', function() {
-          openLightboxForTrack(idx);
-        });
-
-        // Play Button (Spin forward & play song)
         let playBtn = document.createElement('button');
         playBtn.style.background = 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)';
         playBtn.style.border = 'none';
@@ -2361,29 +2328,24 @@
         playBtn.style.padding = '4px 8px';
         playBtn.style.cursor = 'pointer';
         playBtn.textContent = '▶ PLAY';
-
         playBtn.addEventListener('click', function() {
           autoBankUnsavedNotes();
           activeQueueSource = null;
           activePlaylist = currentMasterTracks;
           selectAndPlayTrack(idx);
-
           if (artModal) artModal.style.display = 'none';
           if (artLightboxModal) artLightboxModal.style.display = 'none';
 
           if (recordArt) {
             recordArt.classList.remove('hbr-cover-spin-forward');
-            void recordArt.offsetWidth; // Force reflow
+            void recordArt.offsetWidth;
             recordArt.classList.add('hbr-cover-spin-forward');
-            setTimeout(() => {
-              recordArt.classList.remove('hbr-cover-spin-forward');
-            }, 550);
+            setTimeout(() => recordArt.classList.remove('hbr-cover-spin-forward'), 550);
           }
         });
 
         btnContainer.appendChild(enlargeBtn);
         btnContainer.appendChild(playBtn);
-
         item.appendChild(thumb);
         item.appendChild(info);
         item.appendChild(btnContainer);
@@ -2411,7 +2373,6 @@
         activeQueueSource = null;
         activePlaylist = currentMasterTracks;
         selectAndPlayTrack(idx);
-
         if (artLightboxModal) artLightboxModal.style.display = 'none';
         if (artModal) artModal.style.display = 'none';
 
@@ -2419,58 +2380,88 @@
           recordArt.classList.remove('hbr-cover-spin-forward');
           void recordArt.offsetWidth;
           recordArt.classList.add('hbr-cover-spin-forward');
-          setTimeout(() => {
-            recordArt.classList.remove('hbr-cover-spin-forward');
-          }, 550);
+          setTimeout(() => recordArt.classList.remove('hbr-cover-spin-forward'), 550);
         }
       });
     }
 
-    if (lightboxCloseBtn && artLightboxModal) {
-      lightboxCloseBtn.addEventListener('click', () => { artLightboxModal.style.display = 'none'; });
-    }
-    if (closeLightboxBtn && artLightboxModal) {
-      closeLightboxBtn.addEventListener('click', () => { artLightboxModal.style.display = 'none'; });
-    }
-
+    if (lightboxCloseBtn && artLightboxModal) lightboxCloseBtn.addEventListener('click', () => artLightboxModal.style.display = 'none');
+    if (closeLightboxBtn && artLightboxModal) closeLightboxBtn.addEventListener('click', () => artLightboxModal.style.display = 'none');
     if (seeCoverBtn && artModal) {
       seeCoverBtn.addEventListener('click', function() {
         renderArtGallery();
         artModal.style.display = 'flex';
       });
     }
+    if (closeArtModalBtn && artModal) closeArtModalBtn.addEventListener('click', () => artModal.style.display = 'none');
+    if (artModalDoneBtn && artModal) artModalDoneBtn.addEventListener('click', () => artModal.style.display = 'none');
 
-    if (closeArtModalBtn && artModal) {
-      closeArtModalBtn.addEventListener('click', function() {
-        artModal.style.display = 'none';
-      });
-    }
-
-    if (artModalDoneBtn && artModal) {
-      artModalDoneBtn.addEventListener('click', function() {
-        artModal.style.display = 'none';
-      });
-    }
-
-    // Automatic Eastern Time Fireworks & Interactive Heart Inflation Challenge Engine
+    // SCHEDULED FIREWORKS SYSTEM WITH $1.23 CASH REWARD & SUMMARY MODAL
     const canvas = document.getElementById('hbr-fireworks-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
-    let fireworksActive = false;
-    let fireworksAnimId = null;
-    let particles = [];
     let fireworksRockets = [];
-    let isGrandFinale = false;
+    let particles = [];
+    let isFireworksShowActive = false;
+    let userFireworkShotsCount = 0;
+    let showSummaryModal = document.getElementById('hbr-fireworks-summary-modal');
+    let summaryShotsSpan = document.getElementById('hbr-summary-shots');
+    let summaryEarnedSpan = document.getElementById('hbr-summary-earned');
+    let closeSummaryBtn = document.getElementById('hbr-close-summary-btn');
 
-    let heartChallengeActive = false;
-    let heartTapsLeft = 23;
-    let heartStartTime = 0;
-    const heartCard = document.getElementById('hbr-heart-challenge-card');
-    const heartTargetBtn = document.getElementById('hbr-heart-target-btn');
-    const inflatingHeart = document.getElementById('hbr-inflating-heart');
-    const heartTapsLeftSpan = document.getElementById('hbr-heart-taps-left');
-    const heartStatus = document.getElementById('hbr-heart-status');
-    const heartTitle = document.getElementById('hbr-heart-title');
-    const heartSub = document.getElementById('hbr-heart-sub');
+    function isFireworksTimeWindow() {
+      try {
+        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', hour12: false });
+        let parts = formatter.formatToParts(new Date());
+        let h = parseInt(parts.find(p => p.type === 'hour').value, 10);
+        let m = parseInt(parts.find(p => p.type === 'minute').value, 10);
+        // Window 1: 6:00-6:05 PM ET (18:00 - 18:04:59)
+        // Window 2: 9:00-9:05 PM ET (21:00 - 21:04:59)
+        return (h === 18 && m >= 0 && m < 5) || (h === 21 && m >= 0 && m < 5);
+      } catch(e) {
+        let now = new Date();
+        let h = now.getHours();
+        let m = now.getMinutes();
+        return (h === 18 && m >= 0 && m < 5) || (h === 21 && m >= 0 && m < 5);
+      }
+    }
+
+    function checkFireworksSchedule() {
+      let active = isFireworksTimeWindow();
+      if (active !== isFireworksShowActive) {
+        if (isFireworksShowActive && !active) {
+          // Show just ended! Calculate earnings ($1.23 per firework shot)
+          if (userFireworkShotsCount > 0) {
+            let totalEarned = userFireworkShotsCount * 1.23;
+            storeCashTotal += totalEarned;
+            saveEverything();
+            updateCashUI();
+
+            if (summaryShotsSpan) summaryShotsSpan.textContent = userFireworkShotsCount.toLocaleString();
+            if (summaryEarnedSpan) summaryEarnedSpan.textContent = '$' + totalEarned.toFixed(2);
+            if (showSummaryModal) showSummaryModal.style.display = 'flex';
+          }
+          userFireworkShotsCount = 0;
+        }
+
+        isFireworksShowActive = active;
+        if (canvas) {
+          canvas.style.display = active ? 'block' : 'none';
+          canvas.style.pointerEvents = active ? 'auto' : 'none';
+        }
+        if (fireworksShowBanner) fireworksShowBanner.style.display = active ? 'block' : 'none';
+        if (!active) {
+          fireworksRockets = [];
+          particles = [];
+        }
+      }
+    }
+
+    checkFireworksSchedule();
+    setInterval(checkFireworksSchedule, 5000);
+
+    if (closeSummaryBtn && showSummaryModal) {
+      closeSummaryBtn.addEventListener('click', () => { showSummaryModal.style.display = 'none'; });
+    }
 
     function resizeCanvas() {
       if (!canvas) return;
@@ -2480,14 +2471,16 @@
         canvas.height = parent.clientHeight;
       }
     }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
     class FireworkRocket {
       constructor(w, h, targetX, targetY) {
-        this.x = targetX !== undefined ? (Math.random() * 40 - 20 + targetX) : (Math.random() * w);
+        this.x = targetX !== undefined ? targetX : (Math.random() * w);
         this.y = h;
         this.targetY = targetY !== undefined ? targetY : (Math.random() * (h * 0.5) + (h * 0.1));
         this.targetX = targetX !== undefined ? targetX : this.x;
-        this.speed = Math.random() * 3 + (isGrandFinale ? 6 : 4);
+        this.speed = Math.random() * 3 + 5;
         this.color = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502', '#9b59b6', '#00d2d3', '#ff6b81', '#facc15', '#ec4899'][Math.floor(Math.random() * 9)];
       }
       update() {
@@ -2506,11 +2499,11 @@
         this.y = y;
         this.color = color;
         let angle = Math.random() * Math.PI * 2;
-        let speed = Math.random() * (isGrandFinale ? 7 : 5) + 1;
+        let speed = Math.random() * 6 + 2;
         this.vx = Math.cos(angle) * speed;
         this.vy = Math.sin(angle) * speed;
         this.alpha = 1;
-        this.decay = Math.random() * 0.015 + 0.012;
+        this.decay = Math.random() * 0.018 + 0.012;
       }
       update() {
         this.x += this.vx;
@@ -2530,143 +2523,59 @@
     }
 
     function launchUserRocket(e) {
-      if (!fireworksActive || !canvas) return;
+      if (!canvas || !isFireworksShowActive) return;
       let rect = canvas.getBoundingClientRect();
       let clickX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
       let clickY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
       
-      fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, clickX, clickY));
+      userFireworkShotsCount++;
+
+      for (let i = 0; i < 2; i++) {
+        fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, clickX + (Math.random() * 30 - 15), clickY + (Math.random() * 20 - 10)));
+      }
     }
 
     if (canvas) {
       canvas.addEventListener('click', launchUserRocket);
-      canvas.addEventListener('touchstart', launchUserRocket);
-    }
-
-    if (heartTargetBtn) {
-      heartTargetBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (!heartChallengeActive) return;
-
-        if (heartTapsLeft === 23) heartStartTime = Date.now();
-        heartTapsLeft--;
-        
-        let currentScale = 1.0 + ((23 - heartTapsLeft) / 23) * 1.2;
-        if (inflatingHeart) {
-          inflatingHeart.style.transform = 'scale(' + currentScale + ')';
-        }
-
-        if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = heartTapsLeft;
-
-        if (canvas) {
-          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height, Math.random() * canvas.width, canvas.height * 0.6));
-        }
-
-        if (heartTapsLeft <= 0) {
-          heartChallengeActive = false;
-          let elapsed = ((Date.now() - heartStartTime) / 1000).toFixed(1);
-          
-          if (inflatingHeart) {
-            inflatingHeart.textContent = '💖';
-            inflatingHeart.style.transform = 'scale(2.6)';
-            setTimeout(() => { inflatingHeart.style.transform = 'scale(1)'; }, 300);
-          }
-
-          if (heartTitle) heartTitle.textContent = '💖 HEART BURST COMPLETE!';
-          if (heartStatus) heartStatus.innerHTML = '<strong style="color: #4ade80;">Inflated in ' + elapsed + 's!</strong>';
-          if (heartSub) heartSub.innerHTML = '<strong style="font-size: 11px; color: #f472b6;">You Are Loved ❤️</strong>';
-        }
-      });
+      canvas.addEventListener('touchstart', launchUserRocket, { passive: true });
     }
 
     function runFireworksLoop() {
-      if (!ctx || !canvas || !fireworksActive) return;
+      if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if (Math.random() < (isGrandFinale ? 0.35 : 0.08) && fireworksRockets.length < (isGrandFinale ? 18 : 5)) {
-        fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height));
-      }
+      if (isFireworksShowActive) {
+        if (Math.random() < 0.05 && fireworksRockets.length < 8) {
+          fireworksRockets.push(new FireworkRocket(canvas.width, canvas.height));
+        }
 
-      for (let i = fireworksRockets.length - 1; i >= 0; i--) {
-        let r = fireworksRockets[i];
-        r.update();
-        r.draw(ctx);
-        if (r.y <= r.targetY) {
-          for (let p = 0; p < (isGrandFinale ? 60 : 45); p++) {
-            particles.push(new FireworkParticle(r.x, r.y, r.color));
+        for (let i = fireworksRockets.length - 1; i >= 0; i--) {
+          let r = fireworksRockets[i];
+          r.update();
+          r.draw(ctx);
+          if (r.y <= r.targetY) {
+            for (let p = 0; p < 50; p++) {
+              particles.push(new FireworkParticle(r.x, r.y, r.color));
+            }
+            fireworksRockets.splice(i, 1);
           }
-          fireworksRockets.splice(i, 1);
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          let pt = particles[i];
+          pt.update();
+          pt.draw(ctx);
+          if (pt.alpha <= 0) particles.splice(i, 1);
         }
       }
 
-      for (let i = particles.length - 1; i >= 0; i--) {
-        let pt = particles[i];
-        pt.update();
-        pt.draw(ctx);
-        if (pt.alpha <= 0) particles.splice(i, 1);
-      }
-
-      fireworksAnimId = requestAnimationFrame(runFireworksLoop);
+      requestAnimationFrame(runFireworksLoop);
     }
 
-    function startFireworks() {
-      if (fireworksActive) return;
-      fireworksActive = true;
-      isGrandFinale = false;
-      resizeCanvas();
-      if (canvas) canvas.style.display = 'block';
-      runFireworksLoop();
-
-      heartChallengeActive = true;
-      heartTapsLeft = 23;
-      if (inflatingHeart) {
-        inflatingHeart.textContent = '❤️';
-        inflatingHeart.style.transform = 'scale(1)';
-      }
-      if (heartTapsLeftSpan) heartTapsLeftSpan.textContent = '23';
-      if (heartTitle) heartTitle.textContent = '💖 PUMP UP THE HEART';
-      if (heartStatus) {
-        heartStatus.innerHTML = '<span id="hbr-heart-taps-left">23</span> pumps remaining';
-      }
-      if (heartSub) heartSub.textContent = 'Tap to inflate the heart until it bursts!';
-      if (heartCard) heartCard.style.display = 'block';
-
-      setTimeout(() => stopFireworks(), 300000);
-    }
-
-    function stopFireworks() {
-      fireworksActive = false;
-      isGrandFinale = false;
-      heartChallengeActive = false;
-      if (canvas) canvas.style.display = 'none';
-      if (heartCard) heartCard.style.display = 'none';
-      if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
-      particles = [];
-      fireworksRockets = [];
-    }
-
-    function checkEasternTimeFireworks() {
-      try {
-        let formatter = new Intl.DateTimeFormat([], { timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false });
-        let parts = formatter.formatToParts(new Date());
-        let hours = parseInt(parts.find(p => p.type === 'hour').value, 10);
-        let minutes = parseInt(parts.find(p => p.type === 'minute').value, 10);
-        let seconds = parseInt(parts.find(p => p.type === 'second').value, 10);
-
-        if ((hours === 18 || hours === 21) && minutes >= 0 && minutes <= 4) {
-          if (!fireworksActive) startFireworks();
-          isGrandFinale = (minutes === 4 && seconds >= 30);
-        } else {
-          if (fireworksActive) stopFireworks();
-        }
-      } catch (e) {}
-    }
-
-    setInterval(checkEasternTimeFireworks, 1000);
+    runFireworksLoop();
 
     // Dynamic Listener Counter Algorithm
     const listenerElement = document.getElementById('hbr-listeners');
-    
     function calculateTargetListeners() {
       let hours = 0, minutes = 0;
       try {
@@ -2681,14 +2590,11 @@
       }
 
       if (hours === 21 && minutes <= 4) return 1050 + Math.floor(Math.random() * 120);
-      if (hours === 21 && minutes >= 5 && minutes <= 15) return 110 + Math.floor(900 * (1 - (minutes - 5) / 10));
-
       let baseCount = 104;
       if (hours >= 11 && hours <= 13) baseCount = 108 + Math.floor(Math.sin((minutes / 60) * Math.PI) * 12);
       else if (hours >= 18 && hours <= 22) baseCount = 115 + Math.floor(Math.random() * 15);
       else if (hours >= 9 && hours < 18) baseCount = 102 + Math.floor(Math.random() * 15);
       else baseCount = 100 + Math.floor(Math.random() * 10);
-
       return baseCount + (Math.floor(Math.random() * 7) - 3);
     }
 
@@ -2699,7 +2605,6 @@
       if (!listenerElement) return;
       let target = calculateTargetListeners();
       let diff = target - currentListeners;
-      
       if (diff !== 0) {
         currentListeners += Math.abs(diff) > 50 ? Math.floor(diff / 4) : (diff > 0 ? 1 : -1);
       } else {
@@ -3134,11 +3039,7 @@
       scrollModeBtn.addEventListener('click', function() {
         isScrollLibraryMode = true;
         [page1Btn, page2Btn, page3Btn].forEach(btn => {
-          if (btn) {
-            btn.style.background = 'rgba(255,255,255,0.06)';
-            btn.style.borderColor = 'rgba(255,255,255,0.15)';
-            btn.style.color = '#9ca3af';
-          }
+          if (btn) { btn.style.background = 'rgba(255,255,255,0.06)'; btn.style.borderColor = 'rgba(255,255,255,0.15)'; btn.style.color = '#9ca3af'; }
         });
         scrollModeBtn.style.background = 'rgba(59,130,246,0.25)';
         scrollModeBtn.style.borderColor = 'rgba(59,130,246,0.5)';
@@ -3315,7 +3216,7 @@
           e.stopPropagation();
           if (!inT3) {
             if (customTop3.length < 3) { customTop3.push(track); saveEverything(); renderDrawerList(); }
-            else alert('Top 3 is full! Remove a song from Top 3 first.');
+            else alert('Top 3 is full!');
           } else {
             customTop3 = customTop3.filter(t => t.id !== track.id);
             saveEverything(); renderDrawerList();
@@ -3333,7 +3234,7 @@
 
       if (q1CountSpan) q1CountSpan.textContent = customQueue1.length;
       if (q1ItemsContainer) {
-        q1ItemsContainer.innerHTML = customQueue1.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 1" above!</div>' : '';
+        q1ItemsContainer.innerHTML = customQueue1.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet.</div>' : '';
         customQueue1.forEach((track, cIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -3352,7 +3253,7 @@
 
       if (q2CountSpan) q2CountSpan.textContent = customQueue2.length;
       if (q2ItemsContainer) {
-        q2ItemsContainer.innerHTML = customQueue2.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet. Click "+ Playlist 2" above!</div>' : '';
+        q2ItemsContainer.innerHTML = customQueue2.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No tracks added yet.</div>' : '';
         customQueue2.forEach((track, cIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -3371,7 +3272,7 @@
 
       updateT3Circles();
       if (t3ItemsContainer) {
-        t3ItemsContainer.innerHTML = customTop3.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected. Click "+ T3" next to any song!</div>' : '';
+        t3ItemsContainer.innerHTML = customTop3.length === 0 ? '<div style="font-size: 10px; color: #6b7280; font-style: italic;">No Top 3 tracks selected.</div>' : '';
         customTop3.forEach((track, tIdx) => {
           let item = document.createElement('div');
           item.style.display = 'flex'; item.style.justifyContent = 'space-between'; item.style.alignItems = 'center'; item.style.fontSize = '11px'; item.style.color = '#d1d5db';
@@ -3441,7 +3342,7 @@
     const colorButtons = document.querySelectorAll('.hbr-color-btn');
     
     let isPlaying = false;
-    let currentTrackIndex = 11; // Pocketful of Rain
+    let currentTrackIndex = 11;
     let ytPlayer = null;
     let isDragging = false;
     let startAngle = 0;
@@ -3463,13 +3364,7 @@
         height: '100',
         width: '100',
         videoId: activePlaylist[currentTrackIndex].id,
-        playerVars: {
-          'autoplay': 0,
-          'controls': 0,
-          'modestbranding': 1,
-          'rel': 0,
-          'iv_load_policy': 3
-        },
+        playerVars: { 'autoplay': 0, 'controls': 0, 'modestbranding': 1, 'rel': 0, 'iv_load_policy': 3 },
         events: {
           'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange
@@ -3518,7 +3413,6 @@
       currentTrackIndex = index;
       let track = activePlaylist[index];
       if (trackTitleText) trackTitleText.textContent = track.name;
-      
       checkPurpleRainEffect(track);
 
       let coverUrl = "url('https://img.youtube.com/vi/" + track.id + "/hqdefault.jpg')";
@@ -3527,11 +3421,8 @@
 
       renderDrawerList();
       if (ytPlayer) {
-        if (typeof ytPlayer.loadVideoById === 'function') {
-          ytPlayer.loadVideoById(track.id);
-        } else if (typeof ytPlayer.cueVideoById === 'function') {
-          ytPlayer.cueVideoById(track.id);
-        }
+        if (typeof ytPlayer.loadVideoById === 'function') ytPlayer.loadVideoById(track.id);
+        else if (typeof ytPlayer.cueVideoById === 'function') ytPlayer.cueVideoById(track.id);
         triggerPlayState();
       }
     }
@@ -3593,6 +3484,21 @@
       });
     }
 
+    const calmTrack = { id: 'OMPaU5L3zy0', name: 'Calm (Root Chakra Session)', startSecs: 3710 };
+    const calmBtn = document.getElementById('hbr-calm-btn');
+
+    if (calmBtn) {
+      calmBtn.addEventListener('click', function() {
+        autoBankUnsavedNotes();
+        activeQueueSource = null;
+        activePlaylist = [calmTrack];
+        if (modeTitleText) modeTitleText.textContent = 'Calm';
+        if (subtitleText) subtitleText.textContent = 'Honest Blue Radio • Root Chakra Session';
+        if (labelSubText) labelSubText.textContent = 'CALM';
+        selectAndPlayTrack(0);
+      });
+    }
+
     colorButtons.forEach(btn => {
       btn.addEventListener('click', function() {
         let mc = this.getAttribute('data-color');
@@ -3607,7 +3513,6 @@
 
     function startNativeSpin() { if (record && isPlaying && !isDragging) record.classList.add('hbr-spinning-native'); }
     function stopNativeSpin() { if (record) record.classList.remove('hbr-spinning-native'); }
-
     function triggerPlayState() {
       isPlaying = true;
       if (tonearm) tonearm.style.transform = 'rotate(0deg)';
@@ -3620,11 +3525,8 @@
       toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
-          if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-            ytPlayer.playVideo();
-          } else {
-            selectAndPlayTrack(currentTrackIndex);
-          }
+          if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
+          else selectAndPlayTrack(currentTrackIndex);
         } else {
           isPlaying = false;
           if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
@@ -3720,4 +3622,122 @@
     }
 
   })();
+  
+        // Honest Blue Radio Drawer Search & iPhone Auto-Save Shield
+  (function() {
+    // 1. Drawer Search Logic
+    const searchInput = document.getElementById('hbr-drawer-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        let query = searchInput.value.toLowerCase().trim();
+        let trackItems = document.querySelectorAll('#hbr-drawer-list span, .hbr-track-item, [data-track-item]');
+
+        trackItems.forEach(item => {
+          let text = item.textContent ? item.textContent.toLowerCase() : '';
+          let row = item.closest('div, li, tr') || item;
+          
+          if (query === '' || text.includes(query)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // 2. iPhone Background Auto-Save Shield for Fireworks & Cash
+    function saveFireworksAndCash() {
+      if (typeof autoBankUnsavedNotes === 'function') {
+        autoBankUnsavedNotes();
+      }
+      if (typeof saveEverything === 'function') {
+        saveEverything();
+      }
+    }
+
+    window.addEventListener('pagehide', saveFireworksAndCash);
+    window.addEventListener('beforeunload', saveFireworksAndCash);
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        saveFireworksAndCash();
+      }
+    });
+
+    // Continuous background sync every 3 seconds so earnings are never lost on iOS
+    setInterval(saveFireworksAndCash, 3000);
+  })();
+  
+  // --- HOURLY SONG BOUNTY CONTROLLER ---
+let bountySongIndex = -1;
+let bountyClaimed = false;
+let bountyListeningTime = 0;
+let bountyTimer = null;
+
+function getHourlySeed() {
+  const now = new Date();
+  return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '-' + now.getHours();
+}
+
+function initHourlyBounty() {
+  const tracks = window.currentMasterTracks || masterBroadcastTracks;
+  if (!tracks || tracks.length === 0) return;
+
+  const currentSeed = getHourlySeed();
+  const lastClaimedSeed = localStorage.getItem('hbr_bounty_claimed_seed');
+  bountyClaimed = (lastClaimedSeed === currentSeed);
+
+  let seedNum = 0;
+  for (let i = 0; i < currentSeed.length; i++) {
+    seedNum += currentSeed.charCodeAt(i);
+  }
+  bountySongIndex = seedNum % tracks.length;
+
+  const bountySong = tracks[bountySongIndex];
+  const titleElem = document.getElementById('hbr-bounty-song-title');
+  const claimBtn = document.getElementById('hbr-claim-bounty-btn');
+
+  if (titleElem && bountySong) {
+    titleElem.textContent = bountySong.name;
+  }
+
+  if (claimBtn) {
+    if (bountyClaimed) {
+      claimBtn.textContent = '✅ CLAIMED THIS HOUR';
+      claimBtn.style.background = '#1f2937';
+      claimBtn.style.color = '#4ade80';
+      claimBtn.disabled = true;
+    } else {
+      claimBtn.textContent = '🔒 LISTEN 15s TO CLAIM';
+      claimBtn.style.background = '#374151';
+      claimBtn.style.color = '#9ca3af';
+      claimBtn.disabled = true;
+    }
+  }
+}
+
+// Hook up event listeners once DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(initHourlyBounty, 1000);
+
+    // Play Bounty Song Button
+  const playBountyBtn = document.getElementById('hbr-play-bounty-btn');
+  if (playBountyBtn) {
+    playBountyBtn.addEventListener('click', function() {
+      const tracks = window.currentMasterTracks || [];
+      if (bountySongIndex >= 0 && tracks[bountySongIndex]) {
+        // Ensure activePlaylist points to the master tracks array
+        activePlaylist = tracks;
+        activeQueueSource = null;
+        
+        // Trigger core track selection and playback
+        if (typeof selectAndPlayTrack === 'function') {
+          selectAndPlayTrack(bountySongIndex);
+        }
+        
+        startBountyTracker();
+      }
+    });
+  }
+
+
 </script>
