@@ -386,6 +386,12 @@
               <button id="hbr-scroll-mode-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #9ca3af; font-size: 9px; font-weight: 700; padding: 2px 6px; cursor: pointer;">📚 Scroll</button>
             </div>
           </div>
+            <!-- Honest Blue Radio Drawer Sticky Search Bar -->
+  <div style="padding: 8px 12px; background: #161622; border-bottom: 1px solid #2e2e3e; position: sticky; top: 0; z-index: 10;">
+    <div style="display: flex; gap: 6px;">
+     <input id="hbr-drawer-search" type="text" placeholder="Search drawer tracks..." onfocus="if(typeof toggleScrollMode === 'function') toggleScrollMode();" style="flex: 1; background: rgba(255, 255, 255, 0.05); border: 1px solid #2e2e3e; border-radius: 6px; padding: 6px 10px; color: #ffffff; font-size: 11px; outline: none;" />
+    </div>
+  </div>
           <div id="hbr-drawer-list" style="display: flex; flex-direction: column; gap: 6px;">&nbsp;</div>
         </div>
         <!-- Dedicated Dual Playlists & Top 3 Launch Center -->
@@ -1087,6 +1093,10 @@
       { id: 'K8UqZGQBH3A', name: 'Mac And Cheese Anthem' },
       { id: 'YM670O1ub-U', name: 'Boston' },
       { id: 'i6sWs0mrJrY', name: "Guess Who's Hear?" },
+      { id: 'OUA8P47SooY', name: 'Free Is Never Free' },
+      { id: 'YQSaruiu73Q', name: "Remember Splash Mountain?" },
+      { id: 'TCSHYf1qZ44', name: "I Fell In Love With The Sunshine" },
+      { id: 'uA-jR1QRTSE', name: "Finding Love In New York City" },
       { id: 'PPK-QMAYvcI', name: 'Flip The Boss Off', explicit: true }
     ];
 
@@ -3592,4 +3602,49 @@
     }
 
   })();
+  
+        // Honest Blue Radio Drawer Search & iPhone Auto-Save Shield
+  (function() {
+    // 1. Drawer Search Logic
+    const searchInput = document.getElementById('hbr-drawer-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        let query = searchInput.value.toLowerCase().trim();
+        let trackItems = document.querySelectorAll('#hbr-drawer-list span, .hbr-track-item, [data-track-item]');
+
+        trackItems.forEach(item => {
+          let text = item.textContent ? item.textContent.toLowerCase() : '';
+          let row = item.closest('div, li, tr') || item;
+          
+          if (query === '' || text.includes(query)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      });
+    }
+
+    // 2. iPhone Background Auto-Save Shield for Fireworks & Cash
+    function saveFireworksAndCash() {
+      if (typeof autoBankUnsavedNotes === 'function') {
+        autoBankUnsavedNotes();
+      }
+      if (typeof saveEverything === 'function') {
+        saveEverything();
+      }
+    }
+
+    window.addEventListener('pagehide', saveFireworksAndCash);
+    window.addEventListener('beforeunload', saveFireworksAndCash);
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        saveFireworksAndCash();
+      }
+    });
+
+    // Continuous background sync every 3 seconds so earnings are never lost on iOS
+    setInterval(saveFireworksAndCash, 3000);
+  })();
+
 </script>
