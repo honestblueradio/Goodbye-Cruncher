@@ -3687,7 +3687,7 @@
     });
   })();
 
-    // Continuous Listening Multiplier & Streak Payout Controller
+      // Continuous Listening Multiplier & Streak Payout Controller
   (function() {
     let sessionSongsCount = 0;
     let sessionPendingCash = 0.00;
@@ -3748,7 +3748,7 @@
       }
     };
 
-            if (collectBtn) {
+    if (collectBtn) {
       collectBtn.addEventListener('click', function() {
         if (sessionPendingCash > 0) {
           if (typeof storeCashTotal !== 'undefined') {
@@ -3777,6 +3777,6 @@
         }
       });
     }
-
+  })(); // <-- THIS CLOSING WRAPPER IS WHAT WAS MISSING
 
 </script>
