@@ -3687,7 +3687,7 @@
     });
   })();
 
-  // Continuous Listening Multiplier & Streak Payout Controller
+    // Continuous Listening Multiplier & Streak Payout Controller
   (function() {
     let sessionSongsCount = 0;
     let sessionPendingCash = 0.00;
@@ -3749,11 +3749,17 @@
     };
 
     if (collectBtn) {
-      collectBtn.onclick = function() {
+      collectBtn.addEventListener('click', function() {
         if (sessionPendingCash > 0) {
-          if (typeof storeCashTotal !== 'undefined') storeCashTotal += sessionPendingCash;
-          if (typeof saveEverything === 'function') saveEverything();
-          if (typeof updateCashUI === 'function') updateCashUI();
+          if (typeof storeCashTotal !== 'undefined') {
+            storeCashTotal += sessionPendingCash;
+          }
+          if (typeof saveEverything === 'function') {
+            saveEverything();
+          }
+          if (typeof updateCashUI === 'function') {
+            updateCashUI();
+          }
 
           sessionPendingCash = 0.00;
           sessionSongsCount = 0;
@@ -3764,8 +3770,10 @@
           if (streakCashElem) streakCashElem.textContent = '$0.00';
           updateMultiplier();
         }
-        if (payoutModal) payoutModal.style.display = 'none';
-      };
+        if (payoutModal) {
+          payoutModal.style.display = 'none';
+        }
+      });
     }
   })();
 
