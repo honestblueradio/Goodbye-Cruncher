@@ -563,33 +563,6 @@
       <button id="hbr-toggle" style="background: #3b82f6; border: none; width: 60px; height: 60px; border-radius: 50%; color: #fff; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4); transition: transform 0.1s ease, background 0.2s ease;">▶</button>
       <button id="hbr-next" style="background: #1f2937; border: 1px solid #374151; width: 44px; height: 44px; border-radius: 50%; color: #9ca3af; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">⏭</button>
     </div>
-    
-      <!-- CONTINUOUS LISTENING MULTIPLIER & STREAK BADGE -->
-  <div id="hbr-listening-streak-card" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; text-align: center; display: flex; align-items: center; justify-content: space-between;">
-    <div style="text-align: left;">
-      <div style="font-size: 9px; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 0.5px;">ACTIVE LISTENING STREAK</div>
-      <div style="font-size: 11px; font-weight: 700; color: #ffffff;">
-        <span id="hbr-streak-song-count">0</span> Songs Played &bull; <span id="hbr-streak-multiplier" style="color: #4ade80; font-weight: 800;">1x MULTIPLIER</span>
-      </div>
-    </div>
-    <div style="text-align: right;">
-      <div style="font-size: 9px; font-weight: 700; color: #9ca3af;">SESSION EARNINGS</div>
-      <div id="hbr-streak-pending-cash" style="font-size: 13px; font-weight: 900; color: #4ade80;">$0.00</div>
-    </div>
-  </div>
-
-  <!-- SESSION PAYOUT SUMMARY MODAL -->
-  <div id="hbr-payout-summary-modal" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17,17,21,0.96); backdrop-filter: blur(10px); z-index: 200; padding: 20px; box-sizing: border-box; text-align: center; flex-direction: column; justify-content: center; align-items: center;">
-    <div style="background: #1c1c28; border: 2px solid #10b981; border-radius: 16px; padding: 22px; max-width: 320px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); text-align: center;">
-      <div style="font-size: 26px; margin-bottom: 6px;">🎧💰🔥</div>
-      <div style="font-size: 14px; font-weight: 900; color: #34d399; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px;">Session Complete!</div>
-      <p style="font-size: 11px; color: #d1d5db; line-height: 1.6; margin-bottom: 14px;">
-        You kept the radio spinning for <strong id="hbr-summary-songs-played" style="color: #60a5fa;">0</strong> songs and reached a max multiplier of <strong id="hbr-summary-max-mult" style="color: #4ade80;">1x</strong>!
-      </p>
-      <div style="font-size: 22px; font-weight: 900; color: #4ade80; margin-bottom: 18px;" id="hbr-summary-cash-total">$0.00</div>
-      <button id="hbr-collect-payout-btn" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none; border-radius: 8px; color: #fff; font-size: 11px; font-weight: 800; padding: 10px 18px; cursor: pointer; box-shadow: 0 4px 12px rgba(16,185,129,0.4); text-transform: uppercase; letter-spacing: 0.5px;">💰 COLLECT CASH & SAVE</button>
-    </div>
-  </div>
 
     <!-- Bottom Middle Play Coffee Game Button -->
     <div style="text-align: center; margin-top: 10px; margin-bottom: 16px;">
@@ -785,8 +758,6 @@
 
 <!-- Player Behavior & Audio Script -->
 <script>
-  let storeCashTotal = 0.00;
-
   (function() {
     const appCard = document.getElementById('hbr-main-app-card');
     const streamLayer = document.getElementById('hbr-reaction-stream-layer');
@@ -1164,13 +1135,6 @@
     let userOwnedStores = { blockbuster: 0, toysrus: 0, kbtoys: 0 };
     let userOwnedMovies = {};
     let userOwnedCharacters = { mollydog: 0 };
-  
-  // --- CONTINUOUS LISTENING STREAK VARIABLES ---
-  let sessionSongsCount = 0;
-  let sessionPendingCash = 0.00;
-  let currentMultiplier = 1;
-  let maxMultiplierReached = 1;
-  let streakTicker = null;
 
     let userProfileData = {
       name: '',
@@ -3537,47 +3501,29 @@
       if (toggleBtn) { toggleBtn.innerHTML = '❚❚'; toggleBtn.style.background = '#ef4444'; }
     }
 
-                if (toggleBtn) {
+    if (toggleBtn) {
       toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
           if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
           else selectAndPlayTrack(currentTrackIndex);
-          if (typeof window.startListeningStreakTicker === 'function') window.startListeningStreakTicker();
         } else {
           isPlaying = false;
           if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
-          if (typeof stopNativeSpin === 'function') stopNativeSpin();
-          if (typeof stopNotesSystem === 'function') stopNotesSystem();
-          if (typeof autoBankUnsavedNotes === 'function') autoBankUnsavedNotes();
-          if (typeof countdownInterval !== 'undefined' && countdownInterval) clearInterval(countdownInterval);
-          if (typeof animFrameReq !== 'undefined' && animFrameReq) cancelAnimationFrame(animFrameReq);
-          if (toggleBtn) {
-            toggleBtn.innerHTML = '▶';
-            toggleBtn.style.background = '#3b82f6';
-          }
+          stopNativeSpin();
+          stopNotesSystem();
+          autoBankUnsavedNotes();
+          if (countdownInterval) clearInterval(countdownInterval);
+          if (animFrameReq) cancelAnimationFrame(animFrameReq);
+          toggleBtn.innerHTML = '▶';
+          toggleBtn.style.background = '#3b82f6';
           if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
-          if (typeof window.triggerSessionPayoutSummary === 'function') window.triggerSessionPayoutSummary();
         }
       });
     }
 
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        autoBankUnsavedNotes();
-        if (typeof window.handleTrackCompletedForStreak === 'function') {
-          window.handleTrackCompletedForStreak();
-        }
-        selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
-      });
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        autoBankUnsavedNotes();
-        selectAndPlayTrack((currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length);
-      });
-    }
+    if (nextBtn) nextBtn.addEventListener('click', () => { autoBankUnsavedNotes(); selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { autoBankUnsavedNotes(); selectAndPlayTrack((currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length); });
 
     renderDrawerList();
 
@@ -3655,96 +3601,50 @@
       window.addEventListener('touchend', grabEnd);
     }
 
-    // --- CONTINUOUS LISTENING STREAK & PAYOUT CONTROLLER ---
+  })();
+  
+        // Honest Blue Radio Drawer Search & iPhone Auto-Save Shield
   (function() {
-    let sessionSongsCount = 0;
-    let sessionPendingCash = 0.00;
-    let currentMultiplier = 1;
-    let maxMultiplierReached = 1;
-    let streakTicker = null;
+    // 1. Drawer Search Logic
+    const searchInput = document.getElementById('hbr-drawer-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        let query = searchInput.value.toLowerCase().trim();
+        let trackItems = document.querySelectorAll('#hbr-drawer-list span, .hbr-track-item, [data-track-item]');
 
-    const streakCountElem = document.getElementById('hbr-streak-song-count');
-    const streakMultElem = document.getElementById('hbr-streak-multiplier');
-    const streakCashElem = document.getElementById('hbr-streak-pending-cash');
-
-    const payoutModal = document.getElementById('hbr-payout-summary-modal');
-    const summarySongsElem = document.getElementById('hbr-summary-songs-played');
-    const summaryMultElem = document.getElementById('hbr-summary-max-mult');
-    const summaryCashElem = document.getElementById('hbr-summary-cash-total');
-    const collectBtn = document.getElementById('hbr-collect-payout-btn');
-
-    function updateMultiplier() {
-      if (sessionSongsCount >= 6) currentMultiplier = 5;
-      else if (sessionSongsCount >= 4) currentMultiplier = 3;
-      else if (sessionSongsCount >= 2) currentMultiplier = 2;
-      else currentMultiplier = 1;
-
-      if (currentMultiplier > maxMultiplierReached) maxMultiplierReached = currentMultiplier;
-
-      if (streakMultElem) {
-        streakMultElem.textContent = currentMultiplier + 'x MULTIPLIER' + (currentMultiplier === 5 ? ' 🔥' : '');
-        streakMultElem.style.color = currentMultiplier === 5 ? '#f59e0b' : (currentMultiplier >= 3 ? '#a855f7' : '#4ade80');
-      }
-    }
-
-    window.startListeningStreakTicker = function() {
-      if (streakTicker) clearInterval(streakTicker);
-      streakTicker = setInterval(function() {
-        const baseTick = 0.05; 
-        sessionPendingCash += (baseTick * currentMultiplier);
-        if (streakCashElem) streakCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
-      }, 3000);
-    };
-
-    window.stopListeningStreakTicker = function() {
-      if (streakTicker) clearInterval(streakTicker);
-    };
-
-    window.handleTrackCompletedForStreak = function() {
-      sessionSongsCount++;
-      if (streakCountElem) streakCountElem.textContent = sessionSongsCount;
-      updateMultiplier();
-    };
-
-    window.triggerSessionPayoutSummary = function() {
-      window.stopListeningStreakTicker();
-      if (sessionPendingCash > 0) {
-        if (summarySongsElem) summarySongsElem.textContent = sessionSongsCount.toLocaleString();
-        if (summaryMultElem) summaryMultElem.textContent = maxMultiplierReached + 'x';
-        if (summaryCashElem) summaryCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
-        if (payoutModal) payoutModal.style.display = 'flex';
-      }
-    };
-
-    if (collectBtn) {
-      collectBtn.addEventListener('click', function() {
-        if (sessionPendingCash > 0) {
-          storeCashTotal += sessionPendingCash;
+        trackItems.forEach(item => {
+          let text = item.textContent ? item.textContent.toLowerCase() : '';
+          let row = item.closest('div, li, tr') || item;
           
-          if (typeof saveEverything === 'function') {
-            saveEverything();
+          if (query === '' || text.includes(query)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
           }
-          if (typeof updateCashUI === 'function') {
-            updateCashUI();
-          }
-          
-          const storeCashCountSpan = document.getElementById('hbr-store-cash-count');
-          if (storeCashCountSpan) storeCashCountSpan.textContent = '$' + storeCashTotal.toFixed(2);
-
-          sessionPendingCash = 0.00;
-          sessionSongsCount = 0;
-          currentMultiplier = 1;
-          maxMultiplierReached = 1;
-
-          if (streakCountElem) streakCountElem.textContent = '0';
-          if (streakCashElem) streakCashElem.textContent = '$0.00';
-          updateMultiplier();
-        }
-        if (payoutModal) {
-          payoutModal.style.display = 'none';
-        }
+        });
       });
     }
+
+    // 2. iPhone Background Auto-Save Shield for Fireworks & Cash
+    function saveFireworksAndCash() {
+      if (typeof autoBankUnsavedNotes === 'function') {
+        autoBankUnsavedNotes();
+      }
+      if (typeof saveEverything === 'function') {
+        saveEverything();
+      }
+    }
+
+    window.addEventListener('pagehide', saveFireworksAndCash);
+    window.addEventListener('beforeunload', saveFireworksAndCash);
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        saveFireworksAndCash();
+      }
+    });
+
+    // Continuous background sync every 3 seconds so earnings are never lost on iOS
+    setInterval(saveFireworksAndCash, 3000);
   })();
 
 </script>
