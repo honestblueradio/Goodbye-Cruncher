@@ -3515,6 +3515,142 @@ const masterBroadcastTracks = window.currentMasterTracks;
     function startNativeSpin() { if (record && isPlaying && !isDragging) record.classList.add('hbr-spinning-native'); }
     function stopNativeSpin() { if (record) record.classList.remove('hbr-spinning-native'); }
 
+// --- HOURLY SONG BOUNTY CONTROLLER ---
+let bountySongIndex = -1;
+let bountyClaimed = false;
+let bountyListeningTime = 0;
+let bountyTimer = null;
+
+function getHourlySeed() {
+  const now = new Date();
+  return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '-' + now.getHours();
+}
+
+function initHourlyBounty() {
+  const tracks = window.currentMasterTracks || masterBroadcastTracks;
+  if (!tracks || tracks.length === 0) return;
+
+  const currentSeed = getHourlySeed();
+  const lastClaimedSeed = localStorage.getItem('hbr_bounty_claimed_seed');
+  bountyClaimed = (lastClaimedSeed === currentSeed);
+
+  let seedNum = 0;
+  for (let i = 0; i < currentSeed.length; i++) {
+    seedNum += currentSeed.charCodeAt(i);
+  }
+  bountySongIndex = seedNum % tracks.length;
+
+  const bountySong = tracks[bountySongIndex];
+  const titleElem = document.getElementById('hbr-bounty-song-title');
+  const claimBtn = document.getElementById('hbr-claim-bounty-btn');
+
+  if (titleElem && bountySong) {
+    titleElem.textContent = bountySong.name;
+  }
+
+  if (claimBtn) {
+    if (bountyClaimed) {
+      claimBtn.textContent = '✅ CLAIMED THIS HOUR';
+      claimBtn.style.background = '#1f2937';
+      claimBtn.style.color = '#4ade80';
+      claimBtn.disabled = true;
+    } else {
+      claimBtn.textContent = '🔒 LISTEN 15s TO CLAIM';
+      claimBtn.style.background = '#374151';
+      claimBtn.style.color = '#9ca3af';
+      claimBtn.disabled = true;
+    }
+  }
+}
+
+// Hook up event listeners once DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(initHourlyBounty, 1000);
+
+  // Play Bounty Song Button
+  const playBountyBtn = document.getElementById('hbr-play-bounty-btn');
+  if (playBountyBtn) {
+    playBountyBtn.addEventListener('click', function() {
+      const tracks = window.currentMasterTracks || masterBroadcastTracks;
+      if (bountySongIndex >= 0 && tracks && tracks[bountySongIndex]) {
+        // Direct call to your player's built-in track loading/playing function
+        if (typeof loadAndPlayTrack === 'function') {
+          loadAndPlayTrack(bountySongIndex);
+        } else if (typeof selectAndPlayTrack === 'function') {
+          selectAndPlayTrack(bountySongIndex);
+        } else {
+          // Fallback: simulate clicking the track in the drawer list
+          const drawerItems = document.querySelectorAll('.track-item, [data-track-index]');
+          if (drawerItems[bountySongIndex]) drawerItems[bountySongIndex].click();
+        }
+        startBountyTracker();
+      }
+    });
+  }
+
+  // Claim Cash Button
+  const claimBountyBtn = document.getElementById('hbr-claim-bounty-btn');
+  if (claimBountyBtn) {
+    claimBountyBtn.addEventListener('click', function() {
+      if (bountyClaimed || claimBountyBtn.disabled) return;
+
+      const randomReward = parseFloat((Math.random() * 4.50 + 0.50).toFixed(2));
+      
+      if (typeof storeCashTotal !== 'undefined') {
+        storeCashTotal += randomReward;
+      }
+
+      bountyClaimed = true;
+      localStorage.setItem('hbr_bounty_claimed_seed', getHourlySeed());
+
+      if (typeof saveEverything === 'function') saveEverything();
+      if (typeof updateCashUI === 'function') updateCashUI();
+
+      alert('🎉 HOURLY BOUNTY CLAIMED!\n\nYou earned $' + randomReward.toFixed(2) + ' cash!');
+      initHourlyBounty();
+    });
+  });
+});
+
+function startBountyTracker() {
+  if (bountyClaimed) return;
+  bountyListeningTime = 0;
+  if (bountyTimer) clearInterval(bountyTimer);
+
+  const claimBtn = document.getElementById('hbr-claim-bounty-btn');
+
+  bountyTimer = setInterval(function() {
+    // Checks if your player's global 'isPlaying' state is true
+    if (typeof isPlaying !== 'undefined' && isPlaying) {
+      bountyListeningTime++;
+      if (claimBtn && bountyListeningTime < 15) {
+        claimBtn.textContent = '⏳ LISTEN ' + (15 - bountyListeningTime) + 's...';
+      } else if (claimBtn && bountyListeningTime >= 15) {
+        clearInterval(bountyTimer);
+        claimBtn.textContent = '🎁 CLAIM CASH!';
+        claimBtn.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+        claimBtn.style.color = '#ffffff';
+        claimBtn.style.cursor = 'pointer';
+        claimBtn.disabled = false;
+      }
+    }
+  }, 1000);
+}
+
+// Countdown timer for the hourly refresh
+setInterval(function() {
+  const now = new Date();
+  const mins = 59 - now.getMinutes();
+  const secs = 59 - now.getSeconds();
+  const timerElem = document.getElementById('hbr-bounty-time-left');
+  if (timerElem) {
+    timerElem.textContent = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+  }
+  if (mins === 0 && secs === 0) {
+    setTimeout(initHourlyBounty, 1500);
+  }
+}, 1000);
+
     function triggerPlayState() {
       isPlaying = true;
       if (tonearm) tonearm.style.transform = 'rotate(0deg)';
@@ -3669,148 +3805,5 @@ const masterBroadcastTracks = window.currentMasterTracks;
     setInterval(saveFireworksAndCash, 3000);
   })();
   
-              // Honest Blue Radio - Hourly Song Bounty System
-  (function() {
-    let bountySongIndex = -1;
-    let bountyClaimed = false;
-    let bountyListeningTime = 0;
-    let bountyTimer = null;
-
-    function getHourlySeed() {
-      const now = new Date();
-      return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '-' + now.getHours();
-    }
-
-    function initHourlyBounty() {
-      const tracks = window.currentMasterTracks || [];
-      if (!tracks || tracks.length === 0) {
-        setTimeout(initHourlyBounty, 500);
-        return;
-      }
-
-      const currentSeed = getHourlySeed();
-      const lastClaimedSeed = localStorage.getItem('hbr_bounty_claimed_seed');
-      bountyClaimed = (lastClaimedSeed === currentSeed);
-
-      let seedNum = 0;
-      for (let i = 0; i < currentSeed.length; i++) {
-        seedNum += currentSeed.charCodeAt(i);
-      }
-      bountySongIndex = seedNum % tracks.length;
-
-      const bountySong = tracks[bountySongIndex];
-      const titleElem = document.getElementById('hbr-bounty-song-title');
-      const claimBtn = document.getElementById('hbr-claim-bounty-btn');
-
-      if (titleElem && bountySong) {
-        titleElem.textContent = bountySong.name;
-      }
-
-      if (claimBtn && bountyClaimed) {
-        claimBtn.textContent = '✅ CLAIMED THIS HOUR';
-        claimBtn.style.background = '#1f2937';
-        claimBtn.style.color = '#4ade80';
-        claimBtn.style.cursor = 'default';
-        claimBtn.disabled = true;
-      }
-    }
-
-    // Direct Track ID Playback Handler
-    const playBountyBtn = document.getElementById('hbr-play-bounty-btn');
-    if (playBountyBtn) {
-      playBountyBtn.addEventListener('click', function() {
-        const tracks = window.currentMasterTracks || [];
-        if (bountySongIndex >= 0 && tracks[bountySongIndex]) {
-          const song = tracks[bountySongIndex];
-          
-          // Execute global deck functions or dispatch events to start playback
-          if (typeof playTrack === 'function') {
-            playTrack(song.id);
-          } else if (typeof selectAndPlayTrack === 'function') {
-            selectAndPlayTrack(bountySongIndex);
-          } else if (typeof loadTrackAndPlay === 'function') {
-            loadTrackAndPlay(song.id);
-          } else {
-            // Find and click the corresponding playlist drawer item directly by matching index
-            const items = document.querySelectorAll('.hbr-playlist-item, [id^="track-"], li, div[onclick*="Play"]');
-            if (items && items[bountySongIndex]) {
-              items[bountySongIndex].click();
-            } else {
-              console.log('Bounty song selected:', song.name);
-            }
-          }
-
-          startListeningTracker();
-        }
-      });
-    }
-
-    function startListeningTracker() {
-      if (bountyClaimed) return;
-      bountyListeningTime = 0;
-      if (bountyTimer) clearInterval(bountyTimer);
-
-      const claimBtn = document.getElementById('hbr-claim-bounty-btn');
-      if (claimBtn) {
-        claimBtn.style.background = '#374151';
-        claimBtn.style.color = '#9ca3af';
-        claimBtn.disabled = true;
-      }
-
-      bountyTimer = setInterval(function() {
-        bountyListeningTime++;
-        if (claimBtn && bountyListeningTime < 15) {
-          claimBtn.textContent = '⏳ LISTEN ' + (15 - bountyListeningTime) + 's...';
-        } else if (claimBtn && bountyListeningTime >= 15) {
-          clearInterval(bountyTimer);
-          claimBtn.textContent = '🎁 CLAIM CASH!';
-          claimBtn.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
-          claimBtn.style.color = '#ffffff';
-          claimBtn.style.cursor = 'pointer';
-          claimBtn.disabled = false;
-        }
-      }, 1000);
-    }
-
-    // Claim Cash Handler
-    const claimBountyBtn = document.getElementById('hbr-claim-bounty-btn');
-    if (claimBountyBtn) {
-      claimBountyBtn.addEventListener('click', function() {
-        if (bountyClaimed || claimBountyBtn.disabled) return;
-
-        const randomReward = parseFloat((Math.random() * 4.50 + 0.50).toFixed(2));
-
-        if (typeof storeCashTotal !== 'undefined') {
-          storeCashTotal += randomReward;
-        }
-
-        bountyClaimed = true;
-        localStorage.setItem('hbr_bounty_claimed_seed', getHourlySeed());
-
-        if (typeof saveEverything === 'function') saveEverything();
-        if (typeof updateCashUI === 'function') updateCashUI();
-
-        alert('🎉 HOURLY BOUNTY CLAIMED!\n\nYou earned $' + randomReward.toFixed(2) + ' cash!');
-        initHourlyBounty();
-      });
-    }
-
-    function updateCountdown() {
-      const now = new Date();
-      const mins = 59 - now.getMinutes();
-      const secs = 59 - now.getSeconds();
-      const timerElem = document.getElementById('hbr-bounty-time-left');
-      if (timerElem) {
-        timerElem.textContent = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
-      }
-      if (mins === 0 && secs === 0) {
-        setTimeout(initHourlyBounty, 1500);
-      }
-    }
-
-    setInterval(updateCountdown, 1000);
-    setTimeout(initHourlyBounty, 500);
-  })();
-
 
 </script>
