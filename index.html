@@ -3669,7 +3669,7 @@ const masterBroadcastTracks = window.currentMasterTracks;
     setInterval(saveFireworksAndCash, 3000);
   })();
   
-      // Honest Blue Radio - Hourly Song Bounty System
+        // Honest Blue Radio - Hourly Song Bounty System
   (function() {
     let bountySongIndex = -1;
     let bountyClaimed = false;
@@ -3682,7 +3682,7 @@ const masterBroadcastTracks = window.currentMasterTracks;
     }
 
     function initHourlyBounty() {
-      const tracks = window.currentMasterTracks || (typeof masterBroadcastTracks !== 'undefined' ? masterBroadcastTracks : []);
+      const tracks = window.currentMasterTracks || [];
       if (!tracks || tracks.length === 0) {
         setTimeout(initHourlyBounty, 500);
         return;
@@ -3690,10 +3690,8 @@ const masterBroadcastTracks = window.currentMasterTracks;
 
       const currentSeed = getHourlySeed();
       const lastClaimedSeed = localStorage.getItem('hbr_bounty_claimed_seed');
-
       bountyClaimed = (lastClaimedSeed === currentSeed);
 
-      // Generate deterministic random index based on current seed
       let seedNum = 0;
       for (let i = 0; i < currentSeed.length; i++) {
         seedNum += currentSeed.charCodeAt(i);
@@ -3708,34 +3706,36 @@ const masterBroadcastTracks = window.currentMasterTracks;
         titleElem.textContent = bountySong.name;
       }
 
-      if (claimBtn) {
-        if (bountyClaimed) {
-          claimBtn.textContent = '✅ CLAIMED THIS HOUR';
-          claimBtn.style.background = '#1f2937';
-          claimBtn.style.color = '#4ade80';
-          claimBtn.style.cursor = 'default';
-          claimBtn.disabled = true;
-        } else {
-          claimBtn.textContent = '🔒 LISTEN 15s TO CLAIM';
-          claimBtn.style.background = '#374151';
-          claimBtn.style.color = '#9ca3af';
-          claimBtn.style.cursor = 'not-allowed';
-          claimBtn.disabled = true;
-        }
+      if (claimBtn && bountyClaimed) {
+        claimBtn.textContent = '✅ CLAIMED THIS HOUR';
+        claimBtn.style.background = '#1f2937';
+        claimBtn.style.color = '#4ade80';
+        claimBtn.style.cursor = 'default';
+        claimBtn.disabled = true;
       }
     }
 
-    // Play Bounty Song Button
+    // Direct Play Handler
     const playBountyBtn = document.getElementById('hbr-play-bounty-btn');
     if (playBountyBtn) {
       playBountyBtn.addEventListener('click', function() {
-        const tracks = window.currentMasterTracks || (typeof masterBroadcastTracks !== 'undefined' ? masterBroadcastTracks : []);
-        if (bountySongIndex >= 0 && tracks && tracks[bountySongIndex]) {
-          // Play the song via the player
+        const tracks = window.currentMasterTracks || [];
+        if (bountySongIndex >= 0 && tracks[bountySongIndex]) {
+          // Try multiple common playback methods used in your player
           if (typeof selectAndPlayTrack === 'function') {
             selectAndPlayTrack(bountySongIndex);
-          } else if (window.selectAndPlayTrack) {
-            window.selectAndPlayTrack(bountySongIndex);
+          } else if (typeof playTrack === 'function') {
+            playTrack(bountySongIndex);
+          } else {
+            // Fallback: simulate click on the track drawer item if available
+            const trackItems = document.querySelectorAll('.track-item, [data-track-index]');
+            if (trackItems[bountySongIndex]) {
+              trackItems[bountySongIndex].click();
+            } else {
+              // Ultimate fallback: trigger main play/pause if loaded
+              const mainPlay = document.getElementById('hbr-play-btn') || document.querySelector('button');
+              if (mainPlay) mainPlay.click();
+            }
           }
           startListeningTracker();
         }
@@ -3747,26 +3747,29 @@ const masterBroadcastTracks = window.currentMasterTracks;
       bountyListeningTime = 0;
       if (bountyTimer) clearInterval(bountyTimer);
 
+      const claimBtn = document.getElementById('hbr-claim-bounty-btn');
+      if (claimBtn) {
+        claimBtn.style.background = '#374151';
+        claimBtn.style.color = '#9ca3af';
+        claimBtn.disabled = true;
+      }
+
       bountyTimer = setInterval(function() {
-        if (typeof isPlaying !== 'undefined' && isPlaying) {
-          bountyListeningTime++;
-          const claimBtn = document.getElementById('hbr-claim-bounty-btn');
-          
-          if (claimBtn && bountyListeningTime < 15) {
-            claimBtn.textContent = '⏳ LISTEN ' + (15 - bountyListeningTime) + 's...';
-          } else if (claimBtn && bountyListeningTime >= 15) {
-            clearInterval(bountyTimer);
-            claimBtn.textContent = '🎁 CLAIM CASH!';
-            claimBtn.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
-            claimBtn.style.color = '#ffffff';
-            claimBtn.style.cursor = 'pointer';
-            claimBtn.disabled = false;
-          }
+        bountyListeningTime++;
+        if (claimBtn && bountyListeningTime < 15) {
+          claimBtn.textContent = '⏳ LISTEN ' + (15 - bountyListeningTime) + 's...';
+        } else if (claimBtn && bountyListeningTime >= 15) {
+          clearInterval(bountyTimer);
+          claimBtn.textContent = '🎁 CLAIM CASH!';
+          claimBtn.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+          claimBtn.style.color = '#ffffff';
+          claimBtn.style.cursor = 'pointer';
+          claimBtn.disabled = false;
         }
       }, 1000);
     }
 
-    // Claim Cash Button
+    // Claim Cash Handler
     const claimBountyBtn = document.getElementById('hbr-claim-bounty-btn');
     if (claimBountyBtn) {
       claimBountyBtn.addEventListener('click', function() {
@@ -3803,7 +3806,7 @@ const masterBroadcastTracks = window.currentMasterTracks;
     }
 
     setInterval(updateCountdown, 1000);
-    setTimeout(initHourlyBounty, 300);
+    setTimeout(initHourlyBounty, 500);
   })();
 
 
