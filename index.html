@@ -3535,12 +3535,13 @@
       if (toggleBtn) { toggleBtn.innerHTML = '❚❚'; toggleBtn.style.background = '#ef4444'; }
     }
 
-    if (toggleBtn) {
+        if (toggleBtn) {
       toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
           if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
           else selectAndPlayTrack(currentTrackIndex);
+          if (typeof window.startListeningStreakTicker === 'function') window.startListeningStreakTicker();
         } else {
           isPlaying = false;
           if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
@@ -3552,6 +3553,7 @@
           toggleBtn.innerHTML = '▶';
           toggleBtn.style.background = '#3b82f6';
           if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
+          if (typeof window.triggerSessionPayoutSummary === 'function') window.triggerSessionPayoutSummary();
         }
       });
     }
@@ -3677,11 +3679,8 @@
       }
     });
 
-    // Continuous background sync every 3 seconds so earnings are never lost on iOS
-    setInterval(saveFireworksAndCash, 3000);
-  })();
-
-        (function() {
+      // Continuous Listening Multiplier & Streak Payout Controller
+  (function() {
     let sessionSongsCount = 0;
     let sessionPendingCash = 0.00;
     let currentMultiplier = 1;
@@ -3715,7 +3714,7 @@
     window.startListeningStreakTicker = function() {
       if (streakTicker) clearInterval(streakTicker);
       streakTicker = setInterval(function() {
-        const baseTick = 0.05;
+        const baseTick = 0.05; // 5 cents every 3 seconds base
         sessionPendingCash += (baseTick * currentMultiplier);
         if (streakCashElem) streakCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
       }, 3000);
@@ -3742,7 +3741,7 @@
     };
 
     if (collectBtn) {
-      collectBtn.addEventListener('click', function() {
+      collectBtn.onclick = function() {
         if (sessionPendingCash > 0) {
           if (typeof storeCashTotal !== 'undefined') storeCashTotal += sessionPendingCash;
           if (typeof saveEverything === 'function') saveEverything();
@@ -3758,7 +3757,7 @@
           updateMultiplier();
         }
         if (payoutModal) payoutModal.style.display = 'none';
-      });
+      };
     }
   })();
 
