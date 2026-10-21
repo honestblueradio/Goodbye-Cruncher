@@ -3535,7 +3535,7 @@
       if (toggleBtn) { toggleBtn.innerHTML = '❚❚'; toggleBtn.style.background = '#ef4444'; }
     }
 
-            if (toggleBtn) {
+                if (toggleBtn) {
       toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
@@ -3560,9 +3560,22 @@
       });
     }
 
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        autoBankUnsavedNotes();
+        if (typeof window.handleTrackCompletedForStreak === 'function') {
+          window.handleTrackCompletedForStreak();
+        }
+        selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length);
+      });
+    }
 
-    if (nextBtn) nextBtn.addEventListener('click', () => { autoBankUnsavedNotes(); selectAndPlayTrack((currentTrackIndex + 1) % activePlaylist.length); });
-    if (prevBtn) prevBtn.addEventListener('click', () => { autoBankUnsavedNotes(); selectAndPlayTrack((currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length); });
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        autoBankUnsavedNotes();
+        selectAndPlayTrack((currentTrackIndex - 1 + activePlaylist.length) % activePlaylist.length);
+      });
+    }
 
     renderDrawerList();
 
@@ -3641,10 +3654,9 @@
     }
 
   })();
-  
-        // Honest Blue Radio Drawer Search & iPhone Auto-Save Shield
+
+  // Honest Blue Radio Drawer Search & iPhone Auto-Save Shield
   (function() {
-    // 1. Drawer Search Logic
     const searchInput = document.getElementById('hbr-drawer-search');
     if (searchInput) {
       searchInput.addEventListener('input', function() {
@@ -3654,7 +3666,6 @@
         trackItems.forEach(item => {
           let text = item.textContent ? item.textContent.toLowerCase() : '';
           let row = item.closest('div, li, tr') || item;
-          
           if (query === '' || text.includes(query)) {
             row.style.display = '';
           } else {
@@ -3664,25 +3675,19 @@
       });
     }
 
-    // 2. iPhone Background Auto-Save Shield for Fireworks & Cash
     function saveFireworksAndCash() {
-      if (typeof autoBankUnsavedNotes === 'function') {
-        autoBankUnsavedNotes();
-      }
-      if (typeof saveEverything === 'function') {
-        saveEverything();
-      }
+      if (typeof autoBankUnsavedNotes === 'function') autoBankUnsavedNotes();
+      if (typeof saveEverything === 'function') saveEverything();
     }
 
     window.addEventListener('pagehide', saveFireworksAndCash);
     window.addEventListener('beforeunload', saveFireworksAndCash);
     document.addEventListener('visibilitychange', function() {
-      if (document.visibilityState === 'hidden') {
-        saveFireworksAndCash();
-      }
+      if (document.visibilityState === 'hidden') saveFireworksAndCash();
     });
+  })();
 
-      // Continuous Listening Multiplier & Streak Payout Controller
+  // Continuous Listening Multiplier & Streak Payout Controller
   (function() {
     let sessionSongsCount = 0;
     let sessionPendingCash = 0.00;
@@ -3717,7 +3722,7 @@
     window.startListeningStreakTicker = function() {
       if (streakTicker) clearInterval(streakTicker);
       streakTicker = setInterval(function() {
-        const baseTick = 0.05; // 5 cents every 3 seconds base
+        const baseTick = 0.05; 
         sessionPendingCash += (baseTick * currentMultiplier);
         if (streakCashElem) streakCashElem.textContent = '$' + sessionPendingCash.toFixed(2);
       }, 3000);
