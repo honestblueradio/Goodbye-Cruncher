@@ -3773,27 +3773,28 @@
     });
   }
 
-  const toggleBtnElem = document.getElementById('hbr-toggle');
-      if (toggleBtn) {
+      const toggleBtn = document.getElementById('hbr-toggle');
+    if (toggleBtn) {
       toggleBtn.addEventListener('click', () => {
         if (!isPlaying) {
           triggerPlayState();
           if (ytPlayer && typeof ytPlayer.playVideo === 'function') ytPlayer.playVideo();
           else selectAndPlayTrack(currentTrackIndex);
           if (typeof startListeningStreakTicker === 'function') startListeningStreakTicker();
-
-    } else {
-      isPlaying = false;
-      if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
-      stopNativeSpin();
-      stopNotesSystem();
-      autoBankUnsavedNotes();
-      if (countdownInterval) clearInterval(countdownInterval);
-      if (animFrameReq) cancelAnimationFrame(animFrameReq);
-      toggleBtn.innerHTML = '▶';
-      toggleBtn.style.background = '#3b82f6';
-      if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
-      if (typeof triggerSessionPayoutSummary === 'function') triggerSessionPayoutSummary();
+        } else {
+          isPlaying = false;
+          if (tonearm) tonearm.style.transform = 'rotate(-26deg)';
+          stopNativeSpin();
+          stopNotesSystem();
+          autoBankUnsavedNotes();
+          if (countdownInterval) clearInterval(countdownInterval);
+          if (animFrameReq) cancelAnimationFrame(animFrameReq);
+          toggleBtn.innerHTML = '▶';
+          toggleBtn.style.background = '#3b82f6';
+          if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
+          if (typeof triggerSessionPayoutSummary === 'function') triggerSessionPayoutSummary();
+        }
+      });
     }
 
 
